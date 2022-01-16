@@ -1,0 +1,7 @@
+{
+  "name": "COVID-19 Tracker",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
