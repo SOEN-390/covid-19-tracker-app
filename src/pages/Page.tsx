@@ -25,6 +25,7 @@ const Page: React.FC = () => {
           </IonToolbar>
         </IonHeader>
         <ExploreContainer name={name} />
+        <p>h</p>
       </IonContent>
     </IonPage>
   );
