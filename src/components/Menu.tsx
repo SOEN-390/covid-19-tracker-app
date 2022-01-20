@@ -9,6 +9,7 @@ import {
   IonMenuToggle,
   IonNote,
   IonAvatar,
+  IonMenuButton,
 } from '@ionic/react';
 
 import logo from '../resources/icon.png'
@@ -17,7 +18,7 @@ import logo from '../resources/icon.png'
 
 
 import { useLocation } from 'react-router-dom';
-import { archiveOutline, archiveSharp, bookmarkOutline, heartOutline, heartSharp, mailOutline, mailSharp, paperPlaneOutline, paperPlaneSharp, trashOutline, trashSharp, warningOutline, warningSharp } from 'ionicons/icons';
+import { archiveOutline, archiveSharp, bookmarkOutline, heartOutline, heartSharp, mailOutline, mailSharp, paperPlaneOutline, paperPlaneSharp, trashOutline, trashSharp, warningOutline, warningSharp, appsOutline, calendarOutline } from 'ionicons/icons';
 import './Menu.css';
 
 interface AppPage {
@@ -29,16 +30,16 @@ interface AppPage {
 
 const appPages: AppPage[] = [
   {
-    title: 'Overview' ,
+    title: 'Overview',
     url: '/page/Overview',
-    iosIcon: mailOutline,
-    mdIcon: mailSharp
+    iosIcon: appsOutline,
+    mdIcon: appsOutline
   },
   {
     title: 'Appointments',
     url: '/page/Appointments',
-    iosIcon: paperPlaneOutline,
-    mdIcon: paperPlaneSharp
+    iosIcon: calendarOutline,
+    mdIcon: calendarOutline
   },
   {
     title: 'option 1',
@@ -59,8 +60,8 @@ const appPages: AppPage[] = [
     mdIcon: trashSharp
   },
   {
-    title: 'Spam',
-    url: '/page/Spam',
+    title: 'Alert',
+    url: '/page/Alert',
     iosIcon: warningOutline,
     mdIcon: warningSharp
   }
@@ -71,15 +72,15 @@ const Menu: React.FC = () => {
   const location = useLocation();
 
   return (
-    <IonMenu contentId="main" type="overlay">
+    <IonMenu contentId="main" type="push">
       <IonContent>
         <IonList id="inbox-list">
           <IonAvatar>
-              <img src={logo} />
-            </IonAvatar>
-          
+            <img src={logo} />
+          </IonAvatar>
+
           <IonList id="inbox-list">
-        </IonList>
+          </IonList>
           {appPages.map((appPage, index) => {
             return (
               <IonMenuToggle key={index} autoHide={false}>
@@ -91,9 +92,9 @@ const Menu: React.FC = () => {
             );
           })}
         </IonList>
-        
 
-        
+
+
       </IonContent>
     </IonMenu>
   );
