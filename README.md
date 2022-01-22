@@ -35,7 +35,7 @@ COVID-19 Tracker application frontend in Ionic
     - Open the Environment's terminal or Terminal
     - `cd` to the project's root folder
     - Run the code with `ionic serve`
-    - Open `http://localhost:8081` to see the web app
+    - Open `http://localhost:8100` to see the web app
 - Run the code on emulator:
   - 
     - Open the emulator iOS or Android emulator
