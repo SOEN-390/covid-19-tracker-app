@@ -1,6 +1,5 @@
 import { IonAvatar, IonCol, IonContent, IonGrid, IonMenuButton, IonPage, IonRow } from '@ionic/react';
 import { useParams } from 'react-router';
-import ExploreContainer from '../components/ExploreContainer';
 import './Page.css';
 import logo from '../resources/icon.png'
 
@@ -18,22 +17,23 @@ const Page: React.FC = () => {
 
       <IonMenuButton></IonMenuButton>
       <IonContent fullscreen>
-        <IonGrid>
+        <IonGrid >
           <IonRow className="background">
-            <IonCol size='6'>
+            <IonCol sizeXl='6'>
               <SearchBar />
             </IonCol>
 
 
-            <IonCol size='3'>
-              <IonAvatar>
+            <IonCol sizeXl='0.5' sizeXs='1.5' size='2'>
+              <IonAvatar className="avatar">
                 <img src={logo} alt="" />
               </IonAvatar>
             </IonCol>
-            <IonCol size='3' offset='-2.2'>
+            <IonCol sizeXl='5.5' sizeXs='4'>
 
-              <h5>Beshoy Soliman</h5>
-              <p>Doctor</p>
+
+              <text>Beshoy Soliman</text>
+              <text>Doctosr</text>
 
             </IonCol>
 
