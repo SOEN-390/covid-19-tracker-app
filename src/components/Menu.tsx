@@ -40,8 +40,8 @@ const appPages: AppPage[] = [
     mdIcon: calendarOutline
   },
   {
-    title: 'option 1',
-    url: '/option1',
+    title: 'Symptoms form',
+    url: '/Symptoms',
     iosIcon: heartOutline,
     mdIcon: heartSharp
   },

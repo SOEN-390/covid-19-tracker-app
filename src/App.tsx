@@ -24,6 +24,8 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
+import Symptom from './components/Symptom';
+import SymptomsForm from './pages/SymptomsForm';
 
 setupIonicReact();
 
@@ -44,6 +46,10 @@ const App: React.FC = () => {
             <Route path="/Appointments" exact={true}>
               <Appointments />
             </Route>
+            <Route path="/Symptoms" exact={true}>
+              <SymptomsForm />
+            </Route>
+
           </IonRouterOutlet>
         </IonSplitPane>
       </IonReactRouter>

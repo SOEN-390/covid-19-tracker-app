@@ -1,16 +1,16 @@
-import { IonAvatar, IonCol, IonContent, IonGrid, IonRow, IonSearchbar } from "@ionic/react";
+import { IonAvatar, IonCard, IonCol, IonContent, IonGrid, IonItem, IonRow, IonSearchbar } from "@ionic/react";
 import './SearchBar.css'
 import logo from '../resources/icon.png'
 
 function SearchBar() {
     return (
-        <IonContent fullscreen>
+
+        <IonCard>
             <IonGrid >
                 <IonRow className="background">
                     <IonCol sizeXl='6'>
                         <IonSearchbar />
                     </IonCol>
-
 
                     <IonCol sizeXl='0.5' sizeXs='1.5'>
                         <IonAvatar className="avatar">
@@ -24,14 +24,12 @@ function SearchBar() {
 
                     </IonCol>
 
-
-
                 </IonRow>
             </IonGrid>
+        </IonCard>
 
 
 
-        </IonContent>
     );
 }
 
