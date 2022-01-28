@@ -35,7 +35,7 @@ const HttpService = {
             body: JSON.stringify(body),
             headers: HttpService.getHeader()
         });
-        fetch(request).then((response) => {
+        return fetch(request).then((response) => {
             return response;
         }).catch((error) => {
             return error;
@@ -57,10 +57,11 @@ const HttpService = {
 
     getHeader: () => {
         // Will be modified later to send the authToken from firebase
-        return new Headers({
-            'Content-Type': 'application/json',
-            Accept: 'application/json'
-        });
+        return new Headers();
+        // {
+        //     'Content-Type': 'application/json',
+        //     Accept: 'application/json'
+        // }
     }
 
 };

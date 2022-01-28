@@ -2,8 +2,12 @@ import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, Io
 import { useParams } from 'react-router';
 import ExploreContainer from '../components/ExploreContainer';
 import './Page.css';
+import HttpService from "../providers/http.service";
 
 const Page: React.FC = () => {
+    HttpService.get('').then((response) => {
+        console.log(response);
+    })
 
   const { name } = useParams<{ name: string; }>();
 
