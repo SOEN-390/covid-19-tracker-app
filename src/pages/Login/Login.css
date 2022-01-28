@@ -1,5 +1,6 @@
 .login-text{
     color: #2C4D62;
+    line-height: 10px;
 }
 
 .login-logo::part(image){
@@ -38,6 +39,4 @@
 .custom-checkbox {
     --ripple-color: transparent;
     --background-hover: transparent;
-    font-size: 12px;
-    color: #2C4D62;
 }

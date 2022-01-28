@@ -11,15 +11,14 @@ import {
     IonRouterLink,
     setupIonicReact
 } from '@ionic/react';
-
-import CovidTrackerTransparent from '../../assets/images/CovidTrackerTransparent.png'
+import CovidTrackerTransparent from '../../assets/images/CovidTrackerTransparent.png';
 
 import {useState} from "react";
 
 import './Login.css';
 setupIonicReact();
 
-const App: React.FC = () => {
+const Login: React.FC = () => {
     const [checked] = useState(false);
     return (
         <IonApp>
@@ -53,4 +52,4 @@ const App: React.FC = () => {
     );
 };
 
-export default App;
+export default Login;
