@@ -1,0 +1,55 @@
+IonCheckbox {
+    display:none;
+}
+
+ionitem .checkBox {
+    background-color: #FFFF33 !important;
+}
+
+div .checkBox {
+    position: relative;
+}
+
+/*Login Screen*/
+.login-text{
+    color: #2C4D62;
+
+
+}
+.login-logo::part(image){
+    position:absolute;
+    left: 0;
+    right: 0;
+    margin:0 auto;
+    top:25%;
+    transform:translateY(-50%);
+    width: 400px;
+    height: 250px;
+}
+
+.login-form-center{
+    height: 500px;
+    width: 425px;
+    left: 689px;
+    top: 390px;
+}
+
+.sign-in-center{
+    height: 47px;
+    width: 425px;
+    left: 689px;
+    top: 351px;
+}
+
+.login-text-field{
+    border: solid 1px #ABABAB;
+    border-radius: 10px;
+    height: 59px;
+    width: 423px;
+}
+.custom-checkbox{
+    --ripple-color: transparent;
+    --background-hover: transparent;
+    font-size: 12px;
+    color: #2C4D62;
+}
