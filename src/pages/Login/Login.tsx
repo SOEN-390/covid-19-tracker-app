@@ -32,12 +32,12 @@ const App: React.FC = () => {
                 </div>
                 <div className="ion-align-items-center; login-form-center">
                     <IonLabel className="login-text">Username</IonLabel>
-                    <IonInput className={"login-text-field"} placeholder="Enter your username" type="text"/>
+                    <IonInput className="login-text-field" placeholder="Enter your username" type="text"/>
                     <br/><br/>
                     <IonLabel className="login-text">Password</IonLabel>
-                    <IonInput className={"login-text-field"} placeholder="Enter your password" type="password"/>
+                    <IonInput className="login-text-field" placeholder="Enter your password" type="password"/>
 
-                    <IonItem className='ion-item' lines='none' style={{highlight: 'none'}}>
+                    <IonItem className='ion-item' lines='none'>
                         <div slot="start">
                             <IonCheckbox slot='end' className={"custom-checkbox"} checked={checked} />
                         </div>
