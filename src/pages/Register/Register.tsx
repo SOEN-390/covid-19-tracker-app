@@ -1,10 +1,10 @@
 import {
     IonApp,
-    IonButton, IonCheckbox,
+    IonButton,
     IonContent, IonHeader,
     IonImg,
-    IonInput, IonItem,
-    IonLabel, IonRouterLink,
+    IonInput,
+    IonLabel,
     setupIonicReact
 } from '@ionic/react';
 import CovidTrackerTransparent from '../../assets/images/CovidTrackerTransparent.png';
