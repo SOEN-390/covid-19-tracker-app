@@ -1,4 +1,4 @@
-import { IonCol, IonContent, IonFooter, IonGrid, IonIcon, IonItem, IonItemDivider, IonRow, IonText } from "@ionic/react";
+import {IonCol, IonFooter, IonIcon, IonRow, IonText} from "@ionic/react";
 import { call } from "ionicons/icons";
 
 import './SearchBar.css'
@@ -17,9 +17,9 @@ function Emergency() {
 
                     <IonCol size="1.5"><IonIcon icon={call} /></IonCol>
                     <IonCol>
-                        <text style={{ color: "red" }}>
+                        <IonText style={{ color: "red" }}>
                             Emergency Hotline
-                        </text>
+                        </IonText>
                         {"\n"}
                         <p>+232 453 4324</p>
                     </IonCol>

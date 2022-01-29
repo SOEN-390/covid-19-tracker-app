@@ -1,0 +1,42 @@
+.login-text{
+    color: #2C4D62;
+    line-height: 10px;
+}
+
+.login-logo::part(image){
+    left: 0;
+    right: 0;
+    margin:0 auto;
+    top: 25%;
+    height: 250px;
+}
+
+.ion-item {
+    --background-hover: none;
+    --background-activated: none;
+    --ripple-color: transparent;
+}
+
+.login-form-center {
+    margin-left: 25%;
+    width: 50%;
+}
+
+.sign-in-center {
+    display: grid;
+    width: 100%;
+    align-items: center;
+    justify-items: center;
+}
+
+.login-text-field {
+    border: solid 1px #ABABAB;
+    border-radius: 10px;
+    height: 59px;
+    width: 100%;
+}
+
+.custom-checkbox {
+    --ripple-color: transparent;
+    --background-hover: transparent;
+}

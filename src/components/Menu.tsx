@@ -1,13 +1,12 @@
 import {
-  IonContent,
-  IonIcon,
-  IonItem,
-  IonLabel,
-  IonList,
-  IonMenu,
-  IonMenuToggle,
-  IonAvatar,
-  IonMenuButton,
+    IonContent,
+    IonIcon,
+    IonItem,
+    IonLabel,
+    IonList,
+    IonMenu,
+    IonMenuToggle,
+    IonAvatar, IonImg, IonListHeader
 } from '@ionic/react';
 
 import logo from '../resources/icon.png'
@@ -29,37 +28,37 @@ interface AppPage {
 const appPages: AppPage[] = [
   {
     title: 'Overview',
-    url: '/Overview',
+    url: '/home/overview',
     iosIcon: appsOutline,
     mdIcon: appsOutline
   },
   {
     title: 'Appointments',
-    url: '/Appointments',
+    url: '/home/appointments',
     iosIcon: calendarOutline,
     mdIcon: calendarOutline
   },
   {
     title: 'Symptoms form',
-    url: '/Symptoms',
+    url: '/home/symptoms',
     iosIcon: heartOutline,
     mdIcon: heartSharp
   },
   {
     title: 'option 2',
-    url: '/option2',
+    url: '/home/option2',
     iosIcon: archiveOutline,
     mdIcon: archiveSharp
   },
   {
     title: 'option 3',
-    url: '/option3',
+    url: '/home/option3',
     iosIcon: trashOutline,
     mdIcon: trashSharp
   },
   {
     title: 'Alert',
-    url: '/Alert',
+    url: '/home/alert',
     iosIcon: warningOutline,
     mdIcon: warningSharp
   }
@@ -69,12 +68,14 @@ const appPages: AppPage[] = [
 const Menu: React.FC = () => {
   const location = useLocation();
 
+    const labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
+
   return (
-    <IonMenu contentId="main" type="push">
+    <IonMenu contentId="home" type="push">
       <IonContent>
         <IonList id="inbox-list">
           <IonAvatar>
-            <img src={logo} />
+            <IonImg src={logo} />
           </IonAvatar>
 
 
@@ -93,7 +94,15 @@ const Menu: React.FC = () => {
           })
           }
         </IonList>
-
+        {/*  <IonList id="labels-list">*/}
+        {/*      <IonListHeader>Labels</IonListHeader>*/}
+        {/*      {labels.map((label, index) => (*/}
+        {/*          <IonItem lines="none" key={index}>*/}
+        {/*              <IonIcon slot="start" icon={bookmarkOutline} />*/}
+        {/*              <IonLabel>{label}</IonLabel>*/}
+        {/*          </IonItem>*/}
+        {/*      ))}*/}
+        {/*  </IonList>*/}
 
       </IonContent>
       <Emergency />

@@ -1,4 +1,4 @@
-import { IonAvatar, IonCard, IonCol, IonContent, IonGrid, IonItem, IonRow, IonSearchbar } from "@ionic/react";
+import { IonAvatar, IonCard, IonCol, IonGrid, IonRow, IonSearchbar } from "@ionic/react";
 import './SearchBar.css'
 import logo from '../resources/icon.png'
 
