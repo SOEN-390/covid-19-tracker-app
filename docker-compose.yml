@@ -1,0 +1,14 @@
+version: "3.9"
+services:
+  web:
+    container_name: covid-tracker
+    command: ionic serve --external
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - "8100:8100"
+    volumes:
+      - ./src:/var/code/src
+
+
