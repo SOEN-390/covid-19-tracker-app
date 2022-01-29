@@ -44,6 +44,8 @@ const Login: React.FC = () => {
                         <IonRouterLink href="#" color="#4D4D4D" className="underline">Forgot Password?</IonRouterLink>
                     </IonItem>
                     <IonButton size="large" expand="block" fill="solid" color={"dark-blue"}>LOGIN</IonButton>
+                    <br/>
+                    <p className={"register-text"}> Do not have an account ? <a href={"/register"} className={"register-text-color"}> Register</a> </p>
                 </div>
 
             </IonContent>
