@@ -1,6 +1,6 @@
 import {IonApp, IonRouterOutlet, IonSplitPane, setupIonicReact} from '@ionic/react';
-import { IonReactRouter } from '@ionic/react-router';
-import { Redirect, Route } from 'react-router-dom';
+import {IonReactRouter} from '@ionic/react-router';
+import {Redirect, Route} from 'react-router-dom';
 import Menu from './components/Menu';
 import Overview from './pages/Overview/Overview';
 import Appointments from './pages/Appointments/Appointments';
@@ -26,31 +26,31 @@ import '@ionic/react/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 import SymptomsForm from './pages/SymptomsForm/SymptomsForm';
-import AppMenu from "./AppMenu";
 
 setupIonicReact();
 
-const App: React.FC = () => {
-  return (
-    <IonApp>
-      <IonReactRouter>
-          <IonRouterOutlet id="main">
-              <Route path="" exact={true}>
-                  <Redirect to="/login" />
-              </Route>
-              <Route path="/login" exact={true}>
-                  <Login />
-              </Route>
-              <Route path="/register" exact={true}>
-                  <Register />
-              </Route>
-              <Route path="/home">
-                  <AppMenu />
-              </Route>
-          </IonRouterOutlet>
-      </IonReactRouter>
-    </IonApp>
-  );
+const AppMenu: React.FC = () => {
+    return (
+                <IonSplitPane contentId="home">
+                    <Menu/>
+                    <IonRouterOutlet id="home">
+                        <Route path="/home" exact={true}>
+                            <Redirect to="/home/symptoms"/>
+                        </Route>
+
+                        <Route path="/home/overview">
+                            <Overview/>
+                        </Route>
+                        <Route path="/home/appointments">
+                            <Appointments/>
+                        </Route>
+                        <Route path="/home/symptoms">
+                            <SymptomsForm/>
+                        </Route>
+
+                    </IonRouterOutlet>
+                </IonSplitPane>
+    );
 };
 
-export default App;
+export default AppMenu;
