@@ -7,43 +7,43 @@ import SearchBar from '../../components/SearchBar';
 
 const Page: React.FC = () => {
 
-  const { name } = useParams<{ name: string; }>(); //to get page name
+    const { name } = useParams<{ name: string; }>(); //to get page name
 
-  return (
-    <IonPage>
+    return (
+        <IonPage>
 
-      <IonMenuButton></IonMenuButton>
-      <IonContent fullscreen>
-        <IonGrid >
-          <IonRow className="background">
-            <IonCol sizeXl='6'>
-              <SearchBar />
-            </IonCol>
-
-
-            <IonCol sizeXl='0.5' sizeXs='1.5' size='2'>
-              <IonAvatar className="avatar">
-                <img src={logo} alt="" />
-              </IonAvatar>
-            </IonCol>
-            <IonCol sizeXl='5.5' sizeXs='4'>
+            <IonMenuButton></IonMenuButton>
+            <IonContent fullscreen>
+                <IonGrid >
+                    <IonRow className="background">
+                        <IonCol sizeXl='6'>
+                            <SearchBar />
+                        </IonCol>
 
 
-              <IonLabel>Beshoy Soliman</IonLabel>
-              <IonLabel>Doctosr</IonLabel>
+                        <IonCol sizeXl='0.5' sizeXs='1.5' size='2'>
+                            <IonAvatar className="avatar">
+                                <img src={logo} alt="" />
+                            </IonAvatar>
+                        </IonCol>
+                        <IonCol sizeXl='5.5' sizeXs='4'>
 
-            </IonCol>
 
+                            <IonLabel>Beshoy Soliman</IonLabel>
+                            <IonLabel>Doctosr</IonLabel>
 
-
-          </IonRow>
-        </IonGrid>
+                        </IonCol>
 
 
 
-      </IonContent>
-    </IonPage>
-  );
+                    </IonRow>
+                </IonGrid>
+
+
+
+            </IonContent>
+        </IonPage>
+    );
 };
 
 export default Page;
