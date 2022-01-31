@@ -8,12 +8,32 @@ import {
     setupIonicReact
 } from '@ionic/react';
 import CovidTrackerTransparent from '../../assets/images/CovidTrackerTransparent.png';
-
+import {useState} from "react";
+import { Route, Redirect } from 'react-router'
+import {registerUser} from '../../firebaseconfig'
 import './Register.css';
 setupIonicReact();
 
 const Register: React.FC = () => {
+    const [email, setEmail] =useState('')
+    const [password, setPassword] =useState('')
+    const [cpassword, setCPassword] =useState('')
 
+  async  function register() {
+        //validation 
+        if(password != cpassword){
+            console.log("password don't match")
+        }
+        if(email.trim() === '' || password.trim()===''){
+            console.log("username and password are required")
+        }
+
+       const rest = await registerUser(email, password)
+
+        if(rest){
+           //redirect to next page
+        }
+    }
     return (
         <IonApp>
             <IonHeader>
@@ -30,21 +50,23 @@ const Register: React.FC = () => {
                     <br /><br />
 
                     <IonLabel className="login-text">Email</IonLabel>
-                    <IonInput className="login-text-field" placeholder="Enter your email" type="text"/>
+                    <IonInput className="login-text-field" placeholder="Enter your email" type="text"
+                    onIonChange={(e: any)=> setEmail(e.target.value)}/>
 
                     <br /><br />
-
-                    <IonLabel className="login-text">Username</IonLabel>
-                    <IonInput className="login-text-field" placeholder="Enter a username" type="text"/>
-
-                    <br /><br />
-
                     <IonLabel className="login-text">New Password</IonLabel>
-                    <IonInput className="login-text-field" placeholder="Enter a password" type="password"/>
+                    <IonInput className="login-text-field" placeholder="Enter a password" type="password"
+                    onIonChange={(e: any)=> setPassword(e.target.value)}/>
+                    
+                    <br /><br />
+
+                    <IonLabel className="login-text">Confirm your password</IonLabel>
+                    <IonInput className="login-text-field" placeholder="Enter a password" type="password"
+                    onIonChange={(e: any)=> setCPassword(e.target.value)}/>
 
                     <br /><br />
 
-                    <IonButton size="large" expand="block" fill="solid" color={"dark-blue"}>Next</IonButton>
+                    <IonButton onClick={register}  size="large" expand="block" fill="solid" color={"dark-blue"}>Next</IonButton>
                 </div>
             </IonContent>
 
