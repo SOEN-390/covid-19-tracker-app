@@ -15,7 +15,7 @@ import Emergency from './Emergency';
 
 
 import { useLocation } from 'react-router-dom';
-import { archiveOutline, archiveSharp, bookmarkOutline, heartOutline, heartSharp, trashOutline, trashSharp, warningOutline, warningSharp, appsOutline, calendarOutline } from 'ionicons/icons';
+import { archiveOutline, archiveSharp, bookmarkOutline, heartOutline, heartSharp, trashOutline, trashSharp, warningOutline, warningSharp, appsOutline, calendarOutline,logOutOutline } from 'ionicons/icons';
 import './Menu.css';
 
 interface AppPage {
@@ -61,6 +61,12 @@ const appPages: AppPage[] = [
     url: '/home/alert',
     iosIcon: warningOutline,
     mdIcon: warningSharp
+  },
+  {
+    title: 'Logout',
+    url: '/home/logout',
+    iosIcon: logOutOutline,
+    mdIcon: logOutOutline
   }
 ];
 

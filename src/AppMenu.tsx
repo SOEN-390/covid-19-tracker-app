@@ -3,6 +3,7 @@ import {Redirect, Route} from 'react-router-dom';
 import Menu from './components/Menu';
 import Overview from './pages/Overview/Overview';
 import Appointments from './pages/Appointments/Appointments';
+import Logout from './pages/logout/logout'
 
 
 /* Core CSS required for Ionic components to work properly */
@@ -45,6 +46,9 @@ const AppMenu: React.FC = () => {
                 </Route>
                 <Route path="/home/symptoms">
                     <SymptomsForm/>
+                </Route>
+                <Route path="/home/logout">
+                    <Logout />
                 </Route>
 
             </IonRouterOutlet>

@@ -29,6 +29,16 @@ export async function registerUser(email: string, password: string) {
     }
 }
 
+export function signoutuser() {
+    firebase.auth().signOut().then(function() {
+        // Sign-out successful.
+        console.log("done right")
+      }).catch(function(error) {
+        // An error happened.
+        console.log(error)
+      });
+    }
+
 export function getCurrentUser() {
 return new Promise((resolve, reject)=> {
  const sub = firebase.auth().onAuthStateChanged(function(user){
@@ -41,4 +51,6 @@ return new Promise((resolve, reject)=> {
         sub()
     })
 })
+
+
 }
