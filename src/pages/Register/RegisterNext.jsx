@@ -27,7 +27,7 @@ export class RegisterNext extends Component {
     render() {
         const { values, inputChange } = this.props;
         const {
-            values: { email, username, fName, lName, testResult, address, medicalCard }
+            values: { email, password, fName, lName, testResult, address, medicalCard }
         } = this.props
 
 
@@ -46,27 +46,27 @@ export class RegisterNext extends Component {
                     <br /><br />
 
                     <IonLabel className="login-text">First Name </IonLabel>
-                    <IonInput className="login-text-field" placeholder="Enter your First Name" type="text" onChange={inputChange('fName')} value={values.fName} />
+                    <IonInput className="login-text-field" placeholder="Enter your First Name" type="text" onIonChange={inputChange('fName')} value={values.fName} />
 
                     <br /><br />
 
                     <IonLabel className="login-text">Last Name</IonLabel>
-                    <IonInput className="login-text-field" placeholder="Enter your Last Name" type="text" onChange={inputChange('lName')} value={values.lName} />
+                    <IonInput className="login-text-field" placeholder="Enter your Last Name" type="text" onIonChange={inputChange('lName')} value={values.lName} />
 
                     <br /><br />
 
                     <IonLabel className="login-text">Test Results</IonLabel>
-                    <IonInput className="login-text-field" placeholder="positive or negative" type="text" onChange={inputChange('testResult')} value={values.testResult} />
+                    <IonInput className="login-text-field" placeholder="positive or negative" type="text" onIonChange={inputChange('testResult')} value={values.testResult} />
 
                     <br /><br />
 
                     <IonLabel className="login-text">Your Address</IonLabel>
-                    <IonInput className="login-text-field" placeholder="Enter your Address" type="text" onChange={inputChange('address')} value={values.address} />
+                    <IonInput className="login-text-field" placeholder="Enter your Address" type="text" onIonChange={inputChange('address')} value={values.address} />
 
                     <br /><br />
 
                     <IonLabel className="login-text">Medical card number</IonLabel>
-                    <IonInput className="login-text-field" placeholder="Enter your medical card number" type="text" onChange={inputChange('medicalCard')} value={values.medicalCard} />
+                    <IonInput className="login-text-field" placeholder="Enter your medical card number" type="text" onIonChange={inputChange('medicalCard')} value={values.medicalCard} />
                     <br /><br />
                     <h1>hiiiii {email}</h1>
 
