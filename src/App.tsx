@@ -1,6 +1,6 @@
-import {IonApp, IonRouterOutlet, setupIonicReact} from '@ionic/react';
-import {IonReactRouter} from '@ionic/react-router';
-import {Redirect, Route} from 'react-router-dom';
+import { IonApp, IonRouterOutlet, setupIonicReact } from '@ionic/react';
+import { IonReactRouter } from '@ionic/react-router';
+import { Redirect, Route } from 'react-router-dom';
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 
@@ -25,7 +25,8 @@ import './theme/variables.css';
 import AppMenu from "./AppMenu";
 import RegisterNext from "./pages/Register/RegisterNext";
 import { useEffect } from 'react';
-import {getCurrentUser} from '../src/firebaseconfig';
+import { getCurrentUser } from '../src/firebaseconfig';
+import RegisterForm from './components/RegisterForm';
 
 setupIonicReact();
 
@@ -35,21 +36,18 @@ const App: React.FC = () => {
             <IonReactRouter>
                 <IonRouterOutlet id="main">
                     <Route path="" exact={true}>
-                        <Redirect to="/login"/>
+                        <Redirect to="/login" />
                     </Route>
                     <Route path="/login" exact={true}>
-                        <Login/>
+                        <Login />
                     </Route>
                     <Route path="/register" exact={true}>
-                        <Register/>
-                    </Route>
-                    <Route path="/RegisterNext" exact={true}>
-                        <RegisterNext/>
+                        <RegisterForm />
                     </Route>
                     <Route path="/home">
-                        <AppMenu/>
+                        <AppMenu />
                     </Route>
-                    
+
                 </IonRouterOutlet>
             </IonReactRouter>
         </IonApp>
