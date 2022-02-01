@@ -9,9 +9,16 @@ import {
 } from '@ionic/react';
 import CovidTrackerTransparent from '../../assets/images/CovidTrackerTransparent.png';
 import React,{Component} from 'react';
+import { registerUser } from '../../../src/firebaseconfig';
+
 
 import './Register.css';
+import { Redirect } from 'react-router';
 setupIonicReact();
+
+
+
+
 
  export class Register extends Component {
     continue = e => {
@@ -21,7 +28,18 @@ setupIonicReact();
 
     render() {
         const { values, inputChange } = this.props;
-
+        const {
+            values: { email, password, fName, lName, testResult, address, medicalCard }
+        } = this.props
+        
+        async function register(){
+            const rest = await registerUser(email , password)
+            
+            alert(rest)
+            if(rest){
+              return <Redirect to = '/overview/'/>
+            }
+          }
 
         return (
             <IonPage>
@@ -48,8 +66,9 @@ setupIonicReact();
                         <IonInput className="login-text-field" placeholder="Enter a password" type="password" onIonChange={inputChange('password')} value={values.password} />
 
                         <br /><br />
+                        
 
-                        <IonButton size="large" expand="block" fill="solid" color={"dark-blue"} onClick={this.continue}>Next</IonButton>
+                        <IonButton size="large" expand="block" fill="solid" color={"dark-blue"} onClick={register}>Next</IonButton>
                     </div>
                 </IonContent>
 

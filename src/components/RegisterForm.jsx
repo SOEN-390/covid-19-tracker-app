@@ -6,6 +6,7 @@ export class RegisterForm extends Component {
     state = {
         step: 1,
         email: '',
+        password:'',
         fName: '',
         lName: '',
         testResult: '',
