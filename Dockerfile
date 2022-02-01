@@ -1,4 +1,4 @@
-FROM node:latest@sha256:1ce86d32c73efe0aed0fa2dd7c0ee6d5c03f66e75986736d2d97d0ce1400c0a3
+FROM node:latest@sha256:f9b18e024fc10ebc95d53c5d7cd6858779a7e3670ec6d24bebe8f2353fdf37b1
 ARG PORT=8100
 
 RUN npm install -g ionic
