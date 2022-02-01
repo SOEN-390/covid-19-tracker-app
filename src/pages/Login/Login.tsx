@@ -17,8 +17,7 @@ import {useState} from "react";
 import {getCurrentUser} from '../../../src/firebaseconfig';
 import { useEffect } from 'react';
 import './Login.css';
-import { Route } from 'workbox-routing';
-import { Redirect } from 'react-router';
+import { Redirect, Route } from "react-router";
 import {useHistory} from "react-router-dom";
 setupIonicReact();
 
@@ -32,6 +31,9 @@ const Login: React.FC = () => {
    async function login(){
       const rest = await loginUser(email , password)
       alert(rest)
+      if(rest){
+        history.push('/home')
+      }
     }
 
     useEffect(() => {

@@ -1,9 +1,13 @@
 import { IonButton, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonMenuButton, IonPage, } from '@ionic/react';
 import {signoutuser} from '../../../src/firebaseconfig';
+import {useHistory} from "react-router-dom";
+
 
 const Logout: React.FC = () => {
+    let history = useHistory();
     async function signout(){
         signoutuser()
+        history.push('/login')
       }
 
     return (

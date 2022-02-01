@@ -29,13 +29,15 @@ export async function registerUser(email: string, password: string) {
     }
 }
 
-export function signoutuser() {
+export  function signoutuser() {
     firebase.auth().signOut().then(function() {
         // Sign-out successful.
         console.log("done right")
+        return true
       }).catch(function(error) {
         // An error happened.
-        console.log(error)
+        console.log("didnt worked")
+        return false
       });
     }
 
