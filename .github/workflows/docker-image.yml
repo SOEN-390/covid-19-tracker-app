@@ -18,8 +18,8 @@ jobs:
     steps:
     - uses: actions/checkout@v2
         
-    - name: Build and run the Docker containers
+    - name: Build and Run the Docker Containers
       run: docker-compose up --build -d
       
-    - name: Run tests
-      run: docker exec -e CI=true covid-19-tracker-app npm run test --coverage
+    - name: Run Tests with Coverage
+      run: docker exec -e CI=true covid-19-tracker-app npm run test -- --coverage
