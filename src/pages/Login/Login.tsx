@@ -33,6 +33,7 @@ const Login: React.FC = () => {
       alert(rest)
       if(rest){
         history.push('/home')
+        
       }
     }
 
@@ -42,7 +43,6 @@ const Login: React.FC = () => {
                 console.log("logged in")
                 // i'm logged in
               // history.push('/home')
-             //  console.log("logged in")
             }
             else{
              console.log("not logged in")
