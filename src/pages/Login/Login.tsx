@@ -15,40 +15,40 @@ import CovidTrackerTransparent from '../../assets/images/CovidTrackerTransparent
 import {loginUser} from '../../../src/firebaseconfig';
 import {useState} from "react";
 import {getCurrentUser} from '../../../src/firebaseconfig';
-import { useEffect } from 'react';
+import {useEffect} from 'react';
 import './Login.css';
-import { Redirect, Route } from "react-router";
+import {Redirect, Route} from "react-router";
 import {useHistory} from "react-router-dom";
+
 setupIonicReact();
 
 const Login: React.FC = () => {
     const [checked] = useState(false);
-    const [email, setEmail] =useState('')
-    const [password, setPassword] =useState('')
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
     let history = useHistory();
-    
 
-   async function login(){
-      const rest = await loginUser(email , password)
-      alert(rest)
-      if(rest){
-        history.push('/home')
-        
-      }
+
+    async function login() {
+        const rest = await loginUser(email, password)
+        alert(rest)
+        if (rest) {
+            history.push('/home')
+
+        }
     }
 
     useEffect(() => {
         getCurrentUser().then(user => {
-            if(user){
+            if (user) {
                 console.log("logged in")
                 // i'm logged in
-              // history.push('/home')
+                // history.push('/home')
+            } else {
+                console.log("not logged in")
             }
-            else{
-             console.log("not logged in")
-            }
-        })
-    })
+        });
+    });
 
     return (
         <IonApp>
@@ -62,23 +62,26 @@ const Login: React.FC = () => {
                 <div className="ion-align-items-center; login-form-center">
                     <IonLabel className="login-text">Email</IonLabel>
                     <IonInput className="login-text-field" placeholder="Enter your Email" type="text"
-                    onIonChange={(e: any)=> setEmail(e.target.value)}/>
+                              onIonChange={(e: any) => setEmail(e.target.value)}/>
 
                     <br/><br/>
                     <IonLabel className="login-text">Password</IonLabel>
                     <IonInput className="login-text-field" placeholder="Enter your password" type="password"
-                    onIonChange={(e: any)=> setPassword(e.target.value)}/>
+                              onIonChange={(e: any) => setPassword(e.target.value)}/>
 
                     <IonItem className='ion-item' lines='none'>
                         <div slot="start">
-                            <IonCheckbox slot='end' className={"custom-checkbox"} checked={checked} />
+                            <IonCheckbox slot='end' className={"custom-checkbox"} checked={checked}/>
                         </div>
                         <IonLabel>Remember me</IonLabel>
                         <IonRouterLink href="#" color="#4D4D4D" className="underline">Forgot Password?</IonRouterLink>
                     </IonItem>
-                    <IonButton onClick={login}  size="large" expand="block" fill="solid" color={"dark-blue"}>LOGIN</IonButton>
+                    <IonButton onClick={login} size="large" expand="block" fill="solid"
+                               color={"dark-blue"}>LOGIN</IonButton>
                     <br/>
-                    <p className={"register-text"}> Do not have an account ? <a href={"/register"} className={"register-text-color"}> Register</a> </p>
+                    <p className={"register-text"}> Do not have an account ? <a href={"/register"}
+                                                                                className={"register-text-color"}> Register</a>
+                    </p>
                 </div>
 
             </IonContent>
