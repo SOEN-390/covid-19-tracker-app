@@ -1,7 +1,7 @@
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
-import {environment} from "./environments/environment";
+import { environment } from '../environments/environment';
 
 firebase.initializeApp(environment.firebaseConfig);
 
@@ -32,11 +32,11 @@ export async function registerUser(email: string, password: string) {
 export function signoutuser() {
     firebase.auth().signOut().then(function () {
         // Sign-out successful.
-        console.log("done right");
+        console.log('done right');
         return true;
     }).catch(function (error) {
         // An error happened.
-        console.log("didnt worked");
+        console.log('didnt worked');
         return false;
     });
 }
