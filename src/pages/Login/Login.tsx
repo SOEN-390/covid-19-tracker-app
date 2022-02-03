@@ -29,10 +29,12 @@ const Login: React.FC = () => {
 
     async function login() {
         const rest = await loginUser(email, password)
-        alert(rest)
         if (rest) {
+            alert("you succesfully logged in")
             history.push('/home')
-
+        }
+        else{
+            alert("something didn't worked please try again")
         }
     }
 

@@ -6,9 +6,10 @@ import { useHistory } from 'react-router-dom';
 const Logout: React.FC = () => {
     let history = useHistory();
 
-    async function signout() {
-        signOutUser()
-        history.push('/login')
+    async function signOut() {
+        signOutUser();
+        alert("you logged out");
+        history.push('/login');
     }
 
     return (
@@ -22,7 +23,7 @@ const Logout: React.FC = () => {
                 </IonCardHeader>
 
                 <IonCardContent className="ion-margin-horizontal">
-                    <IonButton onClick={signout}>Yes</IonButton>
+                    <IonButton onClick={signOut}>Yes</IonButton>
                     <IonButton>No</IonButton>
                 </IonCardContent>
             </IonCard>
