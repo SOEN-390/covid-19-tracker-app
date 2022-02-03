@@ -1,4 +1,4 @@
-import { IonMenuButton, IonPage, IonToolbar } from '@ionic/react';
+import { IonPage, IonToolbar } from '@ionic/react';
 
 import NavBar from '../../components/NavBar';
 
