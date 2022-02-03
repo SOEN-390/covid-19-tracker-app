@@ -1,11 +1,10 @@
 import { IonMenuButton, IonPage } from '@ionic/react';
-import { useParams } from 'react-router';
 
 import SearchBar from '../../components/SearchBar';
 
 const Overview: React.FC = () => {
 
-    const { name } = useParams<{ name: string; }>(); //to get page name
+    // const { name } = useParams<{ name: string; }>(); //to get page name
 
     return (
         <IonPage>

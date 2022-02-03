@@ -23,7 +23,7 @@ const Register: React.FC = () => {
 
     async function register() {
         //validation
-        if (password != cpassword) {
+        if (password !== cpassword) {
             console.log('password don\'t match')
         }
         if (email.trim() === '' || password.trim() === '') {
