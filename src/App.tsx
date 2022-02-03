@@ -24,8 +24,6 @@ import '@ionic/react/css/display.css';
 import './theme/variables.css';
 import AppMenu from "./AppMenu";
 import RegisterNext from "./pages/Register/RegisterNext";
-import { useEffect } from 'react';
-import {getCurrentUser} from '../src/firebaseconfig';
 
 setupIonicReact();
 
@@ -49,7 +47,7 @@ const App: React.FC = () => {
                     <Route path="/home">
                         <AppMenu/>
                     </Route>
-                    
+
                 </IonRouterOutlet>
             </IonReactRouter>
         </IonApp>
