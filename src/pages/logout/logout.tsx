@@ -7,6 +7,7 @@ const Logout: React.FC = () => {
     let history = useHistory();
     async function signout(){
         signoutuser()
+        alert("you logged out")
         history.push('/login')
       }
 

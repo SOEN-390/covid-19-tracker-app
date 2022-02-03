@@ -8,11 +8,17 @@ import {
     setupIonicReact
 } from '@ionic/react';
 import CovidTrackerTransparent from '../../assets/images/CovidTrackerTransparent.png';
-
+import {useHistory} from "react-router-dom";
 import './Register.css';
 setupIonicReact();
 
 const RegisterNext: React.FC = () => {
+    let history = useHistory();
+
+    async function registration() {
+      alert("you successufly register")
+        history.push("/login")
+    }
 
     return (
         <IonApp>
@@ -53,7 +59,7 @@ const RegisterNext: React.FC = () => {
                     <IonInput className="login-text-field" placeholder="Enter your medical card number" type="text"/>
                     <br /><br/>
 
-                    <IonButton size="large" expand="block" fill="solid" color={"dark-blue"} >Register</IonButton>
+                    <IonButton size="large" expand="block" fill="solid" color={"dark-blue"} onClick={registration} >Register</IonButton>
                 </div>
             </IonContent>
 
