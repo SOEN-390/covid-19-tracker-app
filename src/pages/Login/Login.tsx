@@ -9,7 +9,8 @@ import {
     IonItem,
     IonLabel,
     IonRouterLink,
-    setupIonicReact
+    setupIonicReact,
+    useIonToast
 } from '@ionic/react';
 import CovidTrackerTransparent from '../../assets/images/CovidTrackerTransparent.png';
 import { useState } from 'react';
@@ -17,35 +18,35 @@ import { getCurrentUser, loginUser } from '../../providers/firebase.service';
 import { useEffect } from 'react';
 import './Login.css';
 import { useHistory } from 'react-router-dom';
+import { Pages } from '../../providers/pages.enum';
 
 setupIonicReact();
 
 const Login: React.FC = () => {
     const [checked] = useState(false);
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
     let history = useHistory();
-
+    const [present] = useIonToast();
 
     async function login() {
-        const rest = await loginUser(email, password)
+        const rest = await loginUser(email, password);
         if (rest) {
-            alert("you succesfully logged in")
-            history.push('/home')
-        }
-        else{
-            alert("something didn't worked please try again")
+            present('Successfully logged in.', 1500);
+            history.push(Pages.home);
+        } else {
+            present('Something went wrong. Please try again.', 1500);
         }
     }
 
     useEffect(() => {
         getCurrentUser().then(user => {
             if (user) {
-                console.log('logged in')
+                console.log('logged in');
                 // i'm logged in
                 // history.push('/home')
             } else {
-                console.log('not logged in')
+                console.log('not logged in');
             }
         });
     });
@@ -79,7 +80,7 @@ const Login: React.FC = () => {
                     <IonButton onClick={login} size="large" expand="block" fill="solid"
                                color={'dark-blue'}>LOGIN</IonButton>
                     <br/>
-                    <p className={'register-text'}> Do not have an account ? <a href={'/register'}
+                    <p className={'register-text'}> Do not have an account ? <a href={Pages.register}
                                                                                 className={'register-text-color'}> Register</a>
                     </p>
                 </div>

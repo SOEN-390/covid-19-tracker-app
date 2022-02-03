@@ -1,6 +1,6 @@
-import { IonMenuButton, IonPage } from '@ionic/react';
+import { IonMenuButton, IonPage, IonToolbar } from '@ionic/react';
 
-import SearchBar from '../../components/SearchBar';
+import NavBar from '../../components/NavBar';
 
 const Overview: React.FC = () => {
 
@@ -9,8 +9,10 @@ const Overview: React.FC = () => {
     return (
         <IonPage>
 
-            <IonMenuButton></IonMenuButton>
-            <SearchBar />
+            <IonToolbar>
+                <NavBar />
+            </IonToolbar>
+
 
         </IonPage>
     );

@@ -1,7 +1,6 @@
-import { IonMenuButton, IonPage } from '@ionic/react';
+import { IonPage } from '@ionic/react';
 
-import SearchBar from '../../components/SearchBar';
-import '../../components/Symptom';
+import NavBar from '../../components/NavBar';
 import Symptom from '../../components/Symptom';
 
 const SymptomsForm: React.FC = () => {
@@ -11,8 +10,7 @@ const SymptomsForm: React.FC = () => {
     return (
         <IonPage>
 
-            <IonMenuButton/>
-            <SearchBar />
+            <NavBar />
             <Symptom />
 
         </IonPage>

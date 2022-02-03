@@ -1,5 +1,5 @@
 import { IonButton, IonCardHeader, IonCheckbox, IonCol, IonContent, IonGrid, IonInput, IonLabel, IonRow } from "@ionic/react";
-import './Symptom.css'
+import './Symptom.css';
 function Symptom() {
     return (
         <IonContent>

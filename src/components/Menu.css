@@ -13,6 +13,10 @@ ion-menu.md ion-list {
   padding: 20px 0;
 }
 
+span.button-inner {
+  justify-content: left;
+}
+
 ion-menu.md ion-note {
   margin-bottom: 30px;
 }
@@ -110,5 +114,5 @@ ion-note {
 
 ion-item.selected {
   --color: var(--ion-color-primary);
-} 
+}
 

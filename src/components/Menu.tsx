@@ -26,6 +26,7 @@ import {
     logOutOutline
 } from 'ionicons/icons';
 import './Menu.css';
+import { Pages } from '../providers/pages.enum';
 
 interface AppPage {
     url: string;
@@ -37,19 +38,19 @@ interface AppPage {
 const appPages: AppPage[] = [
     {
         title: 'Overview',
-        url: '/home/overview',
+        url: Pages.overview,
         iosIcon: appsOutline,
         mdIcon: appsOutline
     },
     {
         title: 'Appointments',
-        url: '/home/appointments',
+        url: Pages.appointments,
         iosIcon: calendarOutline,
         mdIcon: calendarOutline
     },
     {
         title: 'Symptoms form',
-        url: '/home/symptoms',
+        url: Pages.symptoms,
         iosIcon: heartOutline,
         mdIcon: heartSharp
     },
@@ -73,7 +74,7 @@ const appPages: AppPage[] = [
     },
     {
         title: 'Logout',
-        url: '/home/logout',
+        url: Pages.logout,
         iosIcon: logOutOutline,
         mdIcon: logOutOutline
     }
@@ -93,6 +94,8 @@ const Menu: React.FC = () => {
                         <IonImg src={logo}/>
                     </IonAvatar>
 
+                    <h5>Beshoy Soliman</h5>
+                    <p>Doctor</p>
 
                     <IonList id="inbox-list">
                     </IonList>

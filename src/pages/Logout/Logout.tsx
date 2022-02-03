@@ -1,15 +1,26 @@
-import { IonButton, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonMenuButton, IonPage, } from '@ionic/react';
+import {
+    IonButton,
+    IonCard,
+    IonCardContent,
+    IonCardHeader,
+    IonCardTitle,
+    IonMenuButton,
+    IonPage,
+    useIonToast,
+} from '@ionic/react';
 import { signOutUser } from '../../providers/firebase.service';
 import { useHistory } from 'react-router-dom';
+import { Pages } from '../../providers/pages.enum';
 
 
 const Logout: React.FC = () => {
     let history = useHistory();
+    const [present] = useIonToast();
 
     async function signOut() {
         signOutUser();
-        alert("you logged out");
-        history.push('/login');
+        present('Logged out.', 1500);
+        history.push(Pages.login);
     }
 
     return (

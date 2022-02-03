@@ -1,6 +1,6 @@
 import { IonMenuButton, IonPage } from '@ionic/react';
 
-import SearchBar from '../../components/SearchBar';
+import NavBar from '../../components/NavBar';
 
 const Appointments: React.FC = () => {
 
@@ -9,9 +9,7 @@ const Appointments: React.FC = () => {
     return (
         <IonPage>
 
-            <IonMenuButton />
-
-            <SearchBar />
+            <NavBar />
 
         </IonPage>
     );

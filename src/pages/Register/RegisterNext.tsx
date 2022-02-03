@@ -1,23 +1,28 @@
 import {
     IonApp,
     IonButton,
-    IonContent, IonHeader,
+    IonContent,
+    IonHeader,
     IonImg,
     IonInput,
     IonLabel,
-    setupIonicReact
+    setupIonicReact,
+    useIonToast
 } from '@ionic/react';
 import CovidTrackerTransparent from '../../assets/images/CovidTrackerTransparent.png';
-import {useHistory} from "react-router-dom";
+import { useHistory } from 'react-router-dom';
 import './Register.css';
+import { Pages } from '../../providers/pages.enum';
+
 setupIonicReact();
 
 const RegisterNext: React.FC = () => {
     let history = useHistory();
+    const [present] = useIonToast();
 
-    async function registration() {
-      alert("you successufly register")
-        history.push("/login")
+    function registration() {
+        present('Successfully registered.');
+        history.push(Pages.login);
     }
 
     return (
@@ -33,33 +38,34 @@ const RegisterNext: React.FC = () => {
                 <div className="ion-align-items-center; login-form-center">
                     <IonLabel className="login-text">Protect Yourself</IonLabel>
 
-                    <br /><br/>
+                    <br/><br/>
 
                     <IonLabel className="login-text">First Name </IonLabel>
                     <IonInput className="login-text-field" placeholder="Enter your First Name" type="text"/>
 
-                    <br /><br/>
+                    <br/><br/>
 
                     <IonLabel className="login-text">Last Name</IonLabel>
                     <IonInput className="login-text-field" placeholder="Enter your Last Name" type="text"/>
 
-                    <br /><br/>
+                    <br/><br/>
 
                     <IonLabel className="login-text">Test Results</IonLabel>
                     <IonInput className="login-text-field" placeholder="positive or negative" type="text"/>
 
-                    <br /><br/>
+                    <br/><br/>
 
                     <IonLabel className="login-text">Your Address</IonLabel>
                     <IonInput className="login-text-field" placeholder="Enter your Address" type="text"/>
 
-                    <br /><br/>
+                    <br/><br/>
 
                     <IonLabel className="login-text">Medical card number</IonLabel>
                     <IonInput className="login-text-field" placeholder="Enter your medical card number" type="text"/>
-                    <br /><br/>
+                    <br/><br/>
 
-                    <IonButton size="large" expand="block" fill="solid" color={"dark-blue"} onClick={registration} >Register</IonButton>
+                    <IonButton size="large" expand="block" fill="solid" color={'dark-blue'}
+                               onClick={registration}>Register</IonButton>
                 </div>
             </IonContent>
 
