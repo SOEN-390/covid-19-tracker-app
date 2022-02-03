@@ -1,7 +1,6 @@
 import {IonCol, IonFooter, IonIcon, IonRow, IonText} from "@ionic/react";
 import { call } from "ionicons/icons";
 
-import './SearchBar.css'
 import './Emergency.css';
 
 function Emergency() {

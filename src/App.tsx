@@ -24,8 +24,7 @@ import '@ionic/react/css/display.css';
 import './theme/variables.css';
 import AppMenu from "./AppMenu";
 import RegisterNext from "./pages/Register/RegisterNext";
-import { useEffect } from 'react';
-import {getCurrentUser} from '../src/firebaseconfig';
+import { Pages } from './providers/pages.enum';
 
 setupIonicReact();
 
@@ -35,21 +34,21 @@ const App: React.FC = () => {
             <IonReactRouter>
                 <IonRouterOutlet id="main">
                     <Route path="" exact={true}>
-                        <Redirect to="/login"/>
+                        <Redirect to={Pages.login}/>
                     </Route>
-                    <Route path="/login" exact={true}>
+                    <Route path={Pages.login} exact={true}>
                         <Login/>
                     </Route>
-                    <Route path="/register" exact={true}>
+                    <Route path={Pages.register} exact={true}>
                         <Register/>
                     </Route>
                     <Route path="/register/2" exact={true}>
                         <RegisterNext/>
                     </Route>
-                    <Route path="/home">
+                    <Route path={Pages.home}>
                         <AppMenu/>
                     </Route>
-                    
+
                 </IonRouterOutlet>
             </IonReactRouter>
         </IonApp>
