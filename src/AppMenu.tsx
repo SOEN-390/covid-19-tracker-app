@@ -3,7 +3,7 @@ import {Redirect, Route} from 'react-router-dom';
 import Menu from './components/Menu';
 import Overview from './pages/Overview/Overview';
 import Appointments from './pages/Appointments/Appointments';
-import Logout from './pages/logout/logout'
+import Logout from './pages/Logout/Logout'
 
 
 /* Core CSS required for Ionic components to work properly */
