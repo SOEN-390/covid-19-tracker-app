@@ -83,7 +83,7 @@ const appPages: AppPage[] = [
 
 const Menu: React.FC = () => {
     const location = useLocation();
-   
+    const currentUser=GetCurrentUserObject();
     // const labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
 
     return (
@@ -93,7 +93,7 @@ const Menu: React.FC = () => {
                     <IonAvatar>
                         <IonImg src={logo}/>
                     </IonAvatar>
-                    <h5>Welcome {GetCurrentUserObject()?.email}</h5>
+                    <h5>Welcome {currentUser?.email}</h5>
                     <p>Doctor</p>
                     <IonList id="inbox-list">
                     </IonList>
