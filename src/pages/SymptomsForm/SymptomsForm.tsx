@@ -1,19 +1,16 @@
-import { IonMenuButton, IonPage } from '@ionic/react';
-import { useParams } from 'react-router';
+import { IonPage } from '@ionic/react';
 
-import SearchBar from '../../components/SearchBar';
-import '../../components/Symptom';
+import NavBar from '../../components/NavBar';
 import Symptom from '../../components/Symptom';
 
 const SymptomsForm: React.FC = () => {
 
-    const { name } = useParams<{ name: string; }>(); //to get page name
+    // const { name } = useParams<{ name: string; }>(); //to get page name
 
     return (
         <IonPage>
 
-            <IonMenuButton></IonMenuButton>
-            <SearchBar />
+            <NavBar />
             <Symptom />
 
         </IonPage>

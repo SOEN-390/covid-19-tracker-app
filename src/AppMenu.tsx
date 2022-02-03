@@ -3,6 +3,9 @@ import {Redirect, Route} from 'react-router-dom';
 import Menu from './components/Menu';
 import Overview from './pages/Overview/Overview';
 import Appointments from './pages/Appointments/Appointments';
+import Logout from './pages/Logout/Logout';
+import SymptomsForm from './pages/SymptomsForm/SymptomsForm';
+import { Pages } from './providers/pages.enum';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -22,7 +25,7 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
-import SymptomsForm from './pages/SymptomsForm/SymptomsForm';
+
 
 setupIonicReact();
 
@@ -31,18 +34,21 @@ const AppMenu: React.FC = () => {
         <IonSplitPane contentId="home">
             <Menu/>
             <IonRouterOutlet id="home">
-                <Route path="/home" exact={true}>
-                    <Redirect to="/home/overview"/>
+                <Route path={Pages.home} exact={true}>
+                    <Redirect to={Pages.overview}/>
                 </Route>
 
-                <Route path="/home/overview">
+                <Route path={Pages.overview}>
                     <Overview/>
                 </Route>
-                <Route path="/home/appointments">
+                <Route path={Pages.appointments}>
                     <Appointments/>
                 </Route>
-                <Route path="/home/symptoms">
+                <Route path={Pages.symptoms}>
                     <SymptomsForm/>
+                </Route>
+                <Route path={Pages.logout}>
+                    <Logout />
                 </Route>
 
             </IonRouterOutlet>

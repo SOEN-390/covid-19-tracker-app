@@ -3,7 +3,7 @@ import { useParams } from 'react-router';
 import './Page.css';
 import logo from '../resources/icon.png'
 
-import SearchBar from '../../components/SearchBar';
+import NavBar from '../../components/NavBar';
 
 const Page: React.FC = () => {
 
@@ -17,7 +17,7 @@ const Page: React.FC = () => {
                 <IonGrid >
                     <IonRow className="background">
                         <IonCol sizeXl='6'>
-                            <SearchBar />
+                            <NavBar />
                         </IonCol>
 
 
