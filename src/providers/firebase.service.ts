@@ -2,6 +2,8 @@ import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
 import { environment } from '../environments/environment';
+import  { useState } from "react"
+import { type, userInfo } from 'os';
 
 firebase.initializeApp(environment.firebaseConfig);
 
@@ -54,3 +56,16 @@ export function getCurrentUser() {
         console.log('Error happened at getCurrentUser(): firebase');
     });
 }
+
+export function GetCurrentUserObject() {
+    const [currentUser, setCurrentUser] = useState<firebase.User | null>()
+    firebase.auth().onAuthStateChanged(user => {
+            console.log(user)
+            if(user)
+            setCurrentUser(user)
+        })
+        console.log(currentUser)
+        return currentUser;
+        console.log('Error happened at getCurrentUser(): firebase');
+    }
+

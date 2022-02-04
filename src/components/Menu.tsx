@@ -27,6 +27,7 @@ import {
 } from 'ionicons/icons';
 import './Menu.css';
 import { Pages } from '../providers/pages.enum';
+import {GetCurrentUserObject} from '../providers/firebase.service'
 
 interface AppPage {
     url: string;
@@ -34,7 +35,6 @@ interface AppPage {
     mdIcon: string;
     title: string;
 }
-
 const appPages: AppPage[] = [
     {
         title: 'Overview',
@@ -83,7 +83,7 @@ const appPages: AppPage[] = [
 
 const Menu: React.FC = () => {
     const location = useLocation();
-
+    const currentUser=GetCurrentUserObject();
     // const labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
 
     return (
@@ -93,10 +93,8 @@ const Menu: React.FC = () => {
                     <IonAvatar>
                         <IonImg src={logo}/>
                     </IonAvatar>
-
-                    <h5>Beshoy Soliman</h5>
+                    <h5>Welcome {currentUser?.email}</h5>
                     <p>Doctor</p>
-
                     <IonList id="inbox-list">
                     </IonList>
                     {appPages.map((appPage, index) => {
