@@ -13,6 +13,7 @@ import CovidTrackerTransparent from '../../assets/images/CovidTrackerTransparent
 import { useHistory } from 'react-router-dom';
 import './Register.css';
 import { Pages } from '../../providers/pages.enum';
+import { useState } from 'react';
 
 setupIonicReact();
 
@@ -21,6 +22,9 @@ const RegisterNext: React.FC = () => {
         POSITIVE  = "positive",
         NEGATIVE = "negative"
     }
+    const [fname, setfName] = useState('')
+    const [lName, setlastName] = useState('')
+    const [address, setaddress] = useState('')
 
     interface IUser  {
         id: string, 
@@ -36,8 +40,12 @@ const RegisterNext: React.FC = () => {
 
     let history = useHistory();
     const [present] = useIonToast();
-
+    
+    
     function registration() {
+        console.log("here is the information",fname)
+      //  user.firstName = fname
+      //  console.log("attribuer ", user.firstName)
 
         present('Successfully registered.');
         history.push(Pages.login);
@@ -61,7 +69,7 @@ const RegisterNext: React.FC = () => {
 
                     <IonLabel className="login-text">First Name </IonLabel>
                     <IonInput className="login-text-field" placeholder="Enter your First Name" type="text"
-                    />
+                      onIonChange={(e: any) => setfName(e.target.value)} />
 
                     <br/><br/>
 
