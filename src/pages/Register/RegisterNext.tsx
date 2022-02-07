@@ -14,6 +14,7 @@ import { useHistory } from 'react-router-dom';
 import './Register.css';
 import { Pages } from '../../providers/pages.enum';
 import { useState } from 'react';
+import HttpService from '../../providers/http.service'
 
 setupIonicReact();
 
@@ -27,7 +28,7 @@ const RegisterNext: React.FC = () => {
     const [address, setaddress] = useState('')
 
     interface IUser  {
-        id: string, 
+        id: string,
         firstName: string,
         lastName: string,
         testResults: testResults
@@ -35,22 +36,36 @@ const RegisterNext: React.FC = () => {
         email: string
         phoneNumber: string
     }
-    let user : IUser 
 
 
     let history = useHistory();
     const [present] = useIonToast();
-    
-    
+
+
     function registration() {
-        console.log("here is the information",fname)
-      //  user.firstName = fname
-      //  console.log("attribuer ", user.firstName)
+        let user: IUser = {
+            id: '1',
+            firstName: fname,
+            lastName: 'hello',
+            testResults: testResults.POSITIVE,
+            address: '123 srt',
+            email: 'sevag@mail.com',
+            phoneNumber: '123'
+        }
+
+        console.log("FIRST NAME:", user.firstName);
+
+        HttpService.post('/patients/create', {
+            user: user
+        }).then((success) => {
+
+        });
+
 
         present('Successfully registered.');
         history.push(Pages.login);
     }
-   
+
 
     return (
         <IonApp>
@@ -91,7 +106,7 @@ const RegisterNext: React.FC = () => {
                     <IonLabel className="login-text">Medical card number</IonLabel>
                     <IonInput className="login-text-field" placeholder="Enter your medical card number" type="text"/>
                     <br/><br/>
-                    
+
 
                     <IonButton size="large" expand="block" fill="solid" color={'dark-blue'}
                                onClick={registration}>Register</IonButton>
