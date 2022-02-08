@@ -26,7 +26,10 @@ const RegisterNext: React.FC = () => {
     const [fname, setfName] = useState('')
     const [lName, setlastName] = useState('')
     const [address, setaddress] = useState('')
+    const [medecialNumber, setmedicalnumber] = useState('')
+    const [phoneNumber, setphonenumber] = useState('')
 
+    
     interface IUser  {
         id: string,
         firstName: string,
@@ -44,16 +47,16 @@ const RegisterNext: React.FC = () => {
 
     function registration() {
         let user: IUser = {
-            id: '1',
+            id: medecialNumber,
             firstName: fname,
-            lastName: 'hello',
+            lastName: lName,
             testResults: testResults.POSITIVE,
-            address: '123 srt',
+            address: address,
             email: 'sevag@mail.com',
-            phoneNumber: '123'
+            phoneNumber: phoneNumber
         }
 
-        console.log("FIRST NAME:", user.firstName);
+        console.log("FIRST NAME:", user.firstName, user.address);
 
         HttpService.post('/patients/create', {
             user: user
@@ -89,7 +92,8 @@ const RegisterNext: React.FC = () => {
                     <br/><br/>
 
                     <IonLabel className="login-text">Last Name</IonLabel>
-                    <IonInput className="login-text-field" placeholder="Enter your Last Name" type="text"/>
+                    <IonInput className="login-text-field" placeholder="Enter your Last Name" type="text"
+                    onIonChange={(e: any) => setlastName(e.target.value)}/>
 
                     <br/><br/>
 
@@ -99,12 +103,19 @@ const RegisterNext: React.FC = () => {
                     <br/><br/>
 
                     <IonLabel className="login-text">Your Address</IonLabel>
-                    <IonInput className="login-text-field" placeholder="Enter your Address" type="text" />
+                    <IonInput className="login-text-field" placeholder="Enter your Address" type="text" 
+                    onIonChange={(e: any) => setaddress(e.target.value)}/>
 
                     <br/><br/>
 
                     <IonLabel className="login-text">Medical card number</IonLabel>
-                    <IonInput className="login-text-field" placeholder="Enter your medical card number" type="text"/>
+                    <IonInput className="login-text-field" placeholder="Enter your medical card number" type="text"
+                    onIonChange={(e: any) => setmedicalnumber(e.target.value)}/>
+                    <br/><br/>
+
+                    <IonLabel className="login-text">Phone number</IonLabel>
+                    <IonInput className="login-text-field" placeholder="Enter your phone number" type="text"
+                    onIonChange={(e: any) => setphonenumber(e.target.value)}/>
                     <br/><br/>
 
 
