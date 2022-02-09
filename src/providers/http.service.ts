@@ -58,10 +58,7 @@ const HttpService = {
     getHeader: () => {
         // Will be modified later to send the authToken from firebase
         return new Headers();
-        // {
-        //     'Content-Type': 'application/json',
-        //     Accept: 'application/json'
-        // }
+
     }
 
 };
