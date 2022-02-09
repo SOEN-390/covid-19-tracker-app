@@ -26,6 +26,7 @@ import AppMenu from "./AppMenu";
 import RegisterNext from "./pages/Register/RegisterNext";
 
 import { Pages } from './providers/pages.enum';
+import Immigrationdashboard from './pages/ImmigrationOfficer/Immigrationdashboard';
 
 setupIonicReact();
 

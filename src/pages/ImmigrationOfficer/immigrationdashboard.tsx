@@ -2,7 +2,7 @@ import { IonPage, IonToolbar } from '@ionic/react';
 
 import NavBar from '../../components/NavBar';
 
-const immigrationdashboard: React.FC = () => {
+const Immigrationdashboard: React.FC = () => {
 
     // const { name } = useParams<{ name: string; }>(); //to get page name
 
@@ -12,10 +12,11 @@ const immigrationdashboard: React.FC = () => {
             <IonToolbar>
                 <NavBar />
             </IonToolbar>
+            
 
 
         </IonPage>
     );
 };
 
-export default immigrationdashboard;
+export default Immigrationdashboard;
