@@ -25,6 +25,7 @@ import './theme/variables.css';
 import AppMenu from "./AppMenu";
 import RegisterNext from "./pages/Register/RegisterNext";
 import { Pages } from './providers/pages.enum';
+import HealthOfficialView from './pages/HealthOffical/HealthOfficialView';
 
 setupIonicReact();
 
@@ -47,6 +48,10 @@ const App: React.FC = () => {
                     </Route>
                     <Route path={Pages.home}>
                         <AppMenu/>
+                    </Route>
+                    <Route path={Pages.ho_ConfirmedPatient}>
+
+                        <HealthOfficialView/>
                     </Route>
 
                 </IonRouterOutlet>
