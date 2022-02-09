@@ -88,8 +88,13 @@ const RegisterNext: React.FC = () => {
     }
 
     async function saveUser(user: IUser): Promise<boolean> {
-        const data: any = await HttpService.post('patients/create', user);
-        console.log('Result: ', data.error);
+        HttpService.post('patients/create', {
+            medicalId: user.medicalId
+        }).then((response) => {
+            if (response.ok) {
+                return true;
+            }
+        });
         return false;
     }
 
