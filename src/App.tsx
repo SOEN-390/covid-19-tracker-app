@@ -25,6 +25,7 @@ import './theme/variables.css';
 import AppMenu from "./AppMenu";
 import RegisterNext from "./pages/Register/RegisterNext";
 import { Pages } from './providers/pages.enum';
+import NonConfirmedpatients from './pages/HealthOfficial/NonConfirmedpatients';
 
 setupIonicReact();
 
@@ -47,6 +48,9 @@ const App: React.FC = () => {
                     </Route>
                     <Route path={Pages.home}>
                         <AppMenu/>
+                    </Route>
+                    <Route path={Pages.ho_nonConfirmed}>
+                        <NonConfirmedpatients/>
                     </Route>
 
                 </IonRouterOutlet>

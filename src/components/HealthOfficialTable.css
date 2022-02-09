@@ -1,0 +1,74 @@
+.tab {
+
+
+  margin: 10px;
+
+}
+#Container{
+  border-radius: 15px;
+  border: 2px solid #E7E7E7;
+  padding: 20px;
+}
+
+#col{
+  color :#343434;
+  font-family: 'Poppins';
+  font-weight: bold;
+  font-size: 9px;
+  margin: auto;
+  text-align: center;
+}
+#tableHead{
+  text-align: center;
+}
+#tableRow{
+  border-radius: 10px;
+  border: 2px solid #E7E7E7;
+  margin-top: 20px;
+  height:60px ;
+}
+#confirmed{
+  color: #2C4D62;
+  font-weight: bold;
+  font-family: 'Poppins';
+
+}
+#nonConfirmed{
+  color: #2C4D62;
+  font-weight: bold;
+  text-decoration: underline;
+  font-family: 'Poppins';
+
+}
+#status{
+  height: 32px;
+  width: 88px;
+  border-radius: 15px;
+  background-color:#F6FFED ;
+  color: #52C41A;
+  margin: auto;
+  vertical-align: middle;
+  line-height: 32px;
+}
+
+#lastUpdate{
+  color :#F80D38;
+  font-family: 'Poppins';
+  font-weight: bold;
+  font-size: 10px;
+  margin: auto;
+  text-align: center;
+}
+#action{
+  height: 32px;
+  width: 100px;
+  border-radius: 15px;
+  border: 2px solid #2C4D62;
+  margin: auto;
+  vertical-align: middle;
+  line-height: 32px;
+}
+ion-avatar{
+  height: 20px;
+  width: 20px;
+}
