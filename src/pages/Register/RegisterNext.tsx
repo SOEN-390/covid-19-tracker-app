@@ -64,6 +64,9 @@ const RegisterNext: React.FC = () => {
                     history.push(Pages.login);
                 });
             }
+            else {
+                present('Something went wrong.');
+            }
         });
     }
 
@@ -88,14 +91,8 @@ const RegisterNext: React.FC = () => {
     }
 
     async function saveUser(user: IUser): Promise<boolean> {
-        HttpService.post('patients/create', {
-            medicalId: user.medicalId
-        }).then((response) => {
-            if (response.ok) {
-                return true;
-            }
-        });
-        return false;
+        const response = await HttpService.post('patients/create', user);
+        return response.ok;
     }
 
     return (
