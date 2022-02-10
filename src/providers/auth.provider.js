@@ -5,7 +5,7 @@ import firebase from 'firebase/compat/app';
 export const AuthContext = React.createContext();
 
 export function useAuth() {
-    return useContext(AuthContext)
+    return useContext(AuthContext);
 }
 
 export function AuthProvider({ children }) {
