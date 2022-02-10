@@ -6,7 +6,7 @@ const HttpService = {
     post: (path: string, body?: any) => {
         const request = new Request(environment.apiUrl + environment.apiPrefix + '/' + path, {
             method: 'POST',
-            body: JSON.stringify(body),
+            body: new Blob([JSON.stringify(body, null, 2)], {type : 'application/json'}),
             headers: HttpService.getHeader()
         });
         return fetch(request).then((response) => {
@@ -19,7 +19,7 @@ const HttpService = {
     put: (path: string, body?: any, params?: { [param: string]: string | string[] }) => {
         const request = new Request(environment.apiUrl + environment.apiPrefix + '/' + path, {
             method: 'POST',
-            body: JSON.stringify(body),
+            body: new Blob([JSON.stringify(body, null, 2)], {type : 'application/json'}),
             headers: HttpService.getHeader()
         });
         return fetch(request).then((response) => {
@@ -32,7 +32,7 @@ const HttpService = {
     get: async (path: string, body?: any) => {
         const request = new Request(environment.apiUrl + environment.apiPrefix + '/' + path, {
             method: 'GET',
-            body: JSON.stringify(body),
+            body: new Blob([JSON.stringify(body, null, 2)], {type : 'application/json'}),
             headers: HttpService.getHeader()
         });
         return fetch(request).then((response) => {
@@ -45,7 +45,7 @@ const HttpService = {
     delete: (path: string, body?: any) => {
         const request = new Request(environment.apiUrl + environment.apiPrefix + '/' + path, {
             method: 'DELETE',
-            body: JSON.stringify(body),
+            body: new Blob([JSON.stringify(body, null, 2)], {type : 'application/json'}),
             headers: HttpService.getHeader()
         });
         return fetch(request).then((response) => {
@@ -58,10 +58,7 @@ const HttpService = {
     getHeader: () => {
         // Will be modified later to send the authToken from firebase
         return new Headers();
-        // {
-        //     'Content-Type': 'application/json',
-        //     Accept: 'application/json'
-        // }
+
     }
 
 };
