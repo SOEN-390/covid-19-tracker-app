@@ -1,4 +1,5 @@
 import {environment} from "../environments/environment";
+import { useAuth } from './auth.provider';
 
 const HttpService = {
 
@@ -56,8 +57,11 @@ const HttpService = {
     },
 
     getHeader: () => {
+        const { idToken } = useAuth();
         // Will be modified later to send the authToken from firebase
-        return new Headers();
+        return new Headers({
+            Authorization: 'Bearer ' + idToken
+        });
         // {
         //     'Content-Type': 'application/json',
         //     Accept: 'application/json'
