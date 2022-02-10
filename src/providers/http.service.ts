@@ -17,12 +17,6 @@ const HttpService = {
         });
     },
 
-    
-
-
-
-
-
     put: (path: string, body?: any, params?: { [param: string]: string | string[] }) => {
         const request = new Request(environment.apiUrl + environment.apiPrefix + '/' + path, {
             method: 'POST',
