@@ -16,6 +16,7 @@ import { Pages } from '../../providers/pages.enum';
 import { useState } from 'react';
 import HttpService from '../../providers/http.service'
 import { testResult } from '../../enum/testResult';
+import { IUser } from '../../interfaces/IUser';
 
 setupIonicReact();
 
@@ -26,17 +27,6 @@ const RegisterNext: React.FC = () => {
     const [address, setAddress] = useState('')
     const [medicalNumber, setMedicalNumber] = useState('')
     const [phoneNumber, setPhoneNumber] = useState('')
-
-
-    interface IUser {
-        medicalId: string,
-        firstName: string,
-        lastName: string,
-        testResults: testResult
-        address: string
-        email: string
-        phoneNumber: string
-    }
 
     const history = useHistory();
     const [present] = useIonToast();
