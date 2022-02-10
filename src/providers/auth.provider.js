@@ -8,10 +8,11 @@ export function useAuth() {
     return useContext(AuthContext);
 }
 
+export let idToken = '';
+
 export function AuthProvider({ children }) {
     const [currentUser, setCurrentUser] = useState(firebase.User);
     const [loading, setLoading] = useState(true);
-    const [idToken, setIdToken] = useState('');
 
     function signup(email, password) {
         return auth.createUserWithEmailAndPassword(email, password);
@@ -39,8 +40,7 @@ export function AuthProvider({ children }) {
 
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged(async (user) => {
-            const idToken = await user.getIdToken();
-            setIdToken(idToken);
+            idToken = await user.getIdToken();
             setCurrentUser(user);
             setLoading(false);
         });
