@@ -1,6 +1,6 @@
 import {IonApp, IonRouterOutlet, setupIonicReact} from '@ionic/react';
 import {IonReactRouter} from '@ionic/react-router';
-import {Redirect, Route} from 'react-router-dom';
+import { Redirect, Route, Switch } from 'react-router-dom';
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 
@@ -26,6 +26,9 @@ import AppMenu from "./AppMenu";
 import RegisterNext from "./pages/Register/RegisterNext";
 import { Pages } from './providers/pages.enum';
 
+import { AuthProvider } from './providers/auth.provider';
+import PrivateRoute from './components/PrivateRoute/PrivateRoute';
+
 setupIonicReact();
 
 const App: React.FC = () => {
@@ -33,22 +36,21 @@ const App: React.FC = () => {
         <IonApp>
             <IonReactRouter>
                 <IonRouterOutlet id="main">
-                    <Route path="" exact={true}>
-                        <Redirect to={Pages.login}/>
-                    </Route>
-                    <Route path={Pages.login} exact={true}>
-                        <Login/>
-                    </Route>
-                    <Route path={Pages.register} exact={true}>
-                        <Register/>
-                    </Route>
-                    <Route path="/register/2" exact={true}>
-                        <RegisterNext/>
-                    </Route>
-                    <Route path={Pages.home}>
-                        <AppMenu/>
-                    </Route>
-
+                    <AuthProvider>
+                        <Route path="" exact={true}>
+                            <Redirect to={Pages.login}/>
+                        </Route>
+                        <Route path={Pages.login} exact={true}>
+                            <Login/>
+                        </Route>
+                        <Route path={Pages.register} exact={true}>
+                            <Register/>
+                        </Route>
+                        <Route path="/register/2" exact={true}>
+                            <RegisterNext/>
+                        </Route>
+                        <PrivateRoute path={Pages.home} component={AppMenu} />
+                    </AuthProvider>
                 </IonRouterOutlet>
             </IonReactRouter>
         </IonApp>
