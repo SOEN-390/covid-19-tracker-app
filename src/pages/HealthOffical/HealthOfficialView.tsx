@@ -10,7 +10,6 @@ const HealthOfficialView: React.FC = () => {
         <IonToolbar>
         <NavBar/>
         <HealthOfficialTable/>
-
         </IonToolbar>
 
         </IonPage>
