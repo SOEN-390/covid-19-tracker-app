@@ -11,6 +11,7 @@ export function useAuth() {
 export function AuthProvider({ children }) {
     const [currentUser, setCurrentUser] = useState(firebase.User);
     const [loading, setLoading] = useState(true);
+    const [idToken, setIdToken] = useState('');
 
     function signup(email, password) {
         return auth.createUserWithEmailAndPassword(email, password);
@@ -37,7 +38,9 @@ export function AuthProvider({ children }) {
     }
 
     useEffect(() => {
-        const unsubscribe = auth.onAuthStateChanged((user) => {
+        const unsubscribe = auth.onAuthStateChanged(async (user) => {
+            const idToken = await user.getIdToken();
+            setIdToken(idToken);
             setCurrentUser(user);
             setLoading(false);
         });
