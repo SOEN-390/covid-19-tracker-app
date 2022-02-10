@@ -46,7 +46,7 @@ const RegisterNext: React.FC = () => {
             firstName: firstName,
             lastName: lastName,
             // TODO - drop down for test result
-            testResults: testResult.POSITIVE,
+            testResult: testResult.POSITIVE,
             address: address,
             email: auth.currentUser?.email,
             phoneNumber: phoneNumber

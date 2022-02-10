@@ -4,7 +4,7 @@ export interface IUser {
     medicalId: string;
     firstName: string;
     lastName: string;
-    testResults: testResult;
+    testResult: testResult;
     address: string;
     email: string | null | undefined;
     phoneNumber: string;
