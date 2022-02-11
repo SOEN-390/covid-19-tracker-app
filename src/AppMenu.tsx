@@ -25,6 +25,7 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
+import NonConfirmedpatients from './pages/HealthOfficial/NonConfirmedpatients';
 
 
 setupIonicReact();
@@ -41,6 +42,7 @@ const AppMenu: React.FC = () => {
                 <Route path={Pages.overview}>
                     <Overview/>
                 </Route>
+
                 <Route path={Pages.appointments}>
                     <Appointments/>
                 </Route>
@@ -50,7 +52,6 @@ const AppMenu: React.FC = () => {
                 <Route path={Pages.logout}>
                     <Logout />
                 </Route>
-
             </IonRouterOutlet>
         </IonSplitPane>
     );

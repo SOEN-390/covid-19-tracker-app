@@ -7,9 +7,11 @@ import {
     IonMenu,
     IonMenuToggle,
     IonAvatar,
-    IonImg
+    IonImg, IonTitle,
+    IonItemDivider
 } from '@ionic/react';
 import logo from '../resources/icon.png'
+import appLogo from '../assets/images/CovidTrackerTransparent1.png'
 import Emergency from './Emergency';
 import { useLocation } from 'react-router-dom';
 import {
@@ -87,16 +89,20 @@ const Menu: React.FC = () => {
     // const labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
 
     return (
-        <IonMenu contentId="home" type="push">
-            <IonContent>
+        <IonMenu contentId="home" type="push" id="sideMenu">
+            <IonImg src={appLogo}/>
+            <IonContent >
+
                 <IonList id="inbox-list">
-                    <IonAvatar>
-                        <IonImg src={logo}/>
-                    </IonAvatar>
-                    <h5>Welcome {currentUser?.email}</h5>
-                    <p>Doctor</p>
-                    <IonList id="inbox-list">
-                    </IonList>
+                    {/*<IonAvatar>*/}
+                    {/*    <IonImg src={logo}/>*/}
+                    {/*</IonAvatar>*/}
+
+                    <IonTitle>Welcome {currentUser?.email}</IonTitle>
+                    {/*<IonTitle>Doctor</IonTitle>*/}
+                    <IonItemDivider/>
+                    {/*<IonList id="inbox-list">*/}
+                    {/*</IonList>*/}
                     {appPages.map((appPage, index) => {
                         return (
                             <IonMenuToggle key={index} autoHide={false}>

@@ -1,5 +1,6 @@
 ion-menu ion-content {
-  --background: var(--ion-item-background, var(--ion-background-color, #fff));
+  --background: var(--ion-item-background, var(--ion-background-color, #F7F7F7));
+  /*--background: #F7F7F7;*/
 }
 
 ion-menu.md ion-content {
@@ -7,6 +8,7 @@ ion-menu.md ion-content {
   --padding-end: 8px;
   --padding-top: 20px;
   --padding-bottom: 20px;
+  --background: #F7F7F7;
 }
 
 ion-menu.md ion-list {
@@ -50,14 +52,15 @@ ion-menu.md ion-item {
 
 ion-menu.md ion-item.selected {
   --background: rgba(var(--ion-color-primary-rgb), 0.14);
+  --background: #DFE0E2;
 }
 
 ion-menu.md ion-item.selected ion-icon {
-  color: var(--ion-color-primary);
+  /*color: var(--ion-color-primary);*/
 }
 
 ion-menu.md ion-item ion-icon {
-  color: #616e7e;
+  color: #2C4D62;
 }
 
 ion-menu.md ion-item ion-label {
@@ -116,3 +119,40 @@ ion-item.selected {
   --color: var(--ion-color-primary);
 }
 
+
+#sideMenu{
+  width: 350px;
+  margin-left: 10px;
+  border-radius: 10px;
+}
+
+ion-title{
+  --background: #9d9b9b;
+  margin-top: 1px;
+}
+
+ion-item-divider{
+margin-bottom: 5px;
+  --background: #F7F7F7;
+  --color: grey;
+}
+
+ion-content{
+  --background: #ffffff;
+}
+
+#inbox-list{
+  background-color: #F7F7F7;
+}
+ion-item{
+  --background: #F7F7F7;
+}
+/*ion-img{*/
+/*  margin-top: 10px;*/
+/*}*/
+/*#home{*/
+/*  background-color: #F7F7F7;*/
+/*}*/
+.emergencyBox{
+  background-color: #F7F7F7;
+}

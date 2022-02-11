@@ -5,6 +5,5 @@ export enum Pages {
     overview = '/home/overview',
     appointments = '/home/appointments',
     symptoms = '/home/symptoms',
-    logout = '/home/logout',
-    ho_nonConfirmed ='/home/NonConfirmedPatients'
+    logout = '/home/logout'
 }
