@@ -36,9 +36,7 @@ const RegisterNext: React.FC = () => {
     function registration() {
         const valid = validateInput();
         if (!valid) {
-            present('Please fill out all the required fields').then(() => {
-                return;
-            });
+            present('Please fill out all the required fields', 1500);
         }
 
         const user: IPatient = {
@@ -53,12 +51,12 @@ const RegisterNext: React.FC = () => {
         }
         saveUser(user).then((success) => {
             if (success) {
-                present('Successfully registered.').then(() => {
+                present('Successfully registered.', 1500).then(() => {
                     history.push(Pages.login);
                 });
             }
             else {
-                present('Something went wrong.');
+                present('Something went wrong.', 1500);
             }
         });
     }
