@@ -4,7 +4,6 @@ import './HealthOfficialTable.css';
 import logo from '../resources/UserIcon.png'
 import { IonReactHashRouter } from '@ionic/react-router';
 
-
 function HealthOfficialTable() {
 
     // @ts-ignore
@@ -60,6 +59,7 @@ function HealthOfficialTable() {
                             <IonButton color="favorite" shape="round"> Contact </IonButton>
                         </IonCol>
                         <IonCol>
+                            <IonIcon name="flag-outline"></IonIcon>
                         </IonCol>
                         <IonCol id="col" >
                             <IonButton color="favorite" shape="round"> Monitor Symptoms </IonButton>
