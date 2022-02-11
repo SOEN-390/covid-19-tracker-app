@@ -13,7 +13,12 @@ function NavBar() {
         if(searchText.trim() == ''){
             return
         }
-     const response = await HttpService.get(`patients/${searchText}`);
+     HttpService.get(`patients/${searchText}`).then(async (response) => {
+         const data = await response.json();
+         console.log("HERE IS THE DATA IN JSON FORM: ", data);
+     }).catch((error) => {
+         console.log("ERROR: ", error);
+     });
     }
     return (
         <IonToolbar>
