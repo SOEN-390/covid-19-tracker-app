@@ -13,7 +13,7 @@ export abstract class User {
 
     // Constructor
 
-    private User(id: string, firstName: string, lastName: string, phoneNumber: string, address: string, email: string) {
+    constructor (id: string, firstName: string, lastName: string, phoneNumber: string, address: string, email: string) {
         this._id = id;
         this._firstName = firstName;
         this._lastName = lastName;
