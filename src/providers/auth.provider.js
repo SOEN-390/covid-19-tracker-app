@@ -40,7 +40,7 @@ export function AuthProvider({ children }) {
 
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged(async (user) => {
-            idToken = await user.getIdToken();
+            idToken = await user?.getIdToken();
             setCurrentUser(user);
             setLoading(false);
         });
