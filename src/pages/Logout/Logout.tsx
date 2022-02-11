@@ -8,17 +8,18 @@ import {
     IonPage,
     useIonToast,
 } from '@ionic/react';
-import { signOutUser } from '../../providers/firebase.service';
 import { useHistory } from 'react-router-dom';
 import { Pages } from '../../providers/pages.enum';
+import { useAuth } from '../../providers/auth.provider';
 
 
 const Logout: React.FC = () => {
     let history = useHistory();
+    const {signout} = useAuth();
     const [present] = useIonToast();
 
     async function signOut() {
-        signOutUser();
+        signout();
         present('Logged out.', 1500);
         history.push(Pages.login);
     }
