@@ -7,7 +7,7 @@ import {
     IonMenu,
     IonMenuToggle,
     IonAvatar,
-    IonImg
+    IonImg, IonButton
 } from '@ionic/react';
 import logo from '../resources/icon.png'
 import Emergency from './Emergency';
@@ -72,18 +72,12 @@ const appPages: AppPage[] = [
         url: '/home/alert',
         iosIcon: warningOutline,
         mdIcon: warningSharp
-    },
-    {
-        title: 'Logout',
-        url: Pages.logout,
-        iosIcon: logOutOutline,
-        mdIcon: logOutOutline
     }
 ];
 
 
 const Menu: React.FC = () => {
-    const {currentUser} = useAuth();
+    const {currentUser, logout} = useAuth();
     const location = useLocation();
     // const labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
 
@@ -98,19 +92,26 @@ const Menu: React.FC = () => {
                     <p>Doctor</p>
                     <IonList id="inbox-list">
                     </IonList>
-                    {appPages.map((appPage, index) => {
-                        return (
-                            <IonMenuToggle key={index} autoHide={false}>
-                                <IonItem className={location.pathname === appPage.url ? 'selected' : ''}
-                                         routerLink={appPage.url} routerDirection="none" lines="none" detail={false}>
-                                    <IonIcon slot="start" ios={appPage.iosIcon} md={appPage.mdIcon}/>
-                                    <IonLabel>{appPage.title}</IonLabel>
-                                </IonItem>
-                            </IonMenuToggle>
+                    {
+                        appPages.map((appPage, index) => {
+                            return (
+                                <IonMenuToggle key={index} autoHide={false}>
+                                    <IonItem className={location.pathname === appPage.url ? 'selected' : ''}
+                                             routerLink={appPage.url} routerDirection="none" lines="none" detail={false}>
+                                        <IonIcon slot="start" ios={appPage.iosIcon} md={appPage.mdIcon}/>
+                                        <IonLabel>{appPage.title}</IonLabel>
+                                    </IonItem>
+                                </IonMenuToggle>
 
-                        );
-                    })
+                            );
+                        })
                     }
+                    <IonMenuToggle key={appPages.length+1} autoHide={false}>
+                        <IonItem routerDirection="none" lines="none" detail={false} onClick={logout}>
+                            <IonIcon slot="start" ios={logOutOutline} md={logOutOutline}/>
+                            <IonButton>Logout</IonButton>
+                        </IonItem>
+                    </IonMenuToggle>
                 </IonList>
                 {/*  <IonList id="labels-list">*/}
                 {/*      <IonListHeader>Labels</IonListHeader>*/}
