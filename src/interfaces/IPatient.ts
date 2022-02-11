@@ -1,6 +1,6 @@
 import { testResult } from '../enum/testResult';
 
-export interface IUser {
+export interface IPatient {
     medicalId: string;
     firstName: string;
     lastName: string;

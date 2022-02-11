@@ -16,7 +16,7 @@ import { Pages } from '../../providers/pages.enum';
 import { useState } from 'react';
 import HttpService from '../../providers/http.service'
 import { testResult } from '../../enum/testResult';
-import { IUser } from '../../interfaces/IUser';
+import { IPatient } from '../../interfaces/IPatient';
 import { auth } from '../../config/firebase';
 
 setupIonicReact();
@@ -41,7 +41,7 @@ const RegisterNext: React.FC = () => {
             });
         }
 
-        const user: IUser = {
+        const user: IPatient = {
             medicalId: medicalNumber,
             firstName: firstName,
             lastName: lastName,
@@ -83,7 +83,7 @@ const RegisterNext: React.FC = () => {
 
     }
 
-    async function saveUser(user: IUser): Promise<boolean> {
+    async function saveUser(user: IPatient): Promise<boolean> {
         const response = await HttpService.post('patients/create', user);
         return response.ok;
     }
