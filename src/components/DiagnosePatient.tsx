@@ -14,7 +14,7 @@ function DiagnosePatient() {
                 <IonRow>
                     <IonCol size='2'>
                         <IonAvatar>
-                            <IonImg className='imgg' src={logo} />
+                            <IonImg src={logo} />
                         </IonAvatar></IonCol>
                     <IonCol>
                         <IonRow>
