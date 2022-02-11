@@ -25,7 +25,7 @@ import './theme/variables.css';
 import AppMenu from "./AppMenu";
 import RegisterNext from "./pages/Register/RegisterNext";
 import { Pages } from './providers/pages.enum';
-import HealthOfficialView from './pages/HealthOffical/HealthOfficialView';
+import HealthOfficialView from './pages/HealthOfficial/HealthOfficialView';
 
 setupIonicReact();
 
