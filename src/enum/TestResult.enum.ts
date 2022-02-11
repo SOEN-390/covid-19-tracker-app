@@ -1,4 +1,4 @@
-export enum testResult {
+export enum TestResult {
     POSITIVE  = "positive",
     NEGATIVE = "negative"
 }
