@@ -1,5 +1,5 @@
-import {IonRouterOutlet, IonSplitPane, setupIonicReact} from '@ionic/react';
-import {Redirect, Route} from 'react-router-dom';
+import { IonRouterOutlet, IonSplitPane, setupIonicReact } from '@ionic/react';
+import { Redirect, Route } from 'react-router-dom';
 import Menu from './components/Menu';
 import Overview from './pages/Overview/Overview';
 import Appointments from './pages/Appointments/Appointments';
@@ -25,30 +25,33 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
-
+import PatientProfile from './pages/Doctor/PatientProfile';
 
 setupIonicReact();
 
 const AppMenu: React.FC = () => {
     return (
         <IonSplitPane contentId="home">
-            <Menu/>
+            <Menu />
             <IonRouterOutlet id="home">
                 <Route path={Pages.home} exact={true}>
-                    <Redirect to={Pages.overview}/>
+                    <Redirect to={Pages.overview} />
                 </Route>
 
                 <Route path={Pages.overview}>
-                    <Overview/>
+                    <Overview />
                 </Route>
                 <Route path={Pages.appointments}>
-                    <Appointments/>
+                    <Appointments />
                 </Route>
                 <Route path={Pages.symptoms}>
-                    <SymptomsForm/>
+                    <SymptomsForm />
                 </Route>
                 <Route path={Pages.logout}>
                     <Logout />
+                </Route>
+                <Route path={Pages.patientProfile}>
+                    <PatientProfile />
                 </Route>
 
             </IonRouterOutlet>
