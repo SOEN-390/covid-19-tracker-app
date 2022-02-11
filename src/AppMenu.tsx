@@ -25,7 +25,7 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
-import Immigrationdashboard from './pages/ImmigrationOfficer/Immigrationdashboard';
+import ImmigrationDashboard from './pages/ImmigrationOfficer/immigrationDashboard';
 
 setupIonicReact();
 
@@ -51,7 +51,7 @@ const AppMenu: React.FC = () => {
                     <Logout />
                 </Route>
                 <Route path={Pages.Immigrationdashboard}>
-                        <Immigrationdashboard/>
+                        <ImmigrationDashboard/>
                     </Route>
             </IonRouterOutlet>
         </IonSplitPane>
