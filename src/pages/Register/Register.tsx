@@ -9,7 +9,7 @@ import {
 } from '@ionic/react';
 import CovidTrackerTransparent from '../../assets/images/CovidTrackerTransparent.png';
 import { useState } from 'react';
-import { registerUser } from '../../providers/firebase.service';
+import { useAuth } from '../../providers/auth.provider';
 import './Register.css';
 import { useHistory } from 'react-router-dom';
 
@@ -19,6 +19,7 @@ const Register: React.FC = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [cpassword, setCPassword] = useState('')
+    const {signup} = useAuth();
     let history = useHistory();
 
     async function register() {
@@ -30,7 +31,7 @@ const Register: React.FC = () => {
             console.log('username and password are required')
         }
 
-        const rest = await registerUser(email, password)
+        const rest = await signup(email, password)
 
         if (rest) {
             //redirect to next page

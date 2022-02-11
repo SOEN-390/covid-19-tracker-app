@@ -17,6 +17,7 @@ import { useState } from 'react';
 import HttpService from '../../providers/http.service'
 import { testResult } from '../../enum/testResult';
 import { IUser } from '../../interfaces/IUser';
+import { auth } from '../../config/firebase';
 
 setupIonicReact();
 
@@ -39,13 +40,15 @@ const RegisterNext: React.FC = () => {
                 return;
             });
         }
+
         const user: IUser = {
             medicalId: medicalNumber,
             firstName: firstName,
             lastName: lastName,
-            testResults: testResult.POSITIVE,
+            // TODO - drop down for test result
+            testResult: testResult.POSITIVE,
             address: address,
-            email: 'sevag@mail.com',
+            email: auth.currentUser?.email,
             phoneNumber: phoneNumber
         }
         saveUser(user).then((success) => {
