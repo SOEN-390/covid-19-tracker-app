@@ -8,12 +8,12 @@ import HttpService from '../providers/http.service';
 
 function NavBar() {
    const [searchText, setSearchText] = useState('');
-   
+
     async function search() {
         if(searchText.trim() == ''){
-            return 
+            return
         }
-     const response = await HttpService.get(`patients/${searchText}` )
+     const response = await HttpService.get(`patients/${searchText}`);
     }
     return (
         <IonToolbar>
@@ -21,14 +21,14 @@ function NavBar() {
             <IonGrid>
                 <IonRow className="ion-align-items-end">
                     <IonCol size="9" size-sd>
-                    
-                    <IonSearchbar value={searchText} onIonChange={e => setSearchText(e.detail.value!)} 
-                    showCancelButton="never" ></IonSearchbar>  
+
+                    <IonSearchbar value={searchText} onIonChange={e => setSearchText(e.detail.value!)}
+                    showCancelButton="never" ></IonSearchbar>
                     <IonButton onClick={search}> search </IonButton>
-                                     
-                        
+
+
                     </IonCol>
-               
+
                     <IonCol size="1">
                         <IonAvatar className="avatar">
                             <img src={logo} alt=""/>
