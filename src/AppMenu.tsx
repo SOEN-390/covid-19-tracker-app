@@ -1,9 +1,8 @@
-import {IonRouterOutlet, IonSplitPane, setupIonicReact} from '@ionic/react';
-import {Redirect, Route} from 'react-router-dom';
+import { IonRouterOutlet, IonSplitPane, setupIonicReact } from '@ionic/react';
+import { Redirect, Route } from 'react-router-dom';
 import Menu from './components/Menu';
 import Overview from './pages/Overview/Overview';
 import Appointments from './pages/Appointments/Appointments';
-import Logout from './pages/Logout/Logout';
 import SymptomsForm from './pages/SymptomsForm/SymptomsForm';
 import { Pages } from './providers/pages.enum';
 
@@ -47,12 +46,9 @@ const AppMenu: React.FC = () => {
                 <Route path={Pages.symptoms}>
                     <SymptomsForm/>
                 </Route>
-                <Route path={Pages.logout}>
-                    <Logout />
-                </Route>
                 <Route path={Pages.Immigrationdashboard}>
-                        <ImmigrationDashboard/>
-                    </Route>
+                    <ImmigrationDashboard/>
+                </Route>
             </IonRouterOutlet>
         </IonSplitPane>
     );
