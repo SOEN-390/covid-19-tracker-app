@@ -2,12 +2,19 @@ import { IonAvatar, IonButton, IonCol, IonGrid, IonMenuButton, IonRow, IonSearch
 import './NavBar.css';
 import logo from '../resources/icon.png';
 import { useState } from 'react';
+import HttpService from '../providers/http.service';
 
 
 
 function NavBar() {
    const [searchText, setSearchText] = useState('');
-    console.log(searchText)
+   
+    async function search() {
+        if(searchText.trim() == ''){
+            return 
+        }
+     const response = await HttpService.get(`patients/${searchText}` )
+    }
     return (
         <IonToolbar>
             <IonMenuButton slot="start" />
@@ -17,7 +24,7 @@ function NavBar() {
                     
                     <IonSearchbar value={searchText} onIonChange={e => setSearchText(e.detail.value!)} 
                     showCancelButton="never" ></IonSearchbar>  
-                    <IonButton > search </IonButton>
+                    <IonButton onClick={search}> search </IonButton>
                                      
                         
                     </IonCol>
