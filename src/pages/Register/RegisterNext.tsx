@@ -15,7 +15,7 @@ import './Register.css';
 import { Pages } from '../../providers/pages.enum';
 import { useState } from 'react';
 import HttpService from '../../providers/http.service'
-import { testResult } from '../../enum/testResult';
+import { TestResult } from '../../enum/TestResult.enum';
 import { IPatient } from '../../interfaces/IPatient';
 import { auth } from '../../config/firebase';
 
@@ -44,7 +44,7 @@ const RegisterNext: React.FC = () => {
             firstName: firstName,
             lastName: lastName,
             // TODO - drop down for test result
-            testResult: testResult.POSITIVE,
+            testResult: TestResult.POSITIVE,
             address: address,
             email: auth.currentUser?.email,
             phoneNumber: phoneNumber

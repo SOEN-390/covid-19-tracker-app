@@ -36,7 +36,7 @@ export class Patient extends User implements IPatient {
 
     // Methods
 
-    getRole(): UserType {
+    public getRole(): UserType {
         return UserType.PATIENT;
     }
 
