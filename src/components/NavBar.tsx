@@ -32,12 +32,12 @@ function NavBar() {
                     <IonCol size="9" size-sd>
 
                         {
-                            currentProfile?.getRole() == UserType.PATIENT ? null :
+                            currentProfile ? (currentProfile.getRole() == UserType.PATIENT ? null :
                                 <div>
                                     <IonSearchbar value={searchText} onIonChange={e => setSearchText(e.detail.value!)}
                                                   showCancelButton="never"/>
                                     <IonButton onClick={search}> Search </IonButton>
-                                </div>
+                                </div>) : null
                         }
 
                     </IonCol>
