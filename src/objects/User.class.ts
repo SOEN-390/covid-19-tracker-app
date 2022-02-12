@@ -9,17 +9,15 @@ export abstract class User {
     private _lastName!: string;
     private _phoneNumber!: string;
     private _address!: string;
-    private _email!: string;
 
     // Constructor
 
-    constructor (id: string, firstName: string, lastName: string, phoneNumber: string, address: string, email: string) {
+    constructor (id: string, firstName: string, lastName: string, phoneNumber: string, address: string) {
         this._id = id;
         this._firstName = firstName;
         this._lastName = lastName;
         this._phoneNumber = phoneNumber;
         this._address = address;
-        this._email = email;
     }
 
     // Getters
@@ -44,10 +42,6 @@ export abstract class User {
         return this._address;
     }
 
-    public get email(): string {
-        return this._email;
-    }
-
     // Setters
 
     public set firstName(value: string) {
@@ -64,10 +58,6 @@ export abstract class User {
 
     public set address(value: string) {
         this._address = value;
-    }
-
-    public set email(value: string) {
-        this._email = value;
     }
 
     // Methods

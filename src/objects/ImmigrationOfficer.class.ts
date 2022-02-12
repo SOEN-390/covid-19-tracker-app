@@ -5,8 +5,8 @@ export class ImmigrationOfficer extends User {
 
     // Constructor
 
-    public constructor (id: string, firstName: string, lastName: string, phoneNumber: string, address: string, email: string) {
-        super(id, firstName, lastName, phoneNumber, address, email);
+    public constructor (id: string, firstName: string, lastName: string, phoneNumber: string, address: string) {
+        super(id, firstName, lastName, phoneNumber, address);
     }
 
     // Methods

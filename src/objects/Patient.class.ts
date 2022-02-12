@@ -1,9 +1,8 @@
 import { User } from './User.class';
-import { IPatient } from '../interfaces/IPatient';
 import { UserType } from '../enum/UserType.enum';
 import { TestResult } from '../enum/TestResult.enum';
 
-export class Patient extends User implements IPatient {
+export class Patient extends User {
 
     // Variables
 
@@ -12,8 +11,8 @@ export class Patient extends User implements IPatient {
 
     // Constructor
 
-    public constructor (id: string, firstName: string, lastName: string, phoneNumber: string, address: string, email: string, medicalId: string, testResult: TestResult) {
-        super(id, firstName, lastName, phoneNumber, address, email);
+    public constructor (id: string, firstName: string, lastName: string, phoneNumber: string, address: string, medicalId: string, testResult: TestResult) {
+        super(id, firstName, lastName, phoneNumber, address);
         this._medicalId = medicalId;
         this._testResult = testResult;
     }
