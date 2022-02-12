@@ -15,11 +15,11 @@ import { useAuth } from '../../providers/auth.provider';
 
 const Logout: React.FC = () => {
     let history = useHistory();
-    const {signout} = useAuth();
+    const {logout} = useAuth();
     const [present] = useIonToast();
 
     async function signOut() {
-        signout();
+        logout();
         present('Logged out.', 1500);
         history.push(Pages.login);
     }

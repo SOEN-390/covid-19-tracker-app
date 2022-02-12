@@ -30,10 +30,9 @@ const HttpService = {
         });
     },
 
-    get: async (path: string, body?: any) => {
+    get: async (path: string) => {
         const request = new Request(environment.apiUrl + environment.apiPrefix + '/' + path, {
             method: 'GET',
-            body: new Blob([JSON.stringify(body, null, 2)], {type: 'application/json'}),
             headers: HttpService.getHeader()
         });
         return fetch(request).then((response) => {

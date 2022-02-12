@@ -6,5 +6,6 @@ export enum Pages {
     appointments = '/home/appointments',
     symptoms = '/home/symptoms',
     logout = '/home/logout',
-    healthOfficial_ConfirmedPatient = '/home/HealthOfficialView'
+    healthOfficial_ConfirmedPatient = '/home/HealthOfficialView',
+    Immigrationdashboard = '/home/immigration'
 }

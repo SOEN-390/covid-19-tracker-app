@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import { auth } from '../config/firebase';
 import firebase from 'firebase/compat/app';
+import {Pages} from "./pages.enum";
 
 export const AuthContext = React.createContext();
 
@@ -40,7 +41,12 @@ export function AuthProvider({ children }) {
 
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged(async (user) => {
-            idToken = await user?.getIdToken();
+            if (user) {
+                idToken = await user.getIdToken();
+                if (window.location.pathname === Pages.login || window.location.pathname === '/') {
+                    window.location.pathname = Pages.home;
+                }
+            }
             setCurrentUser(user);
             setLoading(false);
         });
