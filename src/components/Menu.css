@@ -119,11 +119,14 @@ ion-item.selected {
   --color: var(--ion-color-primary);
 }
 
-
-#sideMenu{
+ion-menu::part(container) {
   width: 350px;
-  margin-left: 10px;
-  border-radius: 10px;
+  /*margin-left: 10px;*/
+  border-radius: 20px;
+}
+
+ion-menu {
+  border-inline-end: unset;
 }
 
 ion-title{
@@ -144,6 +147,7 @@ ion-content{
 #inbox-list{
   background-color: #F7F7F7;
 }
+
 ion-item{
   --background: #F7F7F7;
 }
@@ -151,6 +155,7 @@ ion-item{
 /*#home{*/
 /*  background-color: #F7F7F7;*/
 /*}*/
+
 .emergencyBox{
   background-color: #F7F7F7;
 }

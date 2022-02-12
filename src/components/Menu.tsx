@@ -90,9 +90,9 @@ const Menu: React.FC = () => {
     // const labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
 
     return (
-        <IonMenu contentId="home" type="push" id="sideMenu">
+        <IonMenu contentId="home" type="push">
 
-            <IonContent >
+            <IonContent>
                 <IonImg src={appLogo}/>
                 <IonList id="inbox-list">
                     {/*<IonAvatar>*/}
