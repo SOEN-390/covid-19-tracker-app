@@ -25,6 +25,7 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
+import HealthOfficialView from './pages/HealthOffical/HealthOfficialView';
 
 
 setupIonicReact();
@@ -50,7 +51,9 @@ const AppMenu: React.FC = () => {
                 <Route path={Pages.logout}>
                     <Logout />
                 </Route>
-
+                <Route path={Pages.ho_ConfirmedPatient}>
+                    <HealthOfficialView/>
+                </Route>
             </IonRouterOutlet>
         </IonSplitPane>
     );
