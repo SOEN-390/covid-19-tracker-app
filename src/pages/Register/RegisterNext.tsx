@@ -116,7 +116,7 @@ const RegisterNext: React.FC = () => {
                     <br/><br/>
 
                     <IonLabel className="login-text">Test Results</IonLabel>
-                    <IonInput className="login-text-field" placeholder="positive or negative" type="text"/>
+                    <IonInput className="login-text-field" placeholder="Positive or Negative" type="text"/>
 
                     <br/><br/>
 
@@ -125,7 +125,7 @@ const RegisterNext: React.FC = () => {
                               onIonChange={(e: any) => setAddress(e.target.value)}/>
 
                     <br/><br/>
-
+                    
                     <IonLabel className="login-text">Medical card number</IonLabel>
                     <IonInput className="login-text-field" placeholder="Enter your medical card number" type="text"
                               onIonChange={(e: any) => setMedicalNumber(e.target.value)}/>
