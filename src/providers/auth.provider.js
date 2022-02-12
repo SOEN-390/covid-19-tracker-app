@@ -1,7 +1,13 @@
-import React, { useContext, useState, useEffect } from "react";
-import { auth } from '../config/firebase';
+import React, {useContext, useEffect, useState} from "react";
+import {auth} from '../config/firebase';
 import firebase from 'firebase/compat/app';
 import {Pages} from "./pages.enum";
+import {User} from "../objects/User.class";
+import HttpService from "./http.service";
+import {UserType} from "../enum/UserType.enum";
+import {Patient} from "../objects/Patient.class";
+import {Doctor} from "../objects/Doctor.class";
+import {ImmigrationOfficer} from "../objects/ImmigrationOfficer.class";
 
 export const AuthContext = React.createContext();
 
@@ -12,7 +18,8 @@ export function useAuth() {
 export let idToken = '';
 
 export function AuthProvider({ children }) {
-    const [currentUser, setCurrentUser] = useState(firebase.User);
+    const [currentUser, setCurrentUser] = useState(firebase.User | undefined); // The user from firebase
+    const [currentProfile, setCurrentProfile] = useState(User | undefined); // The user from our database
     const [loading, setLoading] = useState(true);
 
     function signup(email, password) {
@@ -32,22 +39,63 @@ export function AuthProvider({ children }) {
     }
 
     function updateEmail(email) {
-        return currentUser.updateEmail(email);
+        return currentUser.firebaseUser.updateEmail(email);
     }
 
     function updatePassword(password) {
-        return currentUser.updatePassword(password);
+        return currentUser.firebaseUser.updatePassword(password);
     }
+
+    async function isEmailUsed(email){
+        try {
+            const signInMethods = await auth.fetchSignInMethodsForEmail(email);
+            // Already signed up with this email if there is a length
+            return !signInMethods.length;
+        } catch (error) {
+            console.log(error);
+            return false;
+        }
+    }
+
+    async function getUserProfile(user) {
+        if (!user) {
+            return undefined;
+        }
+        try {
+            const response = await HttpService.get('users');
+            const userData =  await response.json();
+            return createUserProfileObject(userData);
+        } catch (error) {
+            console.log(error);
+            return null;
+        }
+    }
+
+    function createUserProfileObject(userData) {
+        if (!userData) {
+            return undefined;
+        }
+        switch (userData.role) {
+            case UserType.PATIENT:
+                return new Patient(userData.id, userData.firstName, userData.lastName, userData.phoneNumber, userData.address, userData.medicalId, userData.testResult);
+            case UserType.DOCTOR:
+                return new Doctor(userData.id, userData.firstName, userData.lastName, userData.phoneNumber, userData.address);
+            case UserType.IMMIGRATION_OFFICER:
+                return new ImmigrationOfficer(userData.id, userData.firstName, userData.lastName, userData.phoneNumber, userData.address);
+        }
+    }
+
 
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged(async (user) => {
+            setCurrentUser(user);
             if (user) {
                 idToken = await user.getIdToken();
+                setCurrentProfile(await getUserProfile(user));
                 if (window.location.pathname === Pages.login || window.location.pathname === '/') {
                     window.location.pathname = Pages.home;
                 }
             }
-            setCurrentUser(user);
             setLoading(false);
         });
 
@@ -61,7 +109,8 @@ export function AuthProvider({ children }) {
         logout,
         resetPassword,
         updateEmail,
-        updatePassword
+        updatePassword,
+        isEmailUsed
     };
 
     return (
