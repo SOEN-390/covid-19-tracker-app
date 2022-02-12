@@ -28,6 +28,7 @@ import {
 import './Menu.css';
 import { Pages } from '../providers/pages.enum';
 import { useAuth } from '../providers/auth.provider';
+import { UserType } from '../enum/UserType.enum';
 
 interface AppPage {
     url: string;
@@ -77,9 +78,25 @@ const appPages: AppPage[] = [
 
 
 const Menu: React.FC = () => {
-    const {currentUser, logout} = useAuth();
+    const {currentUser, currentProfile, logout} = useAuth();
     const location = useLocation();
     // const labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
+
+    function getRole(): string {
+        if (!currentProfile) {
+            return '';
+        }
+        switch (currentProfile.getRole()) {
+            case UserType.PATIENT:
+                return 'Patient';
+            case UserType.DOCTOR:
+                return 'Doctor';
+            case UserType.IMMIGRATION_OFFICER:
+                return 'Immigration Officer'
+            default:
+                return '';
+        }
+    }
 
     return (
         <IonMenu contentId="home" type="push">
@@ -89,7 +106,7 @@ const Menu: React.FC = () => {
                         <IonImg src={logo}/>
                     </IonAvatar>
                     <h5>Welcome {currentUser?.email}</h5>
-                    <p>Doctor</p>
+                    <p>{getRole()}</p>
                     <IonList id="inbox-list">
                     </IonList>
                     {
