@@ -91,10 +91,13 @@ export function AuthProvider({ children }) {
             setCurrentUser(user);
             if (user) {
                 idToken = await user.getIdToken();
-                setCurrentProfile(await getUserProfile(user));
-                if (window.location.pathname === Pages.login || window.location.pathname === '/') {
-                    window.location.pathname = Pages.home;
-                }
+                getUserProfile(user).then((user) => {
+                    setCurrentProfile(user);
+                    if (window.location.pathname === Pages.login || window.location.pathname === '/') {
+                        window.location.pathname = Pages.home;
+                    }
+                });
+
             }
             setLoading(false);
         });
@@ -104,6 +107,7 @@ export function AuthProvider({ children }) {
 
     const value = {
         currentUser,
+        currentProfile,
         login,
         signup,
         logout,
