@@ -51,7 +51,7 @@ const AppMenu: React.FC = () => {
                 <Route path={Pages.logout}>
                 <Logout/>
             </Route>
-                <Route path={Pages.ho_ConfirmedPatient}>
+                <Route path={Pages.healthOfficial_ConfirmedPatient}>
                     <HealthOfficialView/>
                 </Route>
 
