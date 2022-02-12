@@ -126,7 +126,7 @@ const Menu: React.FC = () => {
                     <IonMenuToggle key={appPages.length+1} autoHide={false}>
                         <IonItem routerDirection="none" lines="none" detail={false} onClick={logout}>
                             <IonIcon slot="start" ios={logOutOutline} md={logOutOutline}/>
-                            <IonButton>Logout</IonButton>
+                            <IonLabel>Logout</IonLabel>
                         </IonItem>
                     </IonMenuToggle>
                 </IonList>
