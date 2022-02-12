@@ -11,7 +11,7 @@ import {
     IonItemDivider
 } from '@ionic/react';
 import logo from '../resources/icon.png'
-import appLogo from '../assets/images/CovidTrackerTransparent1.png'
+import appLogo from '../assets/images/CovidTrackerTransparent.png'
 import Emergency from './Emergency';
 import { useLocation } from 'react-router-dom';
 import {
@@ -91,9 +91,9 @@ const Menu: React.FC = () => {
 
     return (
         <IonMenu contentId="home" type="push" id="sideMenu">
-            <IonImg src={appLogo}/>
-            <IonContent >
 
+            <IonContent >
+                <IonImg src={appLogo}/>
                 <IonList id="inbox-list">
                     {/*<IonAvatar>*/}
                     {/*    <IonImg src={logo}/>*/}
