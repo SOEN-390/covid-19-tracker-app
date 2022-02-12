@@ -57,7 +57,7 @@ export function AuthProvider({ children }) {
         }
     }
 
-    async function getUserProfile(user) {
+    async function getCurrentUserProfile(user) {
         if (!user) {
             return undefined;
         }
@@ -91,7 +91,7 @@ export function AuthProvider({ children }) {
             setCurrentUser(user);
             if (user) {
                 idToken = await user.getIdToken();
-                getUserProfile(user).then((user) => {
+                getCurrentUserProfile(user).then((user) => {
                     setCurrentProfile(user);
                     if (window.location.pathname === Pages.login || window.location.pathname === '/') {
                         window.location.pathname = Pages.home;
