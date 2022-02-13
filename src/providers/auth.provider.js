@@ -64,6 +64,9 @@ export function AuthProvider({ children }) {
         }
         try {
             const response = await HttpService.get('users');
+            if (!response.ok) {
+                return null;
+            }
             const userData =  await response.json();
             return createUserProfileObject(userData);
         } catch (error) {
@@ -93,12 +96,18 @@ export function AuthProvider({ children }) {
         const unsubscribe = auth.onAuthStateChanged(async (user) => {
             setCurrentUser(user);
             if (user) {
+                if (window.location.pathname === Pages.register || window.location.pathname === '/register/2') {
+                    return;
+                }
                 idToken = await user.getIdToken();
                 getCurrentUserProfile(user).then((user) => {
                     setCurrentProfile(user);
                     if (window.location.pathname === Pages.login || window.location.pathname === '/') {
                         window.location.pathname = Pages.home;
                     }
+                }).catch((error) => {
+                    console.log(error);
+                    // TODO: Display a toast
                 });
 
             }
