@@ -96,9 +96,6 @@ export function AuthProvider({ children }) {
         const unsubscribe = auth.onAuthStateChanged(async (user) => {
             setCurrentUser(user);
             if (user) {
-                if (window.location.pathname === Pages.register || window.location.pathname === '/register/2') {
-                    return;
-                }
                 idToken = await user.getIdToken();
                 getCurrentUserProfile(user).then((user) => {
                     setCurrentProfile(user);
@@ -106,6 +103,9 @@ export function AuthProvider({ children }) {
                         window.location.pathname = Pages.home;
                     }
                 }).catch((error) => {
+                    if (window.location.pathname === Pages.register || window.location.pathname === '/register/2') {
+                        return;
+                    }
                     console.log(error);
                     // TODO: Display a toast
                 });
