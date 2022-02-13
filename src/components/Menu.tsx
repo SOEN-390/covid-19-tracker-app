@@ -93,6 +93,8 @@ const Menu: React.FC = () => {
                 return 'Doctor';
             case UserType.IMMIGRATION_OFFICER:
                 return 'Immigration Officer'
+            case UserType.ADMIN:
+                return 'Admin'
             default:
                 return '';
         }

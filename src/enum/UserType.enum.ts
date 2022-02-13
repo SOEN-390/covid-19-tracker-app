@@ -1,5 +1,6 @@
 export enum UserType {
     PATIENT = 'patient',
     DOCTOR = 'doctor',
-    IMMIGRATION_OFFICER = 'immigration_officer'
+    IMMIGRATION_OFFICER = 'immigration_officer',
+    ADMIN = 'admin'
 }
