@@ -4,6 +4,7 @@ import '../../components/HealthOfficialTable.css';
 import logo from '../../resources/UserIcon.png'
 import { IonReactHashRouter } from '@ionic/react-router';
 import NavBar from '../../components/NavBar';
+import AssignedConfirmed from './AssignedConfirmed';
 
 
 interface patient {
@@ -16,7 +17,7 @@ interface patient {
 }
 const patients: patient[] = [
     {
-        Name: 'Charles',
+        Name: 'Not-Charles',
         Status: 'POSITIVE',
         LastUpdate: '2/01/2022, 2:00 PM',
         Doctor: 'Dr. MarcAngelo Bracken-Sagiz',
@@ -46,7 +47,7 @@ const patients: patient[] = [
 ];
 
 
-const AssignedConfirmed: React.FC = () =>{
+const UnAssignedConfirmed: React.FC = () =>{
 
     // @ts-ignore
     return (
@@ -61,10 +62,10 @@ const AssignedConfirmed: React.FC = () =>{
             <div>
                 <IonRow>
                     <IonCol size="6" class="confirmButton">
-                        <IonButton  color= "favorite" href="admin/AssignedConfirmed">ASSIGN</IonButton>
+                        <IonButton  color= "favorite1" href="admin/AssignedConfirmed">ASSIGN</IonButton>
                     </IonCol>
                     <IonCol size="6" class = "unconfirmedButton">
-                        <IonButton color= "favorite1" href="admin/unAssignedConfirmed">UNASSIGN</IonButton>
+                        <IonButton color= "favorite" href="admin/unAssignedConfirmed">UNASSIGN</IonButton>
                     </IonCol>
                 </IonRow>
             </div>
@@ -111,4 +112,4 @@ const AssignedConfirmed: React.FC = () =>{
         </IonPage>
     );
 }
-export default AssignedConfirmed;
+export default UnAssignedConfirmed;

@@ -16,7 +16,7 @@ interface patient {
 }
 const patients: patient[] = [
     {
-        Name: 'Charles',
+        Name: 'James',
         Status: 'POSITIVE',
         LastUpdate: '2/01/2022, 2:00 PM',
         Doctor: 'Dr. MarcAngelo Bracken-Sagiz',
@@ -46,7 +46,7 @@ const patients: patient[] = [
 ];
 
 
-const AssignedConfirmed: React.FC = () =>{
+const Doctors: React.FC = () =>{
 
     // @ts-ignore
     return (
@@ -56,18 +56,8 @@ const AssignedConfirmed: React.FC = () =>{
 
         <div className='tab'>
             <text>
-                <IonTitle id="patientHeader">Patients</IonTitle>
+                <IonTitle id="patientHeader">Doctors</IonTitle>
             </text>
-            <div>
-                <IonRow>
-                    <IonCol size="6" class="confirmButton">
-                        <IonButton  color= "favorite" href="admin/AssignedConfirmed">ASSIGN</IonButton>
-                    </IonCol>
-                    <IonCol size="6" class = "unconfirmedButton">
-                        <IonButton color= "favorite1" href="admin/unAssignedConfirmed">UNASSIGN</IonButton>
-                    </IonCol>
-                </IonRow>
-            </div>
 
             <div id="Container">
                 <div id = "innerContainer">
@@ -111,4 +101,4 @@ const AssignedConfirmed: React.FC = () =>{
         </IonPage>
     );
 }
-export default AssignedConfirmed;
+export default Doctors;

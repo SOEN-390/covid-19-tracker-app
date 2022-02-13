@@ -8,5 +8,8 @@ export enum Pages {
     logout = '/home/logout',
     ho_ConfirmedPatient = '/home/HealthOfficialView',
     admin = '/admin',
-    assignedConfirmed = "/admin/assignedConfirmed"
+    assignedConfirmed = "/admin/assignedConfirmed",
+    unAssignedConfirmed = "/admin/unAssignedConfirmed",
+    doctors = "/admin/doctors"
+
 }

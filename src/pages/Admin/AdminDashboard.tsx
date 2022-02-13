@@ -22,6 +22,8 @@ import '@ionic/react/css/text-alignment.css';
 import '@ionic/react/css/text-transformation.css';
 import '@ionic/react/css/flex-utils.css';
 import '@ionic/react/css/display.css';
+import Doctors from './Doctors';
+import UnAssignedConfirmed from './UnAssignedConfirmed';
 
 
 const AdminDashboard: React.FC = () => {
@@ -29,17 +31,21 @@ const AdminDashboard: React.FC = () => {
     return (
         <IonSplitPane contentId="admin">
             <AdminMenu/>
-
-
             <IonRouterOutlet id="admin">
                 <Route path={Pages.admin} exact={true} >
                     <h1>Welcome to Admin Dashboard</h1>
                 </Route>
                 
                 <Route path={Pages.assignedConfirmed} >
-                        <AssignedConfirmed/>
-                    </Route>
-                
+                     <AssignedConfirmed/>
+                </Route>
+                <Route path={Pages.unAssignedConfirmed} >
+                     <UnAssignedConfirmed/>
+                </Route>
+                <Route path={Pages.doctors} >
+                    <Doctors/>
+                </Route>
+
                 <Route path={Pages.logout}>
                     <Logout />
                 </Route>

@@ -66,14 +66,8 @@ const adminPages: page[] = [
         mdIcon: calendarOutline
     },
     {
-        title: 'Non-Confirmed Patients',
-        url: Pages.symptoms,
-        iosIcon: heartOutline,
-        mdIcon: heartSharp
-    },
-    {
         title: 'Doctor',
-        url: '/home/option2',
+        url: Pages.doctors,
         iosIcon: archiveOutline,
         mdIcon: archiveSharp
     },
