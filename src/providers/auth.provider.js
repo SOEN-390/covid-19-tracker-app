@@ -8,6 +8,7 @@ import {UserType} from "../enum/UserType.enum";
 import {Patient} from "../objects/Patient.class";
 import {Doctor} from "../objects/Doctor.class";
 import {ImmigrationOfficer} from "../objects/ImmigrationOfficer.class";
+import {Admin} from "../objects/Admin.class";
 
 export const AuthContext = React.createContext();
 
@@ -82,6 +83,8 @@ export function AuthProvider({ children }) {
                 return new Doctor(userData.id, userData.firstName, userData.lastName, userData.phoneNumber, userData.address);
             case UserType.IMMIGRATION_OFFICER:
                 return new ImmigrationOfficer(userData.id, userData.firstName, userData.lastName, userData.phoneNumber, userData.address);
+            case UserType.ADMIN:
+                return new Admin(userData.id, userData.firstName, userData.lastName, userData.phoneNumber, userData.address);
         }
     }
 

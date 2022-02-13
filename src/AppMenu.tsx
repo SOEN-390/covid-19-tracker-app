@@ -4,6 +4,7 @@ import Menu from './components/Menu';
 import Overview from './pages/Overview/Overview';
 import Appointments from './pages/Appointments/Appointments';
 import SymptomsForm from './pages/SymptomsForm/SymptomsForm';
+import ImmigrationDashboard from './pages/ImmigrationOfficer/immigrationDashboard';
 import { Pages } from './providers/pages.enum';
 
 /* Core CSS required for Ionic components to work properly */
@@ -24,7 +25,6 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
-import ImmigrationDashboard from './pages/ImmigrationOfficer/immigrationDashboard';
 
 setupIonicReact();
 
