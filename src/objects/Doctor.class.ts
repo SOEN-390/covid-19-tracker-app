@@ -12,7 +12,7 @@ export class Doctor extends User {
     // Methods
 
     public getRole(): UserType {
-        return UserType.IMMIGRATION_OFFICER;
+        return UserType.DOCTOR;
     }
 
 }
