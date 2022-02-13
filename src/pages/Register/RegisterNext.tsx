@@ -18,6 +18,7 @@ import HttpService from '../../providers/http.service'
 import { TestResult } from '../../enum/TestResult.enum';
 import { IPatient } from '../../interfaces/IPatient';
 import { auth } from '../../config/firebase';
+import { useAuth } from '../../providers/auth.provider';
 
 setupIonicReact();
 
@@ -32,6 +33,7 @@ const RegisterNext: React.FC = () => {
     const history = useHistory();
     const [present] = useIonToast();
 
+    const {logout} = useAuth();
 
     function registration() {
         const valid = validateInput();
@@ -52,6 +54,7 @@ const RegisterNext: React.FC = () => {
         saveUser(user).then((success) => {
             if (success) {
                 present('Successfully registered.', 1500).then(() => {
+                    logout();
                     history.push(Pages.login);
                 });
             }
