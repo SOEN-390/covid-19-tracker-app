@@ -4,7 +4,6 @@ import logo from '../resources/icon.png';
 import React, { useState } from 'react';
 import HttpService from '../providers/http.service';
 import { useAuth } from '../providers/auth.provider';
-import { Component } from 'react';
 import { UserType } from '../enum/UserType.enum';
 
 
@@ -32,7 +31,7 @@ function NavBar() {
                     <IonCol size="9" size-sd>
 
                         {
-                            currentProfile ? (currentProfile.getRole() == UserType.PATIENT ? null :
+                            currentProfile ? (currentProfile.getRole() === UserType.PATIENT ? null :
                                 <div>
                                     <IonSearchbar value={searchText} onIonChange={e => setSearchText(e.detail.value!)}
                                                   showCancelButton="never"/>

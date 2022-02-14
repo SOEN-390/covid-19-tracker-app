@@ -47,9 +47,6 @@ const AppMenu: React.FC = () => {
                 <Route path={Pages.symptoms}>
                     <SymptomsForm/>
                 </Route>
-                <Route path={Pages.logout}>
-                    <Logout/>
-                </Route>
                 <Route path={Pages.patientProfile}>
                     <PatientProfile/>
                 </Route>

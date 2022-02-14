@@ -1,4 +1,4 @@
-import { IonAvatar, IonButton, IonCard, IonCardContent, IonCol, IonContent, IonIcon, IonImg, IonItem, IonLabel, IonRow, IonText } from '@ionic/react';
+import { IonAvatar, IonCol, IonContent, IonImg, IonRow, IonText } from '@ionic/react';
 import './DiagnosePatient.css';
 import logo from '../resources/icon.png'
 
