@@ -5,6 +5,8 @@ import Overview from './pages/Overview/Overview';
 import Appointments from './pages/Appointments/Appointments';
 import Logout from './pages/Logout/Logout';
 import SymptomsForm from './pages/SymptomsForm/SymptomsForm';
+import PatientProfile from './pages/Doctor/PatientProfile';
+import ImmigrationDashboard from './pages/ImmigrationOfficer/immigrationDashboard';
 import { Pages } from './providers/pages.enum';
 
 /* Core CSS required for Ionic components to work properly */
@@ -25,35 +27,36 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
-import PatientProfile from './pages/Doctor/PatientProfile';
 
 setupIonicReact();
 
 const AppMenu: React.FC = () => {
     return (
         <IonSplitPane contentId="home">
-            <Menu />
+            <Menu/>
             <IonRouterOutlet id="home">
                 <Route path={Pages.home} exact={true}>
-                    <Redirect to={Pages.overview} />
+                    <Redirect to={Pages.overview}/>
                 </Route>
 
                 <Route path={Pages.overview}>
-                    <Overview />
+                    <Overview/>
                 </Route>
                 <Route path={Pages.appointments}>
-                    <Appointments />
+                    <Appointments/>
                 </Route>
                 <Route path={Pages.symptoms}>
-                    <SymptomsForm />
+                    <SymptomsForm/>
                 </Route>
                 <Route path={Pages.logout}>
-                    <Logout />
+                    <Logout/>
                 </Route>
                 <Route path={Pages.patientProfile}>
-                    <PatientProfile />
+                    <PatientProfile/>
                 </Route>
-
+                <Route path={Pages.immigrationDashboard}>
+                    <ImmigrationDashboard/>
+                </Route>
             </IonRouterOutlet>
         </IonSplitPane>
     );

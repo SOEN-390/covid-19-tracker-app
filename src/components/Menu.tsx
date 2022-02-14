@@ -7,9 +7,11 @@ import {
     IonMenu,
     IonMenuToggle,
     IonAvatar,
-    IonImg
+    IonImg, IonTitle,
+    IonItemDivider
 } from '@ionic/react';
 import logo from '../resources/icon.png'
+import appLogo from '../assets/images/CovidTrackerTransparent.png'
 import Emergency from './Emergency';
 import { useLocation } from 'react-router-dom';
 import {
@@ -27,7 +29,7 @@ import {
 } from 'ionicons/icons';
 import './Menu.css';
 import { Pages } from '../providers/pages.enum';
-import {GetCurrentUserObject} from '../providers/firebase.service'
+import { useAuth } from '../providers/auth.provider';
 
 interface AppPage {
     url: string;
@@ -35,6 +37,7 @@ interface AppPage {
     mdIcon: string;
     title: string;
 }
+
 const appPages: AppPage[] = [
     {
         title: 'Overview',
@@ -82,21 +85,25 @@ const appPages: AppPage[] = [
 
 
 const Menu: React.FC = () => {
+    const {currentUser} = useAuth();
     const location = useLocation();
-    const currentUser=GetCurrentUserObject();
     // const labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
 
     return (
         <IonMenu contentId="home" type="push">
+
             <IonContent>
+                <IonImg src={appLogo}/>
                 <IonList id="inbox-list">
-                    <IonAvatar>
-                        <IonImg src={logo}/>
-                    </IonAvatar>
-                    <h5>Welcome {currentUser?.email}</h5>
-                    <p>Doctor</p>
-                    <IonList id="inbox-list">
-                    </IonList>
+                    {/*<IonAvatar>*/}
+                    {/*    <IonImg src={logo}/>*/}
+                    {/*</IonAvatar>*/}
+
+                    <IonTitle>Welcome {currentUser?.email}</IonTitle>
+                    {/*<IonTitle>Doctor</IonTitle>*/}
+                    <IonItemDivider/>
+                    {/*<IonList id="inbox-list">*/}
+                    {/*</IonList>*/}
                     {appPages.map((appPage, index) => {
                         return (
                             <IonMenuToggle key={index} autoHide={false}>

@@ -4,13 +4,16 @@ import App from './App';
 
 jest.mock('firebase/compat/app', () => {
     return {
-        initializeApp: jest.fn(() => true),
-        auth: jest.fn(() => {
+        initializeApp: jest.fn(() => {
             return {
-                onAuthStateChanged: jest.fn((callback) => callback(null)),
-                createUserWithEmailAndPassword: jest.fn(() => Promise.resolve(true)), // TODO: Send the correct response format
-                signInWithEmailAndPassword: jest.fn(() => Promise.resolve(true)), // TODO: Send the correct response format
-                signOut: jest.fn()
+                auth: jest.fn(() => {
+                    return {
+                        onAuthStateChanged: jest.fn((callback) => callback(null)),
+                        createUserWithEmailAndPassword: jest.fn(() => Promise.resolve(true)), // TODO: Send the correct response format
+                        signInWithEmailAndPassword: jest.fn(() => Promise.resolve(true)), // TODO: Send the correct response format
+                        signOut: jest.fn()
+                    }
+                })
             }
         })
     }
