@@ -3,7 +3,6 @@ import { Redirect, Route } from 'react-router-dom';
 import Menu from './components/Menu';
 import Overview from './pages/Overview/Overview';
 import Appointments from './pages/Appointments/Appointments';
-import Logout from './pages/Logout/Logout';
 import SymptomsForm from './pages/SymptomsForm/SymptomsForm';
 import PatientProfile from './pages/Doctor/PatientProfile';
 import ImmigrationDashboard from './pages/ImmigrationOfficer/immigrationDashboard';
@@ -47,9 +46,6 @@ const AppMenu: React.FC = () => {
                 </Route>
                 <Route path={Pages.symptoms}>
                     <SymptomsForm/>
-                </Route>
-                <Route path={Pages.logout}>
-                    <Logout/>
                 </Route>
                 <Route path={Pages.patientProfile}>
                     <PatientProfile/>

@@ -30,13 +30,12 @@ const Login: React.FC = () => {
     const [present] = useIonToast();
 
     async function loginUser() {
-        const rest = await login(email, password);
-        if (rest) {
+        login(email, password).then(() => {
             present('Successfully logged in.', 1500);
             history.push(Pages.home);
-        } else {
+        }).catch((error: any) => {
             present('Something went wrong. Please try again.', 1500);
-        }
+        });
     }
 
     return (
