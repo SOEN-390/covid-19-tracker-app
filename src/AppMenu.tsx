@@ -4,6 +4,7 @@ import Menu from './components/Menu';
 import Overview from './pages/Overview/Overview';
 import Appointments from './pages/Appointments/Appointments';
 import SymptomsForm from './pages/SymptomsForm/SymptomsForm';
+import PatientProfile from './pages/Doctor/PatientProfile';
 import ImmigrationDashboard from './pages/ImmigrationOfficer/immigrationDashboard';
 import { Pages } from './providers/pages.enum';
 
@@ -46,7 +47,13 @@ const AppMenu: React.FC = () => {
                 <Route path={Pages.symptoms}>
                     <SymptomsForm/>
                 </Route>
-                <Route path={Pages.Immigrationdashboard}>
+                <Route path={Pages.logout}>
+                    <Logout/>
+                </Route>
+                <Route path={Pages.patientProfile}>
+                    <PatientProfile/>
+                </Route>
+                <Route path={Pages.immigrationDashboard}>
                     <ImmigrationDashboard/>
                 </Route>
             </IonRouterOutlet>

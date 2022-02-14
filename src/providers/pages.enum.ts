@@ -1,3 +1,4 @@
+
 export enum Pages {
     login = '/login',
     register = '/register',
@@ -5,5 +6,7 @@ export enum Pages {
     overview = '/home/overview',
     appointments = '/home/appointments',
     symptoms = '/home/symptoms',
-    Immigrationdashboard = '/home/immigration'
+    logout = '/home/logout',
+    patientProfile = '/home/patient-profile',
+    immigrationDashboard = '/home/immigration-dashboard'
 }
