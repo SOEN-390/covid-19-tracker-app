@@ -111,12 +111,10 @@ const AdminMenu: React.FC = () => {
                                     <IonLabel>{adminPage.title}</IonLabel>
                                 </IonItem>
                                 {adminPage.title=="Doctor"? <><IonList id="inbox-list"> </IonList><IonTitle>Account</IonTitle></> : ''}
-
                             </IonMenuToggle>
                         );
                     })
                     }
-                    
                      <IonMenuToggle key={adminPages.length + 1} autoHide={false}>
                         <IonItem routerDirection="none" lines="none" detail={false} onClick={logout}>
                             <IonIcon slot="start" ios={logOutOutline} md={logOutOutline}/>

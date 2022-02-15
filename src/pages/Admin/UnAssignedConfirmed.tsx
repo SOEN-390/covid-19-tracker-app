@@ -1,56 +1,40 @@
-import { IonAvatar, IonButton, IonCol, IonIcon, IonImg, IonRow,IonTitle,IonGrid,IonContent, IonPage, IonToolbar, IonText } from '@ionic/react';
-import { flag } from 'ionicons/icons';
+import { IonAvatar, IonButton, IonCol, IonRow,IonTitle,IonGrid, IonPage, IonToolbar, IonText } from '@ionic/react';
 import '../../components/HealthOfficialTable.css';
 import logo from '../../resources/UserIcon.png'
-import { IonReactHashRouter } from '@ionic/react-router';
 import NavBar from '../../components/NavBar';
-import AssignedConfirmed from './AssignedConfirmed';
 import { Pages } from '../../providers/pages.enum';
+import { useState, useEffect } from 'react';
+import HttpService from '../../providers/http.service';
 
 
-interface patient {
-    Name: string;
-    Status: string;
-    LastUpdate: string;
-    Doctor: string;
+interface patientSchema {
+
+    firstName: string, 
+    lastName: string, 
+    testResult:string|null,
+    LastUpdate: Date;
+    DoctorName: string;
     DaysQuarantined: string;
-
 }
-const patients: patient[] = [
-    {
-        Name: 'Not-Charles',
-        Status: 'POSITIVE',
-        LastUpdate: '2/01/2022, 2:00 PM',
-        Doctor: 'Dr. MarcAngelo Bracken-Sagiz',
-        DaysQuarantined: '12',
-    },
-    {
-        Name: 'Charles',
-        Status: 'NEGATIVE',
-        LastUpdate: '2/01/2022, 2:00 PM',
-        Doctor: 'Dr. MarcAngelo Bracken-Sagiz',
-        DaysQuarantined: '12',
-    },
-    {
-        Name: 'Charles',
-        Status: 'POSITIVE',
-        LastUpdate: '2/01/2022, 2:00 PM',
-        Doctor: '',
-        DaysQuarantined: '12',
-    },
-    {
-        Name: 'Charles',
-        Status: 'POSITIVE',
-        LastUpdate: '2/01/2022, 2:00 PM',
-        Doctor: 'Dr. MarcAngelo Bracken-Sagiz',
-        DaysQuarantined: '12',
-    },
-];
-
 
 const UnAssignedConfirmed: React.FC = () =>{
+    const [patientsArray, setPatientsArray]= useState <patientSchema[]> ()
+    var moment = require('moment'); 
 
-    // @ts-ignore
+    useEffect(() => {
+        patientsRetrieval();
+      }, []);
+
+    async function patientsRetrieval() {
+       
+        HttpService.get(`patients/all`).then(async (response) => {
+            const data: Array<patientSchema> = await response.json();
+            setPatientsArray(data);
+        }).catch((error) => {
+            console.log('ERROR: ', error);
+        });
+    }
+
     return (
         <IonPage>
         <IonToolbar>
@@ -85,28 +69,25 @@ const UnAssignedConfirmed: React.FC = () =>{
                     </IonGrid>
                 </div>
 
-
-                {patients.map((patient, index) => {
+                {patientsArray? patientsArray.map((patient, index) => {
                         return (
                             <IonGrid key={index} >
                                 <IonRow id="tableRow">
                                 <IonCol size ="1px"><IonAvatar><img src={logo}/></IonAvatar></IonCol>
-                                <IonCol id="colName" size ="2">{patient.Name}</IonCol>
-                                <IonCol size ="1" ><div id={patient.Status=='POSITIVE'?"PosStatus":"NegStatus"}>{patient.Status}</div></IonCol>
-                                <IonCol id="lastUpdate" size ="2">{patient.LastUpdate}</IonCol>
-                                <IonCol id="colName" size ="2" >{patient.Doctor==''?'---':patient.Doctor}</IonCol>
+                                <IonCol id="colName" size ="2">{patient.firstName+' '+patient.lastName}</IonCol>
+                                <IonCol size ="1" ><div id={patient.testResult=='positive'?"PosStatus":"NegStatus"}>{patient.testResult==null?'Negative':'Positive'}</div></IonCol>
+                                <IonCol id="lastUpdate" size ="2">{moment(patient.LastUpdate).format('DD MMM, YYYY')}</IonCol>
+                                <IonCol id="colName" size ="1" >{patient.DoctorName==null?'---':patient.DoctorName}</IonCol>
                                 <IonCol id="col" size ="1" >{patient.DaysQuarantined}</IonCol>
                                 <IonCol id="col" size ="2">
-                                    <IonButton color ="favorite" shape = "round"> {patient.Doctor==''?'ASSIGN':'UNASSIGN'} </IonButton>
+                                    <IonButton color ="favorite" shape = "round"> {patient.DoctorName==null?'ASSIGN':'UNASSIGN'} </IonButton>
                                 </IonCol>
 
                                 </IonRow>
                             </IonGrid>
                         );
-                    })
+                    }):null
                     }
-
-                    
             </div>
         </div>
         </IonToolbar>

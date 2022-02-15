@@ -1,53 +1,40 @@
-import { IonAvatar, IonButton, IonCol, IonIcon, IonImg, IonRow,IonTitle,IonGrid,IonContent, IonPage, IonToolbar, IonText } from '@ionic/react';
-import { flag } from 'ionicons/icons';
+import { IonAvatar,  IonCol,  IonRow,IonTitle,IonGrid, IonPage, IonToolbar, IonText } from '@ionic/react';
 import '../../components/HealthOfficialTable.css';
 import logo from '../../resources/UserIcon.png'
-import { IonReactHashRouter } from '@ionic/react-router';
 import NavBar from '../../components/NavBar';
+import { useState, useEffect } from 'react';
+import HttpService from '../../providers/http.service';
 
 
-interface patient {
-    Name: string;
-    Status: string;
-    LastUpdate: string;
-    Doctor: string;
-    DaysQuarantined: string;
-
+interface doctortSchema {
+    firstName: string, 
+    lastName: string, 
+    licenseId: string,
+    phoneNumber:string,
+    address: Date;
+    email: string;
 }
-const patients: patient[] = [
-    {
-        Name: 'James',
-        Status: 'POSITIVE',
-        LastUpdate: '2/01/2022, 2:00 PM',
-        Doctor: 'Dr. MarcAngelo Bracken-Sagiz',
-        DaysQuarantined: '12',
-    },
-    {
-        Name: 'Charles',
-        Status: 'NEGATIVE',
-        LastUpdate: '2/01/2022, 2:00 PM',
-        Doctor: 'Dr. MarcAngelo Bracken-Sagiz',
-        DaysQuarantined: '12',
-    },
-    {
-        Name: 'Charles',
-        Status: 'POSITIVE',
-        LastUpdate: '2/01/2022, 2:00 PM',
-        Doctor: '',
-        DaysQuarantined: '12',
-    },
-    {
-        Name: 'Charles',
-        Status: 'POSITIVE',
-        LastUpdate: '2/01/2022, 2:00 PM',
-        Doctor: 'Dr. MarcAngelo Bracken-Sagiz',
-        DaysQuarantined: '12',
-    },
-];
 
 
 const Doctors: React.FC = () =>{
 
+    const [doctorsArray, setDoctorssArray]= useState <doctortSchema[]> ()
+    var moment = require('moment'); 
+
+    useEffect(() => {
+        doctorssRetrieval();
+      }, []);
+
+    async function doctorssRetrieval() {
+       
+        HttpService.get(`doctors/all`).then(async (response) => {
+            const data: Array<doctortSchema> = await response.json();
+            setDoctorssArray(data);
+        }).catch((error) => {
+            console.log('ERROR: ', error);
+        });
+    }
+    
     return (
         <IonPage>
         <IonToolbar>
@@ -62,35 +49,32 @@ const Doctors: React.FC = () =>{
                 <div id = "innerContainer">
                     <IonGrid>
                         <IonRow>
-                            <IonCol size ="2" id="headCol">Name</IonCol>
-                            <IonCol size ="1" id="headCol">Status</IonCol>
-                            <IonCol size ="2" id="headCol">Last Update</IonCol>
-                            <IonCol size ="2" id="headCol">Doctor</IonCol>
-                            <IonCol size ="1" id="headCol">Days Quarantined</IonCol>
-                            <IonCol size ="2" id="headCol">Action</IonCol>
+                            <IonCol size ="1" id="headCol">Name</IonCol>
+                            <IonCol size ="1" id="headCol">LicenseId</IonCol>
+                            <IonCol size ="2" id="headCol">PhoneNumber</IonCol>
+                            <IonCol size ="2" id="headCol">Address</IonCol>
+                            <IonCol size ="1" id="headCol">Email</IonCol>
                         </IonRow>
                     </IonGrid>
                 </div>
 
 
-                {patients.map((patient, index) => {
+                {doctorsArray? doctorsArray.map((doctor, index) => {
                         return (
                             <IonGrid key={index} >
                                 <IonRow id="tableRow">
                                 <IonCol size ="1px"><IonAvatar><img src={logo}/></IonAvatar></IonCol>
-                                <IonCol id="colName" size ="2">{patient.Name}</IonCol>
-                                <IonCol size ="1" ><div id={patient.Status=='POSITIVE'?"PosStatus":"NegStatus"}>{patient.Status}</div></IonCol>
-                                <IonCol id="lastUpdate" size ="2">{patient.LastUpdate}</IonCol>
-                                <IonCol id="colName" size ="2" >{patient.Doctor==''?'---':patient.Doctor}</IonCol>
-                                <IonCol id="col" size ="1" >{patient.DaysQuarantined}</IonCol>
-                                <IonCol id="col" size ="2">
-                                    <IonButton color ="favorite" shape = "round"> {patient.Doctor==''?'ASSIGN':'UNASSIGN'} </IonButton>
-                                </IonCol>
+                                <IonCol id="colName" size ="1.5">{doctor.firstName+' '+doctor.lastName}</IonCol>
+                                <IonCol id="colName" size="1.5">{doctor.licenseId}</IonCol>
+                                <IonCol id="colName" size="2">{doctor.phoneNumber}</IonCol>
+                                <IonCol id="colName" size ="1" >{doctor.address}</IonCol>
+                                <IonCol id="col" size ="2" >{doctor.email}</IonCol>
+                                
 
                                 </IonRow>
                             </IonGrid>
                         );
-                    })
+                    }):null
                     }
 
                     
