@@ -1,0 +1,107 @@
+#title{
+  color: #2C4D62;
+  font-family: 'Poppins';
+  font-weight: bold;
+  font-size: 50px;
+}
+ion-content {
+  --padding-top: 20px;
+  --padding-start: 20px;
+}
+
+
+:root {
+  --ion-color-favorite: #2C4D62;
+  --ion-color-favorite1: rgba(255, 255, 255, 0.74);
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255,255,255;
+  --ion-color-primary-shade: #447697;
+  --ion-color-primary-tint: #14242D;
+}
+
+.ion-color-favorite {
+  --ion-color-base: var(--ion-color-favorite);
+}
+
+.ion-color-favorite1 {
+  --ion-color-base: var(--ion-color-favorite1);
+  --border-color: #2C4D62;
+  --border-width: 2px;
+  --color: #2C4D62;
+  --ion-color-hover: var(--ion-color-hover);
+}
+
+.confirmButton {
+  text-align: right;
+}
+
+.unconfirmedButton {
+  text-align: left;
+  color: #2C4D62;
+}
+
+#mainContainer{
+  border-radius: 15px;
+  border: 2px solid #E7E7E7;
+  overflow-x: auto;
+  margin-right: 20px;
+  padding: 20px;
+}
+
+
+#table_container{
+  position: relative;
+  padding: 20px;
+  display: block;
+}
+
+table{
+  scroll-behavior: auto;
+}
+table th:first-child{
+  border-radius:10px 0 0 10px;
+  position: sticky;
+  top: 0;
+  z-index: 9999;
+
+}
+
+
+
+
+#PosStatus {
+  height: 32px;
+  width: 95px;
+  font-weight: normal;
+  font-size: 14px;
+  border-radius: 60px;
+  background-color: #129C0F;
+  color: #FEFFFE;
+  /*margin-top: 6px;*/
+  /*margin-bottom:7px;*/
+  /*margin-left: -57px;*/
+  vertical-align: middle;
+  line-height: 32px;
+  text-align: center;
+
+
+}
+
+#colName{
+  font-size: 20px;
+}
+
+#colSta{
+  child-align: middle;
+  vertical-align: center;
+
+}
+
+
+#Col{
+  color: #2C4D62;
+  font-family: 'Poppins';
+  font-weight: normal;
+  font-size: 16px;
+  margin: auto;
+  text-align: center;}

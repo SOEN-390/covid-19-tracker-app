@@ -26,6 +26,7 @@ import '@ionic/react/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 import ImmigrationDashboard from './pages/ImmigrationOfficer/immigrationDashboard';
+import HO_nonConfirmedPatients from './pages/HealthOfficials/HO_nonConfirmedPatients';
 
 setupIonicReact();
 
@@ -53,6 +54,9 @@ const AppMenu: React.FC = () => {
                 <Route path={Pages.Immigrationdashboard}>
                         <ImmigrationDashboard/>
                     </Route>
+                <Route path={Pages.HO_nonConfirmedPatients}>
+                    <HO_nonConfirmedPatients/>
+                </Route>
             </IonRouterOutlet>
         </IonSplitPane>
     );

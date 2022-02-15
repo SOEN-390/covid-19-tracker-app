@@ -25,20 +25,19 @@ function NavBar() {
             <IonMenuButton slot="start" />
             <IonGrid>
                 <IonRow className="ion-align-items-end">
-                    <IonCol size="9" size-sd>
-
-                    <IonSearchbar value={searchText} onIonChange={e => setSearchText(e.detail.value!)}
-                    showCancelButton="never" ></IonSearchbar>
-                    <IonButton onClick={search}> search </IonButton>
-
-
+                    <IonCol size="7" size-sd>
+                    <IonSearchbar  value={searchText} onIonChange={e => setSearchText(e.detail.value!)}
+                        showCancelButton="never" />
                     </IonCol>
-
-                    <IonCol size="1">
+                    <IonCol size="1" >
                         <IonAvatar className="avatar">
                             <img src={logo} alt=""/>
                         </IonAvatar>
                     </IonCol>
+                    <IonCol>
+                        <IonButton onClick={search}> search </IonButton>
+                    </IonCol>
+
                     {/*<IonCol size="2">*/}
 
                     {/*    <h5>Beshoy Soliman</h5>*/}

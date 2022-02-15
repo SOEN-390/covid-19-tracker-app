@@ -10,8 +10,12 @@
     "@capacitor/ios": "3.4.0",
     "@capacitor/keyboard": "1.2.1",
     "@capacitor/status-bar": "1.0.7",
+    "@emotion/react": "^11.7.1",
+    "@emotion/styled": "^11.6.0",
     "@ionic/react": "^6.0.3",
     "@ionic/react-router": "^6.0.0",
+    "@mobiscroll/react-lite": "^4.10.9",
+    "@mui/material": "^5.4.1",
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
@@ -23,11 +27,14 @@
     "@types/react-router-dom": "^5.3.3",
     "firebase": "^9.6.5",
     "ionicons": "^6.0.1",
+    "mobiscroll-react": "^4.0.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-infinite-scroll-component": "^6.1.0",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.0.1",
     "react-scripts": "^5.0.0",
+    "styled-components": "^5.3.3",
     "typescript": "^4.5.5",
     "web-vitals": "^2.1.4",
     "workbox-background-sync": "^6.4.2",
@@ -69,7 +76,8 @@
   },
   "devDependencies": {
     "@capacitor/cli": "3.4.0",
-    "@types/firebase": "^3.2.1"
+    "@types/firebase": "^3.2.1",
+    "@types/styled-components": "^5.1.22"
   },
   "description": "An Ionic project"
 }

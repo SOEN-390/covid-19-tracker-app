@@ -127,6 +127,7 @@ ion-menu::part(container) {
 
 ion-menu {
   border-inline-end: unset;
+  width: 350px;
 }
 
 ion-title{
