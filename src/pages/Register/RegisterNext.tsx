@@ -15,8 +15,10 @@ import './Register.css';
 import { Pages } from '../../providers/pages.enum';
 import { useState } from 'react';
 import HttpService from '../../providers/http.service'
-import { testResult } from '../../enum/testResult';
-import { IUser } from '../../interfaces/IUser';
+import { TestResult } from '../../enum/TestResult.enum';
+import { IPatient } from '../../interfaces/IPatient';
+import { auth } from '../../config/firebase';
+import { useAuth } from '../../providers/auth.provider';
 
 setupIonicReact();
 
@@ -31,31 +33,33 @@ const RegisterNext: React.FC = () => {
     const history = useHistory();
     const [present] = useIonToast();
 
+    const {logout} = useAuth();
 
     function registration() {
         const valid = validateInput();
         if (!valid) {
-            present('Please fill out all the required fields').then(() => {
-                return;
-            });
+            present('Please fill out all the required fields', 1500);
         }
-        const user: IUser = {
+
+        const user: IPatient = {
             medicalId: medicalNumber,
             firstName: firstName,
             lastName: lastName,
-            testResults: testResult.POSITIVE,
+            // TODO - drop down for test result
+            testResult: TestResult.POSITIVE,
             address: address,
-            email: 'sevag@mail.com',
+            email: auth.currentUser?.email,
             phoneNumber: phoneNumber
         }
         saveUser(user).then((success) => {
             if (success) {
-                present('Successfully registered.').then(() => {
+                present('Successfully registered.', 1500).then(() => {
+                    logout();
                     history.push(Pages.login);
                 });
             }
             else {
-                present('Something went wrong.');
+                present('Something went wrong.', 1500);
             }
         });
     }
@@ -80,7 +84,7 @@ const RegisterNext: React.FC = () => {
 
     }
 
-    async function saveUser(user: IUser): Promise<boolean> {
+    async function saveUser(user: IPatient): Promise<boolean> {
         const response = await HttpService.post('patients/create', user);
         return response.ok;
     }

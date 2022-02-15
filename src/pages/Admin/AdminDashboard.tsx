@@ -1,7 +1,6 @@
 import {IonAvatar, IonContent, IonIcon, IonImg, IonItem, IonLabel, IonList, IonMenu, IonMenuToggle, IonRouterOutlet, IonSplitPane, setupIonicReact} from '@ionic/react';
 import {Redirect, Route, useLocation} from 'react-router-dom';
 
-import Logout from '../../pages/Logout/Logout';
 import { Pages } from '../../providers/pages.enum';
 import AssignedConfirmed from '../../pages/Admin/AssignedConfirmed'
 import AdminMenu from '../../RolesMenu/AdminMenu';
@@ -24,6 +23,8 @@ import '@ionic/react/css/flex-utils.css';
 import '@ionic/react/css/display.css';
 import Doctors from './Doctors';
 import UnAssignedConfirmed from './UnAssignedConfirmed';
+import Settings from './Settings';
+import AdminOverview from './AdminOverview';
 
 
 const AdminDashboard: React.FC = () => {
@@ -33,9 +34,12 @@ const AdminDashboard: React.FC = () => {
             <AdminMenu/>
             <IonRouterOutlet id="admin">
                 <Route path={Pages.admin} exact={true} >
-                    <h1>Welcome to Admin Dashboard</h1>
+                    <Redirect to={Pages.adminOverview}/>
                 </Route>
-                
+                <Route path={Pages.adminOverview} >
+                     <AdminOverview/>
+                </Route>
+
                 <Route path={Pages.assignedConfirmed} >
                      <AssignedConfirmed/>
                 </Route>
@@ -45,11 +49,10 @@ const AdminDashboard: React.FC = () => {
                 <Route path={Pages.doctors} >
                     <Doctors/>
                 </Route>
-
-                <Route path={Pages.logout}>
-                    <Logout />
+                <Route path={Pages.settings} >
+                    <Settings/>
                 </Route>
-                
+
             </IonRouterOutlet>
             
         </IonSplitPane>

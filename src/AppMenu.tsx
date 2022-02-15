@@ -1,10 +1,12 @@
-import {IonRouterOutlet, IonSplitPane, setupIonicReact} from '@ionic/react';
-import {Redirect, Route} from 'react-router-dom';
+import { IonRouterOutlet, IonSplitPane, setupIonicReact } from '@ionic/react';
+import { Redirect, Route } from 'react-router-dom';
+
 import Menu from './components/Menu';
 import Overview from './pages/Overview/Overview';
 import Appointments from './pages/Appointments/Appointments';
-import Logout from './pages/Logout/Logout';
 import SymptomsForm from './pages/SymptomsForm/SymptomsForm';
+import PatientProfile from './pages/Doctor/PatientProfile';
+import ImmigrationDashboard from './pages/ImmigrationOfficer/immigrationDashboard';
 import { Pages } from './providers/pages.enum';
 
 /* Core CSS required for Ionic components to work properly */
@@ -26,37 +28,57 @@ import '@ionic/react/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 import HealthOfficialView from './pages/HealthOffical/HealthOfficialView';
-
+import { useAuth } from './providers/auth.provider';
+import { UserType } from './enum/UserType.enum';
+import AdminDashboard from './pages/Admin/AdminDashboard';
 
 setupIonicReact();
 
 const AppMenu: React.FC = () => {
-    return (
-        <IonSplitPane contentId="home">
-            <Menu/>
-            <IonRouterOutlet id="home">
-                <Route path={Pages.home} exact={true}>
-                    <Redirect to={Pages.overview}/>
-                </Route>
+    const {currentProfile} = useAuth();
+    if (!currentProfile) {
+        return <></>;
+    }
 
-                <Route path={Pages.overview}>
-                    <Overview/>
-                </Route>
-                <Route path={Pages.appointments}>
-                    <Appointments/>
-                </Route>
-                <Route path={Pages.symptoms}>
-                    <SymptomsForm/>
-                </Route>
-                <Route path={Pages.logout}>
-                    <Logout />
-                </Route>
-                <Route path={Pages.ho_ConfirmedPatient}>
-                    <HealthOfficialView/>
-                </Route>
-            </IonRouterOutlet>
-        </IonSplitPane>
-    );
+    switch(currentProfile.getRole()){
+        
+        case UserType.ADMIN:
+            return <Redirect to={Pages.admin}/>
+        default:
+            return (
+                <IonSplitPane contentId="home">
+                    <Menu/>
+                    <IonRouterOutlet id="home">
+                        <Route path={Pages.home} exact={true}>
+                            <Redirect to={Pages.overview}/>
+                        </Route>
+
+                        <Route path={Pages.overview}>
+                            <Overview/>
+                        </Route>
+                        <Route path={Pages.appointments}>
+                            <Appointments/>
+                        </Route>
+                        <Route path={Pages.symptoms}>
+                            <SymptomsForm/>
+                        </Route>
+                        <Route path={Pages.patientProfile}>
+                            <PatientProfile/>
+                        </Route>
+                        <Route path={Pages.immigrationDashboard}>
+                            <ImmigrationDashboard/>
+                        </Route>
+                        <Route path={Pages.ho_ConfirmedPatient}>
+                            <HealthOfficialView/>
+                        </Route>
+                        <Route path={Pages.admin}>
+                            <AdminDashboard/>
+                        </Route>
+                    
+                    </IonRouterOutlet>
+                </IonSplitPane>
+            );
+    }
 };
 
 export default AppMenu;

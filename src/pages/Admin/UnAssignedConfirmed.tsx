@@ -1,10 +1,11 @@
-import { IonAvatar, IonButton, IonCol, IonIcon, IonImg, IonRow,IonTitle,IonGrid,IonContent, IonPage, IonToolbar } from '@ionic/react';
+import { IonAvatar, IonButton, IonCol, IonIcon, IonImg, IonRow,IonTitle,IonGrid,IonContent, IonPage, IonToolbar, IonText } from '@ionic/react';
 import { flag } from 'ionicons/icons';
 import '../../components/HealthOfficialTable.css';
 import logo from '../../resources/UserIcon.png'
 import { IonReactHashRouter } from '@ionic/react-router';
 import NavBar from '../../components/NavBar';
 import AssignedConfirmed from './AssignedConfirmed';
+import { Pages } from '../../providers/pages.enum';
 
 
 interface patient {
@@ -56,16 +57,16 @@ const UnAssignedConfirmed: React.FC = () =>{
         <NavBar/>
 
         <div className='tab'>
-            <text>
+            <IonText>
                 <IonTitle id="patientHeader">Patients</IonTitle>
-            </text>
+            </IonText>
             <div>
                 <IonRow>
                     <IonCol size="6" class="confirmButton">
-                        <IonButton  color= "favorite1" href="admin/AssignedConfirmed">ASSIGN</IonButton>
+                        <IonButton  color= "favorite1" routerLink={Pages.assignedConfirmed}>ASSIGN</IonButton>
                     </IonCol>
                     <IonCol size="6" class = "unconfirmedButton">
-                        <IonButton color= "favorite" href="admin/unAssignedConfirmed">UNASSIGN</IonButton>
+                        <IonButton color= "favorite" routerLink={Pages.unAssignedConfirmed}>UNASSIGN</IonButton>
                     </IonCol>
                 </IonRow>
             </div>

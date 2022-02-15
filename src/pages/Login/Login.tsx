@@ -14,42 +14,29 @@ import {
 } from '@ionic/react';
 import CovidTrackerTransparent from '../../assets/images/CovidTrackerTransparent.png';
 import { useState } from 'react';
-import { getCurrentUser, loginUser } from '../../providers/firebase.service';
-import { useEffect } from 'react';
 import './Login.css';
 import { useHistory } from 'react-router-dom';
 import { Pages } from '../../providers/pages.enum';
+import { useAuth } from '../../providers/auth.provider';
 
 setupIonicReact();
 
 const Login: React.FC = () => {
+    const {login} = useAuth();
     const [checked] = useState(false);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     let history = useHistory();
     const [present] = useIonToast();
 
-    async function login() {
-        const rest = await loginUser(email, password);
-        if (rest) {
+    async function loginUser() {
+        login(email, password).then(() => {
             present('Successfully logged in.', 1500);
             history.push(Pages.home);
-        } else {
+        }).catch((error: any) => {
             present('Something went wrong. Please try again.', 1500);
-        }
-    }
-
-    useEffect(() => {
-        getCurrentUser().then(user => {
-            if (user) {
-                console.log('logged in');
-                // i'm logged in
-                // history.push('/home')
-            } else {
-                console.log('not logged in');
-            }
         });
-    });
+    }
 
     return (
         <IonApp>
@@ -77,7 +64,7 @@ const Login: React.FC = () => {
                         <IonLabel>Remember me</IonLabel>
                         <IonRouterLink href="#" color="#4D4D4D" className="underline">Forgot Password?</IonRouterLink>
                     </IonItem>
-                    <IonButton onClick={login} size="large" expand="block" fill="solid"
+                    <IonButton onClick={loginUser} size="large" expand="block" fill="solid"
                                color={'dark-blue'}>LOGIN</IonButton>
                     <br/>
                     <p className={'register-text'}> Do not have an account ? <a href={Pages.register}

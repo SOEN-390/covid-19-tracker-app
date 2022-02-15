@@ -1,4 +1,4 @@
-import { IonAvatar, IonButton, IonCol, IonIcon, IonImg, IonRow,IonTitle,IonGrid,IonContent, IonPage, IonToolbar } from '@ionic/react';
+import { IonAvatar, IonButton, IonCol, IonIcon, IonImg, IonRow,IonTitle,IonGrid,IonContent, IonPage, IonToolbar, IonText } from '@ionic/react';
 import { flag } from 'ionicons/icons';
 import '../../components/HealthOfficialTable.css';
 import logo from '../../resources/UserIcon.png'
@@ -48,16 +48,15 @@ const patients: patient[] = [
 
 const Doctors: React.FC = () =>{
 
-    // @ts-ignore
     return (
         <IonPage>
         <IonToolbar>
         <NavBar/>
 
         <div className='tab'>
-            <text>
+            <IonText>
                 <IonTitle id="patientHeader">Doctors</IonTitle>
-            </text>
+            </IonText>
 
             <div id="Container">
                 <div id = "innerContainer">
