@@ -1,5 +1,3 @@
-import HO_nonConfirmedPatients from '../pages/HealthOfficials/HO_nonConfirmedPatients';
-
 export enum Pages {
     login = '/login',
     register = '/register',
@@ -7,7 +5,7 @@ export enum Pages {
     overview = '/home/overview',
     appointments = '/home/appointments',
     symptoms = '/home/symptoms',
-    logout = '/home/logout',
-    Immigrationdashboard = '/home/immigration',
+    patientProfile = '/home/patient-profile',
+    immigrationDashboard = '/home/immigration-dashboard',
     HO_nonConfirmedPatients ='/home/healthOfficials'
 }

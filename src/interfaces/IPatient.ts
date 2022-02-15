@@ -1,10 +1,10 @@
-import { testResult } from '../enum/testResult';
+import { TestResult } from '../enum/TestResult.enum';
 
 export interface IPatient {
     medicalId: string;
     firstName: string;
     lastName: string;
-    testResult: testResult;
+    testResult: TestResult;
     address: string;
     email: string | null | undefined;
     phoneNumber: string;
