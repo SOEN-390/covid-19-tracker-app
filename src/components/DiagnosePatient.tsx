@@ -1,12 +1,27 @@
 import { IonAvatar, IonCol, IonContent, IonImg, IonRow, IonText } from '@ionic/react';
 import './DiagnosePatient.css';
 import logo from '../resources/icon.png'
+import HttpService from '../providers/http.service';
+import { useState } from 'react';
+
 
 
 function DiagnosePatient() {
+    const [firstName, setfirstName] = useState('')
+    const [lastName, setLastName] = useState('')
+    const [address, setAddress] = useState('')
+    const [medicalNumber, setMedicalNumber] = useState('')
+    const [phoneNumber, setPhoneNumber] = useState('')
 
 
+     HttpService.get(`patients/${55}`).then(async (response) => {
+         const data = await response.json();
+         setfirstName(data.firstName)
+         setLastName(data.lastName)
 
+     }).catch((error) => {
+     });
+    
     return (
         <IonContent>
             <div id='Container'>
@@ -21,7 +36,7 @@ function DiagnosePatient() {
                             <div>
 
                                 <IonText><strong>First Name</strong></IonText>
-                                <p className='box'>Chirs</p>
+                                <p className='box'> {firstName}  </p>
                             </div>
                         </IonRow>
                         <IonRow>
@@ -44,7 +59,7 @@ function DiagnosePatient() {
                             <div>
 
                                 <IonText><strong>Last Name</strong></IonText>
-                                <p className='box'>Evans</p>
+                                <p className='box'>{lastName}</p>
                             </div>
                         </IonRow>
                         <IonRow>
