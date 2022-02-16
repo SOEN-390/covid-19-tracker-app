@@ -47,10 +47,10 @@ const Register: React.FC = () => {
             <IonContent>
                 <IonImg className="login-logo" src={CovidTrackerTransparent}/>
                 <div className="sign-in-center">
+                    <IonLabel className="login-text">Protect Yourself</IonLabel>
                     <h2 className="login-text">Sign Up</h2>
                 </div>
                 <div className="ion-align-items-center; login-form-center">
-                    <IonLabel className="login-text">Protect Yourself</IonLabel>
 
                     <br/><br/>
 

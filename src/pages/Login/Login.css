@@ -1,15 +1,19 @@
 .login-text{
     color: #2C4D62;
     line-height: 10px;
+    text-align: center;
 }
+
 .register-text{
-    margin-left: 30%;
-    width: 50%;
+  width: 100%;
+  text-align:center;
 }
+
 .register-text-color{
     color: #2C4D62;
     font-weight: bold;
 }
+
 .login-logo::part(image){
     left: 0;
     right: 0;
@@ -22,6 +26,7 @@
     --background-hover: none;
     --background-activated: none;
     --ripple-color: transparent;
+    text-align:center;
 }
 
 .login-form-center {
@@ -41,6 +46,7 @@
     border-radius: 10px;
     height: 59px;
     width: 100%;
+    text-align:center;
 }
 
 .custom-checkbox {

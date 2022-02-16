@@ -125,7 +125,6 @@ const RegisterNext: React.FC = () => {
                               onIonChange={(e: any) => setAddress(e.target.value)}/>
 
                     <br/><br/>
-                    
                     <IonLabel className="login-text">Medical card number</IonLabel>
                     <IonInput className="login-text-field" placeholder="Enter your medical card number" type="text"
                               onIonChange={(e: any) => setMedicalNumber(e.target.value)}/>

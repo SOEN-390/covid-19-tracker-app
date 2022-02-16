@@ -42,6 +42,7 @@ const Login: React.FC = () => {
     return (
         <IonApp>
             <IonHeader>
+                <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
             </IonHeader>
             <IonContent>
                 <IonImg className="login-logo" src={CovidTrackerTransparent}/>
@@ -63,13 +64,15 @@ const Login: React.FC = () => {
                             <IonCheckbox slot="end" className={'custom-checkbox'} checked={checked}/>
                         </div>
                         <IonLabel>Remember me</IonLabel>
+                    </IonItem>
+                    <IonItem className="ion-item" lines="none">
                         <IonRouterLink href="#" color="#4D4D4D" className="underline">Forgot Password?</IonRouterLink>
                     </IonItem>
                     <IonButton onClick={loginUser} size="large" expand="block" fill="solid"
                                color={'dark-blue'}>LOGIN</IonButton>
                     <br/>
-                    <p className={'register-text'}> Do not have an account ? <a href={Pages.register}
-                                                                                className={'register-text-color'}> Register</a>
+                    <p className={'register-text'}> Do not have an account? <br/>
+                        <a href={Pages.register} className={'register-text-color'}>Register</a>
                     </p>
                 </div>
 
