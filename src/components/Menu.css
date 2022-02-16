@@ -127,7 +127,7 @@ ion-menu::part(container) {
 
 ion-menu {
   border-inline-end: unset;
-  width: 350px;
+  /*width: 350px;*/
 }
 
 ion-title{
@@ -153,10 +153,7 @@ ion-item{
   --background: #F7F7F7;
 }
 
-/*#home{*/
-/*  background-color: #F7F7F7;*/
-/*}*/
-
 .emergencyBox{
   background-color: #F7F7F7;
 }
+

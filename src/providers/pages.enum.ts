@@ -7,5 +7,5 @@ export enum Pages {
     symptoms = '/home/symptoms',
     patientProfile = '/home/patient-profile',
     immigrationDashboard = '/home/immigration-dashboard',
-    HO_nonConfirmedPatients ='/home/healthOfficials'
+    healthOfficialPage ='/home/healthOfficials'
 }

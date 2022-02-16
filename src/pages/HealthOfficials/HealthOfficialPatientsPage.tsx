@@ -1,9 +1,9 @@
 import { IonPage, IonToolbar } from '@ionic/react';
 
 import NavBar from '../../components/NavBar';
-import HealthOfficialTable from '../../components/HO_nonConfirmed_TABLE';
+import HealthOfficialTable from '../../components/HealthOfficialTable';
 
-const HO_nonConfirmedPatients: React.FC = () => {
+const HealthOfficialPatientsPage: React.FC = () => {
 
     // const { name } = useParams<{ name: string; }>(); //to get page name
 
@@ -19,4 +19,4 @@ const HO_nonConfirmedPatients: React.FC = () => {
     );
 };
 
-export default HO_nonConfirmedPatients;
+export default HealthOfficialPatientsPage;

@@ -6,6 +6,8 @@ import Appointments from './pages/Appointments/Appointments';
 import SymptomsForm from './pages/SymptomsForm/SymptomsForm';
 import PatientProfile from './pages/Doctor/PatientProfile';
 import ImmigrationDashboard from './pages/ImmigrationOfficer/immigrationDashboard';
+import HealthOfficialPatientsPage from './pages/HealthOfficials/HealthOfficialPatientsPage';
+
 import { Pages } from './providers/pages.enum';
 
 /* Core CSS required for Ionic components to work properly */
@@ -26,7 +28,6 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
-import HO_nonConfirmedPatients from './pages/HealthOfficials/HO_nonConfirmedPatients';
 
 setupIonicReact();
 
@@ -51,8 +52,8 @@ const AppMenu: React.FC = () => {
                 <Route path={Pages.patientProfile}>
                     <PatientProfile/>
                 </Route>
-                <Route path={Pages.HO_nonConfirmedPatients}>
-                    <HO_nonConfirmedPatients/>
+                <Route path={Pages.healthOfficialPage}>
+                    <HealthOfficialPatientsPage/>
                 </Route>
                 <Route path={Pages.immigrationDashboard}>
                     <ImmigrationDashboard/>

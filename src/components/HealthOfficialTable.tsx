@@ -1,46 +1,18 @@
 import { IonAvatar, IonButton, IonCol, IonIcon, IonImg, IonRow, IonTitle, IonGrid, IonContent } from '@ionic/react';
 import { flag } from 'ionicons/icons';
-import './HO_nonConfirmed_TABLE.css';
-// import logo from '../resources/UserIcon.png'
-import { IonReactHashRouter } from '@ionic/react-router';
-//
-// function HealthOfficialTable() {
-//
-//     // @ts-ignore
-//     return (
-//         <IonContent>
-//             <IonTitle id="title"> Patients </IonTitle>
-//             <div>
-//                 <IonRow>
-//                     <IonCol></IonCol>
-//                     <IonCol class="confirmButton" > <IonButton color="favorite">Confirmed</IonButton></IonCol>
-//                     <IonCol class="unconfirmedButton"><IonButton color="favorite1">Unconfirmed</IonButton></IonCol>
-//                     <IonCol></IonCol>
-//                 </IonRow>
-//             </div>
-//
-//         </IonContent>
-//     );
-// }
-// export default HealthOfficialTable
+import './HealthOfficialTable.css';
 
 
 import * as React from 'react';
-import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
-import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
-import styled from "styled-components";
 
 
-
-
-
-interface Column {
+interface Column{
     id: 'name' | 'status' | 'last_update' | 'doctor'|'daysQUAR'| 'action'| 'priority' |'monitor_symptoms';
     label: string;
     minWidth?: number;
@@ -53,9 +25,7 @@ const columns: readonly Column[] = [
         id: 'name',
         label: 'Name',
         minWidth: 170,
-        align:"center"
-
-
+        align: "center"
     },
     {
         id: 'status',
@@ -92,26 +62,13 @@ const columns: readonly Column[] = [
         label: 'Priority',
         minWidth: 170,
         align: "center"
-
     },
     {
         id: 'monitor_symptoms',
         label: '',
         minWidth: 170,
         align: "center"
-    },
-    // {
-    //     id: 'action5',
-    //     label: 'Action',
-    //     minWidth: 170,
-    //
-    // },
-    // {
-    //     id: 'action6',
-    //     label: 'Action',
-    //     minWidth: 170,
-    //
-    // },
+    }
 ];
 
 interface Data {
@@ -123,7 +80,6 @@ interface Data {
     action : string;
     priority :string;
     monitor_symptoms:string;
-
 }
 
 function createData(
@@ -135,7 +91,6 @@ function createData(
     action : string,
     priority :string,
     monitor_symptoms:string
-
 ): Data {
     return { name, status, last_update, action, doctor, daysQUAR, priority, monitor_symptoms };
 }
@@ -167,10 +122,6 @@ const rows = [
     createData('Sarah Salib', 'positive', '20-11-2021', 'Kero', '2days', 'contact', '1',''),
     createData('Sarah Salib', 'positive', '20-11-2021', 'Kero', '2days', 'contact', '1',''),
 
-
-
-
-
 ];
 
 
@@ -188,18 +139,16 @@ export default function HealthOfficialTable() {
     };
 
     return (
-
         <IonContent>
             <IonTitle id="title"> Patients </IonTitle>
             <div>
                 <IonRow>
                     <IonCol></IonCol>
-                    <IonCol class="confirmButton" > <IonButton color="favorite">Confirmed</IonButton></IonCol>
-                    <IonCol class="unconfirmedButton"><IonButton color="favorite1">Unconfirmed</IonButton></IonCol>
+                    <IonCol class="confirmButton" > <IonButton id="con"  color="favorite">Confirmed</IonButton></IonCol>
+                    <IonCol class="unconfirmedButton"><IonButton  color="favorite1">Unconfirmed</IonButton></IonCol>
                     <IonCol></IonCol>
                 </IonRow>
             </div>
-
 
         <div style={{width: '100%', overflow: 'hidden' }}>
             <TableContainer  id='table_container'>
@@ -226,11 +175,8 @@ export default function HealthOfficialTable() {
                     </TableHead>
                     <TableBody>
                         {rows
-                            // .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                             .map((row) => {
                                 return (
-
-
                                         <TableRow hover role="checkbox" tabIndex={-1} key={row.name}
                                         style={{borderRadius:'25px', borderCollapse:'collapse', padding:'10px'}}>
 
@@ -251,22 +197,6 @@ export default function HealthOfficialTable() {
 
                                     </TableRow>
                                 );
-
-                            //
-                            //     return (
-                            //         <TableRow hover role="checkbox" tabIndex={-1} key={row.name}>
-                            //             {columns.map((column) => {
-                            //                 const value = row[column.id];
-                            //                 return (
-                            //                     <TableCell key={column.id} align={column.align}>
-                            //                         {column.format && typeof value === 'number'
-                            //                             ? column.format(value)
-                            //                             : value}
-                            //                     </TableCell>
-                            //                 );
-                            //             })}
-                            //         </TableRow>
-                            //     );
                             })}
                     </TableBody>
                 </Table>
@@ -274,5 +204,4 @@ export default function HealthOfficialTable() {
         </div>
         </IonContent>
     );
-
 }
