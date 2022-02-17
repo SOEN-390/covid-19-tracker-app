@@ -6,7 +6,6 @@
 }
 ion-content {
   --padding-top: 20px;
-  --padding-start: 20px;
 }
 
 
@@ -51,23 +50,25 @@ ion-content {
 
 #table_container{
   position: relative;
-  padding: 20px;
+  padding-top: 20px;
+  padding-right: 20px;
   display: block;
 }
 
 table{
   scroll-behavior: auto;
 }
+
 table th:first-child{
-  border-radius:10px 0 0 10px;
+  border-radius: 10px 0 0 10px;
   position: sticky;
   top: 0;
   z-index: 9999;
-
 }
 
-
-
+table th:last-child{
+  border-radius: 0 10px 10px 0;
+}
 
 #PosStatus {
   height: 32px;
