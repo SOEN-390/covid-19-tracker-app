@@ -84,6 +84,13 @@ const Menu: React.FC = () => {
 
     // const labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
 
+    function getName(): string {
+        if (!currentProfile) {
+            return '';
+        }
+        return `${currentProfile.firstName} ${currentProfile.lastName}`;
+    }
+
     function getRole(): string {
         if (!currentProfile) {
             return '';
@@ -112,7 +119,9 @@ const Menu: React.FC = () => {
                     {/*    <IonImg src={logo}/>*/}
                     {/*</IonAvatar>*/}
 
-                    <IonTitle>Welcome {currentUser?.email}</IonTitle>
+                    <IonTitle>Welcome {getName()}</IonTitle>
+                    <br />
+                    <IonTitle>{currentUser?.email}</IonTitle>
                     <IonTitle>{getRole()}</IonTitle>
                     <IonItemDivider/>
                     {/*<IonList id="inbox-list">*/}
