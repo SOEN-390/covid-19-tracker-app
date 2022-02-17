@@ -8,7 +8,6 @@ import HttpService from '../../providers/http.service';
 
 
 interface patientSchema {
-
     firstName: string, 
     lastName: string, 
     testResult:string|null,
@@ -20,7 +19,6 @@ interface patientSchema {
 
 const AssignedConfirmed: React.FC = () =>{
     const [patientsArray, setPatientsArray]= useState <patientSchema[]> ()
-    var moment = require('moment'); 
 
     useEffect(() => {
         patientsRetrieval();
@@ -78,11 +76,11 @@ const AssignedConfirmed: React.FC = () =>{
                                 <IonCol size ="1px"><IonAvatar><img src={logo}/></IonAvatar></IonCol>
                                 <IonCol id="colName" size ="2">{patient.firstName+' '+patient.lastName}</IonCol>
                                 <IonCol size ="1" ><div id={patient.testResult=='positive'?"PosStatus":"NegStatus"}>{patient.testResult==null?'Negative':'Positive'}</div></IonCol>
-                                <IonCol id="lastUpdate" size ="2">{moment(patient.LastUpdate).format('DD MMM, YYYY')}</IonCol>
-                                <IonCol id="colName" size ="1" >{patient.DoctorName==null?'---':patient.DoctorName}</IonCol>
-                                <IonCol id="col" size ="1" >{patient.DaysQuarantined}</IonCol>
+                                <IonCol id="lastUpdate" size ="2">September 10, 2021</IonCol>
+                                <IonCol id="colName" size ="1" >Dr.Sarah</IonCol>
+                                <IonCol id="col" size ="1" > 15 Days</IonCol>
                                 <IonCol id="col" size ="2">
-                                    <IonButton color ="favorite" shape = "round"> {patient.DoctorName==null?'ASSIGN':'UNASSIGN'} </IonButton>
+                                    <IonButton color ="favorite" shape = "round"> UNASSIGN </IonButton>
                                 </IonCol>
 
                                 </IonRow>
