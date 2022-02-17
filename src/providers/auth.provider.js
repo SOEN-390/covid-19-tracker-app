@@ -64,14 +64,11 @@ export function AuthProvider({ children }) {
         }
         try {
             const response = await HttpService.get('users');
-            if (!response.ok) {
-                return null;
-            }
             const userData =  await response.json();
             return createUserProfileObject(userData);
         } catch (error) {
             console.log(error);
-            return null;
+            throw error;
         }
     }
 
