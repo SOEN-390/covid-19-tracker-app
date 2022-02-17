@@ -13,7 +13,7 @@ const HttpService = {
         return fetch(request).then((response) => {
             return response;
         }).catch((error) => {
-            return error;
+            throw error;
         });
     },
 
@@ -26,7 +26,7 @@ const HttpService = {
         return fetch(request).then((response) => {
             return response;
         }).catch((error) => {
-            return error;
+            throw error;
         });
     },
 
@@ -38,7 +38,7 @@ const HttpService = {
         return fetch(request).then((response) => {
             return response;
         }).catch((error) => {
-            return error;
+            throw error;
         });
     },
 
@@ -51,7 +51,7 @@ const HttpService = {
         return fetch(request).then((response) => {
             return response;
         }).catch((error) => {
-            return error;
+            throw error;
         });
     },
 
