@@ -56,14 +56,9 @@ const HttpService = {
     },
 
     getHeader: () => {
-        // Will be modified later to send the authToken from firebase
         return new Headers({
             Authorization: 'Bearer ' + idToken
         });
-        // {
-        //     'Content-Type': 'application/json',
-        //     Accept: 'application/json'
-        // }
     }
 
 };
