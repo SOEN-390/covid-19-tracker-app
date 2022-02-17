@@ -18,7 +18,7 @@ function DiagnosePatient() {
          const data = await response.json();
          setfirstName(data.firstName)
          setLastName(data.lastName)
-
+        console.log(data.firstName)
      }).catch((error) => {
      });
     
