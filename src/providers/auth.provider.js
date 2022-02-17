@@ -9,6 +9,7 @@ import {Patient} from "../objects/Patient.class";
 import {Doctor} from "../objects/Doctor.class";
 import {ImmigrationOfficer} from "../objects/ImmigrationOfficer.class";
 import {Admin} from "../objects/Admin.class";
+import {useIonToast} from "@ionic/react";
 
 export const AuthContext = React.createContext();
 
@@ -22,6 +23,7 @@ export function AuthProvider({ children }) {
     const [currentUser, setCurrentUser] = useState(firebase.User | undefined); // The user from firebase
     const [currentProfile, setCurrentProfile] = useState(User | undefined); // The user from our database
     const [loading, setLoading] = useState(true);
+    const [present] = useIonToast();
 
     function signup(email, password) {
         return auth.createUserWithEmailAndPassword(email, password);
@@ -103,8 +105,11 @@ export function AuthProvider({ children }) {
                     if (window.location.pathname === Pages.register || window.location.pathname === '/register/2') {
                         return;
                     }
+                    if (window.location.pathname !== Pages.login) {
+                        window.location.pathname = Pages.login;
+                    }
                     console.log(error);
-                    // TODO: Display a toast
+                    present('Something went wrong!', 1500);
                 });
 
             }
