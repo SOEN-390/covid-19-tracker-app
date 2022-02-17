@@ -105,6 +105,7 @@ export function AuthProvider({ children }) {
                     if (window.location.pathname === Pages.register || window.location.pathname === '/register/2') {
                         return;
                     }
+                    logout();
                     if (window.location.pathname !== Pages.login) {
                         window.location.pathname = Pages.login;
                     }
