@@ -1,5 +1,5 @@
 import { IonButton } from '@ionic/react';
-import './HealthOfficialTable.css';
+import './PatientsTable.css';
 import * as React from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -7,7 +7,7 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import { IPatientTableRow } from '../interfaces/IPatientTableRow';
+import { IPatientTableRow } from '../../interfaces/IPatientTableRow';
 
 
 interface Column {
@@ -64,9 +64,7 @@ const columns: readonly Column[] = [
 ];
 
 
-const HealthOfficialTable: React.FC<{ patientTableRows: IPatientTableRow[] }> = (props) => {
-    const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(10);
+const PatientsTable: React.FC<{ patientTableRows: IPatientTableRow[] }> = (props) => {
 
     return (
         <div style={{width: '100%', overflow: 'hidden'}}>
@@ -130,4 +128,4 @@ const HealthOfficialTable: React.FC<{ patientTableRows: IPatientTableRow[] }> = 
     );
 }
 
-export default HealthOfficialTable;
+export default PatientsTable;

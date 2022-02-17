@@ -1,7 +1,7 @@
 import { IonButton, IonCol, IonContent, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
 
 import NavBar from '../../components/NavBar';
-import HealthOfficialTable from '../../components/HealthOfficialTable';
+import PatientsTable from '../../components/PatientsTable/PatientsTable';
 import * as React from 'react';
 import { IPatientTableRow } from '../../interfaces/IPatientTableRow';
 
@@ -65,7 +65,7 @@ const HealthOfficialPatientsPage: React.FC = () => {
                         <IonCol/>
                     </IonRow>
                 </div>
-                <HealthOfficialTable patientTableRows={rows}/>
+                <PatientsTable patientTableRows={rows}/>
             </IonContent>
 
         </IonPage>
