@@ -58,7 +58,7 @@ const HealthOfficialPatientsPage: React.FC = () => {
                 <div>
                     <IonRow>
                         <IonCol/>
-                        // These buttons will change the request and rows!
+                        {/*These buttons will change the request and rows!*/}
                         <IonCol class="confirmButton"> <IonButton id="con"
                                                                   color="favorite">Confirmed</IonButton></IonCol>
                         <IonCol class="unconfirmedButton"><IonButton color="favorite1">Unconfirmed</IonButton></IonCol>
