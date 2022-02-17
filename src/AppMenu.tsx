@@ -6,6 +6,8 @@ import Appointments from './pages/Appointments/Appointments';
 import SymptomsForm from './pages/SymptomsForm/SymptomsForm';
 import PatientProfile from './pages/Doctor/PatientProfile';
 import ImmigrationDashboard from './pages/ImmigrationOfficer/immigrationDashboard';
+import HealthOfficialPatientsPage from './pages/HealthOfficials/HealthOfficialPatientsPage';
+
 import { Pages } from './providers/pages.enum';
 
 /* Core CSS required for Ionic components to work properly */
@@ -49,6 +51,9 @@ const AppMenu: React.FC = () => {
                 </Route>
                 <Route path={Pages.patientProfile}>
                     <PatientProfile/>
+                </Route>
+                <Route path={Pages.healthOfficialPage}>
+                    <HealthOfficialPatientsPage/>
                 </Route>
                 <Route path={Pages.immigrationDashboard}>
                     <ImmigrationDashboard/>
