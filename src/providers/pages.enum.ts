@@ -11,7 +11,7 @@ export enum Pages {
     assignedConfirmed = "/admin/assignedConfirmed",
     unAssignedConfirmed = "/admin/unAssignedConfirmed",
     doctors = "/admin/doctors",
-    settings = "/admin/settings",
+    settings = "/settings",
     patientProfile = '/home/patient-profile',
     immigrationDashboard = '/home/immigration-dashboard',
 }

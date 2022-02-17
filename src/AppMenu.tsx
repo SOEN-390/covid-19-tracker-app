@@ -29,8 +29,6 @@ import '@ionic/react/css/display.css';
 import './theme/variables.css';
 import HealthOfficialView from './pages/HealthOffical/HealthOfficialView';
 import { useAuth } from './providers/auth.provider';
-import { UserType } from './enum/UserType.enum';
-import AdminDashboard from './pages/Admin/AdminDashboard';
 
 setupIonicReact();
 
@@ -39,12 +37,6 @@ const AppMenu: React.FC = () => {
     if (!currentProfile) {
         return <></>;
     }
-
-    switch(currentProfile.getRole()){
-        
-        case UserType.ADMIN:
-            return <Redirect to={Pages.admin}/>
-        default:
             return (
                 <IonSplitPane contentId="home">
                     <Menu/>
@@ -71,14 +63,12 @@ const AppMenu: React.FC = () => {
                         <Route path={Pages.ho_ConfirmedPatient}>
                             <HealthOfficialView/>
                         </Route>
-                        <Route path={Pages.admin}>
-                            <AdminDashboard/>
-                        </Route>
+                        
                     
                     </IonRouterOutlet>
                 </IonSplitPane>
             );
-    }
+    
 };
 
 export default AppMenu;

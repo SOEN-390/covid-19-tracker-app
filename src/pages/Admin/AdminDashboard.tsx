@@ -1,10 +1,8 @@
-import {IonAvatar, IonContent, IonIcon, IonImg, IonItem, IonLabel, IonList, IonMenu, IonMenuToggle, IonRouterOutlet, IonSplitPane, setupIonicReact} from '@ionic/react';
-import {Redirect, Route, useLocation} from 'react-router-dom';
+import {IonRouterOutlet, IonSplitPane} from '@ionic/react';
+import {Redirect, Route} from 'react-router-dom';
 
 import { Pages } from '../../providers/pages.enum';
 import AssignedConfirmed from '../../pages/Admin/AssignedConfirmed'
-import AdminMenu from '../../RolesMenu/AdminMenu';
-import NavBar from '../../components/NavBar';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -23,15 +21,16 @@ import '@ionic/react/css/flex-utils.css';
 import '@ionic/react/css/display.css';
 import Doctors from './Doctors';
 import UnAssignedConfirmed from './UnAssignedConfirmed';
-import Settings from './Settings';
+import Settings from '../Settings/Settings';
 import AdminOverview from './AdminOverview';
+import Menu from '../../components/Menu';
 
 
 const AdminDashboard: React.FC = () => {
 
     return (
         <IonSplitPane contentId="admin">
-            <AdminMenu/>
+            <Menu/>
             <IonRouterOutlet id="admin">
                 <Route path={Pages.admin} exact={true} >
                     <Redirect to={Pages.adminOverview}/>
@@ -49,7 +48,7 @@ const AdminDashboard: React.FC = () => {
                 <Route path={Pages.doctors} >
                     <Doctors/>
                 </Route>
-                <Route path={Pages.settings} >
+                <Route path={'/admin'+Pages.settings} >
                     <Settings/>
                 </Route>
 

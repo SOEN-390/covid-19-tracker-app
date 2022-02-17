@@ -10,10 +10,10 @@ const HttpService = {
             body: new Blob([JSON.stringify(body, null, 2)], {type: 'application/json'}),
             headers: HttpService.getHeader()
         });
-        return fetch(request).then((response) => {
-            return response;
+        return fetch(request).then(async (response) => {
+            return await response.json();
         }).catch((error) => {
-            return error;
+            throw error;
         });
     },
 
@@ -23,10 +23,10 @@ const HttpService = {
             body: new Blob([JSON.stringify(body, null, 2)], {type: 'application/json'}),
             headers: HttpService.getHeader()
         });
-        return fetch(request).then((response) => {
-            return response;
+        return fetch(request).then(async (response) => {
+            return await response.json();
         }).catch((error) => {
-            return error;
+            throw error;
         });
     },
 
@@ -35,10 +35,10 @@ const HttpService = {
             method: 'GET',
             headers: HttpService.getHeader()
         });
-        return fetch(request).then((response) => {
-            return response;
+        return fetch(request).then(async (response) => {
+            return await response.json();
         }).catch((error) => {
-            return error;
+            throw error;
         });
     },
 
@@ -48,22 +48,17 @@ const HttpService = {
             body: new Blob([JSON.stringify(body, null, 2)], {type: 'application/json'}),
             headers: HttpService.getHeader()
         });
-        return fetch(request).then((response) => {
-            return response;
+        return fetch(request).then(async (response) => {
+            return await response.json();
         }).catch((error) => {
-            return error;
+            throw error;
         });
     },
 
     getHeader: () => {
-        // Will be modified later to send the authToken from firebase
         return new Headers({
             Authorization: 'Bearer ' + idToken
         });
-        // {
-        //     'Content-Type': 'application/json',
-        //     Accept: 'application/json'
-        // }
     }
 
 };

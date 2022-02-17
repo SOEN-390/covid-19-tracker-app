@@ -23,11 +23,10 @@ const UnAssignedConfirmed: React.FC = () =>{
         patientsRetrieval();
       }, []);
 
-    async function patientsRetrieval() {
-       
+      async function patientsRetrieval() {
         HttpService.get(`patients/all`).then(async (response) => {
-            const data: Array<patientSchema> = await response.json();
-            setPatientsArray(data);
+            console.log('HERE IS THE DATA IN JSON FORM: ', response);
+            setPatientsArray(response);
         }).catch((error) => {
             console.log('ERROR: ', error);
         });

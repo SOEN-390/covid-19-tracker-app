@@ -19,22 +19,20 @@ interface doctortSchema {
 const Doctors: React.FC = () =>{
 
     const [doctorsArray, setDoctorssArray]= useState <doctortSchema[]> ()
-    var moment = require('moment'); 
 
     useEffect(() => {
         doctorssRetrieval();
       }, []);
 
-    async function doctorssRetrieval() {
-       
+      async function doctorssRetrieval() {
         HttpService.get(`doctors/all`).then(async (response) => {
-            const data: Array<doctortSchema> = await response.json();
-            setDoctorssArray(data);
+            console.log('HERE IS THE DATA IN JSON FORM: ', response);
+            setDoctorssArray(response);
         }).catch((error) => {
             console.log('ERROR: ', error);
         });
     }
-    
+
     return (
         <IonPage>
         <IonToolbar>

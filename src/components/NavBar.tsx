@@ -16,8 +16,7 @@ function NavBar() {
             return;
         }
         HttpService.get(`patients/${searchText}`).then(async (response) => {
-            const data = await response.json();
-            console.log('HERE IS THE DATA IN JSON FORM: ', data);
+            console.log('HERE IS THE DATA IN JSON FORM: ', response);
         }).catch((error) => {
             console.log('ERROR: ', error);
         });
