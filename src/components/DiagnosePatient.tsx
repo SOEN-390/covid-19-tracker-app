@@ -22,6 +22,15 @@ function DiagnosePatient() {
     }).catch((error) => {
     });
 
+
+    HttpService.get(`patients/${55}`).then(async (response) => {
+        const data = await response.json();
+        setfirstName(data.firstName)
+        setLastName(data.lastName)
+        console.log(data.firstName)
+    }).catch((error) => {
+    });
+
     return (
         <IonContent>
             <div id='Container'>

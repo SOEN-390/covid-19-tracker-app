@@ -97,8 +97,8 @@ export function AuthProvider({ children }) {
             setCurrentUser(user);
             if (user) {
                 idToken = await user.getIdToken();
-                getCurrentUserProfile(user).then((user) => {
-                    setCurrentProfile(user);
+                getCurrentUserProfile(user).then((profile) => {
+                    setCurrentProfile(profile);
                     if (window.location.pathname === Pages.login || window.location.pathname === '/') {
                         window.location.pathname = Pages.home;
                     }
