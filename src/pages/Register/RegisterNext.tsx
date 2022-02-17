@@ -85,8 +85,13 @@ const RegisterNext: React.FC = () => {
     }
 
     async function saveUser(user: IPatient): Promise<boolean> {
-        const response = await HttpService.post('patients/create', user);
-        return response.ok;
+        try {
+            await HttpService.post('patients/create', user);
+            return true;
+        } catch (error) {
+            console.log(error);
+            return false;
+        }
     }
 
     return (
