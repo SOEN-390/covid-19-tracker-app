@@ -65,8 +65,7 @@ export function AuthProvider({ children }) {
             return undefined;
         }
         try {
-            const response = await HttpService.get('users');
-            const userData =  await response.json();
+            const userData = await HttpService.get('users');
             return createUserProfileObject(userData);
         } catch (error) {
             console.log(error);
