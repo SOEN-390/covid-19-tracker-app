@@ -1,14 +1,14 @@
 import {
     IonContent,
     IonIcon,
+    IonImg,
     IonItem,
+    IonItemDivider,
     IonLabel,
     IonList,
     IonMenu,
     IonMenuToggle,
-    IonImg,
-    IonTitle,
-    IonItemDivider
+    IonTitle
 } from '@ionic/react';
 import appLogo from '../../assets/images/CovidTrackerTransparent.png'
 import Emergency from '../Emergency/Emergency';
@@ -17,7 +17,14 @@ import { logOutOutline } from 'ionicons/icons';
 import './Menu.css';
 import { useAuth } from '../../providers/auth.provider';
 import { UserType } from '../../enum/UserType.enum';
-import { adminAppPages, AppPage, doctorAppPages, immigrationOfficerAppPages, patientAppPages } from './menuAppPages';
+import {
+    adminAppPages,
+    AppPage,
+    doctorAppPages,
+    healthOfficialAppPages,
+    immigrationOfficerAppPages,
+    patientAppPages
+} from './menuAppPages';
 
 const Menu: React.FC<{ionMenuId: string, userType: UserType}> = (props) => {
     const {currentUser, currentProfile, logout} = useAuth();
@@ -35,6 +42,8 @@ const Menu: React.FC<{ionMenuId: string, userType: UserType}> = (props) => {
                 return doctorAppPages;
             case UserType.IMMIGRATION_OFFICER:
                 return immigrationOfficerAppPages;
+            case UserType.HEALTH_OFFICIAL:
+                return healthOfficialAppPages;
             case UserType.ADMIN:
                 return adminAppPages;
             default:
