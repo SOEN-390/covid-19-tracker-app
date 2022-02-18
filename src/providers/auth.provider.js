@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useState} from "react";
 import {auth} from '../config/firebase';
 import firebase from 'firebase/compat/app';
-import {Pages} from "./pages.enum";
+import {Pages, PatientPages} from "./pages.enum";
 import {User} from "../objects/User.class";
 import HttpService from "./http.service";
 import {UserType} from "../enum/UserType.enum";
@@ -103,7 +103,7 @@ export function AuthProvider({ children }) {
                 getCurrentUserProfile(user).then((profile) => {
                     setCurrentProfile(profile);
                     if (window.location.pathname === Pages.login || window.location.pathname === '/') {
-                        window.location.pathname = Pages.home;
+                        window.location.pathname = PatientPages.home;
                     }
                 }).catch((error) => {
                     if (window.location.pathname === Pages.register || window.location.pathname === '/register/2') {
