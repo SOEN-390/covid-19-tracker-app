@@ -24,10 +24,20 @@ import '@ionic/react/css/display.css';
 import './theme/variables.css';
 import AppMenu from './AppMenu';
 import RegisterNext from './pages/Register/RegisterNext';
-import { Pages } from './providers/pages.enum';
+import {
+    AdminPages,
+    DoctorPages,
+    HealthOfficialPages,
+    ImmigrationOfficerPages,
+    Pages,
+    PatientPages
+} from './providers/pages.enum';
 
 import { AuthProvider } from './providers/auth.provider';
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
+import DoctorRouting from './routings/Doctor.routing';
+import ImmigrationOfficerRouting from './routings/ImmigrationOfficer.routing';
+import HealthOfficialRouting from './routings/HealthOfficial.routing';
 
 setupIonicReact();
 
@@ -49,7 +59,11 @@ const App: React.FC = () => {
                         <Route path="/register/2" exact={true}>
                             <RegisterNext/>
                         </Route>
-                        <PrivateRoute path={Pages.home} component={AppMenu}/>
+                        <PrivateRoute path={PatientPages.home} component={AppMenu}/>
+                        <PrivateRoute path={DoctorPages.home} component={DoctorRouting}/>
+                        <PrivateRoute path={ImmigrationOfficerPages.home} component={ImmigrationOfficerRouting}/>
+                        <PrivateRoute path={HealthOfficialPages.home} component={HealthOfficialRouting}/>
+                        <PrivateRoute path={AdminPages.home} component={AppMenu}/>
                     </IonRouterOutlet>
                 </IonReactRouter>
             </AuthProvider>
