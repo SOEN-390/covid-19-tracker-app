@@ -10,6 +10,7 @@ import {Doctor} from "../objects/Doctor.class";
 import {ImmigrationOfficer} from "../objects/ImmigrationOfficer.class";
 import {Admin} from "../objects/Admin.class";
 import {useIonToast} from "@ionic/react";
+import {HealthOfficial} from "../objects/HealthOfficial.class";
 
 export const AuthContext = React.createContext();
 
@@ -84,8 +85,12 @@ export function AuthProvider({ children }) {
                 return new Doctor(userData.id, userData.firstName, userData.lastName, userData.phoneNumber, userData.address);
             case UserType.IMMIGRATION_OFFICER:
                 return new ImmigrationOfficer(userData.id, userData.firstName, userData.lastName, userData.phoneNumber, userData.address);
+            case UserType.HEALTH_OFFICIAL:
+                return new HealthOfficial(userData.id, userData.firstName, userData.lastName, userData.phoneNumber, userData.address);
             case UserType.ADMIN:
                 return new Admin(userData.id, userData.firstName, userData.lastName, userData.phoneNumber, userData.address);
+            default:
+                return undefined;
         }
     }
 
