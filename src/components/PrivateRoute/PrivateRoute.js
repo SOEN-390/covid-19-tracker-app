@@ -27,29 +27,30 @@ export default function PrivateRoute({component: Component, ...rest}) {
             {...rest}
             render={props => {
                 if (currentUser) {
+                    const rootPath = rest.path.split('/')[1];
                     switch (getRole()) {
                         case UserType.PATIENT:
-                            if (rest.path.split('/')[1] !== PatientPages.home) {
+                            if (rootPath !== PatientPages.home) {
                                 return <Redirect to={PatientPages.home} />
                             }
                             break;
                         case UserType.DOCTOR:
-                            if (rest.path.split('/')[1] !== DoctorPages.home) {
+                            if (rootPath !== DoctorPages.home) {
                                 return <Redirect to={DoctorPages.home} />
                             }
                             break;
                         case UserType.IMMIGRATION_OFFICER:
-                            if (rest.path.split('/')[1] !== ImmigrationOfficerPages.home) {
+                            if (rootPath !== ImmigrationOfficerPages.home) {
                                 return <Redirect to={ImmigrationOfficerPages.home} />
                             }
                             break;
                         case UserType.HEALTH_OFFICIAL:
-                            if (rest.path.split('/')[1] !== HealthOfficialPages.home) {
+                            if (rootPath !== HealthOfficialPages.home) {
                                 return <Redirect to={HealthOfficialPages.home} />
                             }
                             break;
                         case UserType.ADMIN:
-                            if (rest.path.split('/')[1] !== AdminPages.home) {
+                            if (rootPath !== AdminPages.home) {
                                 return <Redirect to={AdminPages.home} />
                             }
                             break;
