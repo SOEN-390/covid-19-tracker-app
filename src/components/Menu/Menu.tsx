@@ -28,6 +28,9 @@ const Menu: React.FC = () => {
     // const labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
 
     function getMenuAppPagesByRole(): AppPage[] {
+        if (!currentProfile) {
+            return [];
+        }
         switch (currentProfile.getRole()) {
             case UserType.PATIENT:
                 return patientAppPages;
