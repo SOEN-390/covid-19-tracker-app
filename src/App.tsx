@@ -25,7 +25,7 @@ import './theme/variables.css';
 import AppMenu from './AppMenu';
 import RegisterNext from './pages/Register/RegisterNext';
 import { Pages } from './providers/pages.enum';
-import AdminDashboard from './pages/Admin/AdminDashboard'
+import AdminDashboardPage from './pages/Admin/AdminDashboard.page'
 
 import { AuthProvider } from './providers/auth.provider';
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
@@ -54,7 +54,7 @@ const App: React.FC = () => {
                             <RegisterNext/>
                         </Route>
                         <PrivateRoute path={Pages.home} component={AppMenu}/>
-                        <PrivateRoute path={Pages.admin} component={AdminDashboard}/>
+                        <PrivateRoute path={Pages.admin} component={AdminDashboardPage}/>
                         <PrivateRoute path={Pages.settings} component={SettingsPage}/>
 
                     </IonRouterOutlet>

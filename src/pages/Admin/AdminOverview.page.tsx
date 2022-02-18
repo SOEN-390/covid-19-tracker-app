@@ -4,7 +4,7 @@ import NavBar from '../../components/NavBar';
 
 
 
-const AdminOverview: React.FC = () =>{
+const AdminOverviewPage: React.FC = () =>{
 
     return (
         <IonPage>
@@ -15,4 +15,4 @@ const AdminOverview: React.FC = () =>{
         </IonPage>
     );
 }
-export default AdminOverview;
+export default AdminOverviewPage;

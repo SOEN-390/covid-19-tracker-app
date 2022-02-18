@@ -2,11 +2,11 @@ import {IonRouterOutlet, IonSplitPane} from '@ionic/react';
 import {Redirect, Route} from 'react-router-dom';
 
 import { Pages } from '../../providers/pages.enum';
-import AssignedConfirmed from '../../pages/Admin/AssignedConfirmed'
-import Doctors from './Doctors';
-import UnAssignedConfirmed from './UnAssignedConfirmed';
+import AssignedConfirmedPage from './AssignedConfirmed.page'
+import DoctorsPage from './Doctors.page';
+import UnAssignedConfirmedPage from './UnAssignedConfirmed.page';
 import SettingsPage from '../Settings/Settings.page';
-import AdminOverview from './AdminOverview';
+import AdminOverviewPage from './AdminOverview.page';
 import Menu from '../../components/Menu/Menu';
 
 /* Core CSS required for Ionic components to work properly */
@@ -28,7 +28,7 @@ import '@ionic/react/css/display.css';
 /* Theme variables */
 import '../../theme/variables.css';
 
-const AdminDashboard: React.FC = () => {
+const AdminDashboardPage: React.FC = () => {
 
     return (
         <IonSplitPane contentId="admin">
@@ -38,16 +38,16 @@ const AdminDashboard: React.FC = () => {
                     <Redirect to={Pages.adminOverview}/>
                 </Route>
                 <Route path={Pages.adminOverview} >
-                     <AdminOverview/>
+                     <AdminOverviewPage/>
                 </Route>
                 <Route path={Pages.assignedConfirmed} >
-                     <AssignedConfirmed/>
+                     <AssignedConfirmedPage/>
                 </Route>
                 <Route path={Pages.unAssignedConfirmed} >
-                     <UnAssignedConfirmed/>
+                     <UnAssignedConfirmedPage/>
                 </Route>
                 <Route path={Pages.doctors} >
-                    <Doctors/>
+                    <DoctorsPage/>
                 </Route>
                 <Route path={'/admin'+Pages.settings} >
                     <SettingsPage/>
@@ -57,4 +57,4 @@ const AdminDashboard: React.FC = () => {
     );
 };
 
-export default AdminDashboard;
+export default AdminDashboardPage;

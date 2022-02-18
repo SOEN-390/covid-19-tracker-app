@@ -7,7 +7,7 @@ import PatientsTable from '../../components/PatientsTable/PatientsTable';
 
 import { IPatientTableRow } from '../../interfaces/IPatientTableRow';
 
-const UnAssignedConfirmed: React.FC = () =>{
+const UnAssignedConfirmedPage: React.FC = () =>{
     const [patientsArray, setPatientsArray]= useState <IPatientTableRow[]> ()
 
     useEffect(() => {
@@ -50,4 +50,4 @@ const UnAssignedConfirmed: React.FC = () =>{
         </IonPage>
     );
 }
-export default UnAssignedConfirmed;
+export default UnAssignedConfirmedPage;

@@ -5,7 +5,7 @@ import HttpService from '../../providers/http.service';
 import { IDoctorTableRow } from '../../interfaces/IDoctorTableRow';
 import DoctorsTable from '../../components/DoctorsTable/DoctorsTable';
 
-const Doctors: React.FC = () =>{
+const DoctorsPage: React.FC = () =>{
 
     const [doctorsArray, setDoctorssArray]= useState <IDoctorTableRow[]> ()
 
@@ -38,4 +38,4 @@ const Doctors: React.FC = () =>{
     );
 
 }
-export default Doctors;
+export default DoctorsPage;
