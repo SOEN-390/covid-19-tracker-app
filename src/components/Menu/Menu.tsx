@@ -17,9 +17,9 @@ import { logOutOutline } from 'ionicons/icons';
 import './Menu.css';
 import { useAuth } from '../../providers/auth.provider';
 import { UserType } from '../../enum/UserType.enum';
-import { adminAppPages, AppPage, patientAppPages } from './menuAppPages';
+import { adminAppPages, AppPage, doctorAppPages, immigrationOfficerAppPages, patientAppPages } from './menuAppPages';
 
-const Menu: React.FC = () => {
+const Menu: React.FC<{ionMenuId: string, userType: UserType}> = (props) => {
     const {currentUser, currentProfile, logout} = useAuth();
     const location = useLocation();
 
@@ -28,16 +28,13 @@ const Menu: React.FC = () => {
     // const labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
 
     function getMenuAppPagesByRole(): AppPage[] {
-        if (!currentProfile) {
-            return [];
-        }
-        switch (currentProfile.getRole()) {
+        switch (props.userType) {
             case UserType.PATIENT:
                 return patientAppPages;
             case UserType.DOCTOR:
-                return patientAppPages;
+                return doctorAppPages;
             case UserType.IMMIGRATION_OFFICER:
-                return patientAppPages;
+                return immigrationOfficerAppPages;
             case UserType.ADMIN:
                 return adminAppPages;
             default:
@@ -71,7 +68,7 @@ const Menu: React.FC = () => {
     }
 
     return (
-        <IonMenu contentId="home" type="push">
+        <IonMenu contentId={props.ionMenuId} type="push">
 
             <IonContent>
                 <IonImg src={appLogo}/>

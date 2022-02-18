@@ -26,7 +26,6 @@ export default function PrivateRoute({component: Component, ...rest}) {
             render={props => {
                 if (currentUser) {
                     const rootPath = '/' + rest.path.split('/')[1];
-                    console.log(rootPath);
                     switch (getRole()) {
                         case UserType.PATIENT:
                             if (rootPath !== PatientPages.home) {

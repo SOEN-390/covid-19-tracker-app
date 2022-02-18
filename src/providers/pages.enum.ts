@@ -27,7 +27,7 @@ export enum HealthOfficialPages {
 
 export enum ImmigrationOfficerPages {
     home = '/immigration-officer',
-    immigrationDashboard = '/immigration-officer/dashboard',
+    dashboard = '/immigration-officer/dashboard',
     patientProfile = '/immigration-officer/patient-profile',
     settings = '/immigration-officer/settings'
 }

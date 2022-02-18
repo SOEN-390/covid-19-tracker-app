@@ -8,13 +8,14 @@ import AssignedConfirmedPage from '../pages/Admin/AssignedConfirmed.page';
 import UnAssignedConfirmedPage from '../pages/Admin/UnAssignedConfirmed.page';
 import DoctorsPage from '../pages/Admin/Doctors.page';
 import SettingsPage from '../pages/Settings/Settings.page';
+import { UserType } from '../enum/UserType.enum';
 
 setupIonicReact();
 
 const AdminRouting: React.FC = () => {
     return (
         <IonSplitPane contentId="admin">
-            <Menu/>
+            <Menu ionMenuId={'admin'} userType={UserType.ADMIN}/>
             <IonRouterOutlet id="admin">
                 <Route path={AdminPages.home} exact={true}>
                     <Redirect to={AdminPages.overview}/>

@@ -5,19 +5,20 @@ import PatientProfile from '../pages/PatientProfile/PatientProfile.page';
 import ImmigrationDashboard from '../pages/ImmigrationOfficer/immigrationDashboard';
 
 import { ImmigrationOfficerPages } from '../providers/pages.enum';
+import { UserType } from '../enum/UserType.enum';
 
 setupIonicReact();
 
 const ImmigrationOfficerRouting: React.FC = () => {
     return (
         <IonSplitPane contentId="immigration-officer">
-            <Menu/>
+            <Menu ionMenuId={'immigration-officer'} userType={UserType.IMMIGRATION_OFFICER}/>
             <IonRouterOutlet id="immigration-officer">
                 <Route path={ImmigrationOfficerPages.home} exact={true}>
-                    <Redirect to={ImmigrationOfficerPages.immigrationDashboard}/>
+                    <Redirect to={ImmigrationOfficerPages.dashboard}/>
                 </Route>
 
-                <Route path={ImmigrationOfficerPages.immigrationDashboard}>
+                <Route path={ImmigrationOfficerPages.dashboard}>
                     <ImmigrationDashboard/>
                 </Route>
                 <Route path={ImmigrationOfficerPages.patientProfile}>

@@ -1,4 +1,10 @@
-import { AdminPages, PatientPages } from '../../providers/pages.enum';
+import {
+    AdminPages,
+    DoctorPages,
+    HealthOfficialPages,
+    ImmigrationOfficerPages,
+    PatientPages
+} from '../../providers/pages.enum';
 import {
     appsOutline,
     archiveOutline,
@@ -42,10 +48,10 @@ export const patientAppPages: AppPage[] = [
         mdIcon: archiveSharp
     },
     {
-        title: 'option 3',
-        url: '/home/option3',
-        iosIcon: trashOutline,
-        mdIcon: trashSharp
+        title: 'Settings',
+        url: PatientPages.settings,
+        iosIcon: settingsOutline,
+        mdIcon: settingsSharp
     },
     {
         title: 'Alert',
@@ -55,6 +61,74 @@ export const patientAppPages: AppPage[] = [
     }
 ];
 
+export const doctorAppPages: AppPage[] = [
+    {
+        title: 'Overview',
+        url: '',
+        iosIcon: appsOutline,
+        mdIcon: appsOutline
+    },
+    {
+        title: 'Patient Profile',
+        url: DoctorPages.patientProfile,
+        iosIcon: calendarOutline,
+        mdIcon: calendarOutline
+    },
+    {
+        title: 'Settings',
+        url: DoctorPages.settings,
+        iosIcon: settingsOutline,
+        mdIcon: settingsSharp
+    },
+];
+
+export const healthOfficialAppPages: AppPage[] = [
+    {
+        title: 'Overview',
+        url: '',
+        iosIcon: appsOutline,
+        mdIcon: appsOutline
+    },
+    {
+        title: 'Patients',
+        url: HealthOfficialPages.patientsPage,
+        iosIcon: calendarOutline,
+        mdIcon: calendarOutline
+    },
+    {
+        title: 'Patient Profile',
+        url: HealthOfficialPages.patientProfile,
+        iosIcon: heartOutline,
+        mdIcon: heartSharp
+    },
+    {
+        title: 'Settings',
+        url: AdminPages.settings,
+        iosIcon: settingsOutline,
+        mdIcon: settingsSharp
+    }
+];
+
+export const immigrationOfficerAppPages: AppPage[] = [
+    {
+        title: 'Overview',
+        url: ImmigrationOfficerPages.dashboard,
+        iosIcon: appsOutline,
+        mdIcon: appsOutline
+    },
+    {
+        title: 'Patient Profile',
+        url: ImmigrationOfficerPages.patientProfile,
+        iosIcon: calendarOutline,
+        mdIcon: calendarOutline
+    },
+    {
+        title: 'Settings',
+        url: ImmigrationOfficerPages.settings,
+        iosIcon: settingsOutline,
+        mdIcon: settingsSharp
+    }
+];
 
 export const adminAppPages: AppPage[] = [
     {
@@ -80,5 +154,5 @@ export const adminAppPages: AppPage[] = [
         url: AdminPages.settings,
         iosIcon: settingsOutline,
         mdIcon: settingsSharp
-    },
+    }
 ];
