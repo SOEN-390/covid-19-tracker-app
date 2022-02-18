@@ -9,10 +9,15 @@ import {
     appsOutline,
     archiveOutline,
     archiveSharp,
-    calendarOutline, heartHalfOutline, heartHalfSharp,
+    calendarOutline,
+    heartHalfOutline,
+    heartHalfSharp,
     heartOutline,
-    heartSharp, settingsOutline, settingsSharp,
-    trashOutline, trashSharp, warningOutline, warningSharp
+    heartSharp,
+    settingsOutline,
+    settingsSharp,
+    warningOutline,
+    warningSharp
 } from 'ionicons/icons';
 
 export interface AppPage {
