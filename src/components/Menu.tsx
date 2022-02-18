@@ -6,11 +6,12 @@ import {
     IonList,
     IonMenu,
     IonMenuToggle,
-    IonAvatar,
-    IonImg
+    IonImg,
+    IonTitle,
+    IonItemDivider
 } from '@ionic/react';
-import logo from '../resources/icon.png'
-import Emergency from './Emergency';
+import appLogo from '../assets/images/CovidTrackerTransparent.png'
+import Emergency from './Emergency/Emergency';
 import { useLocation } from 'react-router-dom';
 import {
     archiveOutline,
@@ -28,6 +29,7 @@ import {
 import './Menu.css';
 import { Pages } from '../providers/pages.enum';
 import { useAuth } from '../providers/auth.provider';
+import { UserType } from '../enum/UserType.enum';
 
 interface AppPage {
     url: string;
@@ -72,45 +74,79 @@ const appPages: AppPage[] = [
         url: '/home/alert',
         iosIcon: warningOutline,
         mdIcon: warningSharp
-    },
-    {
-        title: 'Logout',
-        url: Pages.logout,
-        iosIcon: logOutOutline,
-        mdIcon: logOutOutline
     }
 ];
 
 
 const Menu: React.FC = () => {
-    const {currentUser} = useAuth();
+    const {currentUser, currentProfile, logout} = useAuth();
     const location = useLocation();
+
     // const labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
+
+    function getName(): string {
+        if (!currentProfile) {
+            return '';
+        }
+        return `${currentProfile.firstName} ${currentProfile.lastName}`;
+    }
+
+    function getRole(): string {
+        if (!currentProfile) {
+            return '';
+        }
+        switch (currentProfile.getRole()) {
+            case UserType.PATIENT:
+                return 'Patient';
+            case UserType.DOCTOR:
+                return 'Doctor';
+            case UserType.IMMIGRATION_OFFICER:
+                return 'Immigration Officer'
+            case UserType.ADMIN:
+                return 'Admin'
+            default:
+                return '';
+        }
+    }
 
     return (
         <IonMenu contentId="home" type="push">
-            <IonContent>
-                <IonList id="inbox-list">
-                    <IonAvatar>
-                        <IonImg src={logo}/>
-                    </IonAvatar>
-                    <h5>Welcome {currentUser?.email}</h5>
-                    <p>Doctor</p>
-                    <IonList id="inbox-list">
-                    </IonList>
-                    {appPages.map((appPage, index) => {
-                        return (
-                            <IonMenuToggle key={index} autoHide={false}>
-                                <IonItem className={location.pathname === appPage.url ? 'selected' : ''}
-                                         routerLink={appPage.url} routerDirection="none" lines="none" detail={false}>
-                                    <IonIcon slot="start" ios={appPage.iosIcon} md={appPage.mdIcon}/>
-                                    <IonLabel>{appPage.title}</IonLabel>
-                                </IonItem>
-                            </IonMenuToggle>
 
-                        );
-                    })
+            <IonContent>
+                <IonImg src={appLogo}/>
+                <IonList id="inbox-list">
+                    {/*<IonAvatar>*/}
+                    {/*    <IonImg src={logo}/>*/}
+                    {/*</IonAvatar>*/}
+
+                    <IonTitle>Welcome {getName()}</IonTitle>
+                    <br />
+                    <IonTitle>{currentUser?.email}</IonTitle>
+                    <IonTitle>{getRole()}</IonTitle>
+                    <IonItemDivider/>
+                    {/*<IonList id="inbox-list">*/}
+                    {/*</IonList>*/}
+                    {
+                        appPages.map((appPage, index) => {
+                            return (
+                                <IonMenuToggle key={index} autoHide={false}>
+                                    <IonItem className={location.pathname === appPage.url ? 'selected' : ''}
+                                             routerLink={appPage.url} routerDirection="none" lines="none"
+                                             detail={false}>
+                                        <IonIcon slot="start" ios={appPage.iosIcon} md={appPage.mdIcon}/>
+                                        <IonLabel>{appPage.title}</IonLabel>
+                                    </IonItem>
+                                </IonMenuToggle>
+
+                            );
+                        })
                     }
+                    <IonMenuToggle key={appPages.length + 1} autoHide={false}>
+                        <IonItem routerDirection="none" lines="none" detail={false} onClick={logout}>
+                            <IonIcon slot="start" ios={logOutOutline} md={logOutOutline}/>
+                            <IonLabel>Logout</IonLabel>
+                        </IonItem>
+                    </IonMenuToggle>
                 </IonList>
                 {/*  <IonList id="labels-list">*/}
                 {/*      <IonListHeader>Labels</IonListHeader>*/}

@@ -15,9 +15,10 @@ import './Register.css';
 import { Pages } from '../../providers/pages.enum';
 import { useState } from 'react';
 import HttpService from '../../providers/http.service'
-import { testResult } from '../../enum/testResult';
+import { TestResult } from '../../enum/TestResult.enum';
 import { IPatient } from '../../interfaces/IPatient';
 import { auth } from '../../config/firebase';
+import { useAuth } from '../../providers/auth.provider';
 
 setupIonicReact();
 
@@ -32,13 +33,12 @@ const RegisterNext: React.FC = () => {
     const history = useHistory();
     const [present] = useIonToast();
 
+    const {logout} = useAuth();
 
     function registration() {
         const valid = validateInput();
         if (!valid) {
-            present('Please fill out all the required fields').then(() => {
-                return;
-            });
+            present('Please fill out all the required fields', 1500);
         }
 
         const user: IPatient = {
@@ -46,19 +46,20 @@ const RegisterNext: React.FC = () => {
             firstName: firstName,
             lastName: lastName,
             // TODO - drop down for test result
-            testResult: testResult.POSITIVE,
+            testResult: TestResult.POSITIVE,
             address: address,
             email: auth.currentUser?.email,
             phoneNumber: phoneNumber
         }
         saveUser(user).then((success) => {
             if (success) {
-                present('Successfully registered.').then(() => {
+                present('Successfully registered.', 1500).then(() => {
+                    logout();
                     history.push(Pages.login);
                 });
             }
             else {
-                present('Something went wrong.');
+                present('Something went wrong.', 1500);
             }
         });
     }
@@ -84,8 +85,13 @@ const RegisterNext: React.FC = () => {
     }
 
     async function saveUser(user: IPatient): Promise<boolean> {
-        const response = await HttpService.post('patients/create', user);
-        return response.ok;
+        try {
+            await HttpService.post('patients/create', user);
+            return true;
+        } catch (error) {
+            console.log(error);
+            return false;
+        }
     }
 
     return (

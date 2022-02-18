@@ -93,6 +93,10 @@ http://ionicframework.com/docs/theming/ */
     --ion-color-tint: var(--ion-color-dark-blue-tint);
 }
 
+ion-split-pane {
+  --side-max-width: 380px;
+}
+
 /* Disabled DarkMode theme */
 /*@media (prefers-color-scheme: dark) {*/
 /*  !**/

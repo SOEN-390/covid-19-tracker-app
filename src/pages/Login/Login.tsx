@@ -15,7 +15,6 @@ import {
 import CovidTrackerTransparent from '../../assets/images/CovidTrackerTransparent.png';
 import { useState } from 'react';
 import './Login.css';
-import { useHistory } from 'react-router-dom';
 import { Pages } from '../../providers/pages.enum';
 import { useAuth } from '../../providers/auth.provider';
 
@@ -26,17 +25,14 @@ const Login: React.FC = () => {
     const [checked] = useState(false);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    let history = useHistory();
     const [present] = useIonToast();
 
     async function loginUser() {
-        const rest = await login(email, password);
-        if (rest) {
+        login(email, password).then(() => {
             present('Successfully logged in.', 1500);
-            history.push(Pages.home);
-        } else {
+        }).catch((error: any) => {
             present('Something went wrong. Please try again.', 1500);
-        }
+        });
     }
 
     return (
