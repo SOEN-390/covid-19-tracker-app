@@ -1,4 +1,4 @@
-import { Pages } from '../../providers/pages.enum';
+import { AdminPages, PatientPages } from '../../providers/pages.enum';
 import {
     appsOutline,
     archiveOutline,
@@ -19,19 +19,19 @@ export interface AppPage {
 export const patientAppPages: AppPage[] = [
     {
         title: 'Overview',
-        url: Pages.overview,
+        url: PatientPages.overview,
         iosIcon: appsOutline,
         mdIcon: appsOutline
     },
     {
         title: 'Appointments',
-        url: Pages.appointments,
+        url: PatientPages.appointments,
         iosIcon: calendarOutline,
         mdIcon: calendarOutline
     },
     {
         title: 'Symptoms form',
-        url: Pages.symptoms,
+        url: PatientPages.symptoms,
         iosIcon: heartOutline,
         mdIcon: heartSharp
     },
@@ -59,25 +59,25 @@ export const patientAppPages: AppPage[] = [
 export const adminAppPages: AppPage[] = [
     {
         title: 'Overview',
-        url: Pages.admin,
+        url: AdminPages.overview,
         iosIcon: appsOutline,
         mdIcon: appsOutline
     },
     {
         title: 'Confirmed Patients',
-        url: Pages.assignedConfirmed,
+        url: AdminPages.assignedConfirmed,
         iosIcon: calendarOutline,
         mdIcon: calendarOutline
     },
     {
         title: 'Doctor',
-        url: Pages.doctors,
+        url: AdminPages.doctors,
         iosIcon: heartHalfOutline,
         mdIcon: heartHalfSharp
     },
     {
         title: 'Settings',
-        url: '/admin'+Pages.settings,
+        url: AdminPages.settings,
         iosIcon: settingsOutline,
         mdIcon: settingsSharp
     },

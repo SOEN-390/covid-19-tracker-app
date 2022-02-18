@@ -1,7 +1,7 @@
 import { IonRouterOutlet, IonSplitPane, setupIonicReact } from '@ionic/react';
 import { Redirect, Route } from 'react-router-dom';
-import Menu from '../components/Menu';
-import PatientProfile from '../pages/Doctor/PatientProfile';
+import Menu from '../components/Menu/Menu';
+import PatientProfile from '../pages/PatientProfile/PatientProfile.page';
 import ImmigrationDashboard from '../pages/ImmigrationOfficer/immigrationDashboard';
 
 import { ImmigrationOfficerPages } from '../providers/pages.enum';
