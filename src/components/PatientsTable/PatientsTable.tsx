@@ -1,12 +1,7 @@
 import { IonButton } from '@ionic/react';
 import './PatientsTable.css';
 import * as React from 'react';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
+import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table';
 import { IPatientTableRow } from '../../interfaces/IPatientTableRow';
 
 
@@ -67,64 +62,36 @@ const columns: readonly Column[] = [
 const PatientsTable: React.FC<{ patientTableRows: IPatientTableRow[] }> = (props) => {
 
     return (
-        <div style={{width: '100%', overflow: 'hidden'}}>
-            <TableContainer id="table_container">
-                <Table stickyHeader aria-label="sticky table" style={{borderRadius: '200px', position: 'relative'}}>
-                    <TableHead
-                        style={{borderRadius: '25px', borderStyle: '2px'}}>
-                        <TableRow className={'head'}>
-                            {columns.map((column) => (
-                                <TableCell
-                                    key={column.id}
-                                    align={column.align}
-                                    style={{
-                                        minWidth: column.minWidth,
-                                        color: '#2C4D62', fontSize: '24px',
-                                        fontWeight: 'bold',
-                                        backgroundColor: 'rgba(44, 77, 98, .12)',
-                                        height: '90px',
-
-                                    }}
-                                >
-                                    {column.label}
-                                </TableCell>
-                            ))}
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {
-                            props.patientTableRows.map((patientTableRow) => {
-                                return (
-                                    <TableRow hover role="checkbox" tabIndex={-1} key={patientTableRow.name}
-                                              style={{
-                                                  borderRadius: '25px',
-                                                  borderCollapse: 'collapse',
-                                                  padding: '10px'
-                                              }}>
-
-                                        <TableCell id="colName">{patientTableRow.name}</TableCell>
-                                        <TableCell id="colSta">
-                                            <div id="PosStatus">{patientTableRow.status}</div>
-                                        </TableCell>
-                                        <TableCell id="Col">{patientTableRow.last_update}</TableCell>
-                                        <TableCell id="Col">{patientTableRow.doctor}</TableCell>
-                                        <TableCell id="Col">
-                                            <IonButton color="favorite" shape="round">
-                                                {patientTableRow.action}
-                                            </IonButton>
-                                        </TableCell>
-                                        <TableCell id="Col">{patientTableRow.priority}</TableCell>
-                                        <TableCell>
-                                            <IonButton color="favorite" shape="round"> Monitor Symptoms </IonButton>
-                                        </TableCell>
-                                    </TableRow>
-                                );
-                            })
-                        }
-                    </TableBody>
-                </Table>
-            </TableContainer>
-        </div>
+        <Table>
+            <Thead>
+                <Tr id="tableHead">
+                    {columns.map((column) => (
+                        <Th id="headCol">{column.label}</Th>
+                    ))}
+                </Tr>
+            </Thead>
+            <Tbody>
+                {
+                    props.patientTableRows.map((row) => {
+                        return (
+                            <Tr id="tableRow">
+                                <Td id="colName">{row.name}</Td>
+                                <Td>
+                                    <div id="PosStatus">{row.status}</div>
+                                </Td>
+                                <Td id="lastUpdate">{row.last_update}</Td>
+                                <Td id="colDoc">{row.doctor}</Td>
+                                <Td id="col"><IonButton color="favorite" shape="round"
+                                                        size="large"> {row.action} </IonButton></Td>
+                                <Td id="col"> {row.priority}</Td>
+                                <Td id="col"> <IonButton color="favorite" shape="round"
+                                                         size="large"> Symptoms </IonButton></Td>
+                            </Tr>
+                        );
+                    })
+                }
+            </Tbody>
+        </Table>
     );
 }
 
