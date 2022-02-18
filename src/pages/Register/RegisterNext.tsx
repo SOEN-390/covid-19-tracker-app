@@ -101,10 +101,13 @@ const RegisterNext: React.FC = () => {
             <IonContent>
                 <IonImg className="register__logo" src={CovidTrackerTransparent}/>
                 <h2 className="register__login-text">Sign Up</h2>
+                <br/>
+                <div className={'ion-text-center'}>
+                    <IonLabel text-center className="register__login-text">Protect Yourself</IonLabel>
+                </div>
                 <div className="ion-align-items-center; register__form">
-                    <IonLabel className="register__login-text">Protect Yourself</IonLabel>
 
-                    <br/><br/>
+                    <br/>
 
                     <IonLabel className="register__login-text">First Name </IonLabel>
                     <IonInput className="register__text-field" placeholder="Enter your First Name" type="text"
@@ -118,7 +121,7 @@ const RegisterNext: React.FC = () => {
 
                     <br/><br/>
 
-                    <IonLabel className="register__login-text">Test Results</IonLabel>
+                    <IonLabel className="register__login-text">Test Result</IonLabel>
                     <IonInput className="register__text-field" placeholder="Positive or Negative" type="text"/>
 
                     <br/><br/>
@@ -128,7 +131,7 @@ const RegisterNext: React.FC = () => {
                               onIonChange={(e: any) => setAddress(e.target.value)}/>
 
                     <br/><br/>
-                    <IonLabel className="register__login-text">Medical card number</IonLabel>
+                    <IonLabel className="register__login-text">Medical Card Number</IonLabel>
                     <IonInput className="register__text-field" placeholder="Enter your medical card number" type="text"
                               onIonChange={(e: any) => setMedicalNumber(e.target.value)}/>
                     <br/><br/>
