@@ -7,6 +7,8 @@ import Appointments from './pages/Appointments/Appointments';
 import SymptomsForm from './pages/SymptomsForm/SymptomsForm';
 import PatientProfile from './pages/Doctor/PatientProfile';
 import ImmigrationDashboard from './pages/ImmigrationOfficer/immigrationDashboard';
+import HealthOfficialPatientsPage from './pages/HealthOfficials/HealthOfficialPatientsPage';
+
 import { Pages } from './providers/pages.enum';
 
 /* Core CSS required for Ionic components to work properly */
@@ -27,48 +29,39 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
-import HealthOfficialView from './pages/HealthOffical/HealthOfficialView';
-import { useAuth } from './providers/auth.provider';
 
 setupIonicReact();
 
 const AppMenu: React.FC = () => {
-    const {currentProfile} = useAuth();
-    if (!currentProfile) {
-        return <></>;
-    }
-            return (
-                <IonSplitPane contentId="home">
-                    <Menu/>
-                    <IonRouterOutlet id="home">
-                        <Route path={Pages.home} exact={true}>
-                            <Redirect to={Pages.overview}/>
-                        </Route>
+    return (
+        <IonSplitPane contentId="home">
+            <Menu/>
+            <IonRouterOutlet id="home">
+                <Route path={Pages.home} exact={true}>
+                    <Redirect to={Pages.overview}/>
+                </Route>
 
-                        <Route path={Pages.overview}>
-                            <Overview/>
-                        </Route>
-                        <Route path={Pages.appointments}>
-                            <Appointments/>
-                        </Route>
-                        <Route path={Pages.symptoms}>
-                            <SymptomsForm/>
-                        </Route>
-                        <Route path={Pages.patientProfile}>
-                            <PatientProfile/>
-                        </Route>
-                        <Route path={Pages.immigrationDashboard}>
-                            <ImmigrationDashboard/>
-                        </Route>
-                        <Route path={Pages.ho_ConfirmedPatient}>
-                            <HealthOfficialView/>
-                        </Route>
-                        
-                    
-                    </IonRouterOutlet>
-                </IonSplitPane>
-            );
-    
+                <Route path={Pages.overview}>
+                    <Overview/>
+                </Route>
+                <Route path={Pages.appointments}>
+                    <Appointments/>
+                </Route>
+                <Route path={Pages.symptoms}>
+                    <SymptomsForm/>
+                </Route>
+                <Route path={Pages.patientProfile}>
+                    <PatientProfile/>
+                </Route>
+                <Route path={Pages.healthOfficialPage}>
+                    <HealthOfficialPatientsPage/>
+                </Route>
+                <Route path={Pages.immigrationDashboard}>
+                    <ImmigrationDashboard/>
+                </Route>
+            </IonRouterOutlet>
+        </IonSplitPane>
+    );
 };
 
 export default AppMenu;

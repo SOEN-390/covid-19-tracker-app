@@ -14,4 +14,5 @@ export enum Pages {
     settings = "/settings",
     patientProfile = '/home/patient-profile',
     immigrationDashboard = '/home/immigration-dashboard',
+    healthOfficialPage ='/home/healthOfficials'
 }

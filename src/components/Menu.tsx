@@ -11,7 +11,7 @@ import {
     IonItemDivider
 } from '@ionic/react';
 import appLogo from '../assets/images/CovidTrackerTransparent.png'
-import Emergency from './Emergency';
+import Emergency from './Emergency/Emergency';
 import { useLocation } from 'react-router-dom';
 import {
     archiveOutline,
