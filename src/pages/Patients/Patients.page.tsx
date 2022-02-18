@@ -5,11 +5,11 @@ import PatientsTable from '../../components/PatientsTable/PatientsTable';
 import * as React from 'react';
 import { IPatientTableRow } from '../../interfaces/IPatientTableRow';
 
-const HealthOfficialPatientsPage: React.FC = () => {
+const PatientsPage: React.FC = () => {
 
     function createData(
         firstName: string,
-        lastName: string, 
+        lastName: string,
         testResult: string,
         lastUpdate: string,
         doctorName: string,
@@ -68,4 +68,4 @@ const HealthOfficialPatientsPage: React.FC = () => {
     );
 };
 
-export default HealthOfficialPatientsPage;
+export default PatientsPage;

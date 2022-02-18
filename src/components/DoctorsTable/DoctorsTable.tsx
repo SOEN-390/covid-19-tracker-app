@@ -1,5 +1,4 @@
-import { IonButton } from '@ionic/react';
-import './PatientsTable.css';
+import './DoctorTable.css';
 import * as React from 'react';
 import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table';
 import { IDoctorTableRow } from '../../interfaces/IDoctorTableRow';
@@ -48,7 +47,7 @@ const columns: readonly Column[] = [
 
 
 const DoctorsTable: React.FC<{ doctorTableRows: IDoctorTableRow[] }> = (props) => {
-    
+
     return (
         <Table>
             <Thead>

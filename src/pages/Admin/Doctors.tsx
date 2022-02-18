@@ -1,11 +1,9 @@
-import { IonAvatar,  IonCol,  IonRow,IonTitle,IonGrid, IonPage, IonToolbar, IonText, IonContent } from '@ionic/react';
-import '../../components/HealthOfficialTable.css';
-import logo from '../../resources/UserIcon.png'
+import { IonTitle, IonPage, IonToolbar, IonContent } from '@ionic/react';
 import NavBar from '../../components/NavBar';
 import { useState, useEffect } from 'react';
 import HttpService from '../../providers/http.service';
 import { IDoctorTableRow } from '../../interfaces/IDoctorTableRow';
-import DoctorsTable from '../../components/PatientsTable/DoctorsTable';
+import DoctorsTable from '../../components/DoctorsTable/DoctorsTable';
 
 const Doctors: React.FC = () =>{
 
@@ -32,7 +30,7 @@ const Doctors: React.FC = () =>{
         </IonToolbar>
         <IonContent>
             <IonTitle id="patientHeader">Doctors</IonTitle>
-                {    
+                {
                     doctorsArray!==undefined? <DoctorsTable doctorTableRows={doctorsArray}/>:null
                 }
             </IonContent>

@@ -1,13 +1,13 @@
 import { IonRouterOutlet, IonSplitPane, setupIonicReact } from '@ionic/react';
 import { Redirect, Route } from 'react-router-dom';
 
-import Menu from './components/Menu';
-import Overview from './pages/Overview/Overview';
+import Menu from './components/Menu/Menu';
+import OverviewPage from './pages/Overview/Overview.page';
 import Appointments from './pages/Appointments/Appointments';
-import SymptomsForm from './pages/SymptomsForm/SymptomsForm';
-import PatientProfile from './pages/Doctor/PatientProfile';
+import SymptomsFormPage from './pages/SymptomsForm/SymptomsForm.page';
+import PatientProfilePage from './pages/PatientProfile/PatientProfile.page';
 import ImmigrationDashboard from './pages/ImmigrationOfficer/immigrationDashboard';
-import HealthOfficialPatientsPage from './pages/HealthOfficials/HealthOfficialPatientsPage';
+import PatientsPage from './pages/Patients/Patients.page';
 
 import { Pages } from './providers/pages.enum';
 
@@ -42,19 +42,19 @@ const AppMenu: React.FC = () => {
                 </Route>
 
                 <Route path={Pages.overview}>
-                    <Overview/>
+                    <OverviewPage/>
                 </Route>
                 <Route path={Pages.appointments}>
                     <Appointments/>
                 </Route>
                 <Route path={Pages.symptoms}>
-                    <SymptomsForm/>
+                    <SymptomsFormPage/>
                 </Route>
                 <Route path={Pages.patientProfile}>
-                    <PatientProfile/>
+                    <PatientProfilePage/>
                 </Route>
                 <Route path={Pages.healthOfficialPage}>
-                    <HealthOfficialPatientsPage/>
+                    <PatientsPage/>
                 </Route>
                 <Route path={Pages.immigrationDashboard}>
                     <ImmigrationDashboard/>

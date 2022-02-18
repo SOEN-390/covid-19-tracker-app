@@ -29,7 +29,7 @@ import AdminDashboard from './pages/Admin/AdminDashboard'
 
 import { AuthProvider } from './providers/auth.provider';
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
-import Settings from './pages/Settings/Settings';
+import SettingsPage from './pages/Settings/Settings.page';
 
 
 setupIonicReact();
@@ -55,7 +55,7 @@ const App: React.FC = () => {
                         </Route>
                         <PrivateRoute path={Pages.home} component={AppMenu}/>
                         <PrivateRoute path={Pages.admin} component={AdminDashboard}/>
-                        <PrivateRoute path={Pages.settings} component={Settings}/>
+                        <PrivateRoute path={Pages.settings} component={SettingsPage}/>
 
                     </IonRouterOutlet>
                 </IonReactRouter>

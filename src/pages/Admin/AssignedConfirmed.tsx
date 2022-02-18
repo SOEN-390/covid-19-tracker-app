@@ -1,5 +1,4 @@
 import {IonButton, IonCol, IonRow,IonTitle, IonPage, IonToolbar, IonContent } from '@ionic/react';
-import '../../components/HealthOfficialTable.css';
 import NavBar from '../../components/NavBar';
 import { Pages } from '../../providers/pages.enum';
 import { useState, useEffect } from 'react';
@@ -10,7 +9,7 @@ import { IPatientTableRow } from '../../interfaces/IPatientTableRow';
 
 const AssignedConfirmed: React.FC = () =>{
     const [patientsArray, setPatientsArray]= useState <IPatientTableRow[]> ()
-    
+
     useEffect(() => {
         patientsRetrieval();
       }, []);
@@ -35,7 +34,7 @@ const AssignedConfirmed: React.FC = () =>{
                     <IonRow>
                         <IonCol/>
                             {/*These buttons will change the request and rows!*/}
-                            <IonCol class="confirmButton"> 
+                            <IonCol class="confirmButton">
                                 <IonButton id="con" color="favorite" routerLink={Pages.assignedConfirmed}>Assigned</IonButton>
                             </IonCol>
                             <IonCol class="unconfirmedButton">
@@ -44,7 +43,7 @@ const AssignedConfirmed: React.FC = () =>{
                         <IonCol/>
                     </IonRow>
                 </div>
-                {    
+                {
                     patientsArray!==undefined? <PatientsTable patientTableRows={patientsArray}/>:null
                 }
             </IonContent>

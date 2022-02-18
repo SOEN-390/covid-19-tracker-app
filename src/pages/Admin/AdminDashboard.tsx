@@ -5,9 +5,9 @@ import { Pages } from '../../providers/pages.enum';
 import AssignedConfirmed from '../../pages/Admin/AssignedConfirmed'
 import Doctors from './Doctors';
 import UnAssignedConfirmed from './UnAssignedConfirmed';
-import Settings from '../Settings/Settings';
+import SettingsPage from '../Settings/Settings.page';
 import AdminOverview from './AdminOverview';
-import Menu from '../../components/Menu';
+import Menu from '../../components/Menu/Menu';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -50,9 +50,9 @@ const AdminDashboard: React.FC = () => {
                     <Doctors/>
                 </Route>
                 <Route path={'/admin'+Pages.settings} >
-                    <Settings/>
+                    <SettingsPage/>
                 </Route>
-            </IonRouterOutlet>     
+            </IonRouterOutlet>
         </IonSplitPane>
     );
 };
