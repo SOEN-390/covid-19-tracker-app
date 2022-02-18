@@ -38,9 +38,7 @@ const Login: React.FC = () => {
         <IonApp>
             <IonContent>
                 <IonImg className="login__logo" src={CovidTrackerTransparent}/>
-                <div className="login__sign-in-title">
-                    <h2 className="login__text">Sign In</h2>
-                </div>
+                <h2 className="login__text">Sign In</h2>
                 <div className="ion-align-items-center; login__form">
                     <IonLabel className="login__text">Email</IonLabel>
                     <IonInput className="login__text-field" placeholder="Enter your Email" type="text"
@@ -58,7 +56,8 @@ const Login: React.FC = () => {
                         <IonLabel>Remember me</IonLabel>
                         <IonRouterLink href="#" color="#4D4D4D" className="underline">Forgot Password?</IonRouterLink>
                     </IonItem>
-                    <IonButton onClick={loginUser} size="large" expand="block" fill="solid"
+                    <br/>
+                    <IonButton onClick={loginUser} className={'login__btn'} size="large" expand="block" fill="solid"
                                color={'dark-blue'}>LOGIN</IonButton>
                     <br/>
                     <p className={'login__register-text'}> Do not have an account? <br/>

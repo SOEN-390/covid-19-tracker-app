@@ -25,13 +25,6 @@
   padding: 50px 20px;
 }
 
-.login__sign-in-title {
-  display: grid;
-  width: 100%;
-  align-items: center;
-  justify-items: center;
-}
-
 .login__text-field {
   border: solid 1px #ABABAB;
   border-radius: 10px;
@@ -48,6 +41,10 @@
 .login__register-text {
   width: 100%;
   text-align: center;
+}
+
+.login__btn {
+  font-size: 20px;
 }
 
 .login__register-btn {

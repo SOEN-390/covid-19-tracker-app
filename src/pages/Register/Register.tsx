@@ -45,33 +45,32 @@ const Register: React.FC = () => {
             </IonHeader>
 
             <IonContent>
-                <IonImg className="login-logo" src={CovidTrackerTransparent}/>
-                <div className="sign-in-center">
-                    <IonLabel className="login-text">Protect Yourself</IonLabel>
-                    <h2 className="login-text">Sign Up</h2>
-                </div>
-                <div className="ion-align-items-center; login-form-center">
+                <IonImg className="register__logo" src={CovidTrackerTransparent}/>
+                <h2 className="register__login-text">Sign Up</h2>
+                <div className="ion-align-items-center; register__form">
+
+                    <IonLabel className="register__login-text">Protect Yourself</IonLabel>
 
                     <br/><br/>
 
-                    <IonLabel className="login-text">Email</IonLabel>
-                    <IonInput className="login-text-field" placeholder="Enter your email" type="text"
+                    <IonLabel className="register__login-text">Email</IonLabel>
+                    <IonInput className="register__text-field" placeholder="Enter your email" type="text"
                               onIonChange={(e: any) => setEmail(e.target.value)}/>
 
                     <br/><br/>
-                    <IonLabel className="login-text">New Password</IonLabel>
-                    <IonInput className="login-text-field" placeholder="Enter a password" type="password"
+                    <IonLabel className="register__login-text">New Password</IonLabel>
+                    <IonInput className="register__text-field" placeholder="Enter a password" type="password"
                               onIonChange={(e: any) => setPassword(e.target.value)}/>
 
                     <br/><br/>
 
-                    <IonLabel className="login-text">Confirm your password</IonLabel>
-                    <IonInput className="login-text-field" placeholder="Enter a password" type="password"
+                    <IonLabel className="register__login-text">Confirm your password</IonLabel>
+                    <IonInput className="register__text-field" placeholder="Enter a password" type="password"
                               onIonChange={(e: any) => setCPassword(e.target.value)}/>
 
                     <br/><br/>
 
-                    <IonButton onClick={register} size="large" expand="block" fill="solid"
+                    <IonButton className={'register__btn'} onClick={register} size="large" expand="block" fill="solid"
                                color={'dark-blue'}>Next</IonButton>
                 </div>
             </IonContent>
