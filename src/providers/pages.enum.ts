@@ -13,6 +13,7 @@ export enum PatientPages {
 
 export enum DoctorPages {
     home = '/doctor',
+    dashboard = '/doctor/dashboard',
     patientProfile = '/doctor/patient-profile'
 }
 
