@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useState} from "react";
 import {auth} from '../config/firebase';
 import firebase from 'firebase/compat/app';
-import {Pages} from "./pages.enum";
+import {Pages, PatientPages} from "./pages.enum";
 import {User} from "../objects/User.class";
 import HttpService from "./http.service";
 import {UserType} from "../enum/UserType.enum";
@@ -10,6 +10,7 @@ import {Doctor} from "../objects/Doctor.class";
 import {ImmigrationOfficer} from "../objects/ImmigrationOfficer.class";
 import {Admin} from "../objects/Admin.class";
 import {useIonToast} from "@ionic/react";
+import {HealthOfficial} from "../objects/HealthOfficial.class";
 
 export const AuthContext = React.createContext();
 
@@ -84,8 +85,12 @@ export function AuthProvider({ children }) {
                 return new Doctor(userData.id, userData.firstName, userData.lastName, userData.phoneNumber, userData.address);
             case UserType.IMMIGRATION_OFFICER:
                 return new ImmigrationOfficer(userData.id, userData.firstName, userData.lastName, userData.phoneNumber, userData.address);
+            case UserType.HEALTH_OFFICIAL:
+                return new HealthOfficial(userData.id, userData.firstName, userData.lastName, userData.phoneNumber, userData.address);
             case UserType.ADMIN:
                 return new Admin(userData.id, userData.firstName, userData.lastName, userData.phoneNumber, userData.address);
+            default:
+                return undefined;
         }
     }
 
@@ -98,7 +103,7 @@ export function AuthProvider({ children }) {
                 getCurrentUserProfile(user).then((profile) => {
                     setCurrentProfile(profile);
                     if (window.location.pathname === Pages.login || window.location.pathname === '/') {
-                        window.location.pathname = Pages.home;
+                        window.location.pathname = PatientPages.home;
                     }
                 }).catch((error) => {
                     if (window.location.pathname === Pages.register || window.location.pathname === '/register/2') {

@@ -1,14 +1,14 @@
 import {
     IonContent,
     IonIcon,
+    IonImg,
     IonItem,
+    IonItemDivider,
     IonLabel,
     IonList,
     IonMenu,
     IonMenuToggle,
-    IonImg,
-    IonTitle,
-    IonItemDivider
+    IonTitle
 } from '@ionic/react';
 import appLogo from '../../assets/images/CovidTrackerTransparent.png'
 import Emergency from '../Emergency/Emergency';
@@ -17,9 +17,16 @@ import { logOutOutline } from 'ionicons/icons';
 import './Menu.css';
 import { useAuth } from '../../providers/auth.provider';
 import { UserType } from '../../enum/UserType.enum';
-import { adminAppPages, AppPage, patientAppPages } from './menuAppPages';
+import {
+    adminAppPages,
+    AppPage,
+    doctorAppPages,
+    healthOfficialAppPages,
+    immigrationOfficerAppPages,
+    patientAppPages
+} from './menuAppPages';
 
-const Menu: React.FC = () => {
+const Menu: React.FC<{ionMenuId: string, userType: UserType}> = (props) => {
     const {currentUser, currentProfile, logout} = useAuth();
     const location = useLocation();
 
@@ -28,16 +35,15 @@ const Menu: React.FC = () => {
     // const labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
 
     function getMenuAppPagesByRole(): AppPage[] {
-        if (!currentProfile) {
-            return [];
-        }
-        switch (currentProfile.getRole()) {
+        switch (props.userType) {
             case UserType.PATIENT:
                 return patientAppPages;
             case UserType.DOCTOR:
-                return patientAppPages;
+                return doctorAppPages;
             case UserType.IMMIGRATION_OFFICER:
-                return patientAppPages;
+                return immigrationOfficerAppPages;
+            case UserType.HEALTH_OFFICIAL:
+                return healthOfficialAppPages;
             case UserType.ADMIN:
                 return adminAppPages;
             default:
@@ -71,7 +77,7 @@ const Menu: React.FC = () => {
     }
 
     return (
-        <IonMenu contentId="home" type="push">
+        <IonMenu contentId={props.ionMenuId} type="push">
 
             <IonContent>
                 <IonImg src={appLogo}/>

@@ -1,6 +1,6 @@
 import {IonButton, IonCol, IonRow,IonTitle, IonPage, IonToolbar, IonContent } from '@ionic/react';
 import NavBar from '../../components/NavBar';
-import { Pages } from '../../providers/pages.enum';
+import { AdminPages } from '../../providers/pages.enum';
 import { useState, useEffect } from 'react';
 import HttpService from '../../providers/http.service';
 import PatientsTable from '../../components/PatientsTable/PatientsTable';
@@ -35,10 +35,10 @@ const AssignedConfirmedPage: React.FC = () =>{
                         <IonCol/>
                             {/*These buttons will change the request and rows!*/}
                             <IonCol class="confirmButton">
-                                <IonButton id="con" color="favorite" routerLink={Pages.assignedConfirmed}>Assigned</IonButton>
+                                <IonButton id="con" color="favorite" routerLink={AdminPages.assignedConfirmed}>Assigned</IonButton>
                             </IonCol>
                             <IonCol class="unconfirmedButton">
-                                <IonButton color="favorite1" routerLink={Pages.unAssignedConfirmed}>UnAssigned</IonButton>
+                                <IonButton color="favorite1" routerLink={AdminPages.unAssignedConfirmed}>UnAssigned</IonButton>
                             </IonCol>
                         <IonCol/>
                     </IonRow>
