@@ -42,6 +42,7 @@ import './theme/variables.css';
 setupIonicReact();
 
 const App: React.FC = () => {
+
     return (
         <IonApp>
             <AuthProvider>
