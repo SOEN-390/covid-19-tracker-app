@@ -25,13 +25,17 @@ import './theme/variables.css';
 import AppMenu from './AppMenu';
 import RegisterNext from './pages/Register/RegisterNext';
 import { Pages } from './providers/pages.enum';
+import AdminDashboardPage from './pages/Admin/AdminDashboard.page'
 
 import { AuthProvider } from './providers/auth.provider';
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
+import SettingsPage from './pages/Settings/Settings.page';
+
 
 setupIonicReact();
 
 const App: React.FC = () => {
+
     return (
         <IonApp>
             <AuthProvider>
@@ -50,6 +54,9 @@ const App: React.FC = () => {
                             <RegisterNext/>
                         </Route>
                         <PrivateRoute path={Pages.home} component={AppMenu}/>
+                        <PrivateRoute path={Pages.admin} component={AdminDashboardPage}/>
+                        <PrivateRoute path={Pages.settings} component={SettingsPage}/>
+
                     </IonRouterOutlet>
                 </IonReactRouter>
             </AuthProvider>
