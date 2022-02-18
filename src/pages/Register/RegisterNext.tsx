@@ -101,14 +101,13 @@ const RegisterNext: React.FC = () => {
             <IonContent>
                 <IonImg className="register__logo" src={CovidTrackerTransparent}/>
                 <h2 className="register__login-text">Sign Up</h2>
+
                 <br/>
                 <div className={'ion-text-center'}>
                     <IonLabel text-center className="register__login-text">Protect Yourself</IonLabel>
                 </div>
+
                 <div className="ion-align-items-center; register__form">
-
-                    <br/>
-
                     <IonLabel className="register__login-text">First Name </IonLabel>
                     <IonInput className="register__text-field" placeholder="Enter your First Name" type="text"
                               onIonChange={(e: any) => setFirstName(e.target.value)}/>
