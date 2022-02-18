@@ -8,43 +8,39 @@ import { IPatientTableRow } from '../../interfaces/IPatientTableRow';
 const HealthOfficialPatientsPage: React.FC = () => {
 
     function createData(
-        name: string,
-        status: string,
-        last_update: string,
-        doctor: string,
+        firstName: string,
+        lastName: string, 
+        testResult: string,
+        lastUpdate: string,
+        doctorName: string,
         action: string,
         priority: string,
         monitor_symptoms: string
     ): IPatientTableRow {
-        return {name, status, last_update, action, doctor, priority, monitor_symptoms};
+        return {firstName, lastName, testResult, lastUpdate, action, doctorName, priority, monitor_symptoms};
     }
 
     const rows = [
-        createData('Sarah SalibSarah Salib', 'positive', '20-11-2021', 'Kero', 'contact', '1', ''),
-        createData('Sarah Salib', 'positive', '20-11-2021', 'Kero', 'contact', '1', ''),
-        createData('Sarah Salib', 'positive', '20-11-2021', 'Kero', 'contact', '1', ''),
-        createData('Sarah Salib', 'positive', '20-11-2021', 'Kero', 'contact', '1', ''),
-        createData('Sarah Salib', 'positive', '20-11-2021', 'Kero', 'contact', '1', ''),
-        createData('Sarah Salib', 'positive', '20-11-2021', 'Kero', 'contact', '1', ''),
-        createData('Sarah Salib', 'positive', '20-11-2021', 'Kero', 'contact', '1', ''),
-        createData('Sarah Salib', 'positive', '20-11-2021', 'Kero', 'contact', '1', ''),
-        createData('Sarah Salib', 'positive', '20-11-2021', 'Kero', 'contact', '1', ''),
-        createData('Sarah Salib', 'positive', '20-11-2021', 'Kero', 'contact', '1', ''),
-        createData('Sarah Salib', 'positive', '20-11-2021', 'Kero', 'contact', '1', ''),
-        createData('Sarah Salib', 'positive', '20-11-2021', 'Kero', 'contact', '1', ''),
-        createData('Sarah Salib', 'positive', '20-11-2021', 'Kero', 'contact', '1', ''),
-        createData('Sarah Salib', 'positive', '20-11-2021', 'Kero', 'contact', '1', ''),
-        createData('Sarah Salib', 'positive', '20-11-2021', 'Kero', 'contact', '1', ''),
-        createData('Sarah Salib', 'positive', '20-11-2021', 'Kero', 'contact', '1', ''),
-        createData('Sarah Salib', 'positive', '20-11-2021', 'Kero', 'contact', '1', ''),
-        createData('Sarah Salib', 'positive', '20-11-2021', 'Kero', 'contact', '1', ''),
-        createData('Sarah Salib', 'positive', '20-11-2021', 'Kero', 'contact', '1', ''),
-        createData('Sarah Salib', 'positive', '20-11-2021', 'Kero', 'contact', '1', ''),
-        createData('Sarah Salib', 'positive', '20-11-2021', 'Kero', 'contact', '1', ''),
-        createData('Sarah Salib', 'positive', '20-11-2021', 'Kero', 'contact', '1', ''),
-        createData('Sarah Salib', 'positive', '20-11-2021', 'Kero', 'contact', '1', ''),
-        createData('Sarah Salib', 'positive', '20-11-2021', 'Kero', 'contact', '1', ''),
-        createData('Sarah Salib', 'positive', '20-11-2021', 'Kero', 'contact', '1', '')
+        createData('Sarah Salib', 'Sarah Salib', 'positive', '20-11-2021', 'Kero', 'contact', '1', ''),
+        createData('Sarah', 'Salib', 'positive', '20-11-2021', 'Kero', 'contact', '1', ''),
+        createData('Sarah', 'Salib', 'positive', '20-11-2021', 'Kero', 'contact', '1', ''),
+        createData('Sarah', 'Salib', 'positive', '20-11-2021', 'Kero', 'contact', '1', ''),
+        createData('Sarah', 'Salib', 'positive', '20-11-2021', 'Kero', 'contact', '1', ''),
+        createData('Sarah', 'Salib', 'positive', '20-11-2021', 'Kero', 'contact', '1', ''),
+        createData('Sarah', 'Salib', 'positive', '20-11-2021', 'Kero', 'contact', '1', ''),
+        createData('Sarah', 'Salib', 'positive', '20-11-2021', 'Kero', 'contact', '1', ''),
+        createData('Sarah', 'Salib', 'positive', '20-11-2021', 'Kero', 'contact', '1', ''),
+        createData('Sarah', 'Salib', 'positive', '20-11-2021', 'Kero', 'contact', '1', ''),
+        createData('Sarah', 'Salib', 'positive', '20-11-2021', 'Kero', 'contact', '1', ''),
+        createData('Sarah', 'Salib', 'positive', '20-11-2021', 'Kero', 'contact', '1', ''),
+        createData('Sarah', 'Salib', 'positive', '20-11-2021', 'Kero', 'contact', '1', ''),
+        createData('Sarah', 'Salib', 'positive', '20-11-2021', 'Kero', 'contact', '1', ''),
+        createData('Sarah', 'Salib', 'positive', '20-11-2021', 'Kero', 'contact', '1', ''),
+        createData('Sarah', 'Salib', 'positive', '20-11-2021', 'Kero', 'contact', '1', ''),
+        createData('Sarah', 'Salib', 'positive', '20-11-2021', 'Kero', 'contact', '1', ''),
+        createData('Sarah', 'Salib', 'positive', '20-11-2021', 'Kero', 'contact', '1', ''),
+        createData('Sarah', 'Salib', 'positive', '20-11-2021', 'Kero', 'contact', '1', ''),
+        createData('Sarah', 'Salib', 'positive', '20-11-2021', 'Kero', 'contact', '1', '')
     ];
 
     return (

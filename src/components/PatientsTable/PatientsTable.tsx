@@ -75,14 +75,14 @@ const PatientsTable: React.FC<{ patientTableRows: IPatientTableRow[] }> = (props
                     props.patientTableRows.map((row) => {
                         return (
                             <Tr id="tableRow">
-                                <Td id="colName">{row.name}</Td>
+                                <Td id="colName">{row.firstName+ " "+ row.lastName}</Td>
                                 <Td>
-                                    <div id="PosStatus">{row.status}</div>
+                                <div id={row.testResult=='positive'?"PosStatus":"NegStatus"}>{row.testResult=='positive'?'Positive':'Negative'}</div>
                                 </Td>
-                                <Td id="lastUpdate">{row.last_update}</Td>
-                                <Td id="colDoc">{row.doctor}</Td>
+                                <Td id="lastUpdate">March 17, 2021</Td>
+                                <Td id="colDoc">Dr.Sue</Td>
                                 <Td id="col"><IonButton color="favorite" shape="round"
-                                                        size="large"> {row.action} </IonButton></Td>
+                                                        size="large"> No-Action needed </IonButton></Td>
                                 <Td id="col"> {row.priority}</Td>
                                 <Td id="col"> <IonButton color="favorite" shape="round"
                                                          size="large"> Symptoms </IonButton></Td>

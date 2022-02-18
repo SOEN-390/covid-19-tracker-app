@@ -24,7 +24,11 @@ import {
     warningSharp,
     appsOutline,
     calendarOutline,
-    logOutOutline
+    logOutOutline,
+    settingsOutline,
+    settingsSharp,
+    heartHalfOutline,
+    heartHalfSharp
 } from 'ionicons/icons';
 import './Menu.css';
 import { Pages } from '../providers/pages.enum';
@@ -78,9 +82,37 @@ const appPages: AppPage[] = [
 ];
 
 
+const adminPages: AppPage[] = [
+    {
+        title: 'Overview',
+        url: Pages.admin,
+        iosIcon: appsOutline,
+        mdIcon: appsOutline
+    },
+    {
+        title: 'Confirmed Patients',
+        url: Pages.assignedConfirmed,
+        iosIcon: calendarOutline,
+        mdIcon: calendarOutline
+    },
+    {
+        title: 'Doctor',
+        url: Pages.doctors,
+        iosIcon: heartHalfOutline,
+        mdIcon: heartHalfSharp
+    },
+    {
+        title: 'Settings',
+        url: '/admin'+Pages.settings,
+        iosIcon: settingsOutline,
+        mdIcon: settingsSharp
+    },
+];
+
 const Menu: React.FC = () => {
     const {currentUser, currentProfile, logout} = useAuth();
     const location = useLocation();
+    let sideMenuPages =appPages;
 
     // const labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
 
@@ -102,8 +134,10 @@ const Menu: React.FC = () => {
                 return 'Doctor';
             case UserType.IMMIGRATION_OFFICER:
                 return 'Immigration Officer'
-            case UserType.ADMIN:
-                return 'Admin'
+            case UserType.ADMIN:{
+                sideMenuPages=adminPages;
+                return 'Admin';
+            }
             default:
                 return '';
         }
@@ -126,8 +160,10 @@ const Menu: React.FC = () => {
                     <IonItemDivider/>
                     {/*<IonList id="inbox-list">*/}
                     {/*</IonList>*/}
+
+
                     {
-                        appPages.map((appPage, index) => {
+                        sideMenuPages.map((appPage, index) => {
                             return (
                                 <IonMenuToggle key={index} autoHide={false}>
                                     <IonItem className={location.pathname === appPage.url ? 'selected' : ''}
@@ -136,12 +172,14 @@ const Menu: React.FC = () => {
                                         <IonIcon slot="start" ios={appPage.iosIcon} md={appPage.mdIcon}/>
                                         <IonLabel>{appPage.title}</IonLabel>
                                     </IonItem>
+                                    {appPage.title=="Doctor" && getRole()=='Admin'? <><IonList id="inbox-list"> </IonList><IonTitle>Account</IonTitle></> : ''}
+
                                 </IonMenuToggle>
 
                             );
                         })
                     }
-                    <IonMenuToggle key={appPages.length + 1} autoHide={false}>
+                    <IonMenuToggle key={sideMenuPages.length + 1} autoHide={false}>
                         <IonItem routerDirection="none" lines="none" detail={false} onClick={logout}>
                             <IonIcon slot="start" ios={logOutOutline} md={logOutOutline}/>
                             <IonLabel>Logout</IonLabel>

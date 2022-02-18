@@ -1,0 +1,43 @@
+import { IonAvatar,  IonCol,  IonRow,IonTitle,IonGrid, IonPage, IonToolbar, IonText, IonContent } from '@ionic/react';
+import '../../components/HealthOfficialTable.css';
+import logo from '../../resources/UserIcon.png'
+import NavBar from '../../components/NavBar';
+import { useState, useEffect } from 'react';
+import HttpService from '../../providers/http.service';
+import { IDoctorTableRow } from '../../interfaces/IDoctorTableRow';
+import DoctorsTable from '../../components/PatientsTable/DoctorsTable';
+
+const Doctors: React.FC = () =>{
+
+    const [doctorsArray, setDoctorssArray]= useState <IDoctorTableRow[]> ()
+
+    useEffect(() => {
+        doctorssRetrieval();
+      }, []);
+
+      async function doctorssRetrieval() {
+        HttpService.get(`doctors/all`).then(async (response) => {
+            console.log('HERE IS THE DATA IN JSON FORM: ', response);
+            setDoctorssArray(response);
+        }).catch((error) => {
+            console.log('ERROR: ', error);
+        });
+    }
+
+
+    return (
+        <IonPage>
+        <IonToolbar>
+        <NavBar/>
+        </IonToolbar>
+        <IonContent>
+            <IonTitle id="patientHeader">Doctors</IonTitle>
+                {    
+                    doctorsArray!==undefined? <DoctorsTable doctorTableRows={doctorsArray}/>:null
+                }
+            </IonContent>
+        </IonPage>
+    );
+
+}
+export default Doctors;

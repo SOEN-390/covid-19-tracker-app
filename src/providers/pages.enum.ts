@@ -5,6 +5,13 @@ export enum Pages {
     overview = '/home/overview',
     appointments = '/home/appointments',
     symptoms = '/home/symptoms',
+    ho_ConfirmedPatient = '/home/HealthOfficialView',
+    admin = '/admin',
+    adminOverview = "/admin/adminOverview",
+    assignedConfirmed = "/admin/assignedConfirmed",
+    unAssignedConfirmed = "/admin/unAssignedConfirmed",
+    doctors = "/admin/doctors",
+    settings = "/settings",
     patientProfile = '/home/patient-profile',
     immigrationDashboard = '/home/immigration-dashboard',
     healthOfficialPage ='/home/healthOfficials'
