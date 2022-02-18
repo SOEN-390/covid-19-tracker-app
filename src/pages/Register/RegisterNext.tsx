@@ -57,8 +57,7 @@ const RegisterNext: React.FC = () => {
                     logout();
                     history.push(Pages.login);
                 });
-            }
-            else {
+            } else {
                 present('Something went wrong.', 1500);
             }
         });
@@ -100,50 +99,49 @@ const RegisterNext: React.FC = () => {
             </IonHeader>
 
             <IonContent>
-                <IonImg className="login-logo" src={CovidTrackerTransparent}/>
-                <div className="sign-in-center">
-                    <h2 className="login-text">Sign Up</h2>
+                <IonImg className="register__logo" src={CovidTrackerTransparent}/>
+                <h2 className="register__login-text">Sign Up</h2>
+
+                <br/>
+                <div className={'ion-text-center'}>
+                    <IonLabel text-center className="register__login-text">Protect Yourself</IonLabel>
                 </div>
-                <div className="ion-align-items-center; login-form-center">
-                    <IonLabel className="login-text">Protect Yourself</IonLabel>
 
-                    <br/><br/>
-
-                    <IonLabel className="login-text">First Name </IonLabel>
-                    <IonInput className="login-text-field" placeholder="Enter your First Name" type="text"
+                <div className="ion-align-items-center; register__form">
+                    <IonLabel className="register__login-text">First Name </IonLabel>
+                    <IonInput className="register__text-field" placeholder="Enter your First Name" type="text"
                               onIonChange={(e: any) => setFirstName(e.target.value)}/>
 
                     <br/><br/>
 
-                    <IonLabel className="login-text">Last Name</IonLabel>
-                    <IonInput className="login-text-field" placeholder="Enter your Last Name" type="text"
+                    <IonLabel className="register__login-text">Last Name</IonLabel>
+                    <IonInput className="register__text-field" placeholder="Enter your Last Name" type="text"
                               onIonChange={(e: any) => setLastName(e.target.value)}/>
 
                     <br/><br/>
 
-                    <IonLabel className="login-text">Test Results</IonLabel>
-                    <IonInput className="login-text-field" placeholder="positive or negative" type="text"/>
+                    <IonLabel className="register__login-text">Test Result</IonLabel>
+                    <IonInput className="register__text-field" placeholder="Positive or Negative" type="text"/>
 
                     <br/><br/>
 
-                    <IonLabel className="login-text">Your Address</IonLabel>
-                    <IonInput className="login-text-field" placeholder="Enter your Address" type="text"
+                    <IonLabel className="register__login-text">Your Address</IonLabel>
+                    <IonInput className="register__text-field" placeholder="Enter your Address" type="text"
                               onIonChange={(e: any) => setAddress(e.target.value)}/>
 
                     <br/><br/>
-
-                    <IonLabel className="login-text">Medical card number</IonLabel>
-                    <IonInput className="login-text-field" placeholder="Enter your medical card number" type="text"
+                    <IonLabel className="register__login-text">Medical Card Number</IonLabel>
+                    <IonInput className="register__text-field" placeholder="Enter your medical card number" type="text"
                               onIonChange={(e: any) => setMedicalNumber(e.target.value)}/>
                     <br/><br/>
 
-                    <IonLabel className="login-text">Phone number</IonLabel>
-                    <IonInput className="login-text-field" placeholder="Enter your phone number" type="text"
+                    <IonLabel className="register__login-text">Phone number</IonLabel>
+                    <IonInput className="register__text-field" placeholder="Enter your phone number" type="text"
                               onIonChange={(e: any) => setPhoneNumber(e.target.value)}/>
                     <br/><br/>
 
 
-                    <IonButton size="large" expand="block" fill="solid" color={'dark-blue'}
+                    <IonButton className={'register__btn'} size="large" expand="block" fill="solid" color={'dark-blue'}
                                onClick={registration}>Register</IonButton>
                 </div>
             </IonContent>
