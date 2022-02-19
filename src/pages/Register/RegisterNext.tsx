@@ -33,6 +33,8 @@ const RegisterNext: React.FC = () => {
     const [phoneNumber, setPhoneNumber] = useState('')
     const [TestResults, setTestResults] = useState('')
     const [dateOfbirth, setDOB] = useState('')
+    const [gender, setGender] = useState('')
+
 
     const history = useHistory();
     const [present] = useIonToast();
@@ -122,8 +124,14 @@ const RegisterNext: React.FC = () => {
                     <IonLabel className="register__login-text">Last Name</IonLabel>
                     <IonInput className="register__text-field" placeholder="Enter your Last Name" type="text"
                               onIonChange={(e: any) => setLastName(e.target.value)}/>
-
                     <br/><br/>
+
+                    <IonLabel className="register__login-text"> Your Gender </IonLabel>
+                   <IonSelect placeholder='your Gender'  onIonChange={(e: any) => setGender(e.target.value)}>
+                        <IonSelectOption value='Positive'> Male</IonSelectOption>
+                        <IonSelectOption value='Negative'> Female</IonSelectOption>
+                   </IonSelect>
+                   <br/><br/>
                     <IonLabel className="register__login-text">Your Date of Birth</IonLabel>
                     <IonInput className="register__text-field" placeholder="YYYY/MM/DD" type="text"
                               onIonChange={(e: any) => setDOB(e.target.value)}/>
@@ -135,7 +143,6 @@ const RegisterNext: React.FC = () => {
                         <IonSelectOption value='Positive'> Positive</IonSelectOption>
                         <IonSelectOption value='Negative'> Negative</IonSelectOption>
                         <IonSelectOption value='Unknown'> Unknown</IonSelectOption>
-
                    </IonSelect>
                   
 
@@ -155,8 +162,6 @@ const RegisterNext: React.FC = () => {
                     <IonInput className="register__text-field" placeholder="Enter your phone number" type="text"
                               onIonChange={(e: any) => setPhoneNumber(e.target.value)}/>
                     <br/><br/>
-
-
                     <IonButton className={'register__btn'} size="large" expand="block" fill="solid" color={'dark-blue'}
                                onClick={registration}>Register</IonButton>
                 </div>
