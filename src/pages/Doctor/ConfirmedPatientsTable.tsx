@@ -20,7 +20,6 @@ const ConfirmedPatientsTable: React.FC = () => {
             return;
         }
         HttpService.get(`doctors/${currentProfile.id}/patients/assigned`).then(async (response) => {
-            console.log('HERE IS THE DATA IN JSON FORM: ', response);
             setPatientsArray(response);
         }).catch((error) => {
             console.log('ERROR: ', error);
