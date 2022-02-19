@@ -31,8 +31,8 @@ const RegisterNext: React.FC = () => {
     const [address, setAddress] = useState('')
     const [medicalNumber, setMedicalNumber] = useState('')
     const [phoneNumber, setPhoneNumber] = useState('')
-    const [TestResults, setTestResults] = useState('')
-    const [dateOfbirth, setDOB] = useState('')
+    const [testResult, setTestResult] = useState('')
+    const [dob, setDOB] = useState('')
     const [gender, setGender] = useState('')
 
 
@@ -44,7 +44,7 @@ const RegisterNext: React.FC = () => {
     function registration() {
         const valid = validateInput();
         if (!valid) {
-            present('Please fill out all the required fields', 1500);
+            return;
         }
 
         const user: IPatient = {
@@ -52,11 +52,12 @@ const RegisterNext: React.FC = () => {
             firstName: firstName,
             lastName: lastName,
             // TODO - drop down for test result
-            testResult: TestResults,
+            testResult: testResult,
             address: address,
             email: auth.currentUser?.email,
             phoneNumber: phoneNumber,
-            dateOfbirth: dateOfbirth
+            dob: dob,
+            gender: gender
         }
         saveUser(user).then((success) => {
             if (success) {
@@ -72,22 +73,34 @@ const RegisterNext: React.FC = () => {
 
     function validateInput(): boolean {
         if (medicalNumber.trim() === '') {
+            present('Please enter your medical card number', 1500);
             return false;
         }
-        if (firstName.trim() === '') {
-            return false;
-        }
-        if (lastName.trim() === '') {
+        if (firstName.trim() === '' || lastName.trim() === '') {
+            present('Please enter your name', 1500);
             return false;
         }
         if (address.trim() === '') {
+            present('Please enter your address', 1500);
             return false;
         }
         if (phoneNumber.trim() === '') {
+            present('Please enter your phone number', 1500);
+            return false;
+        }
+        if (gender.trim() === '') {
+            present('Please choose one of the options for gender', 1500);
+            return false;
+        }
+        if (dob.trim() === '') {
+            present('Please enter your date of birth', 1500);
+            return false;
+        }
+        if (testResult.trim() === '') {
+            present('Please choose one of the options for test result', 1500);
             return false;
         }
         return true;
-
     }
 
     async function saveUser(user: IPatient): Promise<boolean> {
@@ -119,48 +132,45 @@ const RegisterNext: React.FC = () => {
                     <IonInput className="register__text-field" placeholder="Enter your First Name" type="text"
                               onIonChange={(e: any) => setFirstName(e.target.value)}/>
 
-                    <br/><br/>
+                    <br/>
 
                     <IonLabel className="register__login-text">Last Name</IonLabel>
                     <IonInput className="register__text-field" placeholder="Enter your Last Name" type="text"
                               onIonChange={(e: any) => setLastName(e.target.value)}/>
-                    <br/><br/>
+                    <br/>
 
-                    <IonLabel className="register__login-text"> Your Gender </IonLabel>
-                   <IonSelect placeholder='your Gender'  onIonChange={(e: any) => setGender(e.target.value)}>
-                        <IonSelectOption value='Positive'> Male</IonSelectOption>
-                        <IonSelectOption value='Negative'> Female</IonSelectOption>
-                   </IonSelect>
-                   <br/><br/>
+                    <IonLabel className="register__login-text">Medical Card Number</IonLabel>
+                    <IonInput className="register__text-field" placeholder="Enter your medical card number" type="text"
+                              onIonChange={(e: any) => setMedicalNumber(e.target.value)}/>
+                    <br/>
+
                     <IonLabel className="register__login-text">Your Date of Birth</IonLabel>
-                    <IonInput className="register__text-field" placeholder="YYYY/MM/DD" type="text"
+                    <IonInput className="register__text-field" placeholder="MM/DD/YYYY" type="date"
                               onIonChange={(e: any) => setDOB(e.target.value)}/>
-                    <br/><br/>
-                    
-                    <br/><br/>
-                    <IonLabel className="register__login-text"> Your test results </IonLabel>
-                   <IonSelect placeholder='Test result'  onIonChange={(e: any) => setTestResults(e.target.value)}>
-                        <IonSelectOption value='Positive'> Positive</IonSelectOption>
-                        <IonSelectOption value='Negative'> Negative</IonSelectOption>
-                        <IonSelectOption value='Unknown'> Unknown</IonSelectOption>
-                   </IonSelect>
-                  
-
-                    <br/><br/>
+                    <br/>
 
                     <IonLabel className="register__login-text">Your Address</IonLabel>
                     <IonInput className="register__text-field" placeholder="Enter your Address" type="text"
                               onIonChange={(e: any) => setAddress(e.target.value)}/>
-
-                    <br/><br/>
-                    <IonLabel className="register__login-text">Medical Card Number</IonLabel>
-                    <IonInput className="register__text-field" placeholder="Enter your medical card number" type="text"
-                              onIonChange={(e: any) => setMedicalNumber(e.target.value)}/>
-                    <br/><br/>
+                    <br/>
 
                     <IonLabel className="register__login-text">Phone number</IonLabel>
                     <IonInput className="register__text-field" placeholder="Enter your phone number" type="text"
                               onIonChange={(e: any) => setPhoneNumber(e.target.value)}/>
+                    <br/>
+                    <IonLabel className="register__login-text"> Your Gender </IonLabel>
+                    <IonSelect placeholder="your Gender" onIonChange={(e: any) => setGender(e.target.value)}>
+                        <IonSelectOption value="male"> Male</IonSelectOption>
+                        <IonSelectOption value="female"> Female</IonSelectOption>
+                        <IonSelectOption value="none"> Prefer not to respond</IonSelectOption>
+                    </IonSelect>
+                    <br/>
+                    <IonLabel className="register__login-text"> Your test results </IonLabel>
+                    <IonSelect placeholder="Test result" onIonChange={(e: any) => setTestResult(e.target.value)}>
+                        <IonSelectOption value="positive"> Positive</IonSelectOption>
+                        <IonSelectOption value="negative"> Negative</IonSelectOption>
+                        <IonSelectOption value="pending"> Not tested/Pending</IonSelectOption>
+                    </IonSelect>
                     <br/><br/>
                     <IonButton className={'register__btn'} size="large" expand="block" fill="solid" color={'dark-blue'}
                                onClick={registration}>Register</IonButton>
