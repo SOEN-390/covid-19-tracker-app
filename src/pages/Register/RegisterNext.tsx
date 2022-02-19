@@ -6,6 +6,8 @@ import {
     IonImg,
     IonInput,
     IonLabel,
+    IonSelect,
+    IonSelectOption,
     setupIonicReact,
     useIonToast
 } from '@ionic/react';
@@ -29,6 +31,8 @@ const RegisterNext: React.FC = () => {
     const [address, setAddress] = useState('')
     const [medicalNumber, setMedicalNumber] = useState('')
     const [phoneNumber, setPhoneNumber] = useState('')
+    const [TestResults, setTestResults] = useState('')
+    const [dateOfbirth, setDOB] = useState('')
 
     const history = useHistory();
     const [present] = useIonToast();
@@ -46,10 +50,11 @@ const RegisterNext: React.FC = () => {
             firstName: firstName,
             lastName: lastName,
             // TODO - drop down for test result
-            testResult: TestResult.POSITIVE,
+            testResult: TestResults,
             address: address,
             email: auth.currentUser?.email,
-            phoneNumber: phoneNumber
+            phoneNumber: phoneNumber,
+            dateOfbirth: dateOfbirth
         }
         saveUser(user).then((success) => {
             if (success) {
@@ -119,9 +124,20 @@ const RegisterNext: React.FC = () => {
                               onIonChange={(e: any) => setLastName(e.target.value)}/>
 
                     <br/><br/>
+                    <IonLabel className="register__login-text">Your Date of Birth</IonLabel>
+                    <IonInput className="register__text-field" placeholder="YYYY/MM/DD" type="text"
+                              onIonChange={(e: any) => setDOB(e.target.value)}/>
+                    <br/><br/>
+                    
+                    <br/><br/>
+                    <IonLabel className="register__login-text"> Your test results </IonLabel>
+                   <IonSelect placeholder='Test result'  onIonChange={(e: any) => setTestResults(e.target.value)}>
+                        <IonSelectOption value='Positive'> Positive</IonSelectOption>
+                        <IonSelectOption value='Negative'> Negative</IonSelectOption>
+                        <IonSelectOption value='Unknown'> Unknown</IonSelectOption>
 
-                    <IonLabel className="register__login-text">Test Result</IonLabel>
-                    <IonInput className="register__text-field" placeholder="Positive or Negative" type="text"/>
+                   </IonSelect>
+                  
 
                     <br/><br/>
 
