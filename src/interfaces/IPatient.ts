@@ -8,5 +8,6 @@ export interface IPatient {
     address: string;
     email: string | null | undefined;
     phoneNumber: string;
-    dateOfbirth: string;
+    dob: string;
+    gender: string;
 }
