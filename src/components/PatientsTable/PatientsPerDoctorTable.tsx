@@ -55,24 +55,24 @@ const PatientsPerDoctorTable: React.FC<{ patientTableRows: IPatientTableRow[] }>
         <Table>
             <Thead>
                 <Tr id="tableHead">
-                    {columns.map((column) => (
-                        <Th id="headCol">{column.label}</Th>
+                    {columns.map((column, i) => (
+                        <Th key={i} id="headCol">{column.label}</Th>
                     ))}
                 </Tr>
             </Thead>
             <Tbody>
                 {
-                    props.patientTableRows.map((row) => {
+                    props.patientTableRows.map((row, i) => {
                         return (
-                            <Tr id="tableRow">
-                                <Td id="colName">{row.firstName + " " + row.lastName}</Td>
-                                <Td>
-                                    <div id={row.testResult == 'positive' ? "PosStatus" : "NegStatus"}>{row.testResult == 'positive' ? 'Positive' : 'Negative'}</div>
+                            <Tr id="tableRow" key={i}>
+                                <Td key={i} id="colName">{row.firstName + " " + row.lastName}</Td>
+                                <Td key={i}>
+                                    <div key={i} id={row.testResult == 'positive' ? "PosStatus" : "NegStatus"}>{row.testResult == 'positive' ? 'Positive' : 'Negative'}</div>
                                 </Td>
-                                <Td id="lastUpdate">March 17, 2021</Td>
-                                <Td id="col"><IonButton color="favorite" shape="round"
+                                <Td key={i} id="lastUpdate">March 17, 2021</Td>
+                                <Td key={i} id="col"><IonButton color="favorite" shape="round"
                                     size="large"> No-Action needed </IonButton></Td>
-                                <Td id="col"> {row.priority}
+                                <Td key={i} id="col"> {row.priority}
                                     <IonButton>
                                         <IonIcon slot="start" ios={flag} md={flag} />
 
