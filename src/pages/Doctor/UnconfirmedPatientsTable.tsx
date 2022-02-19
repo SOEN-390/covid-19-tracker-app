@@ -5,19 +5,24 @@ import NavBar from '../../components/NavBar';
 import PatientsPerDoctorTable from '../../components/PatientsTable/PatientsPerDoctorTable';
 import PatientsTable from '../../components/PatientsTable/PatientsTable';
 import { IPatientTableRow } from '../../interfaces/IPatientTableRow';
+import { useAuth } from '../../providers/auth.provider';
 import HttpService from '../../providers/http.service';
 import { DoctorPages } from '../../providers/pages.enum';
 import DoctorsPage from '../Admin/Doctors.page';
 
 const UnconfirmedPatientsTable: React.FC = () => {
     const [patientsArray, setPatientsArray] = useState<IPatientTableRow[]>()
+    const { currentProfile } = useAuth();
 
     useEffect(() => {
-        patientsRetrieval();
+        getAssignedPatients();
     }, []);
 
-    async function patientsRetrieval() {
-        HttpService.get(`patients/all`).then(async (response) => {
+    async function getAssignedPatients() {
+        if (!currentProfile) {
+            return;
+        }
+        HttpService.get(`doctors/${currentProfile.id}/patients/assigned`).then(async (response) => {
             console.log('HERE IS THE DATA IN JSON FORM: ', response);
             setPatientsArray(response);
         }).catch((error) => {
@@ -40,16 +45,16 @@ const UnconfirmedPatientsTable: React.FC = () => {
                         <IonCol />
                         {/*These buttons will change the request and rows!*/}
                         <IonCol class="confirmButton">
-                            <IonButton color="favorite1" routerLink={DoctorPages.assignedConfirmed}>Assigned</IonButton>
+                            <IonButton color="favorite1" routerLink={DoctorPages.assignedConfirmed}>Confirmed</IonButton>
                         </IonCol>
                         <IonCol class="unconfirmedButton">
-                            <IonButton id="con" color="favorite" routerLink={DoctorPages.unAssignedConfirmed}>UnAssigned</IonButton>
+                            <IonButton id="con" color="favorite" routerLink={DoctorPages.unAssignedConfirmed}>UnConfirmed</IonButton>
                         </IonCol>
                         <IonCol />
                     </IonRow>
                 </div>
                 {
-                    patientsArray !== undefined ? <PatientsTable patientTableRows={patientsArray} /> : null
+                    patientsArray !== undefined ? <PatientsPerDoctorTable patientTableRows={patientsArray} /> : null
                 }
             </IonContent>
         </IonPage>
