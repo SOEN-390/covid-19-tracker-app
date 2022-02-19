@@ -81,7 +81,7 @@ export const doctorAppPages: AppPage[] = [
     },
     {
         title: 'Patients',
-        url: DoctorPages.assignedConfirmed,
+        url: DoctorPages.patients,
         iosIcon: calendarOutline,
         mdIcon: calendarOutline
     },

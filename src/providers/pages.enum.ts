@@ -15,9 +15,7 @@ export enum PatientPages {
 export enum DoctorPages {
     home = '/doctor',
     patientProfile = '/doctor/patient-profile',
-    patientsTable = '/doctor/PatientsTable',
-    assignedConfirmed = '/doctor/confirmedPatientsTable',
-    unAssignedConfirmed = '/doctor/unConfirmedPatientsTable',
+    patients = '/doctor/patients',
     settings = '/doctor/settings'
 }
 

@@ -4,8 +4,7 @@ import Menu from '../components/Menu/Menu';
 import PatientProfile from '../pages/PatientProfile/PatientProfile.page';
 import { DoctorPages } from '../providers/pages.enum';
 import { UserType } from '../enum/UserType.enum';
-import ConfirmedPatientsTable from '../pages/Doctor/ConfirmedPatientsTable';
-import UnconfirmedPatientsTable from '../pages/Doctor/UnconfirmedPatientsTable';
+import PatientsDoctorPage from '../pages/Doctor Patients/Patients.doctor.page';
 
 setupIonicReact();
 
@@ -21,11 +20,8 @@ const DoctorRouting: React.FC = () => {
                 <Route path={DoctorPages.patientProfile}>
                     <PatientProfile />
                 </Route>
-                <Route path={DoctorPages.assignedConfirmed}>
-                    <ConfirmedPatientsTable />
-                </Route>
-                <Route path={DoctorPages.unAssignedConfirmed}>
-                    <UnconfirmedPatientsTable />
+                <Route path={DoctorPages.patients}>
+                    <PatientsDoctorPage />
                 </Route>
             </IonRouterOutlet>
         </IonSplitPane>
