@@ -118,7 +118,8 @@ export function AuthProvider({ children }) {
                     present('Something went wrong!', 1500);
                     setLoading(false);
                 });
-
+            } else {
+                setLoading(false);
             }
         });
 
