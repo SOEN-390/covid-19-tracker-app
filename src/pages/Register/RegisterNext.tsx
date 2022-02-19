@@ -21,6 +21,7 @@ import { TestResult } from '../../enum/TestResult.enum';
 import { IPatient } from '../../interfaces/IPatient';
 import { auth } from '../../config/firebase';
 import { useAuth } from '../../providers/auth.provider';
+import { GenderEnum } from '../../enum/Gender.enum';
 
 setupIonicReact();
 
@@ -160,16 +161,16 @@ const RegisterNext: React.FC = () => {
                     <br/>
                     <IonLabel className="register__login-text"> Your Gender </IonLabel>
                     <IonSelect placeholder="your Gender" onIonChange={(e: any) => setGender(e.target.value)}>
-                        <IonSelectOption value="male"> Male</IonSelectOption>
-                        <IonSelectOption value="female"> Female</IonSelectOption>
-                        <IonSelectOption value="none"> Prefer not to respond</IonSelectOption>
+                        <IonSelectOption value={GenderEnum.MALE}> Male</IonSelectOption>
+                        <IonSelectOption value={GenderEnum.FEMALE}> Female</IonSelectOption>
+                        <IonSelectOption value={GenderEnum.NONE}> Prefer not to respond</IonSelectOption>
                     </IonSelect>
                     <br/>
                     <IonLabel className="register__login-text"> Your test results </IonLabel>
                     <IonSelect placeholder="Test result" onIonChange={(e: any) => setTestResult(e.target.value)}>
-                        <IonSelectOption value="positive"> Positive</IonSelectOption>
-                        <IonSelectOption value="negative"> Negative</IonSelectOption>
-                        <IonSelectOption value="pending"> Not tested/Pending</IonSelectOption>
+                        <IonSelectOption value={TestResult.POSITIVE}> Positive</IonSelectOption>
+                        <IonSelectOption value={TestResult.NEGATIVE}> Negative</IonSelectOption>
+                        <IonSelectOption value={TestResult.PENDING}> Not tested/Pending</IonSelectOption>
                     </IonSelect>
                     <br/><br/>
                     <IonButton className={'register__btn'} size="large" expand="block" fill="solid" color={'dark-blue'}
