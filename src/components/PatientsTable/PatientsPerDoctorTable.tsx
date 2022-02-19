@@ -1,8 +1,9 @@
-import { IonButton } from '@ionic/react';
+import { IonButton, IonIcon } from '@ionic/react';
 import './PatientsTable.css';
 import * as React from 'react';
 import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table';
 import { IPatientTableRow } from '../../interfaces/IPatientTableRow';
+import { flag } from 'ionicons/icons';
 
 
 interface Column {
@@ -69,12 +70,16 @@ const PatientsPerDoctorTable: React.FC<{ patientTableRows: IPatientTableRow[] }>
                                     <div id={row.testResult == 'positive' ? "PosStatus" : "NegStatus"}>{row.testResult == 'positive' ? 'Positive' : 'Negative'}</div>
                                 </Td>
                                 <Td id="lastUpdate">March 17, 2021</Td>
-                                <Td id="colDoc">Dr.Sue</Td>
                                 <Td id="col"><IonButton color="favorite" shape="round"
                                     size="large"> No-Action needed </IonButton></Td>
-                                <Td id="col"> {row.priority}</Td>
-                                <Td id="col"> <IonButton color="favorite" shape="round"
-                                    size="large"> Symptoms </IonButton></Td>
+                                <Td id="col"> {row.priority}
+                                    <IonButton>
+                                        <IonIcon slot="start" ios={flag} md={flag} />
+
+
+
+                                    </IonButton></Td>
+
                             </Tr>
                         );
                     })

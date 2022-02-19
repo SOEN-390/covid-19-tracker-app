@@ -8,6 +8,7 @@
 }
 
 @media screen and (max-width: 40em) {
+
   /*
     Force table elements to not behave like tables anymore
     Hide table headers (but not display: none;, for accessibility)
@@ -153,6 +154,18 @@ table th:last-child {
   font-size: 14px;
   border-radius: 60px;
   background-color: #129C0F;
+  color: #FEFFFE;
+  vertical-align: middle;
+  line-height: 32px;
+  text-align: center;
+}
+
+#NegStatus {
+  height: 32px;
+  font-weight: normal;
+  font-size: 14px;
+  border-radius: 60px;
+  background-color: #db0101;
   color: #FEFFFE;
   vertical-align: middle;
   line-height: 32px;

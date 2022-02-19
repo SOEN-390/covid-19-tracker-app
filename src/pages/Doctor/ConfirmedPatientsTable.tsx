@@ -6,10 +6,11 @@ import { IPatientTableRow } from '../../interfaces/IPatientTableRow';
 import HttpService from '../../providers/http.service';
 import { DoctorPages } from '../../providers/pages.enum';
 import { useAuth } from '../../providers/auth.provider';
+import PatientsPerDoctorTable from '../../components/PatientsTable/PatientsPerDoctorTable';
 
 const ConfirmedPatientsTable: React.FC = () => {
     const [patientsArray, setPatientsArray] = useState<IPatientTableRow[]>();
-    const {currentProfile } = useAuth();
+    const { currentProfile } = useAuth();
 
     useEffect(() => {
         getAssignedPatients();
@@ -40,16 +41,16 @@ const ConfirmedPatientsTable: React.FC = () => {
                         <IonCol />
                         {/*These buttons will change the request and rows!*/}
                         <IonCol class="confirmButton">
-                            <IonButton color="favorite1" routerLink={DoctorPages.assignedConfirmed}>Assigned</IonButton>
+                            <IonButton color="favorite" routerLink={DoctorPages.assignedConfirmed}>Confirmed</IonButton>
                         </IonCol>
                         <IonCol class="unconfirmedButton">
-                            <IonButton id="con" color="favorite" routerLink={DoctorPages.unAssignedConfirmed}>UnAssigned</IonButton>
+                            <IonButton id="con" color="favorite1" routerLink={DoctorPages.unAssignedConfirmed}>UnConfirmed</IonButton>
                         </IonCol>
                         <IonCol />
                     </IonRow>
                 </div>
                 {
-                    patientsArray !== undefined ? <PatientsTable patientTableRows={patientsArray} /> : null
+                    patientsArray !== undefined ? <PatientsPerDoctorTable patientTableRows={patientsArray} /> : null
                 }
             </IonContent>
         </IonPage>
