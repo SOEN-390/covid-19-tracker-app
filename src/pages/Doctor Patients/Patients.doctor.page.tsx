@@ -1,11 +1,12 @@
 import { IonButton, IonCol, IonContent, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import NavBar from '../../components/NavBar';
-import PatientsPerDoctorTable from '../../components/PatientsTable/PatientsPerDoctorTable';
 import { IPatientTableRow } from '../../interfaces/IPatientTableRow';
 import { useAuth } from '../../providers/auth.provider';
 import HttpService from '../../providers/http.service';
 import { TestResult } from '../../enum/TestResult.enum';
+import PatientsTable from '../../components/PatientsTable/PatientsTable';
+import { UserType } from '../../enum/UserType.enum';
 
 const PatientsDoctorPage: React.FC = () => {
     const [patientsArray, setPatientsArray] = useState<IPatientTableRow[]>([]);
@@ -78,7 +79,9 @@ const PatientsDoctorPage: React.FC = () => {
                     </IonRow>
                 </div>
                 {
-                    patientsArray !== undefined ? <PatientsPerDoctorTable patientTableRows={patientsTableRow}/> : null
+                    patientsArray !== undefined ?
+                        <PatientsTable currentUserType={UserType.DOCTOR} patientTableRows={patientsTableRow}/> :
+                        null
                 }
             </IonContent>
         </IonPage>

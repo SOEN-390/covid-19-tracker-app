@@ -1,11 +1,12 @@
-import {IonButton, IonCol, IonRow,IonTitle, IonPage, IonToolbar, IonContent } from '@ionic/react';
+import { IonButton, IonCol, IonContent, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
 import NavBar from '../../components/NavBar';
 import { AdminPages } from '../../providers/pages.enum';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import HttpService from '../../providers/http.service';
 import PatientsTable from '../../components/PatientsTable/PatientsTable';
 
 import { IPatientTableRow } from '../../interfaces/IPatientTableRow';
+import { UserType } from '../../enum/UserType.enum';
 
 const AssignedConfirmedPage: React.FC = () =>{
     const [patientsArray, setPatientsArray]= useState <IPatientTableRow[]> ()
@@ -44,7 +45,9 @@ const AssignedConfirmedPage: React.FC = () =>{
                     </IonRow>
                 </div>
                 {
-                    patientsArray!==undefined? <PatientsTable patientTableRows={patientsArray}/>:null
+                    patientsArray !== undefined ?
+                        <PatientsTable currentUserType={UserType.ADMIN} patientTableRows={patientsArray} /> :
+                        null
                 }
             </IonContent>
         </IonPage>
