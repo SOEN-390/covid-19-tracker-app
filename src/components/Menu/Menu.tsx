@@ -30,11 +30,11 @@ const Menu: React.FC<{ionMenuId: string, userType: UserType}> = (props) => {
     const {currentUser, currentProfile, logout} = useAuth();
     const location = useLocation();
 
-    const sideMenuPages: AppPage[] = getMenuAppPagesByRole();
+    const sideMenuPages: readonly AppPage[] = getMenuAppPagesByRole();
 
     // const labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
 
-    function getMenuAppPagesByRole(): AppPage[] {
+    function getMenuAppPagesByRole(): readonly AppPage[] {
         switch (props.userType) {
             case UserType.PATIENT:
                 return patientAppPages;

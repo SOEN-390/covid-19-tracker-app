@@ -105,6 +105,7 @@ export function AuthProvider({ children }) {
                     if (window.location.pathname === Pages.login || window.location.pathname === '/') {
                         window.location.pathname = PatientPages.home;
                     }
+                    setLoading(false);
                 }).catch((error) => {
                     if (window.location.pathname === Pages.register || window.location.pathname === '/register/2') {
                         return;
@@ -115,10 +116,11 @@ export function AuthProvider({ children }) {
                     }
                     console.log(error);
                     present('Something went wrong!', 1500);
+                    setLoading(false);
                 });
-
+            } else {
+                setLoading(false);
             }
-            setLoading(false);
         });
 
         return unsubscribe;

@@ -27,7 +27,7 @@ export interface AppPage {
     title: string;
 }
 
-export const patientAppPages: AppPage[] = [
+export const patientAppPages: readonly AppPage[] = [
     {
         title: 'Overview',
         url: PatientPages.overview,
@@ -66,7 +66,7 @@ export const patientAppPages: AppPage[] = [
     }
 ];
 
-export const doctorAppPages: AppPage[] = [
+export const doctorAppPages: readonly AppPage[] = [
     {
         title: 'Overview',
         url: '',
@@ -80,6 +80,12 @@ export const doctorAppPages: AppPage[] = [
         mdIcon: calendarOutline
     },
     {
+        title: 'Patients',
+        url: DoctorPages.patients,
+        iosIcon: calendarOutline,
+        mdIcon: calendarOutline
+    },
+    {
         title: 'Settings',
         url: DoctorPages.settings,
         iosIcon: settingsOutline,
@@ -87,7 +93,7 @@ export const doctorAppPages: AppPage[] = [
     },
 ];
 
-export const healthOfficialAppPages: AppPage[] = [
+export const healthOfficialAppPages: readonly AppPage[] = [
     {
         title: 'Overview',
         url: '',
@@ -114,7 +120,7 @@ export const healthOfficialAppPages: AppPage[] = [
     }
 ];
 
-export const immigrationOfficerAppPages: AppPage[] = [
+export const immigrationOfficerAppPages: readonly AppPage[] = [
     {
         title: 'Overview',
         url: ImmigrationOfficerPages.dashboard,
@@ -135,7 +141,7 @@ export const immigrationOfficerAppPages: AppPage[] = [
     }
 ];
 
-export const adminAppPages: AppPage[] = [
+export const adminAppPages: readonly AppPage[] = [
     {
         title: 'Overview',
         url: AdminPages.overview,

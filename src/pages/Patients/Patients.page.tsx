@@ -4,6 +4,7 @@ import NavBar from '../../components/NavBar';
 import PatientsTable from '../../components/PatientsTable/PatientsTable';
 import * as React from 'react';
 import { IPatientTableRow } from '../../interfaces/IPatientTableRow';
+import { UserType } from '../../enum/UserType.enum';
 
 const PatientsPage: React.FC = () => {
 
@@ -61,7 +62,7 @@ const PatientsPage: React.FC = () => {
                         <IonCol/>
                     </IonRow>
                 </div>
-                <PatientsTable patientTableRows={rows}/>
+                <PatientsTable currentUserType={UserType.HEALTH_OFFICIAL} patientTableRows={rows}/>
             </IonContent>
 
         </IonPage>

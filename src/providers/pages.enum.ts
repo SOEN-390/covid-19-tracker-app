@@ -15,12 +15,13 @@ export enum PatientPages {
 export enum DoctorPages {
     home = '/doctor',
     patientProfile = '/doctor/patient-profile',
+    patients = '/doctor/patients',
     settings = '/doctor/settings'
 }
 
 export enum HealthOfficialPages {
     home = '/health-official',
-    patientsPage ='/health-official/patients',
+    patientsPage = '/health-official/patients',
     patientProfile = '/health-official/patient-profile',
     settings = '/health-official/settings'
 }
