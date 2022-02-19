@@ -1,7 +1,6 @@
 import { IonButton, IonCol, IonContent, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
 import { useState, useEffect } from 'react';
 import NavBar from '../../components/NavBar';
-import PatientsTable from '../../components/PatientsTable/PatientsTable';
 import { IPatientTableRow } from '../../interfaces/IPatientTableRow';
 import HttpService from '../../providers/http.service';
 import { DoctorPages } from '../../providers/pages.enum';
