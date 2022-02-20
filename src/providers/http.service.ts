@@ -11,10 +11,11 @@ const HttpService = {
             headers: HttpService.getHeader()
         });
         return fetch(request).then(async (response) => {
-            if (response.status === 200 && !response.bodyUsed) {
+            try {
+                return await response.json();
+            } catch (error) {
                 return true;
             }
-            return await response.json();
         }).catch((error) => {
             throw error;
         });
@@ -27,10 +28,11 @@ const HttpService = {
             headers: HttpService.getHeader()
         });
         return fetch(request).then(async (response) => {
-            if (response.status === 200 && !response.bodyUsed) {
+            try {
+                return await response.json();
+            } catch (error) {
                 return true;
             }
-            return await response.json();
         }).catch((error) => {
             throw error;
         });
@@ -42,10 +44,11 @@ const HttpService = {
             headers: HttpService.getHeader()
         });
         return fetch(request).then(async (response) => {
-            if (response.status === 200 && !response.bodyUsed) {
+            try {
+                return await response.json();
+            } catch (error) {
                 return true;
             }
-            return await response.json();
         }).catch((error) => {
             throw error;
         });
@@ -58,10 +61,11 @@ const HttpService = {
             headers: HttpService.getHeader()
         });
         return fetch(request).then(async (response) => {
-            if (response.status === 200 && !response.bodyUsed) {
+            try {
+                return await response.json();
+            } catch (error) {
                 return true;
             }
-            return await response.json();
         }).catch((error) => {
             throw error;
         });
