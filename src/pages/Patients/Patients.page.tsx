@@ -5,44 +5,26 @@ import PatientsTable from '../../components/PatientsTable/PatientsTable';
 import * as React from 'react';
 import { IPatientTableRow } from '../../interfaces/IPatientTableRow';
 import { UserType } from '../../enum/UserType.enum';
+import { useEffect, useState } from 'react';
+import HttpService from '../../providers/http.service';
 
 const PatientsPage: React.FC = () => {
 
-    function createData(
-        firstName: string,
-        lastName: string,
-        testResult: string,
-        lastUpdate: string,
-        doctorName: string,
-        action: string,
-        priority: string,
-        monitor_symptoms: string
-    ): IPatientTableRow {
-        return {firstName, lastName, testResult, lastUpdate, action, doctorName, priority, monitor_symptoms};
-    }
 
-    const rows = [
-        createData('Sarah Salib', 'Sarah Salib', 'positive', '20-11-2021', 'Kero', 'contact', '1', ''),
-        createData('Sarah', 'Salib', 'positive', '20-11-2021', 'Kero', 'contact', '1', ''),
-        createData('Sarah', 'Salib', 'positive', '20-11-2021', 'Kero', 'contact', '1', ''),
-        createData('Sarah', 'Salib', 'positive', '20-11-2021', 'Kero', 'contact', '1', ''),
-        createData('Sarah', 'Salib', 'positive', '20-11-2021', 'Kero', 'contact', '1', ''),
-        createData('Sarah', 'Salib', 'positive', '20-11-2021', 'Kero', 'contact', '1', ''),
-        createData('Sarah', 'Salib', 'positive', '20-11-2021', 'Kero', 'contact', '1', ''),
-        createData('Sarah', 'Salib', 'positive', '20-11-2021', 'Kero', 'contact', '1', ''),
-        createData('Sarah', 'Salib', 'positive', '20-11-2021', 'Kero', 'contact', '1', ''),
-        createData('Sarah', 'Salib', 'positive', '20-11-2021', 'Kero', 'contact', '1', ''),
-        createData('Sarah', 'Salib', 'positive', '20-11-2021', 'Kero', 'contact', '1', ''),
-        createData('Sarah', 'Salib', 'positive', '20-11-2021', 'Kero', 'contact', '1', ''),
-        createData('Sarah', 'Salib', 'positive', '20-11-2021', 'Kero', 'contact', '1', ''),
-        createData('Sarah', 'Salib', 'positive', '20-11-2021', 'Kero', 'contact', '1', ''),
-        createData('Sarah', 'Salib', 'positive', '20-11-2021', 'Kero', 'contact', '1', ''),
-        createData('Sarah', 'Salib', 'positive', '20-11-2021', 'Kero', 'contact', '1', ''),
-        createData('Sarah', 'Salib', 'positive', '20-11-2021', 'Kero', 'contact', '1', ''),
-        createData('Sarah', 'Salib', 'positive', '20-11-2021', 'Kero', 'contact', '1', ''),
-        createData('Sarah', 'Salib', 'positive', '20-11-2021', 'Kero', 'contact', '1', ''),
-        createData('Sarah', 'Salib', 'positive', '20-11-2021', 'Kero', 'contact', '1', '')
-    ];
+    const [patientsArray, setPatientsArray]= useState <IPatientTableRow[]> ()
+
+    useEffect(() => {
+        patientsRetrieval();
+      }, []);
+
+    async function patientsRetrieval() {
+        HttpService.get(`patients/all`).then(async (response) => {
+            console.log('HERE IS THE DATA IN JSON FORM: ', response);
+            setPatientsArray(response);
+        }).catch((error) => {
+            console.log('ERROR: ', error);
+        });
+    }
 
     return (
         <IonPage>
@@ -62,7 +44,11 @@ const PatientsPage: React.FC = () => {
                         <IonCol/>
                     </IonRow>
                 </div>
-                <PatientsTable currentUserType={UserType.HEALTH_OFFICIAL} patientTableRows={rows}/>
+                {
+                    patientsArray !== undefined ?
+                        <PatientsTable currentUserType={UserType.HEALTH_OFFICIAL} patientTableRows={patientsArray} /> :
+                        null
+                }            
             </IonContent>
 
         </IonPage>

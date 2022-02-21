@@ -30,6 +30,7 @@ const DoctorsPage: React.FC = () =>{
         </IonToolbar>
         <IonContent>
             <IonTitle id="patientHeader">Doctors</IonTitle>
+            <br/>
                 {
                     doctorsArray!==undefined? <DoctorsTable doctorTableRows={doctorsArray}/>:null
                 }
