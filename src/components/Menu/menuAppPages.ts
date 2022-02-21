@@ -68,8 +68,8 @@ export const patientAppPages: readonly AppPage[] = [
 
 export const doctorAppPages: readonly AppPage[] = [
     {
-        title: 'Overview',
-        url: '',
+        title: 'Dashboard',
+        url: DoctorPages.dashboard,
         iosIcon: appsOutline,
         mdIcon: appsOutline
     },
