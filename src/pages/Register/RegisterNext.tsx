@@ -21,7 +21,7 @@ import { TestResult } from '../../enum/TestResult.enum';
 import { IPatient } from '../../interfaces/IPatient';
 import { auth } from '../../config/firebase';
 import { useAuth } from '../../providers/auth.provider';
-import { GenderEnum } from '../../enum/Gender.enum';
+import { Gender } from '../../enum/Gender.enum';
 
 setupIonicReact();
 
@@ -161,9 +161,9 @@ const RegisterNext: React.FC = () => {
                     <br/>
                     <IonLabel className="register__login-text"> Your Gender </IonLabel>
                     <IonSelect placeholder="your Gender" onIonChange={(e: any) => setGender(e.target.value)}>
-                        <IonSelectOption value={GenderEnum.MALE}> Male</IonSelectOption>
-                        <IonSelectOption value={GenderEnum.FEMALE}> Female</IonSelectOption>
-                        <IonSelectOption value={GenderEnum.NONE}> Prefer not to respond</IonSelectOption>
+                        <IonSelectOption value={Gender.MALE}> Male</IonSelectOption>
+                        <IonSelectOption value={Gender.FEMALE}> Female</IonSelectOption>
+                        <IonSelectOption value={Gender.NONE}> Prefer not to respond</IonSelectOption>
                     </IonSelect>
                     <br/>
                     <IonLabel className="register__login-text"> Your test results </IonLabel>
