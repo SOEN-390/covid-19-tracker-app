@@ -1,39 +1,90 @@
-import React, { useState } from 'react';
-import { IonCard, IonCol, IonContent, IonPage, IonRow, IonTitle } from '@ionic/react';
+import React, { useEffect, useState } from 'react';
+import { IonCard, IonCol, IonContent, IonPage, IonRow } from '@ionic/react';
 import NavBar from '../../components/NavBar';
 import './Dashboard.doctor.page.css';
-import PieChart, {
-    Legend,
-    Series,
-    Tooltip,
-    Label,
-    Connector,
-    Export,
-} from 'devextreme-react/pie-chart';
+import PieChart, { Connector, Export, Label, Legend, Series, Tooltip, } from 'devextreme-react/pie-chart';
+import HttpService from '../../providers/http.service';
+import { useAuth } from '../../providers/auth.provider';
+import { Patient } from '../../objects/Patient.class';
+import { TestResult } from '../../enum/TestResult.enum';
+import { Gender } from '../../enum/Gender.enum';
 
 const DashboardDoctorPage: React.FC = () => {
 
-    const diagnosticData = [{
-        testResult: 'Positive',
-        val: 10,
-    }, {
-        testResult: 'Negative',
-        val: 15,
-    }, {
-        testResult: 'Non-Confirmed',
-        val: 3,
-    }];
+    const {currentProfile} = useAuth();
+    const [diagnosticData, setDiagnosticData] = useState<{testResult: string, val: number}[]>([]);
+    const [genderData, setGenderData] = useState<{gender: string, val: number}[]>([]);
 
-    const genderData = [{
-        gender: 'Male',
-        val: 10,
-    }, {
-        gender: 'Female',
-        val: 15,
-    }, {
-        gender: 'Other',
-        val: 3,
-    }];
+    useEffect(() => {
+        getAssignedPatients();
+    }, []);
+
+    function getAssignedPatients() {
+        HttpService.get(`doctors/${currentProfile.id}/patients/assigned`).then((patients: Patient[]) => {
+            generateDiagnosticGraph(patients);
+            generateGenderGraph(patients)
+        }).catch((error) => {
+            console.log('ERROR: ', error);
+        });
+    }
+
+    function generateDiagnosticGraph(patients: Patient[]) {
+        let negativeCount = 0;
+        let positiveCount = 0;
+        let pendingCount = 0;
+        for (const patient of patients) {
+            switch (patient.testResult) {
+                case TestResult.NEGATIVE:
+                    negativeCount++;
+                    break;
+                case TestResult.POSITIVE:
+                    positiveCount++;
+                    break;
+                case TestResult.PENDING:
+                    pendingCount++;
+                    break;
+            }
+        }
+        setDiagnosticData([{
+            testResult: 'Negative',
+            val: negativeCount
+        }, {
+            testResult: 'Positive',
+            val: positiveCount
+        }, {
+            testResult: 'Non-Confirmed',
+            val: pendingCount
+        }]);
+    }
+
+    function generateGenderGraph(patients: Patient[]) {
+        let maleCount = 0;
+        let femaleCount = 0;
+        let otherCount = 0;
+        for (const patient of patients) {
+            switch (patient.gender) {
+                case Gender.MALE:
+                    maleCount++;
+                    break;
+                case Gender.FEMALE:
+                    femaleCount++;
+                    break;
+                case Gender.NONE:
+                    otherCount++;
+                    break;
+            }
+        }
+        setGenderData([{
+            gender: 'Male',
+            val: maleCount
+        }, {
+            gender: 'Female',
+            val: femaleCount
+        }, {
+            gender: 'Other',
+            val: otherCount
+        }]);
+    }
 
     function customizeTooltip(arg: any) {
         return {
