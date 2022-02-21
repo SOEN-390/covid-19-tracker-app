@@ -1,121 +1,105 @@
 import React, { useState } from 'react';
-import { IonContent, IonPage, IonTitle } from '@ionic/react';
+import { IonCard, IonCol, IonContent, IonPage, IonRow, IonTitle } from '@ionic/react';
 import NavBar from '../../components/NavBar';
-import { PieChart } from 'react-minimal-pie-chart';
 import './DoctorDashboard.page.css';
+import PieChart, {
+    Legend,
+    Series,
+    Tooltip,
+    Label,
+    Connector,
+    Export,
+} from 'devextreme-react/pie-chart';
 
 const DoctorDashboardPage: React.FC = () => {
 
-    const [selectedDiagnostics, setSelectedDiagnostics] = useState<number | undefined>(0);
-    // const [hovered, setHovered] = useState<number | undefined>(undefined);
-    const [selectedGender, setSelectedGender] = useState<number | undefined>(0);
+    const diagnosticData = [{
+        testResult: 'Positive',
+        val: 10,
+    }, {
+        testResult: 'Negative',
+        val: 15,
+    }, {
+        testResult: 'Non-Confirmed',
+        val: 3,
+    }];
+
+    const genderData = [{
+        gender: 'Male',
+        val: 10,
+    }, {
+        gender: 'Female',
+        val: 15,
+    }, {
+        gender: 'Other',
+        val: 3,
+    }];
+
+    function customizeTooltip(arg: any) {
+        return {
+            text: `${arg.argumentText} - ${(arg.percent * 100).toFixed(2)}%`,
+        };
+    }
 
     return (
         <IonPage>
             <IonContent>
-                <NavBar />
+                <NavBar/>
 
-                <IonTitle>Diagnostics</IonTitle>
-                <PieChart
-                    style={{
-                        fontFamily: '"Nunito Sans", -apple-system, Helvetica, Arial, sans-serif',
-                        fontSize: '8px'
-                    }}
-                    className={"doctor-dashboard__piechart"}
-                    radius={40}
-                    label={({ x, y, dx, dy, dataEntry }) => (
-                        <text
-                            key={dataEntry.title}
-                            x={x}
-                            y={y}
-                            dx={dx}
-                            dy={dy}
-                            dominantBaseline="central"
-                            textAnchor="middle"
-                            style={{
-                                fill: '#fff',
-                                opacity: 0.75,
-                                pointerEvents: 'none',
-                                fontSize: '5px',
-                                fontFamily: 'sans-serif'
-                            }}
-                        >
-                            {dataEntry.title}
-                            {/*<br/>*/}
-                            {/*{'(' + dataEntry.percentage.toFixed(2) + ')'}*/}
-                        </text>
-                    )}
-                    labelPosition={100 - 60 / 2}
-                    segmentsStyle={{ transition: 'stroke .3s', cursor: 'pointer' }}
-                    segmentsShift={(index) => (index === selectedDiagnostics ? 6 : 1)}
-                    lineWidth={50}
-                    animate={true}
-                    data={[
-                        { title: 'Positive', value: 10, color: '#E38627' },
-                        { title: 'Negative', value: 15, color: '#C13C37' },
-                        { title: 'Unconfirmed', value: 20, color: '#6A2135' }
-                    ]}
-                    onClick={(_, index) => {
-                        setSelectedDiagnostics(index === selectedDiagnostics ? undefined : index);
-                    }}
-                    // onMouseOver={(_, index) => {
-                    //     setHovered(index);
-                    // }}
-                    // onMouseOut={() => {
-                    //     setHovered(undefined);
-                    // }}
-                />
+                <IonCol>
+                    <IonRow>
+                <IonCard>
+                    <PieChart
+                        id="pie"
+                        type="doughnut"
+                        title="Diagnostics"
+                        palette="Soft Pastel"
+                        dataSource={diagnosticData}
+                    >
+                        <Series argumentField="testResult">
+                            <Label visible={true}>
+                                <Connector visible={true}/>
+                            </Label>
+                        </Series>
+                        <Export enabled={true}/>
+                        <Legend
+                            margin={20}
+                            horizontalAlignment="center"
+                            verticalAlignment="bottom"
+                        />
+                        <Tooltip enabled={true} customizeTooltip={customizeTooltip}>
+                            {/*<Format type="percentage" />*/}
+                        </Tooltip>
+                    </PieChart>
+                </IonCard>
 
-                <IonTitle>Patients</IonTitle>
-                <PieChart
-                    style={{
-                        fontFamily: '"Nunito Sans", -apple-system, Helvetica, Arial, sans-serif',
-                        fontSize: '8px'
-                    }}
-                    className={"doctor-dashboard__piechart"}
-                    radius={40}
-                    label={({ x, y, dx, dy, dataEntry }) => (
-                        <text
-                            key={dataEntry.title}
-                            x={x}
-                            y={y}
-                            dx={dx}
-                            dy={dy}
-                            dominantBaseline="central"
-                            textAnchor="middle"
-                            style={{
-                                fill: '#fff',
-                                opacity: 0.75,
-                                pointerEvents: 'none',
-                                fontSize: '5px',
-                                fontFamily: 'sans-serif'
-                            }}
-                        >
-                            {dataEntry.title}
-                            {/*<br/>*/}
-                            {/*{'(' + dataEntry.percentage.toFixed(2) + ')'}*/}
-                        </text>
-                    )}
-                    labelPosition={100 - 60 / 2}
-                    segmentsStyle={{ transition: 'stroke .3s', cursor: 'pointer' }}
-                    segmentsShift={(index) => (index === selectedGender ? 6 : 1)}
-                    lineWidth={50}
-                    animate={true}
-                    data={[
-                        { title: 'Men', value: 10, color: '#E38627' },
-                        { title: 'Women', value: 15, color: '#C13C37' },
-                        { title: 'Other', value: 10, color: '#6A2135' }
-                    ]}
-                    onClick={(_, index) => {
-                        setSelectedGender(index === selectedGender ? undefined : index);
-                    }}
-                    // onMouseOver={(_, index) => {
-                    //     setHovered(index);
-                    // }}
-                    // onMouseOut={() => {
-                    //     setHovered(undefined);
-                    // }}
-                />
+                <IonCard>
+                    <PieChart
+                        id="pie"
+                        type="doughnut"
+                        title="Patients"
+                        palette="Soft Pastel"
+                        dataSource={genderData}
+                    >
+                        <Series argumentField="gender">
+                            <Label visible={true}>
+                                <Connector visible={true}/>
+                            </Label>
+                        </Series>
+                        <Export enabled={true}/>
+                        <Legend
+                            margin={20}
+                            horizontalAlignment="center"
+                            verticalAlignment="bottom"
+                        />
+                        <Tooltip enabled={true} customizeTooltip={customizeTooltip}>
+                            {/*<Format type="percentage" />*/}
+                        </Tooltip>
+                    </PieChart>
+                </IonCard>
+                    </IonRow>
+                </IonCol>
+
             </IonContent>
         </IonPage>
     );
