@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { IonCard, IonCol, IonContent, IonPage, IonRow, IonTitle } from '@ionic/react';
 import NavBar from '../../components/NavBar';
-import './DoctorDashboard.page.css';
+import './Dashboard.doctor.page.css';
 import PieChart, {
     Legend,
     Series,
@@ -11,7 +11,7 @@ import PieChart, {
     Export,
 } from 'devextreme-react/pie-chart';
 
-const DoctorDashboardPage: React.FC = () => {
+const DashboardDoctorPage: React.FC = () => {
 
     const diagnosticData = [{
         testResult: 'Positive',
@@ -105,4 +105,4 @@ const DoctorDashboardPage: React.FC = () => {
     );
 };
 
-export default DoctorDashboardPage;
+export default DashboardDoctorPage;
