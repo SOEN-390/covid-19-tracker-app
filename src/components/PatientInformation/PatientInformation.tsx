@@ -1,39 +1,11 @@
 import { IonAvatar, IonButton, IonCol, IonContent, IonImg, IonInput, IonLabel, IonRow, IonText } from '@ionic/react';
 import './PatientInformation.css';
 import logo from '../../resources/icon.png'
-import HttpService from '../../providers/http.service';
-import { useState } from 'react';
+import { IPatient } from '../../interfaces/IPatient';
 
 
-const PatientInformation: React.FC = () => {
-    const [medicalNumber, setMedicalNumber] = useState('')
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
-    const [testResult, setTestResult] = useState('');
-    const [phoneNumber, setPhoneNumber] = useState('');
-    const [address, setAddress] = useState('');
-    const [email, setEmail] = useState('');
-    const [dob, setDOB] = useState('');
-    const [gender, setGender] = useState('');
+const PatientInformation: React.FC<{patient: IPatient}> = (props) => {
 
-
-    HttpService.get(`patients/${55}`).then(async (data) => {
-        setData(data);
-    }).catch((error) => {
-        console.log(error);
-    });
-
-    function setData(data: any) {
-        setMedicalNumber(data.medicalId);
-        setFirstName(data.firstName);
-        setLastName(data.lastName);
-        setTestResult(data.testResult);
-        setPhoneNumber(data.phoneNumber);
-        setAddress(data.address);
-        setEmail(data.email);
-        setDOB(data.dob);
-        setGender(data.gender);
-    }
 
 
     return (
@@ -50,21 +22,21 @@ const PatientInformation: React.FC = () => {
                             <div>
 
                                 <IonText><strong>First Name</strong></IonText>
-                                <p className="box"> {firstName}  </p>
+                                <p className="box"> {props.patient.firstName}  </p>
                             </div>
                         </IonRow>
                         <IonRow>
                             <div>
 
                                 <IonText><strong>Medicare Number</strong></IonText>
-                                <p className="box">{medicalNumber}</p>
+                                <p className="box">{props.patient.medicalId}</p>
                             </div>
                         </IonRow>
                         <IonRow>
                             <div>
 
                                 <IonText> <strong>Email</strong></IonText>
-                                <p className="box">{email}</p>
+                                <p className="box">{props.patient.email}</p>
                             </div>
                         </IonRow>
 
@@ -74,14 +46,14 @@ const PatientInformation: React.FC = () => {
                             <div>
 
                                 <IonText><strong>Last Name</strong></IonText>
-                                <p className="box">{lastName}</p>
+                                <p className="box">{props.patient.lastName}</p>
                             </div>
                         </IonRow>
                         <IonRow>
                             <div>
 
                                 <IonText><strong>Phone Number</strong></IonText>
-                                <p className="box">{phoneNumber}</p>
+                                <p className="box">{props.patient.phoneNumber}</p>
                             </div>
                         </IonRow>
 
@@ -89,7 +61,7 @@ const PatientInformation: React.FC = () => {
                             <div>
 
                                 <IonText><strong>Date of birth</strong></IonText>
-                                <p className="box">{dob}</p>
+                                <p className="box">{props.patient.dob}</p>
                             </div>
                         </IonRow>
 
@@ -100,7 +72,7 @@ const PatientInformation: React.FC = () => {
                             <div>
 
                                 <IonText><strong>Address</strong></IonText>
-                                <p className="box">{address}</p>
+                                <p className="box">{props.patient.address}</p>
 
                             </div>
                         </IonRow>
@@ -109,7 +81,7 @@ const PatientInformation: React.FC = () => {
                             <div>
 
                                 <IonText><strong>Test Result</strong></IonText>
-                                <p className="box">{testResult}</p>
+                                <p className="box">{props.patient.testResult}</p>
 
                             </div>
                         </IonRow>
@@ -118,7 +90,7 @@ const PatientInformation: React.FC = () => {
                             <div>
 
                                 <IonText><strong>Gender</strong></IonText>
-                                <p className="box">{gender}</p>
+                                <p className="box">{props.patient.gender}</p>
 
                             </div>
                         </IonRow>
