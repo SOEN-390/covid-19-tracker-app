@@ -4,8 +4,10 @@ export interface IPatient {
     medicalId: string;
     firstName: string;
     lastName: string;
-    testResult: TestResult;
+    testResult: string;
     address: string;
     email: string | null | undefined;
     phoneNumber: string;
+    dob: string;
+    gender: string;
 }

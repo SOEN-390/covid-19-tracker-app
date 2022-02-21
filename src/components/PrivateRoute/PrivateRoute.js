@@ -2,6 +2,13 @@ import React from "react";
 import {Route, Redirect} from "react-router-dom";
 import {useAuth} from '../../providers/auth.provider';
 import {UserType} from "../../enum/UserType.enum";
+import {
+    AdminPages,
+    DoctorPages,
+    HealthOfficialPages,
+    ImmigrationOfficerPages,
+    PatientPages
+} from "../../providers/pages.enum";
 
 export default function PrivateRoute({component: Component, ...rest}) {
     const {currentUser, currentProfile} = useAuth();
@@ -18,17 +25,31 @@ export default function PrivateRoute({component: Component, ...rest}) {
             {...rest}
             render={props => {
                 if (currentUser) {
+                    const rootPath = '/' + rest.path.split('/')[1];
                     switch (getRole()) {
                         case UserType.PATIENT:
+                            if (rootPath !== PatientPages.home) {
+                                return <Redirect to={PatientPages.home} />
+                            }
+                            break;
                         case UserType.DOCTOR:
+                            if (rootPath !== DoctorPages.home) {
+                                return <Redirect to={DoctorPages.home} />
+                            }
+                            break;
                         case UserType.IMMIGRATION_OFFICER:
-                            if (rest.path.substring(0, 5) !== '/home') {
-                                return <Redirect to={'/home'} />
+                            if (rootPath !== ImmigrationOfficerPages.home) {
+                                return <Redirect to={ImmigrationOfficerPages.home} />
+                            }
+                            break;
+                        case UserType.HEALTH_OFFICIAL:
+                            if (rootPath !== HealthOfficialPages.home) {
+                                return <Redirect to={HealthOfficialPages.home} />
                             }
                             break;
                         case UserType.ADMIN:
-                            if (rest.path.substring(0, 6) !== '/admin') {
-                                return <Redirect to={'/admin'} />
+                            if (rootPath !== AdminPages.home) {
+                                return <Redirect to={AdminPages.home} />
                             }
                             break;
                     }

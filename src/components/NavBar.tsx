@@ -1,7 +1,7 @@
 import { IonAvatar, IonButton, IonCol, IonGrid, IonMenuButton, IonRow, IonSearchbar, IonToolbar } from '@ionic/react';
 import './NavBar.css';
 import logo from '../resources/icon.png';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import HttpService from '../providers/http.service';
 import { useAuth } from '../providers/auth.provider';
 import { UserType } from '../enum/UserType.enum';
@@ -16,8 +16,7 @@ function NavBar() {
             return;
         }
         HttpService.get(`patients/${searchText}`).then(async (response) => {
-            const data = await response.json();
-            console.log('HERE IS THE DATA IN JSON FORM: ', data);
+            console.log('HERE IS THE DATA IN JSON FORM: ', response);
         }).catch((error) => {
             console.log('ERROR: ', error);
         });
@@ -49,7 +48,7 @@ function NavBar() {
                     {/*<IonCol size="2">*/}
 
                     {/*    <h5>Beshoy Soliman</h5>*/}
-                    {/*    <p>Doctor</p>*/}
+                    {/*    <p>PatientProfilePage</p>*/}
 
                     {/*</IonCol>*/}
 

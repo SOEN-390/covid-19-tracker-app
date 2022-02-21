@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useState} from "react";
 import {auth} from '../config/firebase';
 import firebase from 'firebase/compat/app';
-import {Pages} from "./pages.enum";
+import {Pages, PatientPages} from "./pages.enum";
 import {User} from "../objects/User.class";
 import HttpService from "./http.service";
 import {UserType} from "../enum/UserType.enum";
@@ -9,6 +9,8 @@ import {Patient} from "../objects/Patient.class";
 import {Doctor} from "../objects/Doctor.class";
 import {ImmigrationOfficer} from "../objects/ImmigrationOfficer.class";
 import {Admin} from "../objects/Admin.class";
+import {useIonToast} from "@ionic/react";
+import {HealthOfficial} from "../objects/HealthOfficial.class";
 
 export const AuthContext = React.createContext();
 
@@ -22,6 +24,7 @@ export function AuthProvider({ children }) {
     const [currentUser, setCurrentUser] = useState(firebase.User | undefined); // The user from firebase
     const [currentProfile, setCurrentProfile] = useState(User | undefined); // The user from our database
     const [loading, setLoading] = useState(true);
+    const [present] = useIonToast();
 
     function signup(email, password) {
         return auth.createUserWithEmailAndPassword(email, password);
@@ -63,15 +66,11 @@ export function AuthProvider({ children }) {
             return undefined;
         }
         try {
-            const response = await HttpService.get('users');
-            if (!response.ok) {
-                return null;
-            }
-            const userData =  await response.json();
+            const userData = await HttpService.get('users');
             return createUserProfileObject(userData);
         } catch (error) {
             console.log(error);
-            return null;
+            throw error;
         }
     }
 
@@ -81,13 +80,18 @@ export function AuthProvider({ children }) {
         }
         switch (userData.role) {
             case UserType.PATIENT:
-                return new Patient(userData.id, userData.firstName, userData.lastName, userData.phoneNumber, userData.address, userData.medicalId, userData.testResult);
+                return new Patient(userData.id, userData.firstName, userData.lastName, userData.phoneNumber,
+                    userData.address, userData.medicalId, userData.testResult, userData.dob, userData.gender);
             case UserType.DOCTOR:
                 return new Doctor(userData.id, userData.firstName, userData.lastName, userData.phoneNumber, userData.address);
             case UserType.IMMIGRATION_OFFICER:
                 return new ImmigrationOfficer(userData.id, userData.firstName, userData.lastName, userData.phoneNumber, userData.address);
+            case UserType.HEALTH_OFFICIAL:
+                return new HealthOfficial(userData.id, userData.firstName, userData.lastName, userData.phoneNumber, userData.address);
             case UserType.ADMIN:
                 return new Admin(userData.id, userData.firstName, userData.lastName, userData.phoneNumber, userData.address);
+            default:
+                return undefined;
         }
     }
 
@@ -100,18 +104,24 @@ export function AuthProvider({ children }) {
                 getCurrentUserProfile(user).then((profile) => {
                     setCurrentProfile(profile);
                     if (window.location.pathname === Pages.login || window.location.pathname === '/') {
-                        window.location.pathname = Pages.home;
+                        window.location.pathname = PatientPages.home;
                     }
+                    setLoading(false);
                 }).catch((error) => {
                     if (window.location.pathname === Pages.register || window.location.pathname === '/register/2') {
                         return;
                     }
+                    logout();
+                    if (window.location.pathname !== Pages.login) {
+                        window.location.pathname = Pages.login;
+                    }
                     console.log(error);
-                    // TODO: Display a toast
+                    present('Something went wrong!', 1500);
+                    setLoading(false);
                 });
-
+            } else {
+                setLoading(false);
             }
-            setLoading(false);
         });
 
         return unsubscribe;

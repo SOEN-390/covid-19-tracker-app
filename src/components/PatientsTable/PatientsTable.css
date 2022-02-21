@@ -1,0 +1,210 @@
+/* inspired by: https://css-tricks.com/responsive-data-tables/ */
+.responsiveTable {
+  width: 98%;
+}
+
+.responsiveTable td .tdBefore {
+  display: none;
+}
+
+@media screen and (max-width: 40em) {
+
+  /*
+    Force table elements to not behave like tables anymore
+    Hide table headers (but not display: none;, for accessibility)
+  */
+  .responsiveTable table,
+  .responsiveTable thead,
+  .responsiveTable tbody,
+  .responsiveTable th,
+  .responsiveTable td,
+  .responsiveTable tr {
+    display: block;
+  }
+
+  .responsiveTable thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+    border-bottom: 2px solid #333;
+  }
+
+  .responsiveTable tbody tr {
+    border-bottom: 1px solid #000;
+    padding: .5em;
+  }
+
+  .responsiveTable td.pivoted {
+    /* Behave like a "row" */
+    border: none !important;
+    position: relative;
+    padding-left: calc(50% + 10px) !important;
+    text-align: left !important;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+    padding-bottom: 10px;
+
+  }
+
+  .responsiveTable td .tdBefore {
+    /* Now like a table header */
+    position: absolute;
+    display: block;
+
+    /* Top/left values mimic padding */
+    left: 1rem;
+    width: calc(50% - 20px);
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+    text-align: left !important;
+    font-weight: 600;
+  }
+}
+
+#title {
+  color: #2C4D62;
+  font-family: 'Poppins';
+  font-weight: bold;
+  font-size: 50px;
+}
+
+ion-content {
+  --padding-top: 20px;
+}
+
+:root {
+  --ion-color-favorite: #2C4D62;
+  --ion-color-favorite1: rgba(255, 255, 255, 0.74);
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: #447697;
+  --ion-color-primary-tint: #14242D;
+}
+
+.ion-color-favorite {
+  --ion-color-base: var(--ion-color-favorite);
+}
+
+.ion-color-favorite1 {
+  --ion-color-base: var(--ion-color-favorite1);
+  --border-color: #2C4D62;
+  --border-width: 2px;
+  --color: #2C4D62;
+  --ion-color-hover: var(--ion-color-hover);
+}
+
+.confirmButton {
+  text-align: right;
+}
+
+table th:first-child {
+  border-radius: 10px 0 0 10px;
+  position: sticky;
+  top: 0;
+  z-index: 9999;
+}
+
+table th:last-child {
+  border-radius: 0 10px 10px 0;
+}
+
+.unconfirmedButton {
+  text-align: left;
+  color: #2C4D62;
+}
+
+#headCol {
+  color: #2C4D62;
+  font-family: 'Poppins';
+  font-weight: bold;
+  font-size: 18px;
+  text-align: center;
+  padding: 10px;
+}
+
+#tableHead {
+  background-color: rgba(44, 77, 98, .12);
+  border-radius: 50px;
+  box-sizing: border-box;
+  filter: blur(1);
+  height: 60px;
+}
+
+#tableRow {
+  border-radius: 10px;
+  border-bottom: 1px solid #E7E7E7;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  box-sizing: border-box;
+  height: inherit;
+}
+
+#colName {
+  color: #2C4D62;
+  font-family: 'Poppins';
+  font-weight: normal;
+  font-size: 16px;
+  text-align: left;
+  padding: 10px;
+}
+
+#PosStatus {
+  height: 32px;
+  font-weight: normal;
+  font-size: 14px;
+  border-radius: 60px;
+  background-color: #129C0F;
+  color: #FEFFFE;
+  vertical-align: middle;
+  line-height: 32px;
+  text-align: center;
+}
+
+#NegStatus {
+  height: 32px;
+  font-weight: normal;
+  font-size: 14px;
+  border-radius: 60px;
+  background-color: #db0101;
+  color: #FEFFFE;
+  vertical-align: middle;
+  line-height: 32px;
+  text-align: center;
+}
+
+#lastUpdate {
+  color: #f80d38;
+  font-family: 'Poppins';
+  font-weight: normal;
+  font-size: 16px;
+  text-align: center;
+  padding: 10px;
+
+}
+
+#colDoc {
+  color: #2C4D62;
+  font-family: 'Poppins';
+  font-weight: normal;
+  font-size: 16px;
+  text-align: left;
+  padding: 10px;
+
+
+}
+
+#col {
+  color: #2C4D62;
+  font-family: 'Poppins';
+  font-weight: normal;
+  font-size: 16px;
+  margin: auto;
+  text-align: center;
+  padding: 10px;
+
+}
+
+ion-button {
+  font-weight: bold;
+  font-size: 12px;
+}
