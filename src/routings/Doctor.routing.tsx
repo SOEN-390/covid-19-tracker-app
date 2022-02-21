@@ -3,7 +3,7 @@ import { Redirect, Route } from 'react-router-dom';
 import Menu from '../components/Menu/Menu';
 import PatientProfile from '../pages/PatientProfile/PatientProfile.page';
 import { DoctorPages } from '../providers/pages.enum';
-import DoctorDashboard from '../pages/DoctorDashboard/DoctorDashboard';
+import DoctorDashboardPage from '../pages/DoctorDashboard/DoctorDashboard.page';
 import { UserType } from '../enum/UserType.enum';
 import PatientsDoctorPage from '../pages/Doctor Patients/Patients.doctor.page';
 
@@ -18,7 +18,7 @@ const DoctorRouting: React.FC = () => {
                     <Redirect to={DoctorPages.dashboard}/>
                 </Route>
                 <Route path={DoctorPages.dashboard}>
-                    <DoctorDashboard />
+                    <DoctorDashboardPage />
                 </Route>
                 <Route path={DoctorPages.patientProfile}>
                     <PatientProfile />
