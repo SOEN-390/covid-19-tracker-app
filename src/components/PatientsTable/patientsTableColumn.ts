@@ -76,10 +76,45 @@ export const adminColumns: readonly PatientsTableColumn[] = [
         minWidth: 170,
         align: 'center'
     },
+];
+
+export const healthOfficialColumns: readonly PatientsTableColumn[] = [
     {
-        id: 'monitor_symptoms',
-        label: '',
+        id: 'patients',
+        label: 'Patient',
+        minWidth: 170,
+        align: 'center'
+    },
+    {
+        id: 'status',
+        label: 'Status',
+        minWidth: 170,
+        align: 'center'
+    },
+    {
+        id: 'last_update',
+        label: 'Last Update',
+        minWidth: 170,
+        align: 'center'
+    },
+    {
+        id: 'doctor',
+        label: 'Doctor',
+        minWidth: 170,
+        align: 'center'
+    },
+    {
+        id: 'action',
+        label: 'Action',
+        minWidth: 170,
+        align: 'center'
+    },
+    {
+        id: 'priority',
+        label: 'Priority',
         minWidth: 170,
         align: 'center'
     }
 ];
+
+
