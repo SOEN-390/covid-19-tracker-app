@@ -1,6 +1,6 @@
 import { IonPage } from '@ionic/react';
 
-import DiagnosePatient from '../../components/DiagnosePatient';
+import PatientInformation from '../../components/PatientInformation/PatientInformation';
 import NavBar from '../../components/NavBar';
 
 const PatientProfilePage: React.FC = () => {
@@ -10,7 +10,7 @@ const PatientProfilePage: React.FC = () => {
         <IonPage>
             <NavBar />
 
-            <DiagnosePatient />
+            <PatientInformation />
         </IonPage>
     );
 };

@@ -1,12 +1,12 @@
 import { IonAvatar, IonButton, IonCol, IonContent, IonImg, IonInput, IonItem, IonLabel, IonRow, IonText } from '@ionic/react';
-import './DiagnosePatient.css';
-import logo from '../resources/icon.png'
-import HttpService from '../providers/http.service';
+import './PatientInformation.css';
+import logo from '../../resources/icon.png'
+import HttpService from '../../providers/http.service';
 import { useState } from 'react';
 
 
 
-function DiagnosePatient() {
+const PatientInformation: React.FC = () => {
     const [firstName, setfirstName] = useState('')
     const [lastName, setLastName] = useState('')
     const [address, setAddress] = useState('')
@@ -23,13 +23,6 @@ function DiagnosePatient() {
     });
 
 
-    HttpService.get(`patients/${55}`).then(async (response) => {
-        const data = await response.json();
-        setfirstName(data.firstName)
-        setLastName(data.lastName)
-        console.log(data.firstName)
-    }).catch((error) => {
-    });
 
     return (
         <IonContent>
@@ -174,4 +167,4 @@ function DiagnosePatient() {
     );
 }
 
-export default DiagnosePatient;
+export default PatientInformation;
