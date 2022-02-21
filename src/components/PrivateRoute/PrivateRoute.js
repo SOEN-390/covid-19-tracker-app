@@ -7,10 +7,8 @@ import {
     DoctorPages,
     HealthOfficialPages,
     ImmigrationOfficerPages,
-    Pages,
     PatientPages
 } from "../../providers/pages.enum";
-import {Admin} from "../../objects/Admin.class";
 
 export default function PrivateRoute({component: Component, ...rest}) {
     const {currentUser, currentProfile} = useAuth();
@@ -27,7 +25,7 @@ export default function PrivateRoute({component: Component, ...rest}) {
             {...rest}
             render={props => {
                 if (currentUser) {
-                    const rootPath = rest.path.split('/')[1];
+                    const rootPath = '/' + rest.path.split('/')[1];
                     switch (getRole()) {
                         case UserType.PATIENT:
                             if (rootPath !== PatientPages.home) {
@@ -54,8 +52,6 @@ export default function PrivateRoute({component: Component, ...rest}) {
                                 return <Redirect to={AdminPages.home} />
                             }
                             break;
-                        default:
-                            return <Redirect to="/login"/>;
                     }
                     return <Component {...props} />;
                 }

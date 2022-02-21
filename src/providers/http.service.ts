@@ -11,7 +11,11 @@ const HttpService = {
             headers: HttpService.getHeader()
         });
         return fetch(request).then(async (response) => {
-            return await response.json();
+            try {
+                return await response.json();
+            } catch (error) {
+                return true;
+            }
         }).catch((error) => {
             throw error;
         });
@@ -24,7 +28,11 @@ const HttpService = {
             headers: HttpService.getHeader()
         });
         return fetch(request).then(async (response) => {
-            return await response.json();
+            try {
+                return await response.json();
+            } catch (error) {
+                return true;
+            }
         }).catch((error) => {
             throw error;
         });
@@ -36,7 +44,11 @@ const HttpService = {
             headers: HttpService.getHeader()
         });
         return fetch(request).then(async (response) => {
-            return await response.json();
+            try {
+                return await response.json();
+            } catch (error) {
+                return true;
+            }
         }).catch((error) => {
             throw error;
         });
@@ -49,7 +61,11 @@ const HttpService = {
             headers: HttpService.getHeader()
         });
         return fetch(request).then(async (response) => {
-            return await response.json();
+            try {
+                return await response.json();
+            } catch (error) {
+                return true;
+            }
         }).catch((error) => {
             throw error;
         });

@@ -8,28 +8,38 @@ export enum PatientPages {
     overview = '/home/overview',
     appointments = '/home/appointments',
     symptoms = '/home/symptoms',
-    patientProfile = '/home/patient-profile'
+    patientProfile = '/home/patient-profile',
+    settings = '/home/settings'
 }
 
 export enum DoctorPages {
     home = '/doctor',
     dashboard = '/doctor/dashboard',
-    patientProfile = '/doctor/patient-profile'
+    patientProfile = '/doctor/patient-profile',
+    patients = '/doctor/patients',
+    settings = '/doctor/settings'
 }
 
 export enum HealthOfficialPages {
     home = '/health-official',
-    patientsPage ='/health-official/patients',
-    patientProfile = '/health-official/patient-profile'
+    patientsPage = '/health-official/patients',
+    patientProfile = '/health-official/patient-profile',
+    settings = '/health-official/settings'
 }
 
 export enum ImmigrationOfficerPages {
     home = '/immigration-officer',
-    immigrationDashboard = '/immigration-officer/dashboard',
-    patientProfile = '/immigration-officer/patient-profile'
+    dashboard = '/immigration-officer/dashboard',
+    patientProfile = '/immigration-officer/patient-profile',
+    settings = '/immigration-officer/settings'
 }
 
 export enum AdminPages {
     home = '/admin',
-    patientProfile = '/admin/patient-profile'
+    overview = '/admin/admin-overview',
+    patientProfile = '/admin/patient-profile',
+    assignedConfirmed = '/admin/assignedConfirmed',
+    unAssignedConfirmed = '/admin/unAssignedConfirmed',
+    doctors = '/admin/doctors',
+    settings = '/admin/settings'
 }

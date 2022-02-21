@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useState} from "react";
 import {auth} from '../config/firebase';
 import firebase from 'firebase/compat/app';
-import {Pages} from "./pages.enum";
+import {Pages, PatientPages} from "./pages.enum";
 import {User} from "../objects/User.class";
 import HttpService from "./http.service";
 import {UserType} from "../enum/UserType.enum";
@@ -80,7 +80,8 @@ export function AuthProvider({ children }) {
         }
         switch (userData.role) {
             case UserType.PATIENT:
-                return new Patient(userData.id, userData.firstName, userData.lastName, userData.phoneNumber, userData.address, userData.medicalId, userData.testResult);
+                return new Patient(userData.id, userData.firstName, userData.lastName, userData.phoneNumber,
+                    userData.address, userData.medicalId, userData.testResult, userData.dob, userData.gender);
             case UserType.DOCTOR:
                 return new Doctor(userData.id, userData.firstName, userData.lastName, userData.phoneNumber, userData.address);
             case UserType.IMMIGRATION_OFFICER:
@@ -103,8 +104,9 @@ export function AuthProvider({ children }) {
                 getCurrentUserProfile(user).then((profile) => {
                     setCurrentProfile(profile);
                     if (window.location.pathname === Pages.login || window.location.pathname === '/') {
-                        window.location.pathname = Pages.home;
+                        window.location.pathname = PatientPages.home;
                     }
+                    setLoading(false);
                 }).catch((error) => {
                     if (window.location.pathname === Pages.register || window.location.pathname === '/register/2') {
                         return;
@@ -115,10 +117,11 @@ export function AuthProvider({ children }) {
                     }
                     console.log(error);
                     present('Something went wrong!', 1500);
+                    setLoading(false);
                 });
-
+            } else {
+                setLoading(false);
             }
-            setLoading(false);
         });
 
         return unsubscribe;

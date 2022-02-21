@@ -2,20 +2,17 @@ import { IonPage, IonToolbar } from '@ionic/react';
 
 import NavBar from '../../components/NavBar';
 
-const Overview: React.FC = () => {
 
-    // const { name } = useParams<{ name: string; }>(); //to get page name
+
+const AdminOverviewPage: React.FC = () =>{
 
     return (
         <IonPage>
-
             <IonToolbar>
-                <NavBar />
+                <NavBar/>
+                <h1>Welcome to Admin Dashboard</h1>
             </IonToolbar>
-
-
         </IonPage>
     );
-};
-
-export default Overview;
+}
+export default AdminOverviewPage;

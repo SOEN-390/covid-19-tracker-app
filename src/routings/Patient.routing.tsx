@@ -1,18 +1,19 @@
 import { IonRouterOutlet, IonSplitPane, setupIonicReact } from '@ionic/react';
 import { Redirect, Route } from 'react-router-dom';
-import Menu from '../components/Menu';
-import Overview from '../pages/Overview/Overview';
+import Menu from '../components/Menu/Menu';
+import Overview from '../pages/Overview/Overview.page';
 import Appointments from '../pages/Appointments/Appointments';
-import SymptomsForm from '../pages/SymptomsForm/SymptomsForm';
-import PatientProfile from '../pages/Doctor/PatientProfile';
+import SymptomsForm from '../pages/SymptomsForm/SymptomsForm.page';
+import PatientProfile from '../pages/PatientProfile/PatientProfile.page';
 import { PatientPages } from '../providers/pages.enum';
+import { UserType } from '../enum/UserType.enum';
 
 setupIonicReact();
 
 const PatientRouting: React.FC = () => {
     return (
         <IonSplitPane contentId="home">
-            <Menu/>
+            <Menu ionMenuId={'home'} userType={UserType.PATIENT}/>
             <IonRouterOutlet id="home">
                 <Route path={PatientPages.home} exact={true}>
                     <Redirect to={PatientPages.overview}/>

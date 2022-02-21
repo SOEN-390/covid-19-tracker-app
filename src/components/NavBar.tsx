@@ -48,7 +48,7 @@ function NavBar() {
                     {/*<IonCol size="2">*/}
 
                     {/*    <h5>Beshoy Soliman</h5>*/}
-                    {/*    <p>Doctor</p>*/}
+                    {/*    <p>PatientProfilePage</p>*/}
 
                     {/*</IonCol>*/}
 

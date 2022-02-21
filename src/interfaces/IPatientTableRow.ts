@@ -1,8 +1,9 @@
 export interface IPatientTableRow {
-    name: string;
-    status: string;
-    last_update: string;
-    doctor: string;
+    firstName: string;
+    lastName: string, 
+    testResult: string;
+    lastUpdate: string;
+    doctorName: string;
     action: string;
     priority: string;
     monitor_symptoms: string;
