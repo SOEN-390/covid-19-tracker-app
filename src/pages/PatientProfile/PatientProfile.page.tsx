@@ -42,7 +42,7 @@ const PatientProfilePage: React.FC = () => {
     }
 
 
-    let handleCallBack = (medicalId: string) => {;
+    let handleCallBack = (medicalId: string) => {
         setMedicalNumber(medicalId);
     }
 
