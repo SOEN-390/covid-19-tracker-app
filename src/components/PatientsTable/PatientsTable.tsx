@@ -28,7 +28,7 @@ const PatientsTable: React.FC<{ currentUserType: UserType, patientTableRows: IPa
         }
     }, []);
 
-    
+
     function getRow(row: IPatientTableRow, index: number): JSX.Element | null {
         switch (props.currentUserType) {
             case UserType.DOCTOR:
@@ -73,20 +73,20 @@ const PatientsTable: React.FC<{ currentUserType: UserType, patientTableRows: IPa
                             <IonButton color="medium" shape="round" size="large">
                                 No-Action needed
                             </IonButton></Td>
-                        <Td key={index} id="col"> 
-                            <IonButton>
-                                <IonIcon ios={flag} md={flag}/>
+                        <Td key={index} id="col">
+                            <IonButton color='white'>
+                                <IonIcon color='danger' ios={flag} md={flag}/>
                             </IonButton>
                         </Td>
                         <Td key={index} id="col">
                             <IonButton color="favorite" shape="round" size="large" onClick={() => {
-                                setShowModal(true); 
+                                setShowModal(true);
                                 setSymptomsIndex(index)
-                                }}>  
+                                }}>
                                 Monitor Symptoms
                             </IonButton>
                         </Td>
-                                
+
                         {symptomsIndex!==undefined?
                             <IonModal isOpen={showModal}>
                             <IonContent fullscreen>
@@ -111,10 +111,10 @@ const PatientsTable: React.FC<{ currentUserType: UserType, patientTableRows: IPa
                                         Fever along with running nose
                                     </IonCardContent>
                                 </IonCard>
-                            </IonContent>        
+                            </IonContent>
                             <IonButton onClick={() => setShowModal(false)}>Close Symptoms Form</IonButton>
-                        </IonModal>  
-                        :<></>} 
+                        </IonModal>
+                        :<></>}
                     </Tr>
                 );
             case UserType.ADMIN:
@@ -131,13 +131,13 @@ const PatientsTable: React.FC<{ currentUserType: UserType, patientTableRows: IPa
                         </Td>
                         <Td key={index} id="colDoc">
                             Dr.Sue
-                        </Td>                        
+                        </Td>
                         <Td key={index} id="col">
                             <IonButton color="favorite" shape="round" size="large">
                                 No-Action needed
                             </IonButton>
                         </Td>
-                        <Td key={index} id="col"> 
+                        <Td key={index} id="col">
                             <IonButton>
                                 <IonIcon ios={flag} md={flag}/>
                             </IonButton>
