@@ -2,10 +2,12 @@ import { IonAvatar, IonButton, IonCol, IonContent, IonImg, IonInput, IonLabel, I
 import './PatientInformation.css';
 import logo from '../../resources/icon.png'
 import { IPatient } from '../../interfaces/IPatient';
+import { useAuth } from '../../providers/auth.provider';
+import { UserType } from '../../enum/UserType.enum';
 
 
 const PatientInformation: React.FC<{patient: IPatient}> = (props) => {
-
+    const {currentProfile} = useAuth();
 
 
     return (
@@ -99,13 +101,17 @@ const PatientInformation: React.FC<{patient: IPatient}> = (props) => {
 
 
                 </IonRow>
+                {currentProfile.getRole() === UserType.DOCTOR &&
                 <IonRow>
+
                     <div className="button">
+
                         <IonCol> <IonButton className="buttonc">Symptoms form</IonButton> </IonCol>
                         <IonCol> <IonButton className="buttonc">Set an Appointment</IonButton> </IonCol>
                         <IonCol> <IonButton className="buttonc">Send Email</IonButton> </IonCol>
                     </div>
-                </IonRow>
+                </IonRow> }
+                {currentProfile.getRole() === UserType.DOCTOR &&
                 <IonRow>
                     <table className="blueTable">
                         <thead>
@@ -138,6 +144,8 @@ const PatientInformation: React.FC<{patient: IPatient}> = (props) => {
                         </tbody>
                     </table>
                 </IonRow>
+                }
+                {currentProfile.getRole() === UserType.DOCTOR &&
                 <IonRow>
                     <div className="button">
                         <IonCol> <IonButton className="buttonc">Add Symptoms</IonButton> </IonCol>
@@ -145,6 +153,8 @@ const PatientInformation: React.FC<{patient: IPatient}> = (props) => {
                         <IonCol> <IonButton className="buttonc">Delete Symptoms</IonButton> </IonCol>
                     </div>
                 </IonRow>
+                }
+                {currentProfile.getRole() === UserType.DOCTOR &&
                 <IonRow>
                     <div id="Container2">
                         <IonRow>
@@ -161,7 +171,7 @@ const PatientInformation: React.FC<{patient: IPatient}> = (props) => {
 
                     </div>
                 </IonRow>
-
+                }
 
             </div>
         </IonContent>
