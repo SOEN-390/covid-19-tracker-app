@@ -7,16 +7,16 @@ RUN npm -g i eslint-cli
 RUN mkdir -p /var/code/
 WORKDIR /var/code/
 
-COPY package.json ./
+COPY package.json .
 RUN npm install
 
 COPY src src
 COPY public public
+COPY .eslintrc.json ./
 COPY ionic.config.json ./
 COPY capacitor.config.ts ./
-COPY capacitor.config.ts ./
+COPY capacitor.config.json ./
 COPY tsconfig.json ./
-COPY .eslintrc.json ./
 
 EXPOSE $PORT
 

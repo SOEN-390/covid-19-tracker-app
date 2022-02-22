@@ -15,7 +15,6 @@ const NavBar: React.FC<{ callback?: any }> = (props) => {
 			return;
 		}
 		HttpService.get(`patients/${searchText}`).then(async (response) => {
-			console.log('HERE IS THE DATA IN JSON FORM: ', response);
 			props.callback(searchText);
 		}).catch((error) => {
 			console.log('ERROR: ', error);
