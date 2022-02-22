@@ -36,7 +36,6 @@ const RegisterNext: React.FC = () => {
 	const [dob, setDOB] = useState<string>('');
 	const [gender, setGender] = useState<Gender>(Gender.NONE);
 
-
 	const history = useHistory();
 	const [present] = useIonToast();
 
@@ -59,8 +58,7 @@ const RegisterNext: React.FC = () => {
 			phoneNumber: phoneNumber,
 			dob: dob,
 			gender: gender
-		};
-
+		}
 		saveUser(user).then((success) => {
 			if (success) {
 				present('Successfully registered.', 1500).then(() => {

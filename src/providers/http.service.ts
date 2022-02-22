@@ -21,9 +21,9 @@ const HttpService = {
 		});
 	},
 
-	put: (path: string, body?: any) => {
+	patch: (path: string, body?: any) => {
 		const request = new Request(environment.apiUrl + environment.apiPrefix + '/' + path, {
-			method: 'POST',
+			method: 'PATCH',
 			body: new Blob([JSON.stringify(body, null, 2)], {type: 'application/json'}),
 			headers: HttpService.getHeader()
 		});

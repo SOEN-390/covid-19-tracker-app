@@ -1,14 +1,44 @@
-import { IonAvatar, IonButton, IonCol, IonContent, IonImg, IonInput, IonLabel, IonRow, IonText } from '@ionic/react';
+import {
+	IonAvatar,
+	IonButton,
+	IonCol,
+	IonContent,
+	IonImg,
+	IonInput, IonItem,
+	IonLabel, IonListHeader, IonModal, IonRadio, IonRadioGroup,
+	IonRow,
+	IonText, useIonToast
+} from '@ionic/react';
 import './PatientInformation.css';
 import logo from '../../resources/icon.png';
 import { IPatient } from '../../interfaces/IPatient';
 import { useAuth } from '../../providers/auth.provider';
 import { UserType } from '../../enum/UserType.enum';
-import React from 'react';
+import React, { useState } from 'react';
+import { TestResult } from '../../enum/TestResult.enum';
+import HttpService from '../../providers/http.service';
 
-const PatientInformation: React.FC<{ patient: IPatient }> = (props) => {
+const PatientInformation: React.FC<{ patient: IPatient, update?: any }> = (props) => {
 	const {currentProfile} = useAuth();
 
+	const [showModal, setShowModal] = useState(false);
+	const [status, setStatus] = useState(props.patient.testResult);
+	const [present] = useIonToast();
+
+	async function updateStatus() {
+		if (currentProfile.testResult == status) {
+			return;
+		}
+		try {
+			await HttpService.patch(`patients/${currentProfile.id}/status`, {status: status});
+			props.update(status);
+			setShowModal(false);
+			present('Successfully updated status', 1500);
+		} catch (e) {
+			present('Failed to update status', 1500);
+		}
+
+	}
 
 	return (
 		<IonContent>
@@ -99,6 +129,15 @@ const PatientInformation: React.FC<{ patient: IPatient }> = (props) => {
 
 					</IonCol>
 
+					{currentProfile.getRole() === UserType.PATIENT &&
+						<IonRow>
+							<div className="button">
+								<IonCol> <IonButton onClick={() => {
+									setShowModal(true);
+								}} className="buttonc">Edit Status</IonButton> </IonCol>
+							</div>
+						</IonRow>
+					}
 
 				</IonRow>
 				{currentProfile.getRole() === UserType.DOCTOR &&
@@ -159,20 +198,52 @@ const PatientInformation: React.FC<{ patient: IPatient }> = (props) => {
 						<div id="Container2">
 							<IonRow>
 								<IonCol size="3"><IonLabel>Subject</IonLabel></IonCol>
-								<IonCol><IonInput className="login-text-field"/></IonCol>
+								<IonCol><IonInput className="login-text-field"></IonInput></IonCol>
+
 							</IonRow>
 							<IonRow>
 								<IonCol size="3"><IonLabel>Description</IonLabel></IonCol>
-								<IonCol><IonInput className="login-text-field"/></IonCol>
+								<IonCol><IonInput className="login-text-field"></IonInput></IonCol>
 								<IonButton className="buttonc">Add</IonButton>
+
 							</IonRow>
 
 						</div>
 					</IonRow>
 				}
 
+				<IonModal isOpen={showModal}>
+					<IonContent>
+						<IonRadioGroup value={status} onIonChange={e => setStatus(e.detail.value)}>
+							<IonListHeader>
+								<IonLabel>Edit your Status</IonLabel>
+							</IonListHeader>
+							<IonItem>
+								<IonLabel>Positive</IonLabel>
+								<IonRadio slot="start" value={TestResult.POSITIVE}/>
+							</IonItem>
+
+							<IonItem>
+								<IonLabel>Negative</IonLabel>
+								<IonRadio slot="start" value={TestResult.NEGATIVE}/>
+							</IonItem>
+
+							<IonItem>
+								<IonLabel>Not tested/Pending</IonLabel>
+								<IonRadio slot="start" value={TestResult.PENDING}/>
+							</IonItem>
+
+						</IonRadioGroup>
+
+					</IonContent>
+					<IonButton color="success" onClick={() => updateStatus()}>Save</IonButton>
+					<IonButton color="danger" onClick={() => setShowModal(false)}>Cancel</IonButton>
+				</IonModal>
+
 			</div>
 		</IonContent>
+
+
 	);
 };
 

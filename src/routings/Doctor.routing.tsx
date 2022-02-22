@@ -3,10 +3,10 @@ import { Redirect, Route } from 'react-router-dom';
 import Menu from '../components/Menu/Menu';
 import PatientProfile from '../pages/PatientProfile/PatientProfile.page';
 import { DoctorPages } from '../providers/pages.enum';
-import DashboardDoctorPage from '../pages/Doctor Dashboard/Dashboard.doctor.page';
+import DashboardDoctorPage from '../pages/DoctorDashboard/Dashboard.doctor.page';
 import { UserType } from '../enum/UserType.enum';
-import PatientsDoctorPage from '../pages/Doctor Patients/Patients.doctor.page';
 import React from 'react';
+import PatientsDoctorPage from '../pages/DoctorPatients/Patients.doctor.page';
 
 setupIonicReact();
 
