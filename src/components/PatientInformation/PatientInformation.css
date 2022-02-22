@@ -13,8 +13,6 @@
   width: 700px;
 }
 
-
-
 .box {
   background-color: #529dcb50;
 
@@ -37,7 +35,6 @@ table.blueTable th {
   border: 1px solid #AAAAAA;
   padding: 3px 2px;
 }
-
 
 
 table.blueTable tr:nth-child(even) {

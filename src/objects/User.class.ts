@@ -2,66 +2,64 @@ import { UserType } from '../enum/UserType.enum';
 
 export abstract class User {
 
-    // Variables
+	// Variables
 
-    private _id!: string;
-    private _firstName!: string;
-    private _lastName!: string;
-    private _phoneNumber!: string;
-    private _address!: string;
+	private readonly _id!: string;
+	private _firstName!: string;
+	private _lastName!: string;
+	private _phoneNumber!: string;
+	private _address!: string;
 
-    // Constructor
+	// Constructor
 
-    constructor (id: string, firstName: string, lastName: string, phoneNumber: string, address: string) {
-        this._id = id;
-        this._firstName = firstName;
-        this._lastName = lastName;
-        this._phoneNumber = phoneNumber;
-        this._address = address;
-    }
+	protected constructor(id: string, firstName: string, lastName: string, phoneNumber: string, address: string) {
+		this._id = id;
+		this._firstName = firstName;
+		this._lastName = lastName;
+		this._phoneNumber = phoneNumber;
+		this._address = address;
+	}
 
-    // Getters
+	// Getters & Setters
 
-    public get id(): string {
-        return this._id;
-    }
+	get id(): string {
+		return this._id;
+	}
 
-    public get firstName(): string {
-        return this._firstName;
-    }
+	get firstName(): string {
+		return this._firstName;
+	}
 
-    public get lastName(): string {
-        return this._lastName;
-    }
+	set firstName(value: string) {
+		this._firstName = value;
+	}
 
-    public get phoneNumber(): string {
-        return this._phoneNumber;
-    }
+	get lastName(): string {
+		return this._lastName;
+	}
 
-    public get address(): string {
-        return this._address;
-    }
+	set lastName(value: string) {
+		this._lastName = value;
+	}
 
-    // Setters
+	get phoneNumber(): string {
+		return this._phoneNumber;
+	}
 
-    public set firstName(value: string) {
-        this._firstName = value;
-    }
+	set phoneNumber(value: string) {
+		this._phoneNumber = value;
+	}
 
-    public set lastName(value: string) {
-        this._lastName = value;
-    }
+	get address(): string {
+		return this._address;
+	}
 
-    public set phoneNumber(value: string) {
-        this._phoneNumber = value;
-    }
+	set address(value: string) {
+		this._address = value;
+	}
 
-    public set address(value: string) {
-        this._address = value;
-    }
+	// Methods
 
-    // Methods
-
-    public abstract getRole(): UserType;
+	public abstract getRole(): UserType;
 
 }

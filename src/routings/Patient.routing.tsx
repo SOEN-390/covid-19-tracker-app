@@ -7,32 +7,33 @@ import SymptomsForm from '../pages/SymptomsForm/SymptomsForm.page';
 import PatientProfile from '../pages/PatientProfile/PatientProfile.page';
 import { PatientPages } from '../providers/pages.enum';
 import { UserType } from '../enum/UserType.enum';
+import React from 'react';
 
 setupIonicReact();
 
 const PatientRouting: React.FC = () => {
-    return (
-        <IonSplitPane contentId="home">
-            <Menu ionMenuId={'home'} userType={UserType.PATIENT}/>
-            <IonRouterOutlet id="home">
-                <Route path={PatientPages.home} exact={true}>
-                    <Redirect to={PatientPages.overview}/>
-                </Route>
-                <Route path={PatientPages.overview}>
-                    <Overview/>
-                </Route>
-                <Route path={PatientPages.appointments}>
-                    <Appointments/>
-                </Route>
-                <Route path={PatientPages.symptoms}>
-                    <SymptomsForm/>
-                </Route>
-                <Route path={PatientPages.patientProfile}>
-                    <PatientProfile/>
-                </Route>
-            </IonRouterOutlet>
-        </IonSplitPane>
-    );
+	return (
+		<IonSplitPane contentId="home">
+			<Menu ionMenuId={'home'} userType={UserType.PATIENT}/>
+			<IonRouterOutlet id="home">
+				<Route path={PatientPages.home} exact={true}>
+					<Redirect to={PatientPages.overview}/>
+				</Route>
+				<Route path={PatientPages.overview}>
+					<Overview/>
+				</Route>
+				<Route path={PatientPages.appointments}>
+					<Appointments/>
+				</Route>
+				<Route path={PatientPages.symptoms}>
+					<SymptomsForm/>
+				</Route>
+				<Route path={PatientPages.patientProfile}>
+					<PatientProfile/>
+				</Route>
+			</IonRouterOutlet>
+		</IonSplitPane>
+	);
 };
 
 export default PatientRouting;

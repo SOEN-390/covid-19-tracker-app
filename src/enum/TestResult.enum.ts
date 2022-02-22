@@ -1,6 +1,5 @@
 export enum TestResult {
-    POSITIVE  = 'positive',
-    NEGATIVE = 'negative',
-    PENDING = 'pending',
-
+	POSITIVE = 'positive',
+	NEGATIVE = 'negative',
+	PENDING = 'pending'
 }

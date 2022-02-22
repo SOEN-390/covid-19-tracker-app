@@ -5,64 +5,59 @@ import { Gender } from '../enum/Gender.enum';
 
 export class Patient extends User {
 
-    // Variables
+	// Variables
 
-    private _medicalId!: string;
-    private _testResult!: TestResult;
-    private _dob!: string;
-    private _gender!: Gender;
+	private readonly _medicalId!: string;
+	private _testResult!: TestResult;
+	private _dob!: string;
+	private _gender!: Gender;
 
-    // Constructor
+	// Constructor
 
-    public constructor (id: string, firstName: string, lastName: string, phoneNumber: string, address: string,
-                        medicalId: string, testResult: TestResult, dob: string, gender: Gender) {
-        super(id, firstName, lastName, phoneNumber, address);
-        this._medicalId = medicalId;
-        this._testResult = testResult;
-        this._dob = dob;
-        this._gender = gender;
-    }
-
-
-
-// Getters
-
-    public get medicalId(): string {
-        return this._medicalId;
-    }
-
-    public get testResult(): TestResult {
-        return this._testResult;
-    }
-
-    get dob(): string {
-        return this._dob;
-    }
+	public constructor(id: string, firstName: string, lastName: string, phoneNumber: string, address: string,
+					   medicalId: string, testResult: TestResult, dob: string, gender: Gender) {
+		super(id, firstName, lastName, phoneNumber, address);
+		this._medicalId = medicalId;
+		this._testResult = testResult;
+		this._dob = dob;
+		this._gender = gender;
+	}
 
 
-    get gender(): Gender {
-        return this._gender;
-    }
+	// Getters & Setters
 
-    // Setters
+	get medicalId(): string {
+		return this._medicalId;
+	}
 
-    public set testResult(value: TestResult) {
-        this._testResult = value;
-    }
+	get testResult(): TestResult {
+		return this._testResult;
+	}
 
-    set dob(value: string) {
-        this._dob = value;
-    }
+	set testResult(value: TestResult) {
+		this._testResult = value;
+	}
 
-    set gender(value: Gender) {
-        this._gender = value;
-    }
+	get dob(): string {
+		return this._dob;
+	}
 
+	set dob(value: string) {
+		this._dob = value;
+	}
 
-    // Methods
+	get gender(): Gender {
+		return this._gender;
+	}
 
-    public getRole(): UserType {
-        return UserType.PATIENT;
-    }
+	set gender(value: Gender) {
+		this._gender = value;
+	}
+
+	// Methods
+
+	public getRole(): UserType {
+		return UserType.PATIENT;
+	}
 
 }

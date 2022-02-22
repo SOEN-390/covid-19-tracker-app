@@ -1,8 +1,8 @@
 export interface IDoctorTableRow {
-    firstName: string, 
-    lastName: string, 
-    licenseId: string,
-    phoneNumber:string,
-    address: Date;
-    email: string;
+	firstName: string,
+	lastName: string,
+	licenseId: string,
+	phoneNumber: string,
+	address: Date;
+	email: string;
 }
