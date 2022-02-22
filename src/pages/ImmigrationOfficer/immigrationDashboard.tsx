@@ -1,10 +1,8 @@
 import { IonPage, IonToolbar } from '@ionic/react';
-
-import NavBar from '../../components/NavBar';
+import NavBar from '../../components/NavBar/NavBar';
+import React from 'react';
 
 const ImmigrationDashboard: React.FC = () => {
-
-	// const { name } = useParams<{ name: string; }>(); //to get page name
 
 	return (
 		<IonPage>

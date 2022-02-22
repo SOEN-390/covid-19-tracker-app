@@ -1,22 +1,18 @@
 import { IonPage } from '@ionic/react';
-
-import NavBar from '../../components/NavBar';
-import Symptom from '../../components/Symptom';
+import NavBar from '../../components/NavBar/NavBar';
+import Symptom from '../../components/Symptom/Symptom';
+import React from 'react';
 
 const SymptomsFormPage: React.FC = () => {
 
-    // const { name } = useParams<{ name: string; }>(); //to get page name
+	return (
+		<IonPage>
 
-    return (
-        <IonPage>
+			<NavBar/>
+			<Symptom/>
 
-            <NavBar />
-            <Symptom />
-
-        </IonPage>
-
-
-    );
+		</IonPage>
+	);
 };
 
 export default SymptomsFormPage;
