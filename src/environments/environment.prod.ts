@@ -12,4 +12,4 @@ export const environment = {
 		appId: '1:462027331949:web:a9e9c7517a1bf40fb8a264',
 		measurementId: 'G-SR3XXFC56M'
 	}
-}
+};
