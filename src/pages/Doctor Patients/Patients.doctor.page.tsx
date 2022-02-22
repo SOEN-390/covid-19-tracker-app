@@ -6,7 +6,6 @@ import { useAuth } from '../../providers/auth.provider';
 import HttpService from '../../providers/http.service';
 import { TestResult } from '../../enum/TestResult.enum';
 import PatientsTable from '../../components/PatientsTable/PatientsTable';
-import { UserType } from '../../enum/UserType.enum';
 
 const PatientsDoctorPage: React.FC = () => {
     const [patientsArray, setPatientsArray] = useState<IPatientTableRow[]>([]);
@@ -80,7 +79,7 @@ const PatientsDoctorPage: React.FC = () => {
                 </div>
                 {
                     patientsArray !== undefined ?
-                        <PatientsTable currentUserType={UserType.DOCTOR} patientTableRows={patientsTableRow}/> :
+                        <PatientsTable patientTableRows={patientsTableRow}/> :
                         null
                 }
             </IonContent>

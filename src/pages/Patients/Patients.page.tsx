@@ -4,26 +4,56 @@ import NavBar from '../../components/NavBar';
 import PatientsTable from '../../components/PatientsTable/PatientsTable';
 import * as React from 'react';
 import { IPatientTableRow } from '../../interfaces/IPatientTableRow';
-import { UserType } from '../../enum/UserType.enum';
 import { useEffect, useState } from 'react';
 import HttpService from '../../providers/http.service';
+import { TestResult } from '../../enum/TestResult.enum';
 
 const PatientsPage: React.FC = () => {
 
-
-    const [patientsArray, setPatientsArray]= useState <IPatientTableRow[]> ()
+    const [patientsArray, setPatientsArray]= useState <IPatientTableRow[]> ([]);
+    const [patientsTableRow, setPatientsTableRow] = useState<IPatientTableRow[]>([]);
+    const [tableSelection, setTableSelection] = useState<'confirmed' | 'unconfirmed'>('confirmed');
 
     useEffect(() => {
-        patientsRetrieval();
+        getAllPatients();
       }, []);
 
-    async function patientsRetrieval() {
+    useEffect(() => {
+        if (tableSelection === 'confirmed') {
+            filterConfirmedPatients();
+        } else {
+            filterUnconfirmedPatients();
+        }
+    }, [patientsArray]);
+
+    async function getAllPatients() {
         HttpService.get(`patients/all`).then(async (response) => {
-            console.log('HERE IS THE DATA IN JSON FORM: ', response);
             setPatientsArray(response);
         }).catch((error) => {
             console.log('ERROR: ', error);
         });
+    }
+
+    function filterConfirmedPatients() {
+        const patientTableRow: IPatientTableRow[] = [];
+        for (let patient of patientsArray) {
+            if (patient?.testResult === TestResult.POSITIVE || patient?.testResult === TestResult.NEGATIVE) {
+                patientTableRow.push(patient);
+            }
+        }
+        setTableSelection('confirmed');
+        setPatientsTableRow(patientTableRow);
+    }
+
+    function filterUnconfirmedPatients() {
+        const patientTableRow: IPatientTableRow[] = [];
+        for (let patient of patientsArray) {
+            if (patient?.testResult === TestResult.PENDING || patient?.testResult === null) {
+                patientTableRow.push(patient);
+            }
+        }
+        setTableSelection('unconfirmed');
+        setPatientsTableRow(patientTableRow);
     }
 
     return (
@@ -37,18 +67,22 @@ const PatientsPage: React.FC = () => {
                 <div>
                     <IonRow>
                         <IonCol/>
-                        {/*These buttons will change the request and rows!*/}
-                        <IonCol class="confirmButton"> <IonButton id="con"
-                                                                  color="favorite">Confirmed</IonButton></IonCol>
-                        <IonCol class="unconfirmedButton"><IonButton color="favorite1">Unconfirmed</IonButton></IonCol>
+                        <IonCol class="confirmButton">
+                            <IonButton color={tableSelection === 'confirmed' ? 'favorite1' : 'favorite'}
+                                       onClick={filterConfirmedPatients}>Confirmed</IonButton>
+                        </IonCol>
+                        <IonCol class="unconfirmedButton">
+                            <IonButton color={tableSelection === 'unconfirmed' ? 'favorite1' : 'favorite'}
+                                       onClick={filterUnconfirmedPatients}>UnConfirmed</IonButton>
+                        </IonCol>
                         <IonCol/>
                     </IonRow>
                 </div>
                 {
                     patientsArray !== undefined ?
-                        <PatientsTable currentUserType={UserType.HEALTH_OFFICIAL} patientTableRows={patientsArray} /> :
+                        <PatientsTable patientTableRows={patientsTableRow} /> :
                         null
-                }            
+                }
             </IonContent>
 
         </IonPage>

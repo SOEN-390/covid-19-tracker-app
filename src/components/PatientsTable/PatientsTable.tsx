@@ -7,15 +7,17 @@ import { IPatientTableRow } from '../../interfaces/IPatientTableRow';
 import { UserType } from '../../enum/UserType.enum';
 import { adminColumns, doctorColumns, healthOfficialColumns, PatientsTableColumn } from './patientsTableColumn';
 import { flag} from 'ionicons/icons';
+import { useAuth } from '../../providers/auth.provider';
 
-const PatientsTable: React.FC<{ currentUserType: UserType, patientTableRows: IPatientTableRow[] }> = (props) => {
+const PatientsTable: React.FC<{ patientTableRows: IPatientTableRow[] }> = (props) => {
 
+    const {currentProfile} = useAuth();
     const [columns, setColumns] = useState<readonly PatientsTableColumn[]>([]);
     const [showModal, setShowModal] = useState(false);
     const [symptomsIndex, setSymptomsIndex] = useState<number>();
 
     useEffect(() => {
-        switch (props.currentUserType) {
+        switch (currentProfile.getRole()) {
             case UserType.DOCTOR:
                 setColumns(doctorColumns);
                 break;
@@ -30,7 +32,7 @@ const PatientsTable: React.FC<{ currentUserType: UserType, patientTableRows: IPa
 
 
     function getRow(row: IPatientTableRow, index: number): JSX.Element | null {
-        switch (props.currentUserType) {
+        switch (currentProfile.getRole()) {
             case UserType.DOCTOR:
                 return (
                     <Tr id="tableRow" key={index}>
