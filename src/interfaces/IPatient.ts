@@ -4,7 +4,7 @@ export interface IPatient {
     medicalId: string;
     firstName: string;
     lastName: string;
-    testResult: string;
+    testResult: TestResult;
     address: string;
     email: string | null | undefined;
     phoneNumber: string;
