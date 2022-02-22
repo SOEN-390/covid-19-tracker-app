@@ -2,6 +2,7 @@ FROM node:latest@sha256:f9b18e024fc10ebc95d53c5d7cd6858779a7e3670ec6d24bebe8f235
 ARG PORT=8100
 
 RUN npm install -g ionic
+RUN npm -g i eslint-cli
 
 RUN mkdir -p /var/code/
 WORKDIR /var/code/
