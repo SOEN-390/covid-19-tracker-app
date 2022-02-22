@@ -20,6 +20,7 @@
         "@typescript-eslint"
     ],
     "rules": {
+        "no-mixed-spaces-and-tabs": 0, // disable rule
         "indent": [
             "error",
             "tab",
