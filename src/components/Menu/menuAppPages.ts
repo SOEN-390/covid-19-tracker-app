@@ -59,7 +59,7 @@ export const patientAppPages: readonly AppPage[] = [
 		mdIcon: settingsSharp
 	},
 	{
-		title: 'Alert',
+		title: 'Report',
 		url: '/home/alert',
 		iosIcon: warningOutline,
 		mdIcon: warningSharp
