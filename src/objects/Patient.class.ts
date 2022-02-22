@@ -8,9 +8,12 @@ export class Patient extends User {
 	// Variables
 
 	private readonly _medicalId!: string;
+	private _email!: string;
 	private _testResult!: TestResult;
 	private _dob!: string;
 	private _gender!: Gender;
+	private _lastUpdatedAt!: string;
+	private _flagged!: boolean;
 
 	// Constructor
 
@@ -52,6 +55,29 @@ export class Patient extends User {
 
 	set gender(value: Gender) {
 		this._gender = value;
+	}
+
+	get email(): string {
+		return this._email;
+	}
+
+	set email(value: string) {
+		this._email = value;
+	}
+	get lastUpdatedAt(): string {
+		return this._lastUpdatedAt;
+	}
+
+	set lastUpdatedAt(value: string) {
+		this._lastUpdatedAt = value;
+	}
+
+	get isFlagged(): boolean {
+		return this._flagged;
+	}
+
+	set flagged(value: boolean) {
+		this._flagged = value;
 	}
 
 	// Methods
