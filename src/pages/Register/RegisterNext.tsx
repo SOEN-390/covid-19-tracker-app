@@ -32,7 +32,7 @@ const RegisterNext: React.FC = () => {
     const [address, setAddress] = useState('')
     const [medicalNumber, setMedicalNumber] = useState('')
     const [phoneNumber, setPhoneNumber] = useState('')
-    const [testResult, setTestResult] = useState('')
+    const [testResult, setTestResult] = useState<TestResult>(TestResult.PENDING)
     const [dob, setDOB] = useState('')
     const [gender, setGender] = useState('')
 

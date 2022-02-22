@@ -47,8 +47,8 @@ export const patientAppPages: readonly AppPage[] = [
         mdIcon: heartSharp
     },
     {
-        title: 'option 2',
-        url: '/home/option2',
+        title: 'My Profile',
+        url: PatientPages.patientProfile,
         iosIcon: archiveOutline,
         mdIcon: archiveSharp
     },
