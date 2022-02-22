@@ -23,9 +23,6 @@ const PatientProfilePage: React.FC = () => {
     const [gender, setGender] = useState('');
 
     useEffect(() => {
-        if (!currentProfile) {
-            return;
-        }
         if (currentProfile.getRole() === UserType.PATIENT) {
             setMedicalNumber(currentProfile.id);
         }
