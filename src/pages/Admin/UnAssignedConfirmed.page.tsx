@@ -5,7 +5,6 @@ import React, { useEffect, useState } from 'react';
 import HttpService from '../../providers/http.service';
 import PatientsTable from '../../components/PatientsTable/PatientsTable';
 import { IPatientTableRow } from '../../interfaces/IPatientTableRow';
-import { UserType } from '../../enum/UserType.enum';
 
 const UnAssignedConfirmedPage: React.FC = () => {
 	const [patientsArray, setPatientsArray] = useState<IPatientTableRow[]>();
@@ -16,7 +15,6 @@ const UnAssignedConfirmedPage: React.FC = () => {
 
 	async function patientsRetrieval() {
 		HttpService.get('patients/all').then(async (response) => {
-			console.log('HERE IS THE DATA IN JSON FORM: ', response);
 			setPatientsArray(response);
 		}).catch((error) => {
 			console.log('ERROR: ', error);
@@ -46,7 +44,7 @@ const UnAssignedConfirmedPage: React.FC = () => {
 				</div>
 				{
 					patientsArray !== undefined ?
-						<PatientsTable currentUserType={UserType.ADMIN} patientTableRows={patientsArray}/> :
+						<PatientsTable patientTableRows={patientsArray}/> :
 						null
 				}
 			</IonContent>

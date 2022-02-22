@@ -15,7 +15,6 @@ const DoctorsPage: React.FC = () => {
 
 	async function doctorssRetrieval() {
 		HttpService.get('doctors/all').then(async (response) => {
-			console.log('HERE IS THE DATA IN JSON FORM: ', response);
 			setDoctorssArray(response);
 		}).catch((error) => {
 			console.log('ERROR: ', error);
