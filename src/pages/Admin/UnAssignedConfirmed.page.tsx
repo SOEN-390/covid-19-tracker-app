@@ -4,18 +4,22 @@ import { AdminPages } from '../../providers/pages.enum';
 import React, { useEffect, useState } from 'react';
 import HttpService from '../../providers/http.service';
 import PatientsTable from '../../components/PatientsTable/PatientsTable';
-import { IPatientTableRow } from '../../interfaces/IPatientTableRow';
+import { Patient } from '../../objects/Patient.class';
 
 const UnAssignedConfirmedPage: React.FC = () => {
-	const [patientsArray, setPatientsArray] = useState<IPatientTableRow[]>();
+	const [patients, setPatients] = useState<Patient[]>();
 
 	useEffect(() => {
 		patientsRetrieval();
 	}, []);
 
+	function onPatientsChanged(patients: Patient[]) {
+		setPatients(patients);
+	}
+
 	async function patientsRetrieval() {
-		HttpService.get('patients/all').then(async (response) => {
-			setPatientsArray(response);
+		HttpService.get('patients/all').then((patients: Patient[]) => {
+			setPatients(patients);
 		}).catch((error) => {
 			console.log('ERROR: ', error);
 		});
@@ -43,8 +47,8 @@ const UnAssignedConfirmedPage: React.FC = () => {
 					</IonRow>
 				</div>
 				{
-					patientsArray !== undefined ?
-						<PatientsTable patientTableRows={patientsArray}/> :
+					patients !== undefined ?
+						<PatientsTable patients={patients} onChange={onPatientsChanged}/> :
 						null
 				}
 			</IonContent>
