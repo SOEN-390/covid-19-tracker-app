@@ -4,19 +4,18 @@ import NavBar from '../../components/NavBar';
 
 const ImmigrationDashboard: React.FC = () => {
 
-    // const { name } = useParams<{ name: string; }>(); //to get page name
+	// const { name } = useParams<{ name: string; }>(); //to get page name
 
-    return (
-        <IonPage>
+	return (
+		<IonPage>
 
-            <IonToolbar>
-                <NavBar />
-            </IonToolbar>
+			<IonToolbar>
+				<NavBar/>
+			</IonToolbar>
 
 
-
-        </IonPage>
-    );
+		</IonPage>
+	);
 };
 
 export default ImmigrationDashboard;

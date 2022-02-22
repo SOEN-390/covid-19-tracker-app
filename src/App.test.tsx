@@ -12,11 +12,11 @@ jest.mock('firebase/compat/app', () => {
                         createUserWithEmailAndPassword: jest.fn(() => Promise.resolve(true)), // TODO: Send the correct response format
                         signInWithEmailAndPassword: jest.fn(() => Promise.resolve(true)), // TODO: Send the correct response format
                         signOut: jest.fn()
-                    }
+                    };
                 })
-            }
+            };
         })
-    }
+    };
 });
 
 test('renders without crashing', () => {

@@ -128,33 +128,33 @@ ion-menu::part(container) {
 ion-menu {
   border-inline-end: unset;
   /*width: 350px;*/
-  min-width: 275px!important;
+  min-width: 275px !important;
 }
 
-ion-title{
+ion-title {
   --background: #9d9b9b;
   margin-top: 1px;
 }
 
-ion-item-divider{
-margin-bottom: 5px;
+ion-item-divider {
+  margin-bottom: 5px;
   --background: #F7F7F7;
   --color: grey;
 }
 
-ion-content{
+ion-content {
   --background: #ffffff;
 }
 
-#inbox-list{
+#inbox-list {
   background-color: #F7F7F7;
 }
 
-ion-item{
+ion-item {
   --background: #F7F7F7;
 }
 
-.emergencyBox{
+.emergencyBox {
   background-color: #F7F7F7;
 }
 
