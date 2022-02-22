@@ -22,7 +22,7 @@ jobs:
         run: docker-compose up --build -d
 
       - name: Run ESLint
-        run: ./node_modules/.bin/eslint . --ext .js,.jsx,.ts,.tsx
+        run: eslint . --ext .js,.jsx,.ts,.tsx
 
       - name: Run Tests with Coverage
         run: docker exec -e CI=true covid-19-tracker-app npm run test -- --coverage
