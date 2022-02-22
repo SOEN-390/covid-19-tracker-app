@@ -1,7 +1,7 @@
 import { User } from './User.class';
 import { UserType } from '../enum/UserType.enum';
 import { TestResult } from '../enum/TestResult.enum';
-import { GenderEnum } from '../enum/Gender.enum';
+import { Gender } from '../enum/Gender.enum';
 
 export class Patient extends User {
 
@@ -10,12 +10,12 @@ export class Patient extends User {
     private _medicalId!: string;
     private _testResult!: TestResult;
     private _dob!: string;
-    private _gender!: GenderEnum;
+    private _gender!: Gender;
 
     // Constructor
 
     public constructor (id: string, firstName: string, lastName: string, phoneNumber: string, address: string,
-                        medicalId: string, testResult: TestResult, dob: string, gender: GenderEnum) {
+                        medicalId: string, testResult: TestResult, dob: string, gender: Gender) {
         super(id, firstName, lastName, phoneNumber, address);
         this._medicalId = medicalId;
         this._testResult = testResult;
@@ -40,7 +40,7 @@ export class Patient extends User {
     }
 
 
-    get gender(): GenderEnum {
+    get gender(): Gender {
         return this._gender;
     }
 
@@ -54,7 +54,7 @@ export class Patient extends User {
         this._dob = value;
     }
 
-    set gender(value: GenderEnum) {
+    set gender(value: Gender) {
         this._gender = value;
     }
 
