@@ -21,11 +21,8 @@ jobs:
       - name: Build and Run the Docker Containers
         run: docker-compose up --build -d
 
-      - name: Install dependencies
-        run: npm install
-
       - name: Run ESLint
-        run: npm run style:eslint
+        run: docker exec -e CI=true npm run style:eslint
 
       - name: Run Tests with Coverage
         run: docker exec -e CI=true covid-19-tracker-app npm run test -- --coverage
