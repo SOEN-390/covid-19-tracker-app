@@ -8,7 +8,7 @@ import PatientProfile from '../pages/PatientProfile/PatientProfile.page';
 import { PatientPages } from '../providers/pages.enum';
 import { UserType } from '../enum/UserType.enum';
 import React from 'react';
-import ReportInContactForm from '../components/ReportInContactForm/ReportInContactForm';
+import ReportInContactPage from '../pages/ReportInContact/ReportInContact.page';
 
 setupIonicReact();
 
@@ -33,7 +33,7 @@ const PatientRouting: React.FC = () => {
 					<PatientProfile />
 				</Route>
 				<Route path={PatientPages.reportInContact}>
-					<ReportInContactForm />
+					<ReportInContactPage />
 				</Route>
 			</IonRouterOutlet>
 		</IonSplitPane>
