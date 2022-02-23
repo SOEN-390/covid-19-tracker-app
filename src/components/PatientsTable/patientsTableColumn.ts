@@ -36,43 +36,13 @@ export const doctorColumns: readonly PatientsTableColumn[] = [
 		label: 'Priority',
 		minWidth: 170,
 		align: 'center'
+	},
+	{
+		id: 'monitorSymptoms',
+		label: '',
+		minWidth: 170,
+		align: 'center'
 	}
-    {
-        id: 'patients',
-        label: 'Patient',
-        minWidth: 170,
-        align: 'center'
-    },
-    {
-        id: 'status',
-        label: 'Status',
-        minWidth: 170,
-        align: 'center'
-    },
-    {
-        id: 'last_update',
-        label: 'Last Update',
-        minWidth: 170,
-        align: 'center'
-    },
-    {
-        id: 'action',
-        label: 'Action',
-        minWidth: 170,
-        align: 'center'
-    },
-    {
-        id: 'priority',
-        label: 'Priority',
-        minWidth: 170,
-        align: 'center'
-    },
-    {
-        id: 'monitor_symptoms',
-        label: '',
-        minWidth: 170,
-        align: 'center'
-    }
 ];
 
 export const adminColumns: readonly PatientsTableColumn[] = [

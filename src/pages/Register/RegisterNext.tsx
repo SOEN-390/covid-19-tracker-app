@@ -161,15 +161,15 @@ const RegisterNext: React.FC = () => {
 					<IonInput className="register__text-field" placeholder="Enter your phone number" type="text"
 							  onIonChange={(e: any) => setPhoneNumber(e.target.value)}/>
 					<br/>
-					<IonLabel className="register__login-text"> Your Gender </IonLabel>
-					<IonSelect placeholder="your Gender" onIonChange={(e: any) => setGender(e.target.value)}>
+					<IonLabel className="register__login-text"> Gender </IonLabel>
+					<IonSelect interface="popover" placeholder="Select" onIonChange={(e: any) => setGender(e.target.value)}>
 						<IonSelectOption value={Gender.MALE}> Male</IonSelectOption>
 						<IonSelectOption value={Gender.FEMALE}> Female</IonSelectOption>
 						<IonSelectOption value={Gender.NONE}> Prefer not to respond</IonSelectOption>
 					</IonSelect>
 					<br/>
-					<IonLabel className="register__login-text"> Your test results </IonLabel>
-					<IonSelect placeholder="Test result" onIonChange={(e: any) => setTestResult(e.target.value)}>
+					<IonLabel className="register__login-text"> Test Results </IonLabel>
+					<IonSelect interface="popover" placeholder="Select" onIonChange={(e: any) => setTestResult(e.target.value)}>
 						<IonSelectOption value={TestResult.POSITIVE}> Positive</IonSelectOption>
 						<IonSelectOption value={TestResult.NEGATIVE}> Negative</IonSelectOption>
 						<IonSelectOption value={TestResult.PENDING}> Not tested/Pending</IonSelectOption>
@@ -182,37 +182,7 @@ const RegisterNext: React.FC = () => {
 
 		</IonApp>
 	);
-                    <IonLabel className="register__login-text">Phone number</IonLabel>
-                    <IonInput className="register__text-field" placeholder="Enter your phone number" type="text"
-                              onIonChange={(e: any) => setPhoneNumber(e.target.value)}/>
-                    <br/>
-                    <IonLabel className="register__login-text"> Gender </IonLabel>
-                    <IonSelect interface="popover" placeholder="Select Gender"
-                               onIonChange={(e: any) => setGender(e.target.value)}>
-                        <IonSelectOption value={Gender.MALE} class="register__status-option"> Male</IonSelectOption>
-                        <IonSelectOption value={Gender.FEMALE} class="register__status-option"> Female</IonSelectOption>
-                        <IonSelectOption value={Gender.NONE} class="register__status-option"> Prefer not to
-                            respond</IonSelectOption>
-                    </IonSelect>
-                    <br/>
-                    <IonLabel className="register__login-text"> Test Result </IonLabel>
-                    <IonSelect interface="popover" placeholder="Select Test result"
-                               onIonChange={(e: any) => setTestResult(e.target.value)}>
-                        <IonSelectOption value={TestResult.POSITIVE}
-                                         class="register__status-option"> Positive</IonSelectOption>
-                        <IonSelectOption value={TestResult.NEGATIVE}
-                                         class="register__status-option"> Negative</IonSelectOption>
-                        <IonSelectOption value={TestResult.PENDING} class="register__status-option"> Not
-                            tested/Pending</IonSelectOption>
-                    </IonSelect>
-                    <br/><br/>
-                    <IonButton text-align={'center'} className={'register__btn'} expand="block" fill="solid"
-                               color={'dark-blue'}
-                               onClick={registration}>Register</IonButton>
-                </div>
-            </IonContent>
-        </IonApp>
-    );
+
 };
 
 export default RegisterNext;
