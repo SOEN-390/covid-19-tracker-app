@@ -64,7 +64,7 @@ export class Patient extends User {
 		this._flagged = value;
 	}
 
-// Methods
+	// Methods
 
 	public getRole(): UserType {
 		return UserType.PATIENT;

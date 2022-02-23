@@ -22,14 +22,14 @@
     "rules": {
         "no-mixed-spaces-and-tabs": 0, // disable rule
         "indent": [
-            "warn",
+            "error",
             "tab",
             { "SwitchCase": 1 }
         ],
-        "linebreak-style": [
-            "warn",
-            "unix"
-        ],
+//        "linebreak-style": [
+//            "warn",
+//            "unix"
+//        ],
         "quotes": [
             "error",
             "single"
