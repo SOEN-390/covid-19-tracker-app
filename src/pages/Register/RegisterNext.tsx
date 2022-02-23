@@ -57,9 +57,10 @@ const RegisterNext: React.FC = () => {
 			email: auth.currentUser?.email,
 			phoneNumber: phoneNumber,
 			dob: dob,
-			gender: gender
+			gender: gender,
+			flagged: false
 		};
-		
+
 		saveUser(user).then((success) => {
 			if (success) {
 				present('Successfully registered.', 1500).then(() => {

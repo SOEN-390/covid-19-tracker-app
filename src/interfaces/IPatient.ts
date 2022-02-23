@@ -11,4 +11,5 @@ export interface IPatient {
 	phoneNumber: string;
 	dob: string;
 	gender: Gender;
+	flagged: boolean
 }

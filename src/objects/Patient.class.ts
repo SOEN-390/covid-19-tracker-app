@@ -11,16 +11,18 @@ export class Patient extends User {
 	private _testResult!: TestResult;
 	private _dob!: string;
 	private _gender!: Gender;
+	private _flagged!: boolean;
 
 	// Constructor
 
 	public constructor(id: string, firstName: string, lastName: string, phoneNumber: string, address: string,
-					   medicalId: string, testResult: TestResult, dob: string, gender: Gender) {
+					   medicalId: string, testResult: TestResult, dob: string, gender: Gender, flagged: boolean) {
 		super(id, firstName, lastName, phoneNumber, address);
 		this._medicalId = medicalId;
 		this._testResult = testResult;
 		this._dob = dob;
 		this._gender = gender;
+		this._flagged = flagged;
 	}
 
 
@@ -54,7 +56,15 @@ export class Patient extends User {
 		this._gender = value;
 	}
 
-	// Methods
+	get flagged(): boolean {
+		return this._flagged;
+	}
+
+	set flagged(value: boolean) {
+		this._flagged = value;
+	}
+
+// Methods
 
 	public getRole(): UserType {
 		return UserType.PATIENT;
