@@ -26,7 +26,6 @@ export class Patient extends User {
 		this._gender = gender;
 	}
 
-
 	// Getters & Setters
 
 	get medicalId(): string {
@@ -72,7 +71,7 @@ export class Patient extends User {
 		this._lastUpdatedAt = value;
 	}
 
-	get isFlagged(): boolean {
+	get flagged(): boolean {
 		return this._flagged;
 	}
 

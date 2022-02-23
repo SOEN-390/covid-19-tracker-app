@@ -11,4 +11,6 @@ export interface IPatient {
 	phoneNumber: string;
 	dob: string;
 	gender: Gender;
+	// lastUpdatedAt: string;
+	// priority: boolean; //Not required
 }
