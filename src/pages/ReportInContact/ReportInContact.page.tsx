@@ -6,9 +6,7 @@ const ReportInContactPage: React.FC = () => {
 
 	return (
 		<IonPage>
-			<ReportInContactForm>
-
-			</ReportInContactForm>
+			<ReportInContactForm />
 		</IonPage>
 
 	);
