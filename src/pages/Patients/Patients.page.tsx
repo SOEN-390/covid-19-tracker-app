@@ -2,15 +2,15 @@ import { IonButton, IonCol, IonContent, IonPage, IonRow, IonTitle, IonToolbar } 
 import NavBar from '../../components/NavBar/NavBar';
 import PatientsTable from '../../components/PatientsTable/PatientsTable';
 import * as React from 'react';
-import { IPatientTableRow } from '../../interfaces/IPatientTableRow';
 import { useEffect, useState } from 'react';
 import HttpService from '../../providers/http.service';
 import { TestResult } from '../../enum/TestResult.enum';
+import { Patient } from '../../objects/Patient.class';
 
 const PatientsPage: React.FC = () => {
 
-	const [patientsArray, setPatientsArray] = useState<IPatientTableRow[]>([]);
-	const [patientsTableRow, setPatientsTableRow] = useState<IPatientTableRow[]>([]);
+	const [patients, setPatients] = useState<Patient[]>([]);
+	const [patientsTableRow, setPatientsTableRow] = useState<Patient[]>([]);
 	const [tableSelection, setTableSelection] = useState<'confirmed' | 'unconfirmed'>('confirmed');
 
 	useEffect(() => {
@@ -23,19 +23,31 @@ const PatientsPage: React.FC = () => {
 		} else {
 			filterUnconfirmedPatients();
 		}
-	}, [patientsArray]);
+	}, [patients]);
+
+	function onPatientsChanged(patients: Patient[]) {
+		setPatients(patients);
+	}
 
 	async function getAllPatients() {
-		HttpService.get('patients/all').then(async (response) => {
-			setPatientsArray(response);
+		HttpService.get('patients/all').then((patients: Patient[]) => {
+			const patientsArranged: Patient[] = [];
+			for (const patient of patients) {
+				if (patient.flagged) {
+					patientsArranged.unshift(patient);
+				} else {
+					patientsArranged.push(patient);
+				}
+			}
+			setPatients(patientsArranged);
 		}).catch((error) => {
 			console.log('ERROR: ', error);
 		});
 	}
 
 	function filterConfirmedPatients() {
-		const patientTableRow: IPatientTableRow[] = [];
-		for (const patient of patientsArray) {
+		const patientTableRow: Patient[] = [];
+		for (const patient of patients) {
 			if (patient?.testResult === TestResult.POSITIVE || patient?.testResult === TestResult.NEGATIVE) {
 				patientTableRow.push(patient);
 			}
@@ -45,8 +57,8 @@ const PatientsPage: React.FC = () => {
 	}
 
 	function filterUnconfirmedPatients() {
-		const patientTableRow: IPatientTableRow[] = [];
-		for (const patient of patientsArray) {
+		const patientTableRow: Patient[] = [];
+		for (const patient of patients) {
 			if (patient?.testResult === TestResult.PENDING || patient?.testResult === null) {
 				patientTableRow.push(patient);
 			}
@@ -78,8 +90,8 @@ const PatientsPage: React.FC = () => {
 					</IonRow>
 				</div>
 				{
-					patientsArray !== undefined ?
-						<PatientsTable patientTableRows={patientsTableRow}/> :
+					patients !== undefined ?
+						<PatientsTable patients={patientsTableRow} onChange={onPatientsChanged}/> :
 						null
 				}
 			</IonContent>

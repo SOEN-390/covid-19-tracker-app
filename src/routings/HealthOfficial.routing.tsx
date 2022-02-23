@@ -15,9 +15,9 @@ const HealthOfficialRouting: React.FC = () => {
 			<Menu ionMenuId={'health-official'} userType={UserType.HEALTH_OFFICIAL}/>
 			<IonRouterOutlet id="health-official">
 				<Route path={HealthOfficialPages.home} exact={true}>
-					<Redirect to={HealthOfficialPages.patientsPage}/>
+					<Redirect to={HealthOfficialPages.patients}/>
 				</Route>
-				<Route path={HealthOfficialPages.patientsPage}>
+				<Route path={HealthOfficialPages.patients}>
 					<HealthOfficialPatientsPage/>
 				</Route>
 				<Route path={HealthOfficialPages.patientProfile}>
