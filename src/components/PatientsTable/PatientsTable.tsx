@@ -65,9 +65,9 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 				<Td key={index} id="colName">{patient.firstName + ' ' + patient.lastName}</Td>
 				<Td key={index}>
 					<div key={index} className={'patients-table__status ' +
-						(patient.testResult === TestResult.POSITIVE && 'patients-table__status__positive ') +
-						(patient.testResult === TestResult.NEGATIVE && 'patients-table__status__negative ') +
-						(patient.testResult === TestResult.PENDING && 'patients-table__status__pending ')
+						(patient.testResult === TestResult.POSITIVE ? 'patients-table__status__positive' : '') +
+						(patient.testResult === TestResult.NEGATIVE ? 'patients-table__status__negative' : '') +
+						(patient.testResult === TestResult.PENDING ? 'patients-table__status__pending' : '')
 					}>
 						{patient.testResult === TestResult.POSITIVE && 'Positive'}
 						{patient.testResult === TestResult.NEGATIVE && 'Negative'}
