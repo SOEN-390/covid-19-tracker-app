@@ -1,5 +1,18 @@
+import './ReportInContactForm.css'
+
 import React, { useState } from 'react';
-import { IonButton, IonInput, IonItem, IonLabel } from '@ionic/react';
+import {
+	IonButton,
+	IonCol,
+	IonContent,
+	IonGrid,
+	IonInput,
+	IonItem,
+	IonItemDivider,
+	IonLabel,
+	IonRow,
+	IonTitle
+} from '@ionic/react';
 
 
 
@@ -29,25 +42,43 @@ const ReportInContact: React.FC = () => {
 
 
 	return (
+		<IonContent>
+			<IonTitle id='report__title'>People In Contact </IonTitle>
 		<form>
-			{formValues.map((element, index) => (
-				<div className="form-inline" key={index}>
-					<IonLabel>First Name</IonLabel>
-					<IonInput type="text" name="firstname" value={element.firstname || ''} onIonChange={e => handleChange(index, e)} />
-					<IonLabel>Last Name</IonLabel>
-					<IonInput type="text" name="lastname" value={element.lastname || ''} onIonChange={e => handleChange(index, e)} />
-					<IonLabel>Email</IonLabel>
-					<IonInput type="text" name="email" value={element.email || ''} onIonChange={e => handleChange(index, e)} />
-					<IonLabel>Phone</IonLabel>
-					<IonInput type="text" name="phone" value={element.phone || ''} onIonChange={e => handleChange(index, e)} />
 
-				</div>
+			{formValues.map((element, index) => (
+				<IonGrid>
+					<div className="form-inline" key={index}>
+						<IonRow>
+							<IonCol id={'report__field'}>
+								<IonLabel>First Name</IonLabel>
+								<IonInput type="text" name="firstname" value={element.firstname || ''} onIonChange={e => handleChange(index, e)} />
+							</IonCol>
+							<IonCol id={'report__field'}>
+								<IonLabel>Last Name</IonLabel>
+								<IonInput type="text" name="lastname" value={element.lastname || ''} onIonChange={e => handleChange(index, e)} />
+							</IonCol>
+						</IonRow>
+						<IonRow>
+							<IonCol id={'report__field'}>
+								<IonLabel>Email</IonLabel>
+								<IonInput type="text" name="email" value={element.email || ''} onIonChange={e => handleChange(index, e)} />
+							</IonCol>
+							<IonCol id={'report__field'}>
+								<IonLabel>Phone</IonLabel>
+								<IonInput type="text" name="phone" value={element.phone || ''} onIonChange={e => handleChange(index, e)} />
+							</IonCol>
+						</IonRow>
+						<IonItemDivider/>
+					</div>
+				</IonGrid>
 			))}
 			<div className="button-section">
-				<IonButton className="button add" type="button" onClick={() => addFormFields()}>Add</IonButton>
-				<IonButton className="button submit" type="submit" onClick={() => handleSubmit} >Submit</IonButton>
+				<IonButton className="button_add" type="button" color="warning" onClick={() => addFormFields()}>Add Another</IonButton>
+				<IonButton className="button_submit" type="submit" color ="favorite" onClick={() => handleSubmit} >Submit</IonButton>
 			</div>
 		</form>
+		</IonContent>
 	);
 };
 
