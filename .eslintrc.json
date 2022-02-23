@@ -26,10 +26,10 @@
             "tab",
             { "SwitchCase": 1 }
         ],
-        "linebreak-style": [
-            "error",
-            "unix"
-        ],
+//        "linebreak-style": [
+//            "warn",
+//            "unix"
+//        ],
         "quotes": [
             "error",
             "single"
