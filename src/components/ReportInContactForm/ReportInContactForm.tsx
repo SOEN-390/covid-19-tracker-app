@@ -30,14 +30,27 @@ const ReportInContactForm: React.FC = () => {
 	const addFormFields = () => {
 		setFormValues([...formValues, {firstname: '', lastname: '', email: '', phoneNumber: ''}]);
 	};
-	const handleSubmit = async () => {
+	const handleSubmit = () => {
+		let pass=true;
+		formValues.forEach((person) => {
+			if (person.firstname.trim() == '' || person.lastname.trim() == '' || person.phoneNumber.trim() == '' || person.email.trim() == '') {
+				present('Please fill up all of the fields', 1500);
+				pass=false;
+			}
+		});
+		if (pass) {
+			reportForm();
+		}
+	};
+
+	async function reportForm() {
 		try {
-			await HttpService.post(`patients/${currentProfile.id}/report`, { people: formValues});
+			await HttpService.post(`patients/${currentProfile.id}/report`, {people: formValues});
 			present('Successfully submitted report', 1500);
 		} catch (error) {
 			present('Failed to submit. Please try again later', 1500);
 		}
-	};
+	}
 
 
 	return (
