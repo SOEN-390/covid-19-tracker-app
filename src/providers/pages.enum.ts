@@ -23,7 +23,7 @@ export enum DoctorPages {
 
 export enum HealthOfficialPages {
 	home = '/health-official',
-	patientsPage = '/health-official/patients',
+	patients = '/health-official/patients',
 	patientProfile = '/health-official/patient-profile',
 	settings = '/health-official/settings'
 }
@@ -39,8 +39,7 @@ export enum AdminPages {
 	home = '/admin',
 	overview = '/admin/admin-overview',
 	patientProfile = '/admin/patient-profile',
-	assignedConfirmed = '/admin/assignedConfirmed',
-	unAssignedConfirmed = '/admin/unAssignedConfirmed',
+	patients = '/admin/patients',
 	doctors = '/admin/doctors',
 	settings = '/admin/settings'
 }

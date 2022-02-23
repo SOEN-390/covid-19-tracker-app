@@ -31,7 +31,15 @@ const PatientsDoctorPage: React.FC = () => {
 
 	function getAssignedPatients() {
 		HttpService.get(`doctors/${currentProfile.id}/patients/assigned`).then((patients: Patient[]) => {
-			setPatients(patients);
+			const patientsArranged: Patient[] = [];
+			for (const patient of patients) {
+				if (patient.flagged) {
+					patientsArranged.unshift(patient);
+				} else {
+					patientsArranged.push(patient);
+				}
+			}
+			setPatients(patientsArranged);
 		}).catch((error) => {
 			console.log('ERROR: ', error);
 		});

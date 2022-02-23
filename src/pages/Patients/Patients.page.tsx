@@ -30,8 +30,16 @@ const PatientsPage: React.FC = () => {
 	}
 
 	async function getAllPatients() {
-		HttpService.get('patients/all').then(async (response) => {
-			setPatients(response);
+		HttpService.get('patients/all').then((patients: Patient[]) => {
+			const patientsArranged: Patient[] = [];
+			for (const patient of patients) {
+				if (patient.flagged) {
+					patientsArranged.unshift(patient);
+				} else {
+					patientsArranged.push(patient);
+				}
+			}
+			setPatients(patientsArranged);
 		}).catch((error) => {
 			console.log('ERROR: ', error);
 		});
