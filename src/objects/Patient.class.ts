@@ -8,23 +8,23 @@ export class Patient extends User {
 	// Variables
 
 	private readonly _medicalId!: string;
+	private _email!: string;
 	private _testResult!: TestResult;
 	private _dob!: string;
 	private _gender!: Gender;
+	private _lastUpdatedAt!: string;
 	private _flagged!: boolean;
 
 	// Constructor
 
 	public constructor(id: string, firstName: string, lastName: string, phoneNumber: string, address: string,
-					   medicalId: string, testResult: TestResult, dob: string, gender: Gender, flagged: boolean) {
+					   medicalId: string, testResult: TestResult, dob: string, gender: Gender) {
 		super(id, firstName, lastName, phoneNumber, address);
 		this._medicalId = medicalId;
 		this._testResult = testResult;
 		this._dob = dob;
 		this._gender = gender;
-		this._flagged = flagged;
 	}
-
 
 	// Getters & Setters
 
@@ -54,6 +54,21 @@ export class Patient extends User {
 
 	set gender(value: Gender) {
 		this._gender = value;
+	}
+
+	get email(): string {
+		return this._email;
+	}
+
+	set email(value: string) {
+		this._email = value;
+	}
+	get lastUpdatedAt(): string {
+		return this._lastUpdatedAt;
+	}
+
+	set lastUpdatedAt(value: string) {
+		this._lastUpdatedAt = value;
 	}
 
 	get flagged(): boolean {

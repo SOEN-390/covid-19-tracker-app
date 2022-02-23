@@ -22,6 +22,7 @@ import { IPatient } from '../../interfaces/IPatient';
 import { auth } from '../../config/firebase';
 import { useAuth } from '../../providers/auth.provider';
 import { Gender } from '../../enum/Gender.enum';
+import { Patient } from '../../objects/Patient.class';
 
 setupIonicReact();
 
@@ -43,7 +44,7 @@ const RegisterNext: React.FC = () => {
 
 	function registration() {
 		const valid = validateInput();
-		if (!valid) {
+		if (!valid || !auth.currentUser?.email) {
 			return;
 		}
 

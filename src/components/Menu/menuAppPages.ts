@@ -102,7 +102,7 @@ export const healthOfficialAppPages: readonly AppPage[] = [
 	},
 	{
 		title: 'Patients',
-		url: HealthOfficialPages.patientsPage,
+		url: HealthOfficialPages.patients,
 		iosIcon: calendarOutline,
 		mdIcon: calendarOutline
 	},
@@ -150,7 +150,7 @@ export const adminAppPages: readonly AppPage[] = [
 	},
 	{
 		title: 'Confirmed Patients',
-		url: AdminPages.assignedConfirmed,
+		url: AdminPages.patients,
 		iosIcon: calendarOutline,
 		mdIcon: calendarOutline
 	},

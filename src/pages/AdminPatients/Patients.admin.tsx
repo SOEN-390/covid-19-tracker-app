@@ -1,27 +1,25 @@
 import { IonButton, IonCol, IonContent, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
-import React, { useEffect, useState } from 'react';
 import NavBar from '../../components/NavBar/NavBar';
-import { useAuth } from '../../providers/auth.provider';
+import React, { useEffect, useState } from 'react';
 import HttpService from '../../providers/http.service';
-import { TestResult } from '../../enum/TestResult.enum';
 import PatientsTable from '../../components/PatientsTable/PatientsTable';
 import { Patient } from '../../objects/Patient.class';
+import { TestResult } from '../../enum/TestResult.enum';
 
-const PatientsDoctorPage: React.FC = () => {
+const PatientsAdmin: React.FC = () => {
 	const [patients, setPatients] = useState<Patient[]>([]);
 	const [patientsTableRow, setPatientsTableRow] = useState<Patient[]>([]);
-	const {currentProfile} = useAuth();
 	const [tableSelection, setTableSelection] = useState<'confirmed' | 'unconfirmed'>('confirmed');
 
 	useEffect(() => {
-		getAssignedPatients();
+		getPatients();
 	}, []);
 
 	useEffect(() => {
 		if (tableSelection === 'confirmed') {
-			getAssignedConfirmedPatients();
+			getConfirmedPatients();
 		} else {
-			getAssignedUnconfirmedPatients();
+			getUnconfirmedPatients();
 		}
 	}, [patients]);
 
@@ -29,8 +27,8 @@ const PatientsDoctorPage: React.FC = () => {
 		setPatients(patients);
 	}
 
-	function getAssignedPatients() {
-		HttpService.get(`doctors/${currentProfile.id}/patients/assigned`).then((patients: Patient[]) => {
+	async function getPatients() {
+		HttpService.get('patients/all').then((patients: Patient[]) => {
 			const patientsArranged: Patient[] = [];
 			for (const patient of patients) {
 				if (patient.flagged) {
@@ -45,7 +43,7 @@ const PatientsDoctorPage: React.FC = () => {
 		});
 	}
 
-	function getAssignedConfirmedPatients() {
+	function getConfirmedPatients() {
 		const patientTableRow: Patient[] = [];
 		for (const patient of patients) {
 			if (patient?.testResult === TestResult.POSITIVE || patient?.testResult === TestResult.NEGATIVE) {
@@ -56,7 +54,7 @@ const PatientsDoctorPage: React.FC = () => {
 		setPatientsTableRow(patientTableRow);
 	}
 
-	function getAssignedUnconfirmedPatients() {
+	function getUnconfirmedPatients() {
 		const patientTableRow: Patient[] = [];
 		for (const patient of patients) {
 			if (patient?.testResult === TestResult.PENDING || patient?.testResult === null) {
@@ -79,11 +77,11 @@ const PatientsDoctorPage: React.FC = () => {
 						<IonCol/>
 						<IonCol class="confirmButton">
 							<IonButton color={tableSelection === 'confirmed' ? 'favorite1' : 'favorite'}
-									   onClick={getAssignedConfirmedPatients}>Confirmed</IonButton>
+									   onClick={getConfirmedPatients}>Confirmed</IonButton>
 						</IonCol>
 						<IonCol class="unconfirmedButton">
 							<IonButton color={tableSelection === 'unconfirmed' ? 'favorite1' : 'favorite'}
-									   onClick={getAssignedUnconfirmedPatients}>UnConfirmed</IonButton>
+									   onClick={getUnconfirmedPatients}>UnConfirmed</IonButton>
 						</IonCol>
 						<IonCol/>
 					</IonRow>
@@ -98,4 +96,5 @@ const PatientsDoctorPage: React.FC = () => {
 	);
 };
 
-export default PatientsDoctorPage;
+export default PatientsAdmin;
+

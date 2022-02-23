@@ -1,5 +1,5 @@
 export interface PatientsTableColumn {
-	id: 'patients' | 'status' | 'last_update' | 'doctor' | 'action' | 'priority' | 'monitor_symptoms';
+	id: 'patients' | 'status' | 'lastUpdate' | 'doctor' | 'action' | 'priority' | 'monitorSymptoms';
 	label: string;
 	minWidth?: number;
 	align?: 'center';
@@ -20,7 +20,7 @@ export const doctorColumns: readonly PatientsTableColumn[] = [
 		align: 'center'
 	},
 	{
-		id: 'last_update',
+		id: 'lastUpdate',
 		label: 'Last Update',
 		minWidth: 170,
 		align: 'center'
@@ -53,7 +53,7 @@ export const adminColumns: readonly PatientsTableColumn[] = [
 		align: 'center'
 	},
 	{
-		id: 'last_update',
+		id: 'lastUpdate',
 		label: 'Last Update',
 		minWidth: 170,
 		align: 'center'
@@ -92,7 +92,7 @@ export const healthOfficialColumns: readonly PatientsTableColumn[] = [
 		align: 'center'
 	},
 	{
-		id: 'last_update',
+		id: 'lastUpdate',
 		label: 'Last Update',
 		minWidth: 170,
 		align: 'center'
@@ -110,14 +110,14 @@ export const healthOfficialColumns: readonly PatientsTableColumn[] = [
 		align: 'center'
 	},
 	{
-		id: 'priority',
-		label: 'Priority',
+		id: 'monitorSymptoms',
+		label: 'Monitor',
 		minWidth: 170,
 		align: 'center'
 	},
 	{
-		id: 'monitor_symptoms',
-		label: '',
+		id: 'priority',
+		label: 'Priority',
 		minWidth: 170,
 		align: 'center'
 	}
