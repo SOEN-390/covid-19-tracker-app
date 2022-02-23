@@ -75,6 +75,7 @@ const PatientsPage: React.FC = () => {
                             <IonButton color={tableSelection === 'unconfirmed' ? 'favorite1' : 'favorite'}
                                        onClick={filterUnconfirmedPatients}>UnConfirmed</IonButton>
                         </IonCol>
+
                         <IonCol/>
                     </IonRow>
                 </div>

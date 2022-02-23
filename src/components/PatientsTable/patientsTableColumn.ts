@@ -36,6 +36,12 @@ export const doctorColumns: readonly PatientsTableColumn[] = [
         label: 'Priority',
         minWidth: 170,
         align: 'center'
+    },
+    {
+        id: 'monitor_symptoms',
+        label: '',
+        minWidth: 170,
+        align: 'center'
     }
 ];
 

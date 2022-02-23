@@ -98,9 +98,13 @@ ion-content {
 
 table th:first-child {
   border-radius: 10px 0 0 10px;
-  position: sticky;
   top: 0;
   z-index: 9999;
+}
+
+tr {
+  position: sticky;
+  top: 0;
 }
 
 table th:last-child {
@@ -122,11 +126,14 @@ table th:last-child {
 }
 
 #tableHead {
-  background-color: rgba(44, 77, 98, .12);
+  background-color: #e8ebee;
   border-radius: 50px;
   box-sizing: border-box;
   filter: blur(1);
   height: 60px;
+  position: sticky;
+  z-index: 3;
+
 }
 
 #tableRow {

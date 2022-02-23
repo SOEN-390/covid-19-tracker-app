@@ -97,6 +97,11 @@ ion-content {
   text-align: right;
 }
 
+tr {
+  position:sticky;
+  top:0;
+}
+
 table th:first-child {
   border-radius: 10px 0 0 10px;
   position: sticky;
@@ -123,11 +128,13 @@ table th:last-child {
 }
 
 #tableHead {
-  background-color: rgba(44, 77, 98, .12);
+  background-color: #e8ebee;
   border-radius: 50px;
   box-sizing: border-box;
   filter: blur(1);
   height: 60px;
+  position: sticky;
+  z-index: 1;
 }
 
 #tableRow {
@@ -179,7 +186,6 @@ table th:last-child {
   font-size: 16px;
   text-align: center;
   padding: 10px;
-
 }
 
 #colDoc {
@@ -189,8 +195,6 @@ table th:last-child {
   font-size: 16px;
   text-align: left;
   padding: 10px;
-
-
 }
 
 #col {
@@ -201,10 +205,11 @@ table th:last-child {
   margin: auto;
   text-align: center;
   padding: 10px;
-
 }
 
 ion-button {
   font-weight: bold;
   font-size: 12px;
+  font-family: 'Poppins';
+  height: 32px;
 }
