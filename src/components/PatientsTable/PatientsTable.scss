@@ -155,7 +155,7 @@ table th:last-child {
   padding: 10px;
 }
 
-#PosStatus {
+.patients-table__status {
   height: 32px;
   font-weight: normal;
   font-size: 14px;
@@ -167,16 +167,16 @@ table th:last-child {
   text-align: center;
 }
 
-#NegStatus {
-  height: 32px;
-  font-weight: normal;
-  font-size: 14px;
-  border-radius: 60px;
+.patients-table__status__positive {
   background-color: #db0101;
-  color: #FEFFFE;
-  vertical-align: middle;
-  line-height: 32px;
-  text-align: center;
+}
+
+.patients-table__status__negative {
+  background-color: #129C0F;
+}
+
+.patients-table__status__pending {
+  background-color: #797777;
 }
 
 #lastUpdate {
@@ -205,6 +205,19 @@ table th:last-child {
   margin: auto;
   text-align: center;
   padding: 10px;
+}
+
+.patients-table__flag {
+  text-align: center;
+  font-size: 30px;
+
+  .no-priority {
+    color: gray;
+  }
+
+  .high-priority {
+    color: red;
+  }
 }
 
 ion-button {

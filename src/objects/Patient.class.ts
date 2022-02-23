@@ -5,64 +5,84 @@ import { Gender } from '../enum/Gender.enum';
 
 export class Patient extends User {
 
-    // Variables
+	// Variables
 
-    private _medicalId!: string;
-    private _testResult!: TestResult;
-    private _dob!: string;
-    private _gender!: Gender;
+	private readonly _medicalId!: string;
+	private _email!: string;
+	private _testResult!: TestResult;
+	private _dob!: string;
+	private _gender!: Gender;
+	private _lastUpdatedAt!: string;
+	private _flagged!: boolean;
 
-    // Constructor
+	// Constructor
 
-    public constructor (id: string, firstName: string, lastName: string, phoneNumber: string, address: string,
-                        medicalId: string, testResult: TestResult, dob: string, gender: Gender) {
-        super(id, firstName, lastName, phoneNumber, address);
-        this._medicalId = medicalId;
-        this._testResult = testResult;
-        this._dob = dob;
-        this._gender = gender;
-    }
+	public constructor(id: string, firstName: string, lastName: string, phoneNumber: string, address: string,
+					   medicalId: string, testResult: TestResult, dob: string, gender: Gender) {
+		super(id, firstName, lastName, phoneNumber, address);
+		this._medicalId = medicalId;
+		this._testResult = testResult;
+		this._dob = dob;
+		this._gender = gender;
+	}
 
+	// Getters & Setters
 
+	get medicalId(): string {
+		return this._medicalId;
+	}
 
-// Getters
+	get testResult(): TestResult {
+		return this._testResult;
+	}
 
-    public get medicalId(): string {
-        return this._medicalId;
-    }
+	set testResult(value: TestResult) {
+		this._testResult = value;
+	}
 
-    public get testResult(): TestResult {
-        return this._testResult;
-    }
+	get dob(): string {
+		return this._dob;
+	}
 
-    get dob(): string {
-        return this._dob;
-    }
+	set dob(value: string) {
+		this._dob = value;
+	}
 
+	get gender(): Gender {
+		return this._gender;
+	}
 
-    get gender(): Gender {
-        return this._gender;
-    }
+	set gender(value: Gender) {
+		this._gender = value;
+	}
 
-    // Setters
+	get email(): string {
+		return this._email;
+	}
 
-    public set testResult(value: TestResult) {
-        this._testResult = value;
-    }
+	set email(value: string) {
+		this._email = value;
+	}
+	get lastUpdatedAt(): string {
+		return this._lastUpdatedAt;
+	}
 
-    set dob(value: string) {
-        this._dob = value;
-    }
+	set lastUpdatedAt(value: string) {
+		this._lastUpdatedAt = value;
+	}
 
-    set gender(value: Gender) {
-        this._gender = value;
-    }
+	get flagged(): boolean {
+		return this._flagged;
+	}
 
+	set flagged(value: boolean) {
+		this._flagged = value;
+	}
 
-    // Methods
+	// Methods
 
-    public getRole(): UserType {
-        return UserType.PATIENT;
-    }
+	public getRole(): UserType {
+		return UserType.PATIENT;
+	}
 
 }

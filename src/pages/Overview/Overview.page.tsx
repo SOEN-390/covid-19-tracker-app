@@ -1,21 +1,18 @@
 import { IonPage, IonToolbar } from '@ionic/react';
-
-import NavBar from '../../components/NavBar';
+import NavBar from '../../components/NavBar/NavBar';
+import React from 'react';
 
 const OverviewPage: React.FC = () => {
 
-    // const { name } = useParams<{ name: string; }>(); //to get page name
+	return (
+		<IonPage>
 
-    return (
-        <IonPage>
+			<IonToolbar>
+				<NavBar/>
+			</IonToolbar>
 
-            <IonToolbar>
-                <NavBar />
-            </IonToolbar>
-
-
-        </IonPage>
-    );
+		</IonPage>
+	);
 };
 
 export default OverviewPage;

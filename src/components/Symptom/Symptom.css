@@ -1,0 +1,22 @@
+.container {
+  border-radius: 30px;
+  background-color: #f2f2f2;
+  padding: 20px;
+  margin-right: 150px;
+  position: relative;
+}
+
+.col-75 {
+  --background: white;
+  border-radius: 20px;
+  --padding-top: 15px;
+  --padding-bottom: 15px;
+
+  border-bottom: black;
+
+}
+
+.text {
+  padding-top: 25px;
+  padding-left: 15px;
+}

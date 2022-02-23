@@ -1,228 +1,171 @@
 import {
-    IonButton,
-    IonCard,
-    IonCardContent,
-    IonCardHeader,
-    IonCardSubtitle,
-    IonCardTitle,
-    IonContent,
-    IonIcon,
-    IonModal
+	IonButton,
+	IonCard,
+	IonCardContent,
+	IonCardHeader,
+	IonCardSubtitle,
+	IonCardTitle,
+	IonContent,
+	IonIcon,
+	IonModal,
+	useIonToast
 } from '@ionic/react';
-import './PatientsTable.css';
+import './PatientsTable.scss';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { Table, Tbody, Td, Th, Thead, Tr } from 'react-super-responsive-table';
-import { IPatientTableRow } from '../../interfaces/IPatientTableRow';
 import { UserType } from '../../enum/UserType.enum';
 import { adminColumns, doctorColumns, healthOfficialColumns, PatientsTableColumn } from './patientsTableColumn';
 import { flag } from 'ionicons/icons';
 import { useAuth } from '../../providers/auth.provider';
+import { TestResult } from '../../enum/TestResult.enum';
+import { Patient } from '../../objects/Patient.class';
+import HttpService from '../../providers/http.service';
 
-const PatientsTable: React.FC<{ patientTableRows: IPatientTableRow[] }> = (props) => {
+const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient[]) => void }> = (props) => {
 
-    const {currentProfile} = useAuth();
-    const [columns, setColumns] = useState<readonly PatientsTableColumn[]>([]);
-    const [showModal, setShowModal] = useState(false);
-    const [symptomsIndex, setSymptomsIndex] = useState<number>();
+	const {currentProfile} = useAuth();
+	const [columns, setColumns] = useState<readonly PatientsTableColumn[]>([]);
+	const [showModal, setShowModal] = useState(false);
+	const [symptomsIndex, setSymptomsIndex] = useState<number>();
 
-    useEffect(() => {
-        switch (currentProfile.getRole()) {
-            case UserType.DOCTOR:
-                setColumns(doctorColumns);
-                break;
-            case UserType.HEALTH_OFFICIAL:
-                setColumns(healthOfficialColumns);
-                break;
-            case UserType.ADMIN:
-                setColumns(adminColumns);
-                break;
-        }
-    }, []);
+	const [present] = useIonToast();
 
-    function getRow(row: IPatientTableRow, index: number): JSX.Element | null {
-        switch (currentProfile.getRole()) {
-            case UserType.DOCTOR:
-                return (
-                    <Tr id="tableRow" key={index}>
-                        <Td key={index} id="colName">{row.firstName + ' ' + row.lastName}</Td>
-                        <Td key={index}>
-                            <div key={index} id={row.testResult === 'positive' ? 'PosStatus' : 'NegStatus'}>
-                                {row.testResult === 'positive' ? 'Positive' : 'Negative'}
-                            </div>
-                        </Td>
-                        <Td key={index} id="lastUpdate">
-                            March 17, 2021
-                        </Td>
+	useEffect(() => {
+		switch (currentProfile.getRole()) {
+			case UserType.DOCTOR:
+				setColumns(doctorColumns);
+				break;
+			case UserType.HEALTH_OFFICIAL:
+				setColumns(healthOfficialColumns);
+				break;
+			case UserType.ADMIN:
+				setColumns(adminColumns);
+				break;
+		}
+	}, []);
 
-                        <Td key={index} id="col">
-                            <IonButton color="favorite" shape="round" size="large">
-                                Contact
-                            </IonButton>
-                        </Td>
-                        <Td key={index}> {row.priority}
-                            <IonButton color={'white'}>
-                                <IonIcon color="danger " ios={flag} md={flag}/>
-                            </IonButton>
-                        </Td>
-                        <Td key={index} id="col">
-                            <IonButton color="favorite" shape="round" size="large" onClick={() => {
-                                setShowModal(true);
-                                setSymptomsIndex(index)
-                            }}>
-                                Symptoms
-                            </IonButton>
-                        </Td>
+	function flagPatient(patient: Patient) {
+		patient.flagged = !patient.flagged;
+		HttpService.post(
+			`patients/${patient.medicalId}/${patient.flagged ? 'flag' : 'unflag'}`,
+			{role: currentProfile.getRole()}
+		).then(() => {
+			props.onChange(props.patients);
+		}).catch(() => {
+			present('An error has occurred. Please try again.', 1500);
+		});
+	}
 
-                        {symptomsIndex !== undefined ?
-                            <IonModal isOpen={showModal}>
-                                <IonContent fullscreen>
-                                    <IonCard>
-                                        <IonCardHeader>
-                                            <IonCardTitle>{props.patientTableRows[symptomsIndex].firstName + ' ' + props.patientTableRows[symptomsIndex].lastName}</IonCardTitle>
-                                            <IonCardSubtitle>Temperature</IonCardSubtitle>
-                                        </IonCardHeader>
-                                        <IonCardContent>
-                                            37.8 Celsius
-                                        </IonCardContent>
-                                        <IonCardHeader>
-                                            <IonCardSubtitle>Breathing</IonCardSubtitle>
-                                        </IonCardHeader>
-                                        <IonCardContent>
-                                            Severe difficulty breathing
-                                        </IonCardContent>
-                                        <IonCardHeader>
-                                            <IonCardSubtitle>Other Symptoms</IonCardSubtitle>
-                                        </IonCardHeader>
-                                        <IonCardContent>
-                                            Fever along with running nose
-                                        </IonCardContent>
-                                    </IonCard>
-                                </IonContent>
-                                <IonButton onClick={() => setShowModal(false)}>Close Symptoms Form</IonButton>
-                            </IonModal>
-                            : <></>}
-                    </Tr>
-                );
-            case UserType.HEALTH_OFFICIAL:
-                return (
-                    <Tr id="tableRow" key={index}>
-                        <Td key={index} id="colName">{row.firstName + ' ' + row.lastName}</Td>
-                        <Td key={index}>
-                            <div key={index} id={row.testResult === 'positive' ? 'PosStatus' : 'NegStatus'}>
-                                {row.testResult === 'positive' ? 'Positive' : 'Negative'}
-                            </div>
-                        </Td>
-                        <Td key={index} id="lastUpdate">
-                            March 17, 2021
-                        </Td>
-                        <Td key={index} id="colDoc">
-                            Dr.Sue
-                        </Td>
-                        <Td key={index} id="col">
-                            <IonButton color="favorite" shape="round" size="large">
-                                Contact
-                            </IonButton>
-                        </Td>
-                        <Td key={index} id="col">
-                            <IonButton color='white'>
-                                <IonIcon color='danger' ios={flag} md={flag}/>
-                            </IonButton>
-                        </Td>
-                        <Td key={index} id="col">
-                            <IonButton color="favorite" shape="round" size="large" onClick={() => {
-                                setShowModal(true);
-                                setSymptomsIndex(index)
-                            }}>
-                                Symptoms
-                            </IonButton>
-                        </Td>
 
-                        {symptomsIndex !== undefined ?
-                            <IonModal isOpen={showModal}>
-                                <IonContent fullscreen>
-                                    <IonCard>
-                                        <IonCardHeader>
-                                            <IonCardTitle>{props.patientTableRows[symptomsIndex].firstName + ' ' + props.patientTableRows[symptomsIndex].lastName}</IonCardTitle>
-                                            <IonCardSubtitle>Temperature</IonCardSubtitle>
-                                        </IonCardHeader>
-                                        <IonCardContent>
-                                            37.8 Celsius
-                                        </IonCardContent>
-                                        <IonCardHeader>
-                                            <IonCardSubtitle>Breathing</IonCardSubtitle>
-                                        </IonCardHeader>
-                                        <IonCardContent>
-                                            Severe difficulty breathing
-                                        </IonCardContent>
-                                        <IonCardHeader>
-                                            <IonCardSubtitle>Other Symptoms</IonCardSubtitle>
-                                        </IonCardHeader>
-                                        <IonCardContent>
-                                            Fever along with running nose
-                                        </IonCardContent>
-                                    </IonCard>
-                                </IonContent>
-                                <IonButton onClick={() => setShowModal(false)}>Close Symptoms Form</IonButton>
-                            </IonModal>
-                            : <></>}
-                    </Tr>
-                );
-            case UserType.ADMIN:
-                return (
-                    <Tr id="tableRow" key={index}>
-                        <Td key={index} id="colName">{row.firstName + ' ' + row.lastName}</Td>
-                        <Td key={index}>
-                            <div key={index} id={row.testResult === 'positive' ? 'PosStatus' : 'NegStatus'}>
-                                {row.testResult === 'positive' ? 'Positive' : 'Negative'}
-                            </div>
-                        </Td>
-                        <Td key={index} id="lastUpdate">
-                            March 17, 2021
-                        </Td>
-                        <Td key={index} id="colDoc">
-                            Dr.Sue
-                        </Td>
-                        <Td key={index} id="col">
-                            <IonButton color="favorite" shape="round" size="large">
-                                No-Action needed
-                            </IonButton>
-                        </Td>
-                        <Td key={index} id="col">
-                            <IonButton>
-                                <IonIcon ios={flag} md={flag}/>
-                            </IonButton>
-                        </Td>
-                    </Tr>
-                );
-            default:
-                return null;
-        }
-    }
+	function getRow(patient: Patient, index: number): JSX.Element | null {
 
-    return (
-        <Table>
-            <Thead>
-                <Tr id="tableHead">
-                    {
-                        columns.map((column, index) => (
-                            <Th key={index} id="headCol">
-                                {column.label}
-                            </Th>
-                        ))
-                    }
-                </Tr>
-            </Thead>
-            <Tbody>
-                {
-                    props.patientTableRows.map((row, index) => {
-                        return getRow(row, index);
-                    })
-                }
+		return (
+			<Tr id="tableRow" key={index}>
+				<Td key={index} id="colName">{patient.firstName + ' ' + patient.lastName}</Td>
+				<Td key={index}>
+					<div key={index} className={'patients-table__status ' +
+						(patient.testResult === TestResult.POSITIVE ? 'patients-table__status__positive' : '') +
+						(patient.testResult === TestResult.NEGATIVE ? 'patients-table__status__negative' : '') +
+						(patient.testResult === TestResult.PENDING ? 'patients-table__status__pending' : '')
+					}>
+						{patient.testResult === TestResult.POSITIVE && 'Positive'}
+						{patient.testResult === TestResult.NEGATIVE && 'Negative'}
+						{patient.testResult === TestResult.PENDING && 'Pending'}
+					</div>
+				</Td>
+				<Td key={index} id="lastUpdate">
+					March 17, 2021
+				</Td>
+				{
+					currentProfile.getRole() !== UserType.DOCTOR &&
+					<Td key={index} id="colDoc">
+						Dr.Sue
+					</Td>
+				}
+				<Td key={index} id="col">
+					<IonButton color="favorite" shape="round" size="large">
+						No-Action needed
+					</IonButton>
+				</Td>
 
-            </Tbody>
-        </Table>
-    );
-}
+				{
+					currentProfile.getRole() === UserType.HEALTH_OFFICIAL &&
+					<Td key={index} id="col">
+						<IonButton color="favorite" shape="round" size="large" onClick={() => {
+							setShowModal(true);
+							setSymptomsIndex(index);
+						}}>
+							Monitor Symptoms
+						</IonButton>
+					</Td>
+				}
+
+				{
+					currentProfile.getRole() === UserType.HEALTH_OFFICIAL &&
+					symptomsIndex !== undefined &&
+					<IonModal isOpen={showModal}>
+						<IonContent fullscreen>
+							<IonCard>
+								<IonCardHeader>
+									<IonCardTitle>{props.patients[symptomsIndex].firstName + ' ' + props.patients[symptomsIndex].lastName}</IonCardTitle>
+									<IonCardSubtitle>Temperature</IonCardSubtitle>
+								</IonCardHeader>
+								<IonCardContent>
+									37.8 Celsius
+								</IonCardContent>
+								<IonCardHeader>
+									<IonCardSubtitle>Breathing</IonCardSubtitle>
+								</IonCardHeader>
+								<IonCardContent>
+									Severe difficulty breathing
+								</IonCardContent>
+								<IonCardHeader>
+									<IonCardSubtitle>Other Symptoms</IonCardSubtitle>
+								</IonCardHeader>
+								<IonCardContent>
+									Fever along with running nose
+								</IonCardContent>
+							</IonCard>
+						</IonContent>
+						<IonButton onClick={() => setShowModal(false)}>Close Symptoms Form</IonButton>
+					</IonModal>
+				}
+
+
+				<Td key={index} className={'patients-table__flag'}>
+					<IonIcon className={patient.flagged ? 'high-priority' : 'no-priority'}
+							 ios={flag} md={flag}
+							 onClick={() => flagPatient(patient)}
+					/>
+				</Td>
+
+			</Tr>
+		);
+	}
+
+	return (
+		<Table>
+			<Thead>
+				<Tr id="tableHead">
+					{
+						columns.map((column, index) => (
+							<Th key={index} id="headCol">
+								{column.label}
+							</Th>
+						))
+					}
+				</Tr>
+			</Thead>
+			<Tbody>
+				{
+					props.patients.map((row, index) => {
+						return getRow(row, index);
+					})
+				}
+			</Tbody>
+		</Table>
+	);
+};
 
 export default PatientsTable;
