@@ -59,8 +59,8 @@ export const patientAppPages: readonly AppPage[] = [
 		mdIcon: settingsSharp
 	},
 	{
-		title: 'Alert',
-		url: '/home/alert',
+		title: 'Report',
+		url: PatientPages.reportInContact,
 		iosIcon: warningOutline,
 		mdIcon: warningSharp
 	}
