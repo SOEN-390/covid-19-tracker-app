@@ -7,7 +7,8 @@ import {
 	IonCardTitle,
 	IonContent,
 	IonIcon,
-	IonModal
+	IonModal,
+	useIonToast
 } from '@ionic/react';
 import './PatientsTable.scss';
 import * as React from 'react';
@@ -28,6 +29,8 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 	const [showModal, setShowModal] = useState(false);
 	const [symptomsIndex, setSymptomsIndex] = useState<number>();
 
+	const [present] = useIonToast();
+
 	useEffect(() => {
 		switch (currentProfile.getRole()) {
 			case UserType.DOCTOR:
@@ -43,11 +46,15 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 	}, []);
 
 	function flagPatient(patient: Patient) {
-		console.log(patient.medicalId);
-		console.log(patient.isFlagged);
-		patient.flagged = !patient.isFlagged;
-		props.onChange(props.patients);
-		HttpService.post(`patients/${patient.medicalId}/flag`, {role: currentProfile.getRole()});
+		patient.flagged = !patient.flagged;
+		HttpService.post(
+			`patients/${patient.medicalId}/${patient.flagged ? 'flag' : 'unflag'}`,
+			{role: currentProfile.getRole()}
+		).then(() => {
+			props.onChange(props.patients);
+		}).catch(() => {
+			present('An error has occurred. Please try again.', 1500);
+		});
 	}
 
 
@@ -127,7 +134,7 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 
 
 				<Td key={index} className={'patients-table__flag'}>
-					<IonIcon className={patient.isFlagged ? 'high-priority' : 'no-priority'}
+					<IonIcon className={patient.flagged ? 'high-priority' : 'no-priority'}
 							 ios={flag} md={flag}
 							 onClick={() => flagPatient(patient)}
 					/>
