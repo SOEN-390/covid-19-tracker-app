@@ -48,7 +48,19 @@ const RegisterNext: React.FC = () => {
 			return;
 		}
 
-		const user: Patient = new Patient('', firstName, lastName, phoneNumber, address, medicalNumber, testResult, dob, gender);
+		const user: IPatient = {
+			medicalId: medicalNumber,
+			firstName: firstName,
+			lastName: lastName,
+			// TODO - drop down for test result
+			testResult: testResult,
+			address: address,
+			email: auth.currentUser?.email,
+			phoneNumber: phoneNumber,
+			dob: dob,
+			gender: gender,
+			flagged: false
+		};
 
 		saveUser(user).then((success) => {
 			if (success) {

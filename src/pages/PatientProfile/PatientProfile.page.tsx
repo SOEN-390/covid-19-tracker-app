@@ -21,6 +21,7 @@ const PatientProfilePage: React.FC = () => {
 	const [email, setEmail] = useState<string>('');
 	const [dob, setDOB] = useState<string>('');
 	const [gender, setGender] = useState<Gender>(Gender.NONE);
+	const [flagged, setFlagged] = useState<boolean>(false);
 
 	useEffect(() => {
 		if (currentProfile.getRole() === UserType.PATIENT) {
@@ -29,12 +30,26 @@ const PatientProfilePage: React.FC = () => {
 	}, []);
 
 	useEffect(() => {
-		getPatientWithId();
+		if (currentProfile.getRole() == UserType.DOCTOR) {
+			getPatientWithIdAsDoctor();
+		} else {
+			getPatientWithId();
+		}
+
 	}, [medicalNumber]);
 
 	async function getPatientWithId() {
 		try {
 			const data = await HttpService.get(`patients/${medicalNumber}`);
+			setData(data);
+		} catch (e) {
+			console.log(e);
+		}
+	}
+
+	async function getPatientWithIdAsDoctor() {
+		try {
+			const data = await HttpService.get(`doctors/patient/${medicalNumber}`);
 			setData(data);
 		} catch (e) {
 			console.log(e);
@@ -59,14 +74,19 @@ const PatientProfilePage: React.FC = () => {
 		setEmail(data.email);
 		setDOB(data.dob);
 		setGender(data.gender);
+		setFlagged(data.flagged);
 	}
 
 	const handleCallBack = (medicalId: string) => {
 		setMedicalNumber(medicalId);
 	};
 
-	const handleUpdate = (testResult: TestResult) => {
+	const handleStatus = (testResult: TestResult) => {
 		setTestResult(testResult);
+	};
+
+	const handleFlag = (flagged: boolean) => {
+		setFlagged(flagged);
 	};
 
 	return (
@@ -81,8 +101,9 @@ const PatientProfilePage: React.FC = () => {
 				email: email,
 				phoneNumber: phoneNumber,
 				dob: dob,
-				gender: gender
-			}} update={handleUpdate}/>
+				gender: gender,
+				flagged: flagged
+			}} updateStatus={handleStatus} updateFlag={handleFlag}/>
 		</IonPage>
 	);
 };

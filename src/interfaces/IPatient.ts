@@ -12,5 +12,5 @@ export interface IPatient {
 	dob: string;
 	gender: Gender;
 	// lastUpdatedAt: string;
-	// priority: boolean; //Not required
+	flagged: boolean
 }

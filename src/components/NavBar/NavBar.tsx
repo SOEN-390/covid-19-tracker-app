@@ -14,11 +14,7 @@ const NavBar: React.FC<{ callback?: any }> = (props) => {
 		if (searchText.trim() === '') {
 			return;
 		}
-		HttpService.get(`patients/${searchText}`).then(async (response) => {
-			props.callback(searchText);
-		}).catch((error) => {
-			console.log('ERROR: ', error);
-		});
+		props.callback(searchText);
 	}
 
 	return (

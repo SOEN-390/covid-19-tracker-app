@@ -82,7 +82,7 @@ export function AuthProvider({children}) {
 		switch (userData.role) {
 			case UserType.PATIENT:
 				return new Patient(userData.id, userData.firstName, userData.lastName, userData.phoneNumber,
-					userData.address, userData.medicalId, userData.testResult, userData.dob, userData.gender);
+					userData.address, userData.medicalId, userData.testResult, userData.dob, userData.gender, userData.flagged);
 			case UserType.DOCTOR:
 				return new Doctor(userData.id, userData.firstName, userData.lastName, userData.phoneNumber, userData.address);
 			case UserType.IMMIGRATION_OFFICER:
