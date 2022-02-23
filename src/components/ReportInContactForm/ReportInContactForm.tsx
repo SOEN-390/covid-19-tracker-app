@@ -13,12 +13,14 @@ import {
 	IonTitle, useIonToast
 } from '@ionic/react';
 import HttpService from '../../providers/http.service';
+import { useAuth } from '../../providers/auth.provider';
 
 
 const ReportInContactForm: React.FC = () => {
 
+	const {currentProfile} = useAuth();
 	const [present] = useIonToast();
-	const [formValues, setFormValues] = useState([{firstname: '', lastname: '', email: '', phone: ''}]);
+	const [formValues, setFormValues] = useState([{firstname: '', lastname: '', email: '', phoneNumber: ''}]);
 
 	const handleChange = (i: any, e: any) => {
 		const newFormValues: any = [...formValues];
@@ -26,14 +28,14 @@ const ReportInContactForm: React.FC = () => {
 		setFormValues(newFormValues);
 	};
 	const addFormFields = () => {
-		setFormValues([...formValues, {firstname: '', lastname: '', email: '', phone: ''}]);
+		setFormValues([...formValues, {firstname: '', lastname: '', email: '', phoneNumber: ''}]);
 	};
 	const handleSubmit = async () => {
 		try {
-			await HttpService.post(`patients/report`, { people: formValues});
-			present("Successfully submitted report", 1500);
+			await HttpService.post(`patients/${currentProfile.id}/report`, { people: formValues});
+			present('Successfully submitted report', 1500);
 		} catch (error) {
-			present("Failed to submit. Please try again later", 1500);
+			present('Failed to submit. Please try again later', 1500);
 		}
 	};
 
@@ -66,7 +68,7 @@ const ReportInContactForm: React.FC = () => {
 								</IonCol>
 								<IonCol id={'report__field'}>
 									<IonLabel>Phone</IonLabel>
-									<IonInput type="text" name="phone" value={element.phone || ''}
+									<IonInput type="text" name="phoneNumber" value={element.phoneNumber || ''}
 											  onIonChange={e => handleChange(index, e)}/>
 								</IonCol>
 							</IonRow>
