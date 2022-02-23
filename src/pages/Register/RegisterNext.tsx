@@ -22,6 +22,7 @@ import { IPatient } from '../../interfaces/IPatient';
 import { auth } from '../../config/firebase';
 import { useAuth } from '../../providers/auth.provider';
 import { Gender } from '../../enum/Gender.enum';
+import { Patient } from '../../objects/Patient.class';
 
 setupIonicReact();
 
@@ -43,23 +44,12 @@ const RegisterNext: React.FC = () => {
 
 	function registration() {
 		const valid = validateInput();
-		if (!valid) {
+		if (!valid || !auth.currentUser?.email) {
 			return;
 		}
 
-		const user: IPatient = {
-			medicalId: medicalNumber,
-			firstName: firstName,
-			lastName: lastName,
-			// TODO - drop down for test result
-			testResult: testResult,
-			address: address,
-			email: auth.currentUser?.email,
-			phoneNumber: phoneNumber,
-			dob: dob,
-			gender: gender
-		};
-		
+		const user: Patient = new Patient('', firstName, lastName, phoneNumber, address, medicalNumber, testResult, dob, gender);
+
 		saveUser(user).then((success) => {
 			if (success) {
 				present('Successfully registered.', 1500).then(() => {
