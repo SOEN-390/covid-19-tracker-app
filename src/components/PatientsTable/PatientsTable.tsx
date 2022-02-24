@@ -85,12 +85,12 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 				}
 				<Td key={index} id="col">
 					<IonButton color="favorite" shape="round" size="large">
-						No-Action needed
+						Contact
 					</IonButton>
 				</Td>
 
 				{
-					currentProfile.getRole() === UserType.HEALTH_OFFICIAL &&
+					(currentProfile.getRole() === UserType.HEALTH_OFFICIAL || currentProfile.getRole() === UserType.DOCTOR) &&
 					<Td key={index} id="col">
 						<IonButton color="favorite" shape="round" size="large" onClick={() => {
 							setShowModal(true);
@@ -102,7 +102,7 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 				}
 
 				{
-					currentProfile.getRole() === UserType.HEALTH_OFFICIAL &&
+					(currentProfile.getRole() === UserType.HEALTH_OFFICIAL || currentProfile.getRole() === UserType.DOCTOR) &&
 					symptomsIndex !== undefined &&
 					<IonModal isOpen={showModal}>
 						<IonContent fullscreen>
@@ -132,14 +132,12 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 					</IonModal>
 				}
 
-
 				<Td key={index} className={'patients-table__flag'}>
 					<IonIcon className={patient.flagged ? 'high-priority' : 'no-priority'}
 							 ios={flag} md={flag}
 							 onClick={() => flagPatient(patient)}
 					/>
 				</Td>
-
 			</Tr>
 		);
 	}

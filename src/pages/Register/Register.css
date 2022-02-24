@@ -22,6 +22,7 @@
 
 .register__btn {
   font-size: 20px;
+  height: 50px;
 }
 
 .register__text-field {
@@ -31,3 +32,9 @@
   width: 100%;
   --padding-start: 10px;
 }
+.my-custom-interface .register__status-option {
+  --color: #2C4D62;
+  --color-hover: #708898;
+}
+
+
