@@ -1,11 +1,13 @@
 import {
 	IonApp,
 	IonButton,
-	IonContent, IonHeader,
+	IonContent,
+	IonHeader,
 	IonImg,
 	IonInput,
 	IonLabel,
-	setupIonicReact
+	setupIonicReact,
+	useIonToast
 } from '@ionic/react';
 import CovidTrackerTransparent from '../../assets/images/CovidTrackerTransparent.png';
 import React, { useState } from 'react';
@@ -20,15 +22,19 @@ const Register: React.FC = () => {
 	const [password, setPassword] = useState('');
 	const [cpassword, setCPassword] = useState('');
 	const {signup} = useAuth();
+	const [present] = useIonToast();
 	const history = useHistory();
 
 	async function register() {
 		//validation
-		if (password !== cpassword) {
-			console.log('password don\'t match');
-		}
 		if (email.trim() === '' || password.trim() === '') {
-			console.log('username and password are required');
+			present('Email and Password are required', 1500);
+			return;
+		}
+
+		if (password !== cpassword) {
+			present('The passwords do not match', 1500);
+			return;
 		}
 
 		const rest = await signup(email, password);
