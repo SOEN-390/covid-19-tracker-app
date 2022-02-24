@@ -1,0 +1,17 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+actor Actor
+participant UIClient
+participant Private_Router
+
+Actor -> UIClient ++: Profile Role can access requested Page
+
+UIClient -> Private_Router ++: Validate Firebase + Profile Role can access URL path
+Private_Router --> UIClient --: Validation
+
+UIClient --> Actor --: Access Page or Redirect to Specified Role HomePage
+
+@enduml
