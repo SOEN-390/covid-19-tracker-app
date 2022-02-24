@@ -32,17 +32,17 @@ export const doctorColumns: readonly PatientsTableColumn[] = [
 		align: 'center'
 	},
 	{
+		id: 'monitorSymptoms',
+		label: 'Monitor',
+		minWidth: 170,
+		align: 'center'
+	},
+	{
 		id: 'priority',
 		label: 'Priority',
 		minWidth: 170,
 		align: 'center'
 	},
-	{
-		id: 'monitorSymptoms',
-		label: '',
-		minWidth: 170,
-		align: 'center'
-	}
 ];
 
 export const adminColumns: readonly PatientsTableColumn[] = [

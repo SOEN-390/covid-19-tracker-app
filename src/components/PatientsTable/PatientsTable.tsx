@@ -90,18 +90,7 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 				</Td>
 
 				{
-					currentProfile.getRole() === UserType.HEALTH_OFFICIAL &&
-					<Td key={index} id="col">
-						<IonButton color="favorite" shape="round" size="large" onClick={() => {
-							setShowModal(true);
-							setSymptomsIndex(index);
-						}}>
-							Monitor Symptoms
-						</IonButton>
-					</Td>
-				}
-				{
-					currentProfile.getRole() === UserType.DOCTOR &&
+					(currentProfile.getRole() === UserType.HEALTH_OFFICIAL || currentProfile.getRole() === UserType.DOCTOR) &&
 					<Td key={index} id="col">
 						<IonButton color="favorite" shape="round" size="large" onClick={() => {
 							setShowModal(true);
@@ -113,37 +102,7 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 				}
 
 				{
-					currentProfile.getRole() === UserType.HEALTH_OFFICIAL &&
-					symptomsIndex !== undefined &&
-					<IonModal isOpen={showModal}>
-						<IonContent fullscreen>
-							<IonCard>
-								<IonCardHeader>
-									<IonCardTitle>{props.patients[symptomsIndex].firstName + ' ' + props.patients[symptomsIndex].lastName}</IonCardTitle>
-									<IonCardSubtitle>Temperature</IonCardSubtitle>
-								</IonCardHeader>
-								<IonCardContent>
-									37.8 Celsius
-								</IonCardContent>
-								<IonCardHeader>
-									<IonCardSubtitle>Breathing</IonCardSubtitle>
-								</IonCardHeader>
-								<IonCardContent>
-									Severe difficulty breathing
-								</IonCardContent>
-								<IonCardHeader>
-									<IonCardSubtitle>Other Symptoms</IonCardSubtitle>
-								</IonCardHeader>
-								<IonCardContent>
-									Fever along with running nose
-								</IonCardContent>
-							</IonCard>
-						</IonContent>
-						<IonButton onClick={() => setShowModal(false)}>Close Symptoms Form</IonButton>
-					</IonModal>
-				}
-				{
-					currentProfile.getRole() === UserType.DOCTOR &&
+					(currentProfile.getRole() === UserType.HEALTH_OFFICIAL || currentProfile.getRole() === UserType.DOCTOR) &&
 					symptomsIndex !== undefined &&
 					<IonModal isOpen={showModal}>
 						<IonContent fullscreen>
