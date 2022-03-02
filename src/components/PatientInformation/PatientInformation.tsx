@@ -1,8 +1,8 @@
 import {
 	IonAvatar,
-	IonButton,
+	IonButton, IonCheckbox,
 	IonCol,
-	IonContent, IonIcon,
+	IonContent, IonHeader, IonIcon,
 	IonImg,
 	IonInput, IonItem,
 	IonLabel, IonListHeader, IonModal, IonRadio, IonRadioGroup,
@@ -17,11 +17,14 @@ import React, { useState } from 'react';
 import { TestResult } from '../../enum/TestResult.enum';
 import HttpService from '../../providers/http.service';
 import { flag } from 'ionicons/icons';
+import { ISymptom } from '../../interfaces/ISymptom';
 
-const PatientInformation: React.FC<{ patient: IPatient, updateStatus?: any, updateFlag?: any }> = (props) => {
+
+const PatientInformation: React.FC<{ patient: IPatient, updateStatus?: any, updateFlag?: any, symptomsList?: ISymptom[] }> = (props) => {
+
 	const {currentProfile} = useAuth();
-
-	const [showModal, setShowModal] = useState(false);
+	const [showStatusModal, setShowStatusModal] = useState(false);
+	const [showSymptomsModal, setShowSymptomsModal] = useState(false);
 	const [status, setStatus] = useState(props.patient.testResult);
 	const [present] = useIonToast();
 
@@ -32,7 +35,7 @@ const PatientInformation: React.FC<{ patient: IPatient, updateStatus?: any, upda
 		try {
 			await HttpService.patch(`patients/${currentProfile.id}/status`, {status: status});
 			props.updateStatus(status);
-			setShowModal(false);
+			setShowStatusModal(false);
 			present('Successfully updated status', 1500);
 		} catch (e) {
 			present('Failed to update status', 1500);
@@ -45,8 +48,7 @@ const PatientInformation: React.FC<{ patient: IPatient, updateStatus?: any, upda
 				{role: currentProfile.getRole()});
 			props.updateFlag(true);
 			present('Successfully flagged patient', 1500);
-		}
-		catch (e) {
+		} catch (e) {
 			present('Failed to flag patient', 1500);
 		}
 	}
@@ -57,14 +59,60 @@ const PatientInformation: React.FC<{ patient: IPatient, updateStatus?: any, upda
 				{role: currentProfile.getRole()});
 			props.updateFlag(false);
 			present('Successfully unflagged patient', 1500);
-		}
-		catch (e) {
+		} catch (e) {
 			present('Failed to unflag patient', 1500);
 		}
 	}
 
+	function handleCheck(e: string) {
+		if (!props.symptomsList) {
+			return;
+		}
+		for (const symp of props.symptomsList) {
+			if (symp.name === e) {
+				symp.isChecked = true;
+				break;
+			}
+		}
+	}
+
+	async function submitSymptoms() {
+		if (!props.symptomsList) {
+			return;
+		}
+		const symptomsToRequest: string[] = [];
+		for (const symp of props.symptomsList) {
+			if (symp.isChecked) {
+				symptomsToRequest.push(symp.name);
+			}
+		}
+		if (symptomsToRequest.length ==0) {
+			present('Please select symptoms to request', 1500);
+			return;
+		}
+		try {
+			await HttpService.post(`doctors/${currentProfile.id}/patient/${props.patient.medicalId}/symptoms`, {
+				checklist: symptomsToRequest
+			});
+			setShowSymptomsModal(false);
+			present('Successfully requested symptoms', 1500);
+		}
+		catch (e) {
+			present('You already have a pending request', 1500);
+		}
+	}
+
+
 	return (
 		<IonContent>
+
+			{props.patient.medicalId == '' && <IonHeader>
+				<IonLabel>Enter the medical ID of a patient above and hit search</IonLabel>
+			</IonHeader>}
+
+			{props.patient.medicalId != '' &&
+
+
 			<div id="Container">
 				<IonRow>
 
@@ -149,7 +197,7 @@ const PatientInformation: React.FC<{ patient: IPatient, updateStatus?: any, upda
 					{
 						currentProfile.getRole() != UserType.PATIENT && props.patient.medicalId != '' &&
 						<IonCol>
-							{props.patient.flagged  &&
+							{props.patient.flagged &&
 							<IonButton color="danger" onClick={() => unFlagPatient()}>
 								<IonIcon ios={flag} md={flag}/>
 							</IonButton>
@@ -166,7 +214,7 @@ const PatientInformation: React.FC<{ patient: IPatient, updateStatus?: any, upda
 					<IonRow>
 						<div className="button">
 							<IonCol> <IonButton onClick={() => {
-								setShowModal(true);
+								setShowStatusModal(true);
 							}} className="buttonc">Edit Status</IonButton> </IonCol>
 						</div>
 					</IonRow>
@@ -178,7 +226,8 @@ const PatientInformation: React.FC<{ patient: IPatient, updateStatus?: any, upda
 
 					<div className="button">
 
-						<IonCol> <IonButton className="buttonc">Symptoms form</IonButton> </IonCol>
+						<IonCol> <IonButton className="buttonc" onClick={() => setShowSymptomsModal(true)}>Request
+							symptoms update</IonButton> </IonCol>
 						<IonCol> <IonButton className="buttonc">Set an Appointment</IonButton> </IonCol>
 						<IonCol> <IonButton className="buttonc">Send Email</IonButton> </IonCol>
 					</div>
@@ -217,15 +266,7 @@ const PatientInformation: React.FC<{ patient: IPatient, updateStatus?: any, upda
 					</table>
 				</IonRow>
 				}
-				{currentProfile.getRole() === UserType.DOCTOR &&
-				<IonRow>
-					<div className="button">
-						<IonCol> <IonButton className="buttonc">Add Symptoms</IonButton> </IonCol>
-						<IonCol> <IonButton className="buttonc">Modify Symptoms</IonButton> </IonCol>
-						<IonCol> <IonButton className="buttonc">Delete Symptoms</IonButton> </IonCol>
-					</div>
-				</IonRow>
-				}
+
 				{currentProfile.getRole() === UserType.DOCTOR &&
 				<IonRow>
 					<div id="Container2">
@@ -245,7 +286,7 @@ const PatientInformation: React.FC<{ patient: IPatient, updateStatus?: any, upda
 				</IonRow>
 				}
 
-				<IonModal isOpen={showModal}>
+				<IonModal isOpen={showStatusModal}>
 					<IonContent>
 						<IonRadioGroup value={status} onIonChange={e => setStatus(e.detail.value)}>
 							<IonListHeader>
@@ -270,10 +311,25 @@ const PatientInformation: React.FC<{ patient: IPatient, updateStatus?: any, upda
 
 					</IonContent>
 					<IonButton color="success" onClick={() => updateStatus()}>Save</IonButton>
-					<IonButton color="danger" onClick={() => setShowModal(false)}>Cancel</IonButton>
+					<IonButton color="danger" onClick={() => setShowStatusModal(false)}>Cancel</IonButton>
+				</IonModal>
+
+				<IonModal isOpen={showSymptomsModal}>
+					<IonContent>
+
+						{props.symptomsList && props.symptomsList.map((el, index) => <IonItem
+							key={index}>
+							<IonCheckbox value={el.name} checked={el.isChecked} onIonChange={e => handleCheck(e.detail.value)} />
+							<IonLabel>{el.description}</IonLabel></IonItem>)}
+
+					</IonContent>
+					<IonButton color="success" onClick={() => submitSymptoms()}>Request</IonButton>
+					<IonButton color="danger" onClick={() => setShowSymptomsModal(false)}>Cancel</IonButton>
 				</IonModal>
 
 			</div>
+
+			}
 		</IonContent>
 
 	);

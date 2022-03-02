@@ -95,7 +95,6 @@ const DashboardDoctorPage: React.FC = () => {
 	return (
 		<IonPage>
 			<IonContent>
-				<NavBar/>
 
 				<IonCol>
 					<IonRow>

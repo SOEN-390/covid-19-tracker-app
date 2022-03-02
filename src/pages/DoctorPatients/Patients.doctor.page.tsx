@@ -70,7 +70,6 @@ const PatientsDoctorPage: React.FC = () => {
 	return (
 		<IonPage>
 			<IonToolbar>
-				<NavBar/>
 			</IonToolbar>
 			<IonContent>
 				<IonTitle id="patientHeader">Patients</IonTitle>
