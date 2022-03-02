@@ -18,60 +18,7 @@ const Symptom: React.FC = () => {
 
 			<IonGrid>
 				<form className="container">
-
-					<IonRow>
-						<IonCol size="8">
-							<IonLabel className="text">My Temperature (°C) </IonLabel>
-						</IonCol>
-						<IonCol size="4">
-							<IonInput className="col-75" type="number"/>
-						</IonCol>
-
-					</IonRow>
-
-				</form>
-			</IonGrid>
-
-
-			<IonGrid>
-				<form className="container">
-					<IonCardHeader>BREATHING</IonCardHeader>
-					<IonRow>
-
-						<IonCol size="1">
-							<IonCheckbox/>
-						</IonCol>
-						<IonCol size="7">
-							<IonLabel>Severe difficulty breathing</IonLabel></IonCol>
-					</IonRow>
-					<IonRow>
-						<IonCol size="1">
-							<IonCheckbox/>
-						</IonCol>
-						<IonCol size="7">
-							<IonLabel>Severe chest pain</IonLabel></IonCol>
-					</IonRow>
-					<IonRow>
-						<IonCol size="1">
-							<IonCheckbox/>
-						</IonCol>
-						<IonCol size="7">
-							<IonLabel>Feeling confused or unsure of where you are</IonLabel></IonCol>
-					</IonRow>
-					<IonRow>
-						<IonCol size="1">
-							<IonCheckbox/>
-						</IonCol>
-						<IonCol size="7">
-							<IonLabel>Losing consciousness</IonLabel></IonCol>
-					</IonRow>
-
-				</form>
-			</IonGrid>
-
-			<IonGrid>
-				<form className="container">
-					<IonCardHeader>Other Symptoms</IonCardHeader>
+					<IonCardHeader>List of Symptoms requested by your Doctor</IonCardHeader>
 					<IonRow>
 						<IonCol size="1">
 							<IonCheckbox/>
