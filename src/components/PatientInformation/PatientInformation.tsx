@@ -7,7 +7,7 @@ import {
 	IonInput, IonItem,
 	IonLabel, IonListHeader, IonModal, IonRadio, IonRadioGroup,
 	IonRow,
-	IonText, useIonToast
+	IonText, IonTitle, useIonToast
 } from '@ionic/react';
 import './PatientInformation.css';
 import { IPatient } from '../../interfaces/IPatient';
@@ -106,9 +106,9 @@ const PatientInformation: React.FC<{ patient: IPatient, updateStatus?: any, upda
 	return (
 		<IonContent>
 
-			{props.patient.medicalId == '' && <IonHeader>
+			{props.patient.medicalId == '' && <IonTitle>
 				<IonLabel>Enter the medical ID of a patient above and hit search</IonLabel>
-			</IonHeader>}
+			</IonTitle>}
 
 			{props.patient.medicalId != '' &&
 
