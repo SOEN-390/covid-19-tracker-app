@@ -89,18 +89,11 @@ const PatientInformation: React.FC<{ patient: IPatient, updateStatus?: any, upda
 			await HttpService.post(`doctors/${currentProfile.id}/patient/${props.patient.medicalId}/symptoms`, {
 				checklist: symptomsToRequest
 			});
-			resetSymptomList();
 			setShowSymptomsModal(false);
 			present('Successfully requested symptoms', 1500);
 		}
 		catch (e) {
 			present('You already have a pending request', 1500);
-		}
-	}
-
-	function resetSymptomList() {
-		for (const symp of props.symptomsList? props.symptomsList: []) {
-			symp.isChecked = false;
 		}
 	}
 
