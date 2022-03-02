@@ -65,8 +65,10 @@ const PatientInformation: React.FC<{ patient: IPatient, updateStatus?: any, upda
 	}
 
 	function handleCheck(e: string) {
-		const checkList = props.symptomsList? props.symptomsList: [];
-		for (const symp of checkList) {
+		if (!props.symptomsList) {
+			return;
+		}
+		for (const symp of props.symptomsList) {
 			if (symp.name === e) {
 				symp.isChecked = true;
 				break;
@@ -75,8 +77,11 @@ const PatientInformation: React.FC<{ patient: IPatient, updateStatus?: any, upda
 	}
 
 	async function submitSymptoms() {
+		if (!props.symptomsList) {
+			return;
+		}
 		const symptomsToRequest: string[] = [];
-		for (const symp of props.symptomsList? props.symptomsList: []) {
+		for (const symp of props.symptomsList) {
 			if (symp.isChecked) {
 				symptomsToRequest.push(symp.name);
 			}

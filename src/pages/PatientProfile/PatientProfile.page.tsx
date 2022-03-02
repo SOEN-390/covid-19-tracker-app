@@ -54,9 +54,9 @@ const PatientProfilePage: React.FC = () => {
 		try {
 			const symptoms: ISymptom[] = [];
 			const data: ISymptom[] = await HttpService.get('doctors/symptoms');
-			data.forEach((symp) => {
+			for (const symp of data) {
 				symptoms.push({name: symp.name, description: symp.description, isChecked: false});
-			});
+			}
 			setSymptomsList(symptoms);
 		} catch (e) {
 			console.log(e);
