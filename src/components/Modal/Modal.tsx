@@ -20,8 +20,8 @@ const Modal: React.FC<{ modalEnum: ModalEnum }> = (props) => {
 
 	return (
 		<IonContent>
-		{
-			props.modalEnum == ModalEnum.EDIT_STATUS && <IonModal>
+			{
+				props.modalEnum == ModalEnum.EDIT_STATUS && <IonModal>
 					<IonRadioGroup value={status} onIonChange={e => e}>
 						<IonListHeader>
 							<IonLabel>Edit your Status</IonLabel>
@@ -43,11 +43,11 @@ const Modal: React.FC<{ modalEnum: ModalEnum }> = (props) => {
 
 					</IonRadioGroup>
 
-				<IonButton color="success" onClick={e => e}>Save</IonButton>
-				<IonButton color="danger" onClick={e => e}>Cancel</IonButton>
-			</IonModal>
-		}
+					<IonButton color="success" onClick={e => e}>Save</IonButton>
+					<IonButton color="danger" onClick={e => e}>Cancel</IonButton>
+				</IonModal>
+			}
 		</IonContent>
-	)
-}
+	);
+};
 export default Modal;
