@@ -5,107 +5,57 @@ import {
 	IonCol,
 	IonContent,
 	IonGrid,
-	IonInput,
+	IonInput, IonItem,
 	IonLabel,
-	IonRow
+	IonRow, useIonToast
 } from '@ionic/react';
 import './Symptom.css';
 import React from 'react';
+import { ISymptom } from '../../interfaces/ISymptom';
+import HttpService from '../../providers/http.service';
+import { useAuth } from '../../providers/auth.provider';
 
-const Symptom: React.FC = () => {
+const Symptom: React.FC<{symptomsList: ISymptom[], handleSubmit: any}> = (props) => {
+
+	const {currentProfile} = useAuth();
+	const [present] = useIonToast();
+
+	function handleCheck(e: string) {
+		if (!props.symptomsList) {
+			return;
+		}
+		for (const symp of props.symptomsList) {
+			if (symp.name === e) {
+				symp.isChecked = true;
+				break;
+			}
+		}
+	}
+
+	async function submitSymptoms() {
+		try {
+			await HttpService.post(`patients/${currentProfile.id}/symptoms/response`, {
+				responseList: props.symptomsList
+			});
+			present('Successfully submitted response', 1500);
+			props.handleSubmit();
+		} catch (e) {
+			present('Failed to submit Symptoms', 1500);
+		}
+	}
+
 	return (
 		<IonContent>
-
 			<IonGrid>
+				<IonCardHeader>List of Symptoms requested by your Doctor</IonCardHeader>
 				<form className="container">
-					<IonCardHeader>List of Symptoms requested by your Doctor</IonCardHeader>
-					<IonRow>
-						<IonCol size="1">
-							<IonCheckbox/>
-						</IonCol>
-						<IonCol size="5">
-							<IonLabel>Fever and/or chills</IonLabel></IonCol>
-
-						<IonCol size="1">
-							<IonCheckbox/>
-						</IonCol>
-						<IonCol size="5">
-							<IonLabel>Cough or barking cough (croup)</IonLabel></IonCol>
-					</IonRow>
-					<IonRow>
-						<IonCol size="1">
-							<IonCheckbox/>
-						</IonCol>
-						<IonCol size="5">
-							<IonLabel>Shortness of breath</IonLabel></IonCol>
-
-						<IonCol size="1">
-							<IonCheckbox/>
-						</IonCol>
-						<IonCol size="5">
-							<IonLabel>Muscle aches/joint pain</IonLabel></IonCol>
-					</IonRow>
-					<IonRow>
-						<IonCol size="1">
-							<IonCheckbox/>
-						</IonCol>
-						<IonCol size="5">
-							<IonLabel>Decrease or loss of taste or smell</IonLabel></IonCol>
-
-						<IonCol size="1">
-							<IonCheckbox/>
-						</IonCol>
-						<IonCol size="5">
-							<IonLabel>Runny or stuffy/congested nose
-							</IonLabel></IonCol>
-					</IonRow>
-					<IonRow>
-						<IonCol size="1">
-							<IonCheckbox/>
-						</IonCol>
-						<IonCol size="5">
-							<IonLabel>Extreme tiredness</IonLabel></IonCol>
-
-						<IonCol size="1">
-							<IonCheckbox/>
-						</IonCol>
-						<IonCol size="5">
-							<IonLabel>Headache</IonLabel></IonCol>
-					</IonRow>
-
-					<IonRow>
-						<IonCol size="1">
-							<IonCheckbox/>
-						</IonCol>
-						<IonCol size="5">
-							<IonLabel>Sore throat</IonLabel></IonCol>
-
-						<IonCol size="1">
-							<IonCheckbox/>
-						</IonCol>
-						<IonCol size="5">
-							<IonLabel>Nausea, vomiting and/or diarrhea</IonLabel></IonCol>
-					</IonRow>
-
-					<IonRow>
-						<IonCol size="1">
-							<IonCheckbox/>
-						</IonCol>
-						<IonCol size="5">
-							<IonLabel>None of the above</IonLabel></IonCol>
-
-						<IonCol size="1">
-							<IonCheckbox/>
-						</IonCol>
-						<IonCol size="5">
-							<IonLabel>Severe chest pain</IonLabel></IonCol>
-					</IonRow>
-
+					{props.symptomsList.map((el, index) => <IonRow
+						key={index}>
+						<IonCheckbox value={el.name} checked={el.isChecked} onIonChange={e => handleCheck(e.detail.value)} />
+						<IonCol><IonLabel>{el.description}</IonLabel></IonCol></IonRow>)}
 				</form>
-				<IonButton type="submit"> SUBMIT</IonButton>
 			</IonGrid>
-
-
+			<IonButton color="favorite" onClick={() => submitSymptoms()}>Submit</IonButton>
 		</IonContent>
 
 	);
