@@ -14,16 +14,17 @@ export class Patient extends User {
 	private _gender!: Gender;
 	private _lastUpdatedAt!: string;
 	private _flagged!: boolean;
-
+	private _reviewed!: boolean;
 	// Constructor
 
 	public constructor(id: string, firstName: string, lastName: string, phoneNumber: string, address: string,
-					   medicalId: string, testResult: TestResult, dob: string, gender: Gender) {
+					   medicalId: string, testResult: TestResult, dob: string, gender: Gender, reviewed:boolean) {
 		super(id, firstName, lastName, phoneNumber, address);
 		this._medicalId = medicalId;
 		this._testResult = testResult;
 		this._dob = dob;
 		this._gender = gender;
+		this._reviewed= reviewed;
 	}
 
 	// Getters & Setters
@@ -77,6 +78,14 @@ export class Patient extends User {
 
 	set flagged(value: boolean) {
 		this._flagged = value;
+	}
+
+	get reviewed(): boolean {
+		return this._reviewed;
+	}
+
+	set reviewed(value: boolean) {
+		this._reviewed = value;
 	}
 
 	// Methods

@@ -144,6 +144,7 @@ table th:last-child {
   margin-bottom: 5px;
   box-sizing: border-box;
   height: inherit;
+  border: 2px solid whitesmoke;
 }
 
 #colName {
@@ -179,7 +180,7 @@ table th:last-child {
   background-color: #797777;
 }
 
-#lastUpdate {
+#reviewed {
   color: #f80d38;
   font-family: 'Poppins';
   font-weight: normal;

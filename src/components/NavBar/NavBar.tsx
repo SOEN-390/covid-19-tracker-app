@@ -2,7 +2,6 @@ import { IonAvatar, IonButton, IonCol, IonGrid, IonMenuButton, IonRow, IonSearch
 import './NavBar.css';
 import logo from '../../resources/icon.png';
 import React, { useState } from 'react';
-import HttpService from '../../providers/http.service';
 import { useAuth } from '../../providers/auth.provider';
 import { UserType } from '../../enum/UserType.enum';
 

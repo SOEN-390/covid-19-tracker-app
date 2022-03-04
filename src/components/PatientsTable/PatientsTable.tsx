@@ -16,7 +16,7 @@ import { useEffect, useState } from 'react';
 import { Table, Tbody, Td, Th, Thead, Tr } from 'react-super-responsive-table';
 import { UserType } from '../../enum/UserType.enum';
 import { adminColumns, doctorColumns, healthOfficialColumns, PatientsTableColumn } from './patientsTableColumn';
-import { flag } from 'ionicons/icons';
+import { flag, mailOpen, mailUnread } from 'ionicons/icons';
 import { useAuth } from '../../providers/auth.provider';
 import { TestResult } from '../../enum/TestResult.enum';
 import { Patient } from '../../objects/Patient.class';
@@ -52,18 +52,35 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 			{role: currentProfile.getRole()}
 		).then(() => {
 			props.onChange(props.patients);
+			present(patient.flagged==true?'Successfully FLAGGED patient':'Successfully UNFLAGGED patient', 300);
 		}).catch(() => {
 			present('An error has occurred. Please try again.', 1500);
 		});
 	}
 
+	function reviewPatient(patient: Patient) {
+		patient.reviewed = !patient.reviewed;
+		HttpService.post(
+			`patients/${patient.medicalId}/${patient.reviewed ? 'reviewed' : 'unreviewed'}`,
+			{role: currentProfile.getRole()}
+		).then(() => {
+			props.onChange(props.patients);
+			present(patient.reviewed==true?'Patient marked as REVIEWED':'Patient marked as NOT-REVIEWED', 300);
+		}).catch(() => {
+			present('An error has occurred. Please try again.', 1500);
+		});
+	}
 
 	function getRow(patient: Patient, index: number): JSX.Element | null {
 
 		return (
-			<Tr id="tableRow" key={index}>
-				<Td key={index} id="colName">{patient.firstName + ' ' + patient.lastName}</Td>
-				<Td key={index}>
+			<Tr id="tableRow" 
+				key={index}  
+				style={{ background: patient.reviewed==true ? '':'#cfe2f3' }} 						
+				// onClick={() => reviewPatient(patient)}
+			>
+				<Td key={index} onClick={() => reviewPatient(patient)} id="colName">{patient.firstName + ' ' + patient.lastName}</Td>
+				<Td key={index} onClick={() => reviewPatient(patient)}>
 					<div key={index} className={'patients-table__status ' +
 						(patient.testResult === TestResult.POSITIVE ? 'patients-table__status__positive' : '') +
 						(patient.testResult === TestResult.NEGATIVE ? 'patients-table__status__negative' : '') +
@@ -74,16 +91,14 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 						{patient.testResult === TestResult.PENDING && 'Pending'}
 					</div>
 				</Td>
-				<Td key={index} id="lastUpdate">
-					March 17, 2021
-				</Td>
+				
 				{
 					currentProfile.getRole() !== UserType.DOCTOR &&
-					<Td key={index} id="colDoc">
+					<Td key={index} id="col" onClick={() => reviewPatient(patient)}>
 						Dr.Sue
 					</Td>
 				}
-				<Td key={index} id="col">
+				<Td key={index} id="col" onClick={() => reviewPatient(patient)}>
 					<IonButton color="favorite" shape="round" size="large">
 						Contact
 					</IonButton>
@@ -91,7 +106,7 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 
 				{
 					(currentProfile.getRole() === UserType.HEALTH_OFFICIAL || currentProfile.getRole() === UserType.DOCTOR) &&
-					<Td key={index} id="col">
+					<Td key={index} id="col" onClick={() => reviewPatient(patient)}>
 						<IonButton color="favorite" shape="round" size="large" onClick={() => {
 							setShowModal(true);
 							setSymptomsIndex(index);
@@ -131,7 +146,16 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 						<IonButton onClick={() => setShowModal(false)}>Close Symptoms Form</IonButton>
 					</IonModal>
 				}
-
+				{
+					(currentProfile.getRole() === UserType.DOCTOR) &&
+					<Td key={index} className={'patients-table__flag'} onClick={() => reviewPatient(patient)}>
+						<IonIcon 
+							ios={patient.reviewed==false? mailUnread: mailOpen} 
+							md={patient.reviewed==false? mailUnread: mailOpen}
+							// onClick={() => reviewPatient(patient)}
+						/>
+					</Td>
+				}
 				<Td key={index} className={'patients-table__flag'}>
 					<IonIcon className={patient.flagged ? 'high-priority' : 'no-priority'}
 							 ios={flag} md={flag}
