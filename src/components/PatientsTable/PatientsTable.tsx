@@ -65,7 +65,6 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 			{role: currentProfile.getRole()}
 		).then(() => {
 			props.onChange(props.patients);
-			present(patient.reviewed==true?'Patient marked as REVIEWED':'Patient marked as NOT-REVIEWED', 300);
 		}).catch(() => {
 			present('An error has occurred. Please try again.', 1500);
 		});
@@ -77,10 +76,10 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 			<Tr id="tableRow" 
 				key={index}  
 				style={{ background: patient.reviewed==true ? '':'#cfe2f3' }} 						
-				// onClick={() => reviewPatient(patient)}
+				onClick={() => reviewPatient(patient)}
 			>
-				<Td key={index} onClick={() => reviewPatient(patient)} id="colName">{patient.firstName + ' ' + patient.lastName}</Td>
-				<Td key={index} onClick={() => reviewPatient(patient)}>
+				<Td key={index} id="colName">{patient.firstName + ' ' + patient.lastName}</Td>
+				<Td key={index} >
 					<div key={index} className={'patients-table__status ' +
 						(patient.testResult === TestResult.POSITIVE ? 'patients-table__status__positive' : '') +
 						(patient.testResult === TestResult.NEGATIVE ? 'patients-table__status__negative' : '') +
@@ -94,11 +93,11 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 				
 				{
 					currentProfile.getRole() !== UserType.DOCTOR &&
-					<Td key={index} id="col" onClick={() => reviewPatient(patient)}>
+					<Td key={index} id="col">
 						Dr.Sue
 					</Td>
 				}
-				<Td key={index} id="col" onClick={() => reviewPatient(patient)}>
+				<Td key={index} id="col" >
 					<IonButton color="favorite" shape="round" size="large">
 						Contact
 					</IonButton>
@@ -106,8 +105,9 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 
 				{
 					(currentProfile.getRole() === UserType.HEALTH_OFFICIAL || currentProfile.getRole() === UserType.DOCTOR) &&
-					<Td key={index} id="col" onClick={() => reviewPatient(patient)}>
+					<Td key={index} id="col" >
 						<IonButton color="favorite" shape="round" size="large" onClick={() => {
+							reviewPatient(patient);
 							setShowModal(true);
 							setSymptomsIndex(index);
 						}}>
@@ -148,7 +148,7 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 				}
 				{
 					(currentProfile.getRole() === UserType.DOCTOR) &&
-					<Td key={index} className={'patients-table__flag'} onClick={() => reviewPatient(patient)}>
+					<Td key={index} className={'patients-table__flag'} >
 						<IonIcon 
 							ios={patient.reviewed==false? mailUnread: mailOpen} 
 							md={patient.reviewed==false? mailUnread: mailOpen}
@@ -158,8 +158,10 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 				}
 				<Td key={index} className={'patients-table__flag'}>
 					<IonIcon className={patient.flagged ? 'high-priority' : 'no-priority'}
-							 ios={flag} md={flag}
-							 onClick={() => flagPatient(patient)}
+							 ios={flag} md={flag} onClick={() => {
+							reviewPatient(patient);
+							flagPatient(patient);
+						}}
 					/>
 				</Td>
 			</Tr>
