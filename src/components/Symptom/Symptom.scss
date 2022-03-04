@@ -1,0 +1,16 @@
+ion-content.symptom__content {
+
+  form.symptom__form {
+    border-radius: 30px;
+    background-color: #f2f2f2;
+    padding: 20px;
+    margin-right: 150px;
+    position: center;
+  }
+
+  ion-button {
+    color: var(--ion-color-dark-blue);
+    --background: var(--ion-color-primary-contrast);
+  }
+
+}
