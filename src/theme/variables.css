@@ -8,8 +8,8 @@ http://ionicframework.com/docs/theming/ */
   --ion-color-primary-rgb: 56, 128, 255;
   --ion-color-primary-contrast: #ffffff;
   --ion-color-primary-contrast-rgb: 255, 255, 255;
-  --ion-color-primary-shade: #3171e0;
-  --ion-color-primary-tint: #4c8dff;
+  --ion-color-primary-shade: #447697;
+  --ion-color-primary-tint: #14242D;
 
   /** secondary **/
   --ion-color-secondary: #3dc2ff;
@@ -91,10 +91,6 @@ http://ionicframework.com/docs/theming/ */
     --ion-color-contrast-rgb: var(--ion-color-dark-blue-contrast-rgb);
     --ion-color-shade: var(--ion-color-dark-blue-shade);
     --ion-color-tint: var(--ion-color-dark-blue-tint);
-}
-
-ion-split-pane {
-  --side-max-width: 380px;
 }
 
 /* Disabled DarkMode theme */
@@ -257,3 +253,66 @@ ion-split-pane {
 /*  }*/
 
 /*}*/
+
+
+/* inspired by: https://css-tricks.com/responsive-data-tables/ */
+.responsiveTable {
+  width: 98%;
+}
+
+.responsiveTable td .tdBefore {
+  display: none;
+}
+
+@media screen and (max-width: 40em) {
+  /*
+    Force table elements to not behave like tables anymore
+    Hide table headers (but not display: none;, for accessibility)
+  */
+  .responsiveTable table,
+  .responsiveTable thead,
+  .responsiveTable tbody,
+  .responsiveTable th,
+  .responsiveTable td,
+  .responsiveTable tr {
+    display: block;
+  }
+
+  .responsiveTable thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+    border-bottom: 2px solid #333;
+  }
+
+  .responsiveTable tbody tr {
+    border-bottom: 1px solid #000;
+    padding: .5em;
+  }
+
+  .responsiveTable td.pivoted {
+    /* Behave like a "row" */
+    border: none !important;
+    position: relative;
+    padding-left: calc(50% + 10px) !important;
+    text-align: left !important;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+    padding-bottom: 10px;
+
+  }
+
+  .responsiveTable td .tdBefore {
+    /* Now like a table header */
+    position: absolute;
+    display: block;
+
+    /* Top/left values mimic padding */
+    left: 1rem;
+    width: calc(50% - 20px);
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+    text-align: left !important;
+    font-weight: 600;
+  }
+}

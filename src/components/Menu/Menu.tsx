@@ -14,7 +14,7 @@ import appLogo from '../../assets/images/CovidTrackerTransparent.png';
 import Emergency from '../Emergency/Emergency';
 import { useLocation } from 'react-router-dom';
 import { logOutOutline } from 'ionicons/icons';
-import './Menu.css';
+import './Menu.scss';
 import { useAuth } from '../../providers/auth.provider';
 import { UserType } from '../../enum/UserType.enum';
 import {
@@ -82,19 +82,13 @@ const Menu: React.FC<{ ionMenuId: string, userType: UserType }> = (props) => {
 
 			<IonContent>
 				<IonImg src={appLogo}/>
-				<IonList id="inbox-list">
-					{/*<IonAvatar>*/}
-					{/*    <IonImg src={logo}/>*/}
-					{/*</IonAvatar>*/}
+				<IonList className={'menu__inbox-list'}>
 
 					<IonTitle>Welcome {getName()}</IonTitle>
 					<br/>
 					<IonTitle>{currentUser?.email}</IonTitle>
 					<IonTitle>{getRole()}</IonTitle>
 					<IonItemDivider/>
-					{/*<IonList id="inbox-list">*/}
-					{/*</IonList>*/}
-
 
 					{
 						sideMenuPages.map((appPage, index) => {
@@ -107,9 +101,8 @@ const Menu: React.FC<{ ionMenuId: string, userType: UserType }> = (props) => {
 										<IonLabel>{appPage.title}</IonLabel>
 									</IonItem>
 									{
-										appPage.title === 'Doctor' && getRole() === 'Admin' ?
-											<><IonList id="inbox-list"> </IonList><IonTitle>Account</IonTitle></> :
-											''
+										appPage.title === 'Doctor' && getRole() === 'Admin' &&
+											<><IonTitle>Account</IonTitle></>
 									}
 
 								</IonMenuToggle>
@@ -117,6 +110,7 @@ const Menu: React.FC<{ ionMenuId: string, userType: UserType }> = (props) => {
 							);
 						})
 					}
+
 					<IonMenuToggle key={sideMenuPages.length + 1} autoHide={false}>
 						<IonItem routerDirection="none" lines="none" detail={false} onClick={logout}>
 							<IonIcon slot="start" ios={logOutOutline} md={logOutOutline}/>

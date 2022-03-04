@@ -4,18 +4,19 @@ import React, { useState, useEffect } from 'react';
 import HttpService from '../../providers/http.service';
 import { IDoctorTableRow } from '../../interfaces/IDoctorTableRow';
 import DoctorsTable from '../../components/DoctorsTable/DoctorsTable';
+import './Doctors.admin.page.scss';
 
-const DoctorsPage: React.FC = () => {
+const DoctorsAdminPage: React.FC = () => {
 
-	const [doctorsArray, setDoctorssArray] = useState<IDoctorTableRow[]>();
+	const [doctorsArray, setDoctorsArray] = useState<IDoctorTableRow[]>();
 
 	useEffect(() => {
-		doctorssRetrieval();
+		doctorsRetrieval();
 	}, []);
 
-	async function doctorssRetrieval() {
+	async function doctorsRetrieval() {
 		HttpService.get('doctors/all').then(async (response) => {
-			setDoctorssArray(response);
+			setDoctorsArray(response);
 		}).catch((error) => {
 			console.log('ERROR: ', error);
 		});
@@ -26,8 +27,8 @@ const DoctorsPage: React.FC = () => {
 			<IonToolbar>
 				<NavBar/>
 			</IonToolbar>
-			<IonContent>
-				<IonTitle id="patientHeader">Doctors</IonTitle>
+			<IonContent className={'doctors-admin__content'} >
+				<IonTitle>Doctors</IonTitle>
 				<br/>
 				{
 					doctorsArray !== undefined ? <DoctorsTable doctorTableRows={doctorsArray}/> : null
@@ -38,4 +39,4 @@ const DoctorsPage: React.FC = () => {
 
 };
 
-export default DoctorsPage;
+export default DoctorsAdminPage;

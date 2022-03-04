@@ -1,0 +1,55 @@
+.doctor-table__table {
+
+  tr.doctor-table__table-head {
+    background-color: rgba(44, 77, 98, .12);
+    border-radius: 50px;
+    box-sizing: border-box;
+    filter: blur(1);
+    height: 60px;
+  }
+
+  th:first-child {
+    border-radius: 10px 0 0 10px;
+    position: sticky;
+    top: 0;
+    z-index: 9999;
+  }
+
+  th:last-child {
+    border-radius: 0 10px 10px 0;
+  }
+
+  th {
+    color: #2C4D62;
+    font-family: 'Poppins';
+    font-weight: bold;
+    font-size: 18px;
+    text-align: center;
+    padding: 10px;
+  }
+
+  tr.doctor-table__table-row {
+    border-radius: 10px;
+    border-bottom: 1px solid #E7E7E7;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    box-sizing: border-box;
+    height: inherit;
+  }
+
+  td {
+    color: #2C4D62;
+    font-family: 'Poppins';
+    font-weight: normal;
+    font-size: 16px;
+    margin: auto;
+    text-align: center;
+    padding: 10px;
+  }
+
+  td.doctor-table__doctor-name {
+    text-align: left;
+    padding: 10px;
+  }
+
+}

@@ -1,8 +1,7 @@
 import { IonAvatar, IonButton, IonCol, IonGrid, IonMenuButton, IonRow, IonSearchbar, IonToolbar } from '@ionic/react';
-import './NavBar.css';
-import logo from '../../resources/icon.png';
+import './NavBar.scss';
+import userIcon from '../../assets/images/UserIcon.png';
 import React, { useState } from 'react';
-import HttpService from '../../providers/http.service';
 import { useAuth } from '../../providers/auth.provider';
 import { UserType } from '../../enum/UserType.enum';
 
@@ -20,35 +19,28 @@ const NavBar: React.FC<{ callback?: any }> = (props) => {
 	return (
 		<IonToolbar>
 			<IonMenuButton slot="start"/>
-			<IonGrid>
-				<IonRow className="ion-align-items-end">
-					<IonCol size="9" size-sd>
+			<IonRow className={'ion-align-items-end navbar__row'} >
 
-						{
-							currentProfile ? (currentProfile.getRole() === UserType.PATIENT ? null :
-								<div>
-									<IonSearchbar value={searchText} onIonChange={e => setSearchText(e.detail.value!)}
-												  showCancelButton="never"/>
-									<IonButton onClick={search}> Search </IonButton>
-								</div>) : null
-						}
+				{
+					currentProfile ? (currentProfile.getRole() === UserType.PATIENT ? null :
+						<div className={'search-bar'}>
+							<IonSearchbar value={searchText} onIonChange={e => setSearchText(e.detail.value!)}
+										  showCancelButton="never"/>
+							<IonButton onClick={search}> Search </IonButton>
+						</div>) : null
+				}
 
-					</IonCol>
+				<IonAvatar>
+					<img src={userIcon} alt=""/>
+				</IonAvatar>
+				{/*<IonCol size="2">*/}
 
-					<IonCol size="1">
-						<IonAvatar className="avatar">
-							<img src={logo} alt=""/>
-						</IonAvatar>
-					</IonCol>
-					{/*<IonCol size="2">*/}
+				{/*    <h5>Beshoy Soliman</h5>*/}
+				{/*    <p>PatientProfilePage</p>*/}
 
-					{/*    <h5>Beshoy Soliman</h5>*/}
-					{/*    <p>PatientProfilePage</p>*/}
+				{/*</IonCol>*/}
 
-					{/*</IonCol>*/}
-
-				</IonRow>
-			</IonGrid>
+			</IonRow>
 		</IonToolbar>
 
 	);
