@@ -1,0 +1,68 @@
+ion-content.report-form__content {
+
+  --padding-end: 30px;
+
+  ion-title.report-form__title {
+    color: #2C4D62;
+    font-family: 'Poppins';
+    font-weight: bold;
+    font-size: 50px;
+    padding: 20px;
+  }
+
+  form {
+    border-radius: 20px;
+    border: 2px solid #C5C5C5;
+    margin-top: 20px;
+    right: 20px;
+
+    ion-grid {
+      padding: 10px;
+
+      div.report-form__input-div {
+        padding-left: 30px;
+        padding-right: 20px;
+      }
+
+      ion-col.report-form__input-div__column {
+
+        ion-label {
+          color: #2C4D62;
+          font-family: 'Poppins';
+          font-weight: bold;
+          font-size: 20px;
+          padding: 20px;
+        }
+
+        ion-input {
+          border: 2px solid;
+          --border-color: #2C4D62;
+          border-radius: 10px;
+          margin-top: 10px;
+          margin-bottom: 10px;
+        }
+      }
+
+    }
+
+    div.report-form__buttons-div {
+
+      ion-button {
+        font-weight: bold;
+        font-size: 12px;
+      }
+
+      ion-button.report-form__buttons-div__add {
+        border-radius: 5px;
+      }
+
+      ion-button.report-form__buttons-div__submit {
+        border-radius: 20px;
+      }
+
+    }
+  }
+
+}
+
+

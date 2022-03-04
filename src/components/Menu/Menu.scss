@@ -1,6 +1,7 @@
 ion-menu {
   border-inline-end: unset;
   min-width: 275px !important;
+  margin-right: 20px; //TODO: delete later
 
   --background: #F7F7F7 !important;
   ion-content {
@@ -25,7 +26,6 @@ ion-menu {
 
   ion-menu::part(container) {
     width: 350px;
-    /*margin-left: 10px;*/
     border-radius: 20px;
   }
 
