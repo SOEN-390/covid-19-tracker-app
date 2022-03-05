@@ -1,9 +1,7 @@
 import {
-	IonAvatar,
 	IonButton, IonCheckbox,
 	IonCol,
-	IonContent, IonHeader, IonIcon,
-	IonImg,
+	IonContent, IonIcon,
 	IonInput, IonItem,
 	IonLabel, IonListHeader, IonModal, IonRadio, IonRadioGroup,
 	IonRow,
@@ -17,11 +15,13 @@ import React, { useState } from 'react';
 import { TestResult } from '../../enum/TestResult.enum';
 import HttpService from '../../providers/http.service';
 import { flag } from 'ionicons/icons';
-import { ISymptom, ISymptomResponse } from '../../interfaces/ISymptom';
+import { ISymptom, ISymptomResponse, ISymptomTable } from '../../interfaces/ISymptom';
+import Moment from 'react-moment';
+import 'moment-timezone';
 
 
 const PatientInformation: React.FC<{ patient: IPatient, updateStatus: (status: TestResult) => void, updateFlag: (bool: boolean) => void,
-	symptomsList?: ISymptom[], symptomsResponse?: ISymptomResponse[] }> = (props) => {
+	symptomsList: ISymptom[], symptomsResponse: ISymptomResponse[] }> = (props) => {
 
 		const {currentProfile} = useAuth();
 		const [showStatusModal, setShowStatusModal] = useState(false);
@@ -29,7 +29,7 @@ const PatientInformation: React.FC<{ patient: IPatient, updateStatus: (status: T
 		const [status, setStatus] = useState(props.patient.testResult);
 		const [present] = useIonToast();
 		const [seeSymptoms, setSeeSymptoms] = useState<boolean>(false);
-		const [symptomsTable, setSymptomsTable] = useState<ISymptomResponse[]>([]);
+		const [symptomsTable, setSymptomsTable] = useState<Map<Date, ISymptomTable[]>>(new Map<Date, ISymptomTable[]>());
 
 		async function updateStatus() {
 			if (currentProfile.testResult == status) {
@@ -109,25 +109,39 @@ const PatientInformation: React.FC<{ patient: IPatient, updateStatus: (status: T
 			if (!props.symptomsList || !props.symptomsResponse) {
 				return;
 			}
-			const symptomArray: ISymptomResponse[] = [];
-			for (const symptom of props.symptomsList) {
-				let requested = false;
-				let index = -1;
-				for (const response of props.symptomsResponse) {
-					if (response.name === symptom.name) {
-						requested = true;
-						index = props.symptomsResponse.indexOf(response);
-						break;
-					}
+			const symptomsTableMap = new Map<Date, ISymptomTable[]>();
+
+			for (let i=0; i<props.symptomsResponse.length; i++) {
+				if (i==0) {
+					symptomsTableMap.set(props.symptomsResponse[i].onDate, []);
 				}
-				if (requested) {
-					symptomArray.push(props.symptomsResponse[index]);
-				}
-				else {
-					symptomArray.push({name: symptom.name, description: symptom.description, response: undefined, onDate: undefined});
+				if (i > 0 && props.symptomsResponse[i].onDate != props.symptomsResponse[i-1].onDate) {
+					symptomsTableMap.set(props.symptomsResponse[i].onDate, []);
 				}
 			}
-			setSymptomsTable(symptomArray);
+			mapResponseToRow(symptomsTableMap);
+		}
+
+		function mapResponseToRow(symptomsTableMap: Map<Date, ISymptomTable[]>) {
+			for (const [key , value] of symptomsTableMap) {
+				for (let i=0; i< props.symptomsList.length; i++) {
+					for (const response of props.symptomsResponse) {
+						if (props.symptomsList[i].name == response.name && response.onDate == key) {
+							value[i] = {name: response.name, description: response.description,
+								response: response.response};
+						}
+						else {
+							if (!value[i]) {
+								value[i] = {name: props.symptomsList[i].name, description: props.symptomsList[i].description,
+									response: undefined};
+							}
+
+						}
+					}
+
+				}
+			}
+			setSymptomsTable(symptomsTableMap);
 			setSeeSymptoms(true);
 		}
 
@@ -261,7 +275,7 @@ const PatientInformation: React.FC<{ patient: IPatient, updateStatus: (status: T
 						<IonCol> <IonButton className="buttonc">Set an Appointment</IonButton> </IonCol>
 						<IonCol> <IonButton className="buttonc">Send Email</IonButton> </IonCol>
 						{
-							props.symptomsResponse && props.symptomsList && !seeSymptoms &&
+							props.symptomsResponse && props.symptomsResponse.length > 0 && props.symptomsList && !seeSymptoms &&
 							<IonCol> <IonButton className="buttonc" onClick={()=> { generateSymptomsTable();} }>See Symptoms</IonButton></IonCol>
 						}
 						{
@@ -272,11 +286,11 @@ const PatientInformation: React.FC<{ patient: IPatient, updateStatus: (status: T
 				</IonRow>
 				}
 				{
-					currentProfile.getRole() === UserType.DOCTOR && seeSymptoms &&
+					currentProfile.getRole() === UserType.DOCTOR &&
 				<IonRow>
 					{
-						!props.symptomsResponse && !seeSymptoms && <IonTitle>
-							<IonLabel>The patient has not submitted a response form yet</IonLabel>
+						props.symptomsResponse.length == 0 && !seeSymptoms && <IonTitle>
+							<IonLabel>The patient has not submitted a Symptoms form yet</IonLabel>
 						</IonTitle>
 					}
 					{
@@ -294,23 +308,21 @@ const PatientInformation: React.FC<{ patient: IPatient, updateStatus: (status: T
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								{
-									symptomsTable.map((el, index) => {
-										if (el.response == true || el.response == false) {
-											return <td key={index}>{el.response? 'Yes':'No'}</td>;
-										}
-										else {
-											return <td key={index}>Not Requested</td>;
-										}
-									}
-									)
-								}
-								{
-									props.symptomsResponse.length > 0 && props.symptomsResponse[0].onDate && <td>{props.symptomsResponse[0].onDate}</td>
-								}
-
-							</tr>
+							{
+								Array.from(symptomsTable).map((el, index1) => {
+									return (
+										<tr key={index1}>{ el[1].map((el, index2) => {
+											if (el.response == true || el.response == false) {
+												return <td key={index1+ '-'+ index2}>{el.response? 'Yes':'No'}</td>;
+											}
+											else {
+												return <td key={index1+ '-'+ index2}>Not Requested</td>;
+											}
+										}) }
+										<td key={index1}><Moment  date={el[0]}/></td></tr>
+									);
+								})
+							}
 						</tbody>
 					</table>
 					}

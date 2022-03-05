@@ -36,7 +36,7 @@ const PatientProfilePage: React.FC = () => {
 		if (currentProfile.getRole() == UserType.DOCTOR) {
 			getPatientWithIdAsDoctor();
 			getSymptoms();
-			getSymptomsWithAnswers();
+			getPatientSymptomHistory();
 		} else {
 			getPatientWithId();
 		}
@@ -65,13 +65,14 @@ const PatientProfilePage: React.FC = () => {
 		}
 	}
 
-	async function getSymptomsWithAnswers() {
+	async function getPatientSymptomHistory() {
 		try {
-			const data: ISymptomResponse[] = await HttpService.get(`doctors/patient/${medicalNumber}/symptoms/response`);
+			const data: ISymptomResponse[] =
+				await HttpService.get(`doctors/${currentProfile.id}/patient/${medicalNumber}/symptoms/history`);
 			setSymptomsResponse(data);
 		}
 		catch (e) {
-			console.log(e);
+			setSymptomsResponse([]);
 		}
 	}
 

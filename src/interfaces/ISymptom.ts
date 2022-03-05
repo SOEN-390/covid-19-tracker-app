@@ -9,5 +9,11 @@ export interface ISymptomResponse {
 	name: string,
 	description: string,
 	response?: boolean,
-	onDate?: Date
+	onDate: Date
+}
+
+export interface ISymptomTable {
+	name: string,
+	description: string,
+	response?: boolean
 }
