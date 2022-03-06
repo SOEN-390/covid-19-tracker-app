@@ -14,3 +14,10 @@ export interface IPatient {
 	// lastUpdatedAt: string;
 	flagged: boolean
 }
+
+
+export interface IContact {
+	fistName: string,
+	lastName: string,
+	testResult: TestResult
+}

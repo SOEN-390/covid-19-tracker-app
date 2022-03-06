@@ -15,42 +15,11 @@ import { useAuth } from '../../providers/auth.provider';
 import { useState } from 'react';
 import { TestResult } from '../../enum/TestResult.enum';
 import { ISymptom } from '../../interfaces/ISymptom';
+import { IContact } from '../../interfaces/IPatient';
 
 
-const ContactTracingTable: React.FC = () => {
+const ContactTracingTable: React.FC<{contacts: IContact[]}> = (props) => {
 
-
-	const { currentProfile } = useAuth();
-	const [medicalNumber, setMedicalNumber] = useState<string>('');
-	const [firstName, setFirstName] = useState<string>('');
-	const [lastName, setLastName] = useState<string>('');
-	const [testResult, setTestResult] = useState<TestResult>(currentProfile.testResult);
-	const [email, setEmail] = useState<string>('');
-	const [dob, setDOB] = useState<string>('');
-	const [symptomsList, setSymptomsList] = useState<ISymptom[]>([]);
-	async function getPatientWithEmail() {
-		try {
-			const data = await HttpService.get(`doctors/patient/${email}`);
-			setData(data);
-		} catch (e) {
-			console.log(e);
-		}
-	}
-
-	function setData(data: any) {
-		setFirstName(data.firstName);
-		setLastName(data.lastName);
-		switch (data.testResult) {
-			case 'positive':
-				setTestResult(TestResult.POSITIVE);
-				break;
-			case 'negative':
-				setTestResult(TestResult.NEGATIVE);
-				break;
-			default:
-				setTestResult(TestResult.PENDING);
-		}
-	}
 
 	function createData(fname: string, lname: string, status: any, monitorSymptoms: any, date: any, temperature: string, symptoms: string) {
 		return {
@@ -134,12 +103,13 @@ const ContactTracingTable: React.FC = () => {
 		}).isRequired,
 	};
 
-	const rows = [
-		createData(firstName, lastName, testResult, 'Monitor Symptoms', '20-02-2022', '37.5', 'breathing'),
-		createData('Kero', 'Wahbe', 'Positive', 'Monitor Symptoms', '20-02-2022', '37.5', 'breathing'),
-		createData('Beshoy', 'Soliman', 'Positive', 'Monitor Symptoms', '20-02-2022', '37.5', 'breathing'),
+	const rows = [];
 
-	];
+	for (const row of props.contacts) {
+		rows.push(createData(row.fistName, row.lastName, row.testResult,
+			'Monitor Symptoms', '20-02-2022', '37.5', 'breathing'));
+	}
+
 
 
 	return (
