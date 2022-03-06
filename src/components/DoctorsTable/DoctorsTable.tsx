@@ -4,7 +4,7 @@ import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table';
 import { IDoctorTableRow } from '../../interfaces/IDoctorTableRow';
 
 interface Column {
-	id: 'name' | 'licenseId' | 'phoneNumber' | 'address' | 'email';
+	id: 'name' | 'licenseId' | 'phoneNumber' | 'address' | 'email' | 'numberOfPatients';
 	label: string;
 	minWidth?: number;
 	align?: 'center';
@@ -41,6 +41,12 @@ const columns: readonly Column[] = [
 		label: 'Email',
 		minWidth: 170,
 		align: 'center'
+	},
+	{
+		id: 'numberOfPatients',
+		label: 'Number of Patients',
+		minWidth: 170,
+		align: 'center'
 	}
 ];
 
@@ -68,6 +74,8 @@ const DoctorsTable: React.FC<{ doctorTableRows: IDoctorTableRow[] }> = (props) =
 								<Td id="col">{row.phoneNumber}</Td>
 								<Td id="col">{row.address}</Td>
 								<Td id="col">{row.email}</Td>
+								<Td id="col">{row.numberOfPatients}</Td>
+
 							</Tr>
 						);
 					})
