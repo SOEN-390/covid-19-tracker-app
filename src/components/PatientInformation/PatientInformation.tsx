@@ -9,7 +9,7 @@ import {
 	IonText, IonTitle, useIonToast
 } from '@ionic/react';
 import './PatientInformation.css';
-import './ContactTracingTable.css';
+import '../ContactTracingTable/ContactTracingTable.css';
 import { IContact, IPatient } from '../../interfaces/IPatient';
 import { useAuth } from '../../providers/auth.provider';
 import { UserType } from '../../enum/UserType.enum';
@@ -20,7 +20,7 @@ import { flag } from 'ionicons/icons';
 import { ISymptom, ISymptomResponse, ISymptomTable } from '../../interfaces/ISymptom';
 import Moment from 'react-moment';
 import 'moment-timezone';
-import ContactTracingTable from './ContactTracingTable';
+import ContactTracingTable from '../ContactTracingTable/ContactTracingTable';
 
 
 const PatientInformation: React.FC<{ patient: IPatient, updateStatus: (status: TestResult) => void, updateFlag: (bool: boolean) => void,
