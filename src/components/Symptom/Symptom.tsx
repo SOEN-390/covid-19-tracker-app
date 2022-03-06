@@ -15,7 +15,7 @@ import { ISymptom } from '../../interfaces/ISymptom';
 import HttpService from '../../providers/http.service';
 import { useAuth } from '../../providers/auth.provider';
 
-const Symptom: React.FC<{symptomsList: ISymptom[], handleSubmit: any}> = (props) => {
+const Symptom: React.FC<{symptomsList: ISymptom[], handleSubmit: () => void}> = (props) => {
 
 	const {currentProfile} = useAuth();
 	const [present] = useIonToast();
