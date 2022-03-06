@@ -224,7 +224,7 @@ const PatientInformation: React.FC<{ patient: IPatient, updateStatus?: any, upda
 						}
 
 					</IonRow>
-					{currentProfile.getRole() === UserType.DOCTOR &&
+					{currentProfile.getRole() === (UserType.DOCTOR || UserType.HEALTH_OFFICIAL) &&
 						<IonRow>
 
 							<div className="button">
@@ -233,6 +233,7 @@ const PatientInformation: React.FC<{ patient: IPatient, updateStatus?: any, upda
 									symptoms update</IonButton> </IonCol>
 								<IonCol> <IonButton className="buttonc">Set an Appointment</IonButton> </IonCol>
 								<IonCol> <IonButton className="buttonc">Send Email</IonButton> </IonCol>
+
 								<IonCol> <IonButton onClick={togglePopup} className="buttonc">Contact tracing</IonButton> </IonCol>
 								{contactTracingPopUp && (
 									<div className='model'>
