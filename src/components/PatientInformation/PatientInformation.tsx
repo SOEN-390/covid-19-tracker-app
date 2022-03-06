@@ -299,21 +299,27 @@ const PatientInformation: React.FC<{ patient: IPatient, updateStatus: (status: T
 								seeSymptoms && <IonCol> <IonButton className="buttonc" onClick={()=> { setSeeSymptoms(false);} }>Hide Symptoms</IonButton></IonCol>
 							}
 
-							<IonCol> <IonButton onClick={getPatientsContacts} className="buttonc">Contact tracing</IonButton> </IonCol>
-							{contactTracingPopUp && (
-								<div className='model'>
-									<div className='overlay' onClick={() => setContactTracingPopUp(false)}></div>
-									<div className='model-content'>
-										<ContactTracingTable contacts={contacts}/>
-
-										<IonButton onClick={() => setContactTracingPopUp(false)} className="buttonc">CLOSE</IonButton>
-									</div>
-								</div>
-							)}
 
 						</div>
 					</IonRow>
 					}
+					{
+						(currentProfile.getRole() == UserType.HEALTH_OFFICIAL || currentProfile.getRole() == UserType.DOCTOR) &&
+						<IonCol> <IonButton onClick={getPatientsContacts} className="buttonc">Contact tracing</IonButton> </IonCol>
+					}
+
+					{contactTracingPopUp && (
+						<div className='model'>
+							<div className='overlay' onClick={() => setContactTracingPopUp(false)}></div>
+							<div className='model-content'>
+								<ContactTracingTable contacts={contacts}/>
+								<IonButton onClick={() => setContactTracingPopUp(false)} className="buttonc">CLOSE</IonButton>
+							</div>
+						</div>
+					)}
+
+
+
 					{
 						currentProfile.getRole() === UserType.DOCTOR &&
 					<IonRow>
