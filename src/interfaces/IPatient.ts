@@ -17,7 +17,8 @@ export interface IPatient {
 
 
 export interface IContact {
-	fistName: string,
+	medicalId: any,
+	firstName: string,
 	lastName: string,
 	testResult: TestResult
 }

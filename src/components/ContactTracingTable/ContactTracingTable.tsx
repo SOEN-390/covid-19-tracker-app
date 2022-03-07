@@ -6,23 +6,19 @@ import './ContactTracingTable.css';
 
 import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';
-import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import HttpService from '../../providers/http.service';
-import { useAuth } from '../../providers/auth.provider';
-import { useState } from 'react';
-import { TestResult } from '../../enum/TestResult.enum';
-import { ISymptom } from '../../interfaces/ISymptom';
+
 import { IContact } from '../../interfaces/IPatient';
 
 
-const ContactTracingTable: React.FC<{contacts: IContact[]}> = (props) => {
+const ContactTracingTable: React.FC<{ contacts: IContact[] }> = (props) => {
 
 
-	function createData(fname: string, lname: string, status: any, monitorSymptoms: any, date: any, temperature: string, symptoms: string) {
+	function createData(medicalId: any, fname: string, lname: string, status: any, monitorSymptoms: any, date: any, temperature: string, symptoms: string) {
 		return {
+			medicalId,
 			fname,
 			lname,
 			status,
@@ -44,7 +40,9 @@ const ContactTracingTable: React.FC<{contacts: IContact[]}> = (props) => {
 		return (
 			<React.Fragment>
 				<Tr >
-					<Td id="colName"> {row.fname} {row.lname} </Td>
+					<Td id="colName"> {row.fname} </Td>
+					<Td id="colName"> {row.lname}</Td>
+
 					<Td ><div className={'patients-table__status '}>{row.status}</div></Td>
 					<Td>
 						<IonButton color="favorite" shape="round" size="large"
@@ -89,10 +87,11 @@ const ContactTracingTable: React.FC<{contacts: IContact[]}> = (props) => {
 
 	Row.propTypes = {
 		row: PropTypes.shape({
+			medicalId: PropTypes.any,
 			fname: PropTypes.string.isRequired,
 			lname: PropTypes.string.isRequired,
 			status: PropTypes.any.isRequired,
-			monitorSymptoms: PropTypes.any.isRequired,
+			monitorSymptoms: PropTypes.any,
 			history: PropTypes.arrayOf(
 				PropTypes.shape({
 					date: PropTypes.string.isRequired,
@@ -106,7 +105,7 @@ const ContactTracingTable: React.FC<{contacts: IContact[]}> = (props) => {
 	const rows = [];
 
 	for (const row of props.contacts) {
-		rows.push(createData(row.fistName, row.lastName, row.testResult,
+		rows.push(createData(row.medicalId, row.firstName, row.lastName, row.testResult,
 			'Monitor Symptoms', '20-02-2022', '37.5', 'breathing'));
 	}
 
@@ -117,7 +116,9 @@ const ContactTracingTable: React.FC<{contacts: IContact[]}> = (props) => {
 			<Table aria-label="collapsible table" align='center'>
 				<Thead>
 					<Tr id="tableHead">
-						<Th id="headCol">Name</Th>
+						<Th id="headCol">First Name</Th>
+						<Th id="headCol">Last Name</Th>
+
 						<Th id="headCol">Status</Th>
 						<Th />
 
@@ -125,7 +126,7 @@ const ContactTracingTable: React.FC<{contacts: IContact[]}> = (props) => {
 				</Thead>
 				<Tbody>
 					{rows.map((row) => (
-						<Row key={row.fname} row={row} />
+						<Row key={row.medicalId} row={row} />
 					))}
 				</Tbody>
 			</Table>

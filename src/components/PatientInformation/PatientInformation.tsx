@@ -23,154 +23,160 @@ import 'moment-timezone';
 import ContactTracingTable from '../ContactTracingTable/ContactTracingTable';
 
 
-const PatientInformation: React.FC<{ patient: IPatient, updateStatus: (status: TestResult) => void, updateFlag: (bool: boolean) => void,
-	symptomsList: ISymptom[], symptomsResponse: ISymptomResponse[] }> = (props) => {
+const PatientInformation: React.FC<{
+	patient: IPatient, updateStatus: (status: TestResult) => void, updateFlag: (bool: boolean) => void,
+	symptomsList: ISymptom[], symptomsResponse: ISymptomResponse[]
+}> = (props) => {
 
-		const {currentProfile} = useAuth();
-		const [showStatusModal, setShowStatusModal] = useState(false);
-		const [showSymptomsModal, setShowSymptomsModal] = useState(false);
-		const [status, setStatus] = useState(props.patient.testResult);
-		const [present] = useIonToast();
-		const [seeSymptoms, setSeeSymptoms] = useState<boolean>(false);
-		const [symptomsTable, setSymptomsTable] = useState<Map<Date, ISymptomTable[]>>(new Map<Date, ISymptomTable[]>());
-		const [contactTracingPopUp, setContactTracingPopUp] = useState(false);
-		const [contacts, setContacts] = useState<IContact[]>([]);
+	const { currentProfile } = useAuth();
+	const [showStatusModal, setShowStatusModal] = useState(false);
+	const [showSymptomsModal, setShowSymptomsModal] = useState(false);
+	const [status, setStatus] = useState(props.patient.testResult);
+	const [present] = useIonToast();
+	const [seeSymptoms, setSeeSymptoms] = useState<boolean>(false);
+	const [symptomsTable, setSymptomsTable] = useState<Map<Date, ISymptomTable[]>>(new Map<Date, ISymptomTable[]>());
+	const [contactTracingPopUp, setContactTracingPopUp] = useState(false);
+	const [contacts, setContacts] = useState<IContact[]>([]);
 
 
-		async function updateStatus() {
-			if (currentProfile.testResult == status) {
-				return;
-			}
-			try {
-				await HttpService.patch(`patients/${currentProfile.id}/status`, {status: status});
-				props.updateStatus(status);
-				setShowStatusModal(false);
-				present('Successfully updated status', 1500);
-			} catch (e) {
-				present('Failed to update status', 1500);
+	async function updateStatus() {
+		if (currentProfile.testResult == status) {
+			return;
+		}
+		try {
+			await HttpService.patch(`patients/${currentProfile.id}/status`, { status: status });
+			props.updateStatus(status);
+			setShowStatusModal(false);
+			present('Successfully updated status', 1500);
+		} catch (e) {
+			present('Failed to update status', 1500);
+		}
+	}
+
+	async function flagPatient() {
+		try {
+			await HttpService.post(`patients/${props.patient.medicalId}/flag`,
+				{ role: currentProfile.getRole() });
+			props.updateFlag(true);
+			present('Successfully flagged patient', 1500);
+		} catch (e) {
+			present('Failed to flag patient', 1500);
+		}
+	}
+
+	async function unFlagPatient() {
+		try {
+			await HttpService.post(`patients/${props.patient.medicalId}/unflag`,
+				{ role: currentProfile.getRole() });
+			props.updateFlag(false);
+			present('Successfully unflagged patient', 1500);
+		} catch (e) {
+			present('Failed to unflag patient', 1500);
+		}
+	}
+
+	function handleCheck(e: string) {
+		if (!props.symptomsList) {
+			return;
+		}
+		for (const symp of props.symptomsList) {
+			if (symp.name === e) {
+				symp.isChecked = true;
+				break;
 			}
 		}
+	}
 
-		async function flagPatient() {
-			try {
-				await HttpService.post(`patients/${props.patient.medicalId}/flag`,
-					{role: currentProfile.getRole()});
-				props.updateFlag(true);
-				present('Successfully flagged patient', 1500);
-			} catch (e) {
-				present('Failed to flag patient', 1500);
+	async function submitSymptoms() {
+		if (!props.symptomsList) {
+			return;
+		}
+		const symptomsToRequest: string[] = [];
+		for (const symp of props.symptomsList) {
+			if (symp.isChecked) {
+				symptomsToRequest.push(symp.name);
 			}
 		}
+		if (symptomsToRequest.length == 0) {
+			present('Please select symptoms to request', 1500);
+			return;
+		}
+		try {
+			await HttpService.post(`doctors/${currentProfile.id}/patient/${props.patient.medicalId}/symptoms`, {
+				checklist: symptomsToRequest
+			});
+			setShowSymptomsModal(false);
+			present('Successfully requested symptoms', 1500);
+		}
+		catch (e) {
+			present('You already have a pending request', 1500);
+		}
+	}
 
-		async function unFlagPatient() {
-			try {
-				await HttpService.post(`patients/${props.patient.medicalId}/unflag`,
-					{role: currentProfile.getRole()});
-				props.updateFlag(false);
-				present('Successfully unflagged patient', 1500);
-			} catch (e) {
-				present('Failed to unflag patient', 1500);
+	function generateSymptomsTable() {
+		if (!props.symptomsList || !props.symptomsResponse) {
+			return;
+		}
+		const symptomsTableMap = new Map<Date, ISymptomTable[]>();
+
+		for (let i = 0; i < props.symptomsResponse.length; i++) {
+			if (i == 0) {
+				symptomsTableMap.set(props.symptomsResponse[i].onDate, []);
+			}
+			if (i > 0 && props.symptomsResponse[i].onDate != props.symptomsResponse[i - 1].onDate) {
+				symptomsTableMap.set(props.symptomsResponse[i].onDate, []);
 			}
 		}
+		mapResponseToRow(symptomsTableMap);
+	}
 
-		function handleCheck(e: string) {
-			if (!props.symptomsList) {
-				return;
-			}
-			for (const symp of props.symptomsList) {
-				if (symp.name === e) {
-					symp.isChecked = true;
-					break;
-				}
-			}
-		}
-
-		async function submitSymptoms() {
-			if (!props.symptomsList) {
-				return;
-			}
-			const symptomsToRequest: string[] = [];
-			for (const symp of props.symptomsList) {
-				if (symp.isChecked) {
-					symptomsToRequest.push(symp.name);
-				}
-			}
-			if (symptomsToRequest.length ==0) {
-				present('Please select symptoms to request', 1500);
-				return;
-			}
-			try {
-				await HttpService.post(`doctors/${currentProfile.id}/patient/${props.patient.medicalId}/symptoms`, {
-					checklist: symptomsToRequest
-				});
-				setShowSymptomsModal(false);
-				present('Successfully requested symptoms', 1500);
-			}
-			catch (e) {
-				present('You already have a pending request', 1500);
-			}
-		}
-
-		function generateSymptomsTable() {
-			if (!props.symptomsList || !props.symptomsResponse) {
-				return;
-			}
-			const symptomsTableMap = new Map<Date, ISymptomTable[]>();
-
-			for (let i=0; i<props.symptomsResponse.length; i++) {
-				if (i==0) {
-					symptomsTableMap.set(props.symptomsResponse[i].onDate, []);
-				}
-				if (i > 0 && props.symptomsResponse[i].onDate != props.symptomsResponse[i-1].onDate) {
-					symptomsTableMap.set(props.symptomsResponse[i].onDate, []);
-				}
-			}
-			mapResponseToRow(symptomsTableMap);
-		}
-
-		function mapResponseToRow(symptomsTableMap: Map<Date, ISymptomTable[]>) {
-			for (const [key , value] of symptomsTableMap) {
-				for (let i=0; i< props.symptomsList.length; i++) {
-					for (const response of props.symptomsResponse) {
-						if (props.symptomsList[i].name == response.name && response.onDate == key) {
-							value[i] = {name: response.name, description: response.description,
-								response: response.response};
-						}
-						else {
-							if (!value[i]) {
-								value[i] = {name: props.symptomsList[i].name, description: props.symptomsList[i].description,
-									response: undefined};
-							}
-
-						}
+	function mapResponseToRow(symptomsTableMap: Map<Date, ISymptomTable[]>) {
+		for (const [key, value] of symptomsTableMap) {
+			for (let i = 0; i < props.symptomsList.length; i++) {
+				for (const response of props.symptomsResponse) {
+					if (props.symptomsList[i].name == response.name && response.onDate == key) {
+						value[i] = {
+							name: response.name, description: response.description,
+							response: response.response
+						};
 					}
+					else {
+						if (!value[i]) {
+							value[i] = {
+								name: props.symptomsList[i].name, description: props.symptomsList[i].description,
+								response: undefined
+							};
+						}
 
+					}
 				}
-			}
-			setSymptomsTable(symptomsTableMap);
-			setSeeSymptoms(true);
-		}
 
-		async function getPatientsContacts() {
-			try {
-				const data = await HttpService.get(`doctors/patient/${props.patient.medicalId}/contacts`);
-				setContacts(data);
-				setContactTracingPopUp(true);
-			} catch (e) {
-				console.log(e);
-				present('The patient has not been in contact with anyone', 1500);
 			}
 		}
+		setSymptomsTable(symptomsTableMap);
+		setSeeSymptoms(true);
+	}
+
+	async function getPatientsContacts() {
+		try {
+			const data = await HttpService.get(`doctors/patient/${props.patient.medicalId}/contacts`);
+			setContacts(data);
+			setContactTracingPopUp(true);
+		} catch (e) {
+			console.log(e);
+			present('The patient has not been in contact with anyone', 1500);
+		}
+	}
 
 
-		return (
-			<IonContent>
+	return (
+		<IonContent>
 
-				{props.patient.medicalId == '' && <IonTitle>
-					<IonLabel>Enter the medical ID of a patient above and hit search</IonLabel>
-				</IonTitle>}
+			{props.patient.medicalId == '' && <IonTitle>
+				<IonLabel>Enter the medical ID of a patient above and hit search</IonLabel>
+			</IonTitle>}
 
-				{props.patient.medicalId != '' &&
+			{props.patient.medicalId != '' &&
 
 
 				<div id="Container">
@@ -283,25 +289,25 @@ const PatientInformation: React.FC<{ patient: IPatient, updateStatus: (status: T
 					</IonRow>
 					{
 						currentProfile.getRole() === UserType.DOCTOR &&
-					<IonRow>
+						<IonRow>
 
-						<div className="button">
+							<div className="button">
 
-							<IonCol> <IonButton className="buttonc" onClick={() => setShowSymptomsModal(true)}>Request
-								symptoms update</IonButton> </IonCol>
-							<IonCol> <IonButton className="buttonc">Set an Appointment</IonButton> </IonCol>
-							<IonCol> <IonButton className="buttonc">Send Email</IonButton> </IonCol>
-							{
-								props.symptomsResponse && props.symptomsResponse.length > 0 && props.symptomsList && !seeSymptoms &&
-								<IonCol> <IonButton className="buttonc" onClick={()=> { generateSymptomsTable();} }>See Symptoms</IonButton></IonCol>
-							}
-							{
-								seeSymptoms && <IonCol> <IonButton className="buttonc" onClick={()=> { setSeeSymptoms(false);} }>Hide Symptoms</IonButton></IonCol>
-							}
+								<IonCol> <IonButton className="buttonc" onClick={() => setShowSymptomsModal(true)}>Request
+									symptoms update</IonButton> </IonCol>
+								<IonCol> <IonButton className="buttonc">Set an Appointment</IonButton> </IonCol>
+								<IonCol> <IonButton className="buttonc">Send Email</IonButton> </IonCol>
+								{
+									props.symptomsResponse && props.symptomsResponse.length > 0 && props.symptomsList && !seeSymptoms &&
+									<IonCol> <IonButton className="buttonc" onClick={() => { generateSymptomsTable(); }}>See Symptoms</IonButton></IonCol>
+								}
+								{
+									seeSymptoms && <IonCol> <IonButton className="buttonc" onClick={() => { setSeeSymptoms(false); }}>Hide Symptoms</IonButton></IonCol>
+								}
 
 
-						</div>
-					</IonRow>
+							</div>
+						</IonRow>
 					}
 					{
 						(currentProfile.getRole() == UserType.HEALTH_OFFICIAL || currentProfile.getRole() == UserType.DOCTOR) &&
@@ -312,7 +318,7 @@ const PatientInformation: React.FC<{ patient: IPatient, updateStatus: (status: T
 						<div className='model'>
 							<div className='overlay' onClick={() => setContactTracingPopUp(false)}></div>
 							<div className='model-content'>
-								<ContactTracingTable contacts={contacts}/>
+								<ContactTracingTable contacts={contacts} />
 								<IonButton onClick={() => setContactTracingPopUp(false)} className="buttonc">CLOSE</IonButton>
 							</div>
 						</div>
@@ -322,65 +328,66 @@ const PatientInformation: React.FC<{ patient: IPatient, updateStatus: (status: T
 
 					{
 						currentProfile.getRole() === UserType.DOCTOR &&
-					<IonRow>
-						{
-							props.symptomsResponse.length == 0 && !seeSymptoms && <IonTitle>
-								<IonLabel>The patient has not submitted a Symptoms form yet</IonLabel>
-							</IonTitle>
-						}
-						{
-							props.symptomsList && props.symptomsResponse && seeSymptoms &&
-						<table className="blueTable">
-							<caption><IonLabel>Patient&rsquo;s Symptom updates</IonLabel></caption>
-							<thead>
-								<tr>
-									{
-										props.symptomsList.map((el, index) => <th
-											key={index}>
-											{el.description}</th>)
-									}
-									<th>Updated on</th>
-								</tr>
-							</thead>
-							<tbody>
-								{
-									Array.from(symptomsTable).map((el, index1) => {
-										return (
-											<tr key={index1}>{ el[1].map((el, index2) => {
-												if (el.response == true || el.response == false) {
-													return <td key={index1+ '-'+ index2}>{el.response? 'Yes':'No'}</td>;
-												}
-												else {
-													return <td key={index1+ '-'+ index2}>Not Requested</td>;
-												}
-											}) }
-											<td key={index1}><Moment  date={el[0]}/></td></tr>
-										);
-									})
-								}
-							</tbody>
-						</table>
-						}
-					</IonRow>
+						<IonRow>
+							{
+								props.symptomsResponse.length == 0 && !seeSymptoms && <IonTitle>
+									<IonLabel>The patient has not submitted a Symptoms form yet</IonLabel>
+								</IonTitle>
+							}
+							{
+								props.symptomsList && props.symptomsResponse && seeSymptoms &&
+								<table className="blueTable">
+									<caption><IonLabel>Patient&rsquo;s Symptom updates</IonLabel></caption>
+									<thead>
+										<tr>
+											{
+												props.symptomsList.map((el, index) => <th
+													key={index}>
+													{el.description}</th>)
+											}
+											<th>Updated on</th>
+										</tr>
+									</thead>
+									<tbody>
+										{
+											Array.from(symptomsTable).map((el, index1) => {
+												return (
+													<tr key={index1}>{el[1].map((el, index2) => {
+														if (el.response == true || el.response == false) {
+															return <td key={index1 + '-' + index2}>{el.response ? 'Yes' : 'No'}</td>;
+														}
+														else {
+															return <td key={index1 + '-' + index2}>Not Requested</td>;
+														}
+													})}
+
+														<td key={index1}><Moment date={el[0]} /></td></tr>
+												);
+											})
+										}
+									</tbody>
+								</table>
+							}
+						</IonRow>
 					}
 
 					{currentProfile.getRole() === UserType.DOCTOR &&
-					<IonRow>
-						<div id="Container2">
-							<IonRow>
-								<IonCol size="3"><IonLabel>Subject</IonLabel></IonCol>
-								<IonCol><IonInput className="login-text-field"></IonInput></IonCol>
+						<IonRow>
+							<div id="Container2">
+								<IonRow>
+									<IonCol size="3"><IonLabel>Subject</IonLabel></IonCol>
+									<IonCol><IonInput className="login-text-field"></IonInput></IonCol>
 
-							</IonRow>
-							<IonRow>
-								<IonCol size="3"><IonLabel>Description</IonLabel></IonCol>
-								<IonCol><IonInput className="login-text-field"></IonInput></IonCol>
-								<IonButton className="buttonc">Add</IonButton>
+								</IonRow>
+								<IonRow>
+									<IonCol size="3"><IonLabel>Description</IonLabel></IonCol>
+									<IonCol><IonInput className="login-text-field"></IonInput></IonCol>
+									<IonButton className="buttonc">Add</IonButton>
 
-							</IonRow>
+								</IonRow>
 
-						</div>
-					</IonRow>
+							</div>
+						</IonRow>
 					}
 
 					<IonModal isOpen={showStatusModal}>
@@ -391,17 +398,17 @@ const PatientInformation: React.FC<{ patient: IPatient, updateStatus: (status: T
 								</IonListHeader>
 								<IonItem>
 									<IonLabel>Positive</IonLabel>
-									<IonRadio slot="start" value={TestResult.POSITIVE}/>
+									<IonRadio slot="start" value={TestResult.POSITIVE} />
 								</IonItem>
 
 								<IonItem>
 									<IonLabel>Negative</IonLabel>
-									<IonRadio slot="start" value={TestResult.NEGATIVE}/>
+									<IonRadio slot="start" value={TestResult.NEGATIVE} />
 								</IonItem>
 
 								<IonItem>
 									<IonLabel>Not tested/Pending</IonLabel>
-									<IonRadio slot="start" value={TestResult.PENDING}/>
+									<IonRadio slot="start" value={TestResult.PENDING} />
 								</IonItem>
 
 							</IonRadioGroup>
@@ -426,10 +433,10 @@ const PatientInformation: React.FC<{ patient: IPatient, updateStatus: (status: T
 
 				</div>
 
-				}
-			</IonContent>
+			}
+		</IonContent>
 
-		);
-	};
+	);
+};
 
 export default PatientInformation;
