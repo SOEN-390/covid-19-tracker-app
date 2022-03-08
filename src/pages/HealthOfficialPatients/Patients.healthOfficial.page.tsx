@@ -6,8 +6,9 @@ import { useEffect, useState } from 'react';
 import HttpService from '../../providers/http.service';
 import { TestResult } from '../../enum/TestResult.enum';
 import { Patient } from '../../objects/Patient.class';
+import './Patients.healthOfficial.page.scss';
 
-const PatientsPage: React.FC = () => {
+const PatientsHealthOfficialPage: React.FC = () => {
 
 	const [patients, setPatients] = useState<Patient[]>([]);
 	const [patientsTableRow, setPatientsTableRow] = useState<Patient[]>([]);
@@ -69,21 +70,24 @@ const PatientsPage: React.FC = () => {
 
 	return (
 		<IonPage>
-
 			<IonToolbar>
 				<NavBar/>
 			</IonToolbar>
-			<IonContent>
-				<IonTitle id="title"> Patients </IonTitle>
+			<IonContent className={'patient-health-official-page__content'}>
+				<IonTitle>Patients</IonTitle>
 				<div>
 					<IonRow>
 						<IonCol/>
-						<IonCol class="confirmButton">
-							<IonButton color={tableSelection === 'confirmed' ? 'favorite1' : 'favorite'}
+						<IonCol className={'patient-health-official-page__confirmed'}>
+							<IonButton className={tableSelection === 'confirmed' ?
+								'patient-health-official-page__button-selected' :
+								'patient-health-official-page__button-unselected'}
 									   onClick={filterConfirmedPatients}>Confirmed</IonButton>
 						</IonCol>
-						<IonCol class="unconfirmedButton">
-							<IonButton color={tableSelection === 'unconfirmed' ? 'favorite1' : 'favorite'}
+						<IonCol className={'patient-health-official-page__unconfirmed'}>
+							<IonButton className={tableSelection === 'unconfirmed' ?
+								'patient-health-official-page__button-selected' :
+								'patient-health-official-page__button-unselected'}
 									   onClick={filterUnconfirmedPatients}>UnConfirmed</IonButton>
 						</IonCol>
 						<IonCol/>
@@ -100,4 +104,4 @@ const PatientsPage: React.FC = () => {
 	);
 };
 
-export default PatientsPage;
+export default PatientsHealthOfficialPage;
