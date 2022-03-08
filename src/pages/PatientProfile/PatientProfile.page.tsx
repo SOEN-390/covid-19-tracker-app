@@ -8,6 +8,7 @@ import { UserType } from '../../enum/UserType.enum';
 import { TestResult } from '../../enum/TestResult.enum';
 import { Gender } from '../../enum/Gender.enum';
 import { ISymptom, ISymptomResponse } from '../../interfaces/ISymptom';
+import { Patient } from '../../objects/Patient.class';
 
 const PatientProfilePage: React.FC = () => {
 
@@ -45,7 +46,7 @@ const PatientProfilePage: React.FC = () => {
 
 	async function getPatientWithId() {
 		try {
-			const data = await HttpService.get(`patients/${medicalNumber}`);
+			const data: Patient = await HttpService.get(`patients/${medicalNumber}`);
 			setData(data);
 		} catch (e) {
 			console.log(e);
@@ -85,7 +86,7 @@ const PatientProfilePage: React.FC = () => {
 		}
 	}
 
-	function setData(data: any) {
+	function setData(data: Patient) {
 		setFirstName(data.firstName);
 		setLastName(data.lastName);
 		switch (data.testResult) {

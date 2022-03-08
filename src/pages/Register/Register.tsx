@@ -1,4 +1,5 @@
 import {
+	InputChangeEventDetail,
 	IonApp,
 	IonButton,
 	IonContent,
@@ -62,18 +63,18 @@ const Register: React.FC = () => {
 				<div className="ion-align-items-center; register__form">
 					<IonLabel className="register__login-text">Email</IonLabel>
 					<IonInput className="register__text-field" placeholder="Enter your email" type="text"
-							  onIonChange={(e: any) => setEmail(e.target.value)}/>
+							  onIonChange={(e: CustomEvent<InputChangeEventDetail>) => setEmail(e.detail.value || '')}/>
 
 					<br/><br/>
 					<IonLabel className="register__login-text">New Password</IonLabel>
 					<IonInput className="register__text-field" placeholder="Enter a password" type="password"
-							  onIonChange={(e: any) => setPassword(e.target.value)}/>
+							  onIonChange={(e: CustomEvent<InputChangeEventDetail>) => setPassword(e.detail.value || '')}/>
 
 					<br/><br/>
 
 					<IonLabel className="register__login-text">Confirm your password</IonLabel>
 					<IonInput className="register__text-field" placeholder="Enter a password" type="password"
-							  onIonChange={(e: any) => setCPassword(e.target.value)}/>
+							  onIonChange={(e: CustomEvent<InputChangeEventDetail>) => setCPassword(e.detail.value || '')}/>
 
 					<br/><br/>
 

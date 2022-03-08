@@ -20,36 +20,36 @@ test('LoginPage: Renders without crashing', () => {
 	expect(baseElement).toBeDefined();
 });
 
-describe("LoginPage: Test login form", () => {
+describe('LoginPage: Test login form', () => {
 	let renderedPage: RenderResult;
 
 	beforeEach(async () => {
 		renderedPage = render(<LoginPage/>);
 	});
 
-	test("Insert email", () => {
+	test('Insert email', () => {
 		const emailField = renderedPage.queryByTestId('login__email-field');
 		if (!emailField) {
 			throw Error('No email IonInput found.');
 		}
 		fireEvent.change(emailField, {
-			target: { value: "demo@demo.com" }
+			target: {value: 'demo@demo.com'}
 		});
 		expect((emailField as any).value).toBe('demo@demo.com');
 	});
 
-	test("Insert password", () => {
+	test('Insert password', () => {
 		const passwordField = renderedPage.queryByTestId('login__password-field');
 		if (!passwordField) {
 			throw Error('No password IonInput found.');
 		}
 		fireEvent.change(passwordField, {
-			target: { value: "Demo123" }
+			target: {value: 'Demo123'}
 		});
 		expect((passwordField as any).value).toBe('Demo123');
 	});
 
-	test("Login with correct data", async () => {
+	test('Login with correct data', async () => {
 		const emailField = renderedPage.queryByTestId('login__email-field');
 		if (!emailField) {
 			throw Error('No email IonInput found.');
@@ -72,7 +72,7 @@ describe("LoginPage: Test login form", () => {
 		// expect(useAuth().login.mock).toBe(true)
 	});
 
-	test("Login with wrong data", async () => {
+	test('Login with wrong data', async () => {
 		const emailField = renderedPage.queryByTestId('login__email-field');
 		if (!emailField) {
 			throw Error('No email IonInput found.');

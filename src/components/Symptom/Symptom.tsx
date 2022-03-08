@@ -5,7 +5,6 @@ import {
 	IonCol,
 	IonContent,
 	IonGrid,
-	IonInput, IonItem,
 	IonLabel,
 	IonRow, useIonToast
 } from '@ionic/react';

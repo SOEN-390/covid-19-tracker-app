@@ -1,4 +1,5 @@
 import {
+	InputChangeEventDetail,
 	IonApp,
 	IonButton,
 	IonCheckbox,
@@ -43,13 +44,13 @@ const LoginPage: React.FC = () => {
 					<IonLabel className="login__text">Email</IonLabel>
 					<IonInput data-testid={'login__email-field'} className="login__text-field"
 							  placeholder="Enter your Email" type="email" value={email}
-							  onIonChange={(e: any) => setEmail(e.detail.value)}/>
+							  onIonChange={(e: CustomEvent<InputChangeEventDetail>) => setEmail(e.detail.value || '')}/>
 
 					<br/><br/>
 					<IonLabel className="login__text">Password</IonLabel>
 					<IonInput data-testid={'login__password-field'} className="login__text-field"
 							  placeholder="Enter your password" type="password" value={password}
-							  onIonChange={(e: any) => setPassword(e.detail.value)}/>
+							  onIonChange={(e: CustomEvent<InputChangeEventDetail>) => setPassword(e.detail.value || '')}/>
 
 					<IonItem className="login__ion-item" lines="none">
 						<div slot="start">
