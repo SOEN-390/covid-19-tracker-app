@@ -28,8 +28,10 @@ import { ISymptom, ISymptomResponse, ISymptomTable } from '../../interfaces/ISym
 import Moment from 'react-moment';
 import 'moment-timezone';
 
-const PatientInformation: React.FC<{ patient: IPatient, updateStatus: (status: TestResult) => void, updateFlag: (bool: boolean) => void,
-	symptomsList: ISymptom[], symptomsResponse: ISymptomResponse[] }> = (props) => {
+const PatientInformation: React.FC<{
+	patient: IPatient, updateStatus: (status: TestResult) => void, updateFlag: (bool: boolean) => void,
+	symptomsList: ISymptom[], symptomsResponse: ISymptomResponse[]
+}> = (props) => {
 
 	const {currentProfile} = useAuth();
 	const [showStatusModal, setShowStatusModal] = useState<boolean>(false);
@@ -87,23 +89,6 @@ const PatientInformation: React.FC<{ patient: IPatient, updateStatus: (status: T
 		}
 	}
 
-	function generateSymptomsTable() {
-		if (!props.symptomsList || !props.symptomsResponse) {
-			return;
-		}
-		const symptomsTableMap = new Map<Date, ISymptomTable[]>();
-
-		for (let i=0; i<props.symptomsResponse.length; i++) {
-			if (i==0) {
-				symptomsTableMap.set(props.symptomsResponse[i].onDate, []);
-			}
-			if (i > 0 && props.symptomsResponse[i].onDate != props.symptomsResponse[i-1].onDate) {
-				symptomsTableMap.set(props.symptomsResponse[i].onDate, []);
-			}
-		}
-		mapResponseToRow(symptomsTableMap);
-	}
-
 	async function submitSymptoms(): Promise<void> {
 		if (!props.symptomsList) {
 			return;
@@ -129,6 +114,48 @@ const PatientInformation: React.FC<{ patient: IPatient, updateStatus: (status: T
 		}
 	}
 
+	function generateSymptomsTable() {
+		if (!props.symptomsList || !props.symptomsResponse) {
+			return;
+		}
+		const symptomsTableMap = new Map<Date, ISymptomTable[]>();
+
+		for (let i = 0; i < props.symptomsResponse.length; i++) {
+			if (i == 0) {
+				symptomsTableMap.set(props.symptomsResponse[i].onDate, []);
+			}
+			if (i > 0 && props.symptomsResponse[i].onDate != props.symptomsResponse[i - 1].onDate) {
+				symptomsTableMap.set(props.symptomsResponse[i].onDate, []);
+			}
+		}
+		mapResponseToRow(symptomsTableMap);
+	}
+
+	function mapResponseToRow(symptomsTableMap: Map<Date, ISymptomTable[]>) {
+		for (const [key, value] of symptomsTableMap) {
+			for (let i = 0; i < props.symptomsList.length; i++) {
+				for (const response of props.symptomsResponse) {
+					if (props.symptomsList[i].name == response.name && response.onDate == key) {
+						value[i] = {
+							name: response.name, description: response.description,
+							response: response.response
+						};
+					} else {
+						if (!value[i]) {
+							value[i] = {
+								name: props.symptomsList[i].name, description: props.symptomsList[i].description,
+								response: undefined
+							};
+						}
+
+					}
+				}
+
+			}
+		}
+		setSymptomsTable(symptomsTableMap);
+		setSeeSymptoms(true);
+	}
 
 	return (
 		<IonContent>
@@ -252,13 +279,17 @@ const PatientInformation: React.FC<{ patient: IPatient, updateStatus: (status: T
 									props.symptomsResponse && props.symptomsResponse.length > 0 &&
 									props.symptomsList && !seeSymptoms &&
 									<IonCol>
-										<IonButton onClick={()=> { generateSymptomsTable(); }}>See Symptoms</IonButton>
+										<IonButton onClick={() => {
+											generateSymptomsTable();
+										}}>See Symptoms</IonButton>
 									</IonCol>
 								}
 								{
 									seeSymptoms &&
 									<IonCol>
-										<IonButton onClick={()=> { setSeeSymptoms(false); }}>Hide Symptoms</IonButton>
+										<IonButton onClick={() => {
+											setSeeSymptoms(false);
+										}}>Hide Symptoms</IonButton>
 									</IonCol>
 								}
 							</div>
