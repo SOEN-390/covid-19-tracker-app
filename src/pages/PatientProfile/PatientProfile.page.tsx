@@ -7,7 +7,7 @@ import { useAuth } from '../../providers/auth.provider';
 import { UserType } from '../../enum/UserType.enum';
 import { TestResult } from '../../enum/TestResult.enum';
 import { Gender } from '../../enum/Gender.enum';
-import { ISymptom } from '../../interfaces/ISymptom';
+import { ISymptom, ISymptomResponse } from '../../interfaces/ISymptom';
 
 const PatientProfilePage: React.FC = () => {
 
@@ -24,6 +24,7 @@ const PatientProfilePage: React.FC = () => {
 	const [gender, setGender] = useState<Gender>(Gender.NONE);
 	const [flagged, setFlagged] = useState<boolean>(false);
 	const [symptomsList, setSymptomsList] = useState<ISymptom[]>([]);
+	const [symptomsResponse, setSymptomsResponse] = useState<ISymptomResponse[]>([]);
 
 	useEffect(() => {
 		if (currentProfile.getRole() === UserType.PATIENT) {
@@ -35,6 +36,7 @@ const PatientProfilePage: React.FC = () => {
 		if (currentProfile.getRole() == UserType.DOCTOR) {
 			getPatientWithIdAsDoctor();
 			getSymptoms();
+			getPatientSymptomHistory();
 		} else {
 			getPatientWithId();
 		}
@@ -60,6 +62,17 @@ const PatientProfilePage: React.FC = () => {
 			setSymptomsList(symptoms);
 		} catch (e) {
 			console.log(e);
+		}
+	}
+
+	async function getPatientSymptomHistory() {
+		try {
+			const data: ISymptomResponse[] =
+				await HttpService.get(`doctors/${currentProfile.id}/patient/${medicalNumber}/symptoms/history`);
+			setSymptomsResponse(data);
+		}
+		catch (e) {
+			setSymptomsResponse([]);
 		}
 	}
 
@@ -119,7 +132,8 @@ const PatientProfilePage: React.FC = () => {
 				dob: dob,
 				gender: gender,
 				flagged: flagged
-			}} updateStatus={handleStatus} updateFlag={handleFlag} symptomsList ={symptomsList} />
+			}} updateStatus={handleStatus} updateFlag={handleFlag} symptomsList ={symptomsList}
+			symptomsResponse = {symptomsResponse}/>
 		</IonPage>
 	);
 };

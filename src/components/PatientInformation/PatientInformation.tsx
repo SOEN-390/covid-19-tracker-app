@@ -24,16 +24,20 @@ import React, { useState } from 'react';
 import { TestResult } from '../../enum/TestResult.enum';
 import HttpService from '../../providers/http.service';
 import { flag } from 'ionicons/icons';
-import { ISymptom } from '../../interfaces/ISymptom';
+import { ISymptom, ISymptomResponse, ISymptomTable } from '../../interfaces/ISymptom';
+import Moment from 'react-moment';
+import 'moment-timezone';
 
-
-const PatientInformation: React.FC<{ patient: IPatient, updateStatus?: any, updateFlag?: any, symptomsList?: ISymptom[] }> = (props) => {
+const PatientInformation: React.FC<{ patient: IPatient, updateStatus: (status: TestResult) => void, updateFlag: (bool: boolean) => void,
+	symptomsList: ISymptom[], symptomsResponse: ISymptomResponse[] }> = (props) => {
 
 	const {currentProfile} = useAuth();
 	const [showStatusModal, setShowStatusModal] = useState<boolean>(false);
 	const [showSymptomsModal, setShowSymptomsModal] = useState<boolean>(false);
 	const [status, setStatus] = useState<TestResult>(props.patient.testResult);
 	const [present] = useIonToast();
+	const [seeSymptoms, setSeeSymptoms] = useState<boolean>(false);
+	const [symptomsTable, setSymptomsTable] = useState<Map<Date, ISymptomTable[]>>(new Map<Date, ISymptomTable[]>());
 
 	async function updateStatus(): Promise<void> {
 		if (currentProfile.testResult == status) {
@@ -227,42 +231,74 @@ const PatientInformation: React.FC<{ patient: IPatient, updateStatus?: any, upda
 								<IonCol>
 									<IonButton>Send Email</IonButton>
 								</IonCol>
+								{
+									props.symptomsResponse && props.symptomsResponse.length > 0 &&
+									props.symptomsList && !seeSymptoms &&
+									<IonCol>
+										<IonButton onClick={()=> { generateSymptomsTable(); }}>See Symptoms</IonButton>
+									</IonCol>
+								}
+								{
+									seeSymptoms &&
+									<IonCol>
+										<IonButton onClick={()=> { setSeeSymptoms(false); }}>Hide Symptoms</IonButton>
+									</IonCol>
+								}
 							</div>
 						</IonRow>
 					}
 					{
 						currentProfile.getRole() === UserType.DOCTOR &&
 						<IonRow>
-							<table className="patient-information__medical-table">
-								<thead>
+							{
+								props.symptomsResponse.length == 0 && !seeSymptoms &&
+								<IonTitle>
+									<IonLabel>The patient has not submitted a Symptoms form yet</IonLabel>
+								</IonTitle>
+							}
+							{
+								props.symptomsList && props.symptomsResponse && seeSymptoms &&
+								<table className="patient-information__medical-table">
+									<caption>
+										<IonLabel>Patient&rsquo;s Symptom updates</IonLabel>
+									</caption>
+									<thead>
 									<tr>
-										<th>Date</th>
-										<th>Temperature</th>
-										<th>Breathing</th>
-										<th>Other Symptoms</th>
+										{
+											props.symptomsList.map((el, index) => (
+												<th key={index}>
+													{el.description}
+												</th>)
+											)
+										}
+										<th>Updated on</th>
 									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td>cell1_1</td>
-										<td>cell2_1</td>
-										<td>cell3_1</td>
-										<td>cell4_1</td>
-									</tr>
-									<tr>
-										<td>cell1_2</td>
-										<td>cell2_2</td>
-										<td>cell3_2</td>
-										<td>cell4_2</td>
-									</tr>
-									<tr>
-										<td>cell1_3</td>
-										<td>cell2_3</td>
-										<td>cell3_3</td>
-										<td>cell4_3</td>
-									</tr>
-								</tbody>
-							</table>
+									</thead>
+									<tbody>
+									{
+										Array.from(symptomsTable).map((el, index1) => (
+												<tr key={index1}>
+													{
+														el[1].map((el, index2) => {
+															if (el.response == true || el.response == false) {
+																return (
+																	<td key={index1 + '-' + index2}>{el.response ? 'Yes' : 'No'}</td>);
+															} else {
+																return (
+																	<td key={index1 + '-' + index2}>Not Requested</td>);
+															}
+														})
+													}
+													<td key={index1}>
+														<Moment date={el[0]}/>
+													</td>
+												</tr>
+											)
+										)
+									}
+									</tbody>
+								</table>
+							}
 						</IonRow>
 					}
 					{
