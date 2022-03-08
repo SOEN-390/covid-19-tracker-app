@@ -87,6 +87,23 @@ const PatientInformation: React.FC<{ patient: IPatient, updateStatus: (status: T
 		}
 	}
 
+	function generateSymptomsTable() {
+		if (!props.symptomsList || !props.symptomsResponse) {
+			return;
+		}
+		const symptomsTableMap = new Map<Date, ISymptomTable[]>();
+
+		for (let i=0; i<props.symptomsResponse.length; i++) {
+			if (i==0) {
+				symptomsTableMap.set(props.symptomsResponse[i].onDate, []);
+			}
+			if (i > 0 && props.symptomsResponse[i].onDate != props.symptomsResponse[i-1].onDate) {
+				symptomsTableMap.set(props.symptomsResponse[i].onDate, []);
+			}
+		}
+		mapResponseToRow(symptomsTableMap);
+	}
+
 	async function submitSymptoms(): Promise<void> {
 		if (!props.symptomsList) {
 			return;
