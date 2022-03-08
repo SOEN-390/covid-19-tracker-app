@@ -15,10 +15,18 @@ const DoctorsAdminPage: React.FC = () => {
 	}, []);
 
 	async function doctorsRetrieval() {
-		HttpService.get('doctors/all').then(async (response) => {
-			setDoctorsArray(response);
-		}).catch((error) => {
-			console.log('ERROR: ', error);
+		const doctorsResponse: IDoctorTableRow[] = await HttpService.get(
+			'doctors/all'
+		);
+		doctorsResponse.map(async (doctor: IDoctorTableRow) => {
+			const numberOfPatientsResponse = await HttpService.get(
+				`doctors/${doctor.licenseId}/patients/assigned`
+			);
+			const modifiedDoctorResponse = {
+				...doctor,
+				numberOfPatients: numberOfPatientsResponse.length,
+			};
+			setDoctorsArray([modifiedDoctorResponse]);
 		});
 	}
 
@@ -31,7 +39,7 @@ const DoctorsAdminPage: React.FC = () => {
 				<IonTitle>Doctors</IonTitle>
 				<br/>
 				{
-					doctorsArray !== undefined ? <DoctorsTable doctorTableRows={doctorsArray}/> : null
+					doctorsArray ? <DoctorsTable doctorTableRows={doctorsArray}/> : null
 				}
 			</IonContent>
 		</IonPage>

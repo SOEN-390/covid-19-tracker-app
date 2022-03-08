@@ -1,10 +1,16 @@
-import './DoctorTable.scss';
+import './DoctorTable.css';
 import * as React from 'react';
 import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table';
 import { IDoctorTableRow } from '../../interfaces/IDoctorTableRow';
 
 interface Column {
-	id: 'name' | 'licenseId' | 'phoneNumber' | 'address' | 'email';
+	id:
+		| 'name'
+		| 'licenseId'
+		| 'phoneNumber'
+		| 'address'
+		| 'email'
+		| 'numberOfPatients';
 	label: string;
 	minWidth?: number;
 	align?: 'center';
