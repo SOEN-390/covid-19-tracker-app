@@ -19,7 +19,6 @@ import { ISymptom, ISymptomResponse, ISymptomTable } from '../../interfaces/ISym
 import Moment from 'react-moment';
 import 'moment-timezone';
 
-
 const PatientInformation: React.FC<{ patient: IPatient, updateStatus: (status: TestResult) => void, updateFlag: (bool: boolean) => void,
 	symptomsList: ISymptom[], symptomsResponse: ISymptomResponse[] }> = (props) => {
 
