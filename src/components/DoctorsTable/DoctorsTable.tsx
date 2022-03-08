@@ -1,4 +1,4 @@
-import './DoctorTable.css';
+import './DoctorTable.scss';
 import * as React from 'react';
 import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table';
 import { IDoctorTableRow } from '../../interfaces/IDoctorTableRow';
@@ -47,41 +47,40 @@ const columns: readonly Column[] = [
 		label: 'Email',
 		minWidth: 170,
 		align: 'center'
-	},
-	{
-		id: 'numberOfPatients',
-		label: 'Number of Patients',
-		minWidth: 170,
-		align: 'center'
-	},
+	}
 ];
 
-const DoctorsTable: React.FC<{ doctorTableRows: IDoctorTableRow[] }> = ({
-	doctorTableRows,
-}) => (
-	<Table>
-		<Thead>
-			<Tr id="tableHead">
-				{columns.map((column) => (
-					<Th key={column.label} id="headCol">
-						{column.label}
-					</Th>
-				))}
-			</Tr>
-		</Thead>
-		<Tbody>
-			{doctorTableRows.map((row) => (
-				<Tr key={row.email} id="tableRow">
-					<Td id="colName">{row.firstName + ' ' + row.lastName}</Td>
-					<Td id="col">{row.licenseId}</Td>
-					<Td id="col">{row.phoneNumber}</Td>
-					<Td id="col">{row.address}</Td>
-					<Td id="col">{row.email}</Td>
-					<Td id="col">{row.numberOfPatients}</Td>
+
+const DoctorsTable: React.FC<{ doctorTableRows: IDoctorTableRow[] }> = (props) => {
+
+	return (
+		<Table className={'doctor-table__table'}>
+			<Thead>
+				<Tr className={'doctor-table__table-head'}>
+					{
+						columns.map((column, index) => (
+							<Th key={index}>{column.label}</Th>
+						))
+					}
 				</Tr>
-			))}
-		</Tbody>
-	</Table>
-);
+			</Thead>
+			<Tbody>
+				{
+					props.doctorTableRows.map((row, index) => {
+						return (
+							<Tr key={index} className={'doctor-table__table-row'}>
+								<Td className={'doctor-table__doctor-name'}>{row.firstName + ' ' + row.lastName}</Td>
+								<Td>{row.licenseId}</Td>
+								<Td>{row.phoneNumber}</Td>
+								<Td>{row.address}</Td>
+								<Td>{row.email}</Td>
+							</Tr>
+						);
+					})
+				}
+			</Tbody>
+		</Table>
+	);
+};
 
 export default DoctorsTable;

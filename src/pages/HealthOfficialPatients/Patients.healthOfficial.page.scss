@@ -1,0 +1,25 @@
+ion-content.patient-health-official-page__content {
+
+  ion-title {
+
+  }
+
+  ion-col.patient-health-official-page__confirmed {
+    text-align: right;
+  }
+
+  ion-col.patient-health-official-page__unconfirmed {
+    text-align: left;
+  }
+
+  ion-button.patient-health-official-page__button-selected {
+    color: var(--ion-color-primary-contrast);
+    --background: var(--ion-color-dark-blue);
+  }
+
+  ion-button.patient-health-official-page__button-unselected {
+    color: var(--ion-color-dark-blue);
+    --background: var(--ion-color-primary-contrast);
+  }
+
+}

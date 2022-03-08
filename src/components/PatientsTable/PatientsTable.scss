@@ -1,228 +1,100 @@
-/* inspired by: https://css-tricks.com/responsive-data-tables/ */
-.responsiveTable {
-  width: 98%;
-}
+table.patients-table__table {
 
-.responsiveTable td .tdBefore {
-  display: none;
-}
-
-@media screen and (max-width: 40em) {
-
-  /*
-    Force table elements to not behave like tables anymore
-    Hide table headers (but not display: none;, for accessibility)
-  */
-  .responsiveTable table,
-  .responsiveTable thead,
-  .responsiveTable tbody,
-  .responsiveTable th,
-  .responsiveTable td,
-  .responsiveTable tr {
-    display: block;
+  th:first-child {
+    border-radius: 10px 0 0 10px;
+    position: sticky;
+    top: 0;
+    z-index: 9999;
   }
 
-  .responsiveTable thead tr {
-    position: absolute;
-    top: -9999px;
-    left: -9999px;
-    border-bottom: 2px solid #333;
+  th:last-child {
+    border-radius: 0 10px 10px 0;
   }
 
-  .responsiveTable tbody tr {
-    border-bottom: 1px solid #000;
-    padding: .5em;
+  tr.patients-table__table-head {
+    background-color: rgba(44, 77, 98, .12);
+    border-radius: 50px;
+    box-sizing: border-box;
+    filter: blur(1);
+    height: 60px;
+
+    th.patients-table__table-column-title {
+      color: var(--ion-color-dark-blue);
+      font-weight: bold;
+      font-size: 18px;
+      text-align: center;
+      padding: 10px;
+    }
   }
 
-  .responsiveTable td.pivoted {
-    /* Behave like a "row" */
-    border: none !important;
-    position: relative;
-    padding-left: calc(50% + 10px) !important;
-    text-align: left !important;
-    white-space: pre-wrap;
-    overflow-wrap: break-word;
-    padding-bottom: 10px;
+  tr.patients-table__table-entries {
+    border-radius: 10px;
+    border-bottom: 1px solid #E7E7E7;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    box-sizing: border-box;
+    height: inherit;
+
+    td {
+      color: var(--ion-color-dark-blue);
+      font-weight: normal;
+      font-size: 16px;
+      margin: auto;
+      text-align: center;
+      padding: 10px;
+
+      ion-button {
+        color: var(--ion-color-dark-blue);
+        --background: var(--ion-color-primary-contrast);
+      }
+    }
+
+    td.patients-table__table-entries__name {
+      text-align: left;
+    }
+
+    div.patients-table__status {
+      height: 32px;
+      font-weight: normal;
+      font-size: 14px;
+      border-radius: 60px;
+      background-color: #129C0F;
+      color: #FEFFFE;
+      vertical-align: middle;
+      line-height: 32px;
+      text-align: center;
+    }
+
+    div.patients-table__status__positive {
+      background-color: #db0101;
+    }
+
+    div.patients-table__status__negative {
+      background-color: #129C0F;
+    }
+
+    div.patients-table__status__pending {
+      background-color: #797777;
+    }
+
+    td.patients-table__table-entries__last-updated {
+    }
+
+    td.patients-table__table-entries__doctor-name {
+    }
+
+    td.patients-table__flag {
+      font-size: 30px;
+
+      .patients-table__flag__no-priority {
+        color: gray;
+      }
+
+      .patients-table__flag__high-priority {
+        color: red;
+      }
+    }
 
   }
 
-  .responsiveTable td .tdBefore {
-    /* Now like a table header */
-    position: absolute;
-    display: block;
-
-    /* Top/left values mimic padding */
-    left: 1rem;
-    width: calc(50% - 20px);
-    white-space: pre-wrap;
-    overflow-wrap: break-word;
-    text-align: left !important;
-    font-weight: 600;
-  }
-}
-
-#title {
-  color: #2C4D62;
-  font-family: 'Poppins';
-  font-weight: bold;
-  font-size: 50px;
-}
-
-ion-content {
-  --padding-top: 20px;
-}
-
-:root {
-  --ion-color-favorite: #2C4D62;
-  --ion-color-favorite1: rgba(255, 255, 255, 0.74);
-  --ion-color-primary-contrast: #ffffff;
-  --ion-color-primary-contrast-rgb: 255, 255, 255;
-  --ion-color-primary-shade: #447697;
-  --ion-color-primary-tint: #14242D;
-}
-
-.ion-color-favorite {
-  --ion-color-base: var(--ion-color-favorite);
-}
-
-.ion-color-favorite1 {
-  --ion-color-base: var(--ion-color-favorite1);
-  --border-color: #2C4D62;
-  --border-width: 2px;
-  --color: #2C4D62;
-  --ion-color-hover: var(--ion-color-hover);
-}
-
-.confirmButton {
-  text-align: right;
-}
-
-tr {
-  position:sticky;
-  top:0;
-}
-
-table th:first-child {
-  border-radius: 10px 0 0 10px;
-  position: sticky;
-  top: 0;
-  z-index: 9999;
-}
-
-table th:last-child {
-  border-radius: 0 10px 10px 0;
-}
-
-.unconfirmedButton {
-  text-align: left;
-  color: #2C4D62;
-}
-
-#headCol {
-  color: #2C4D62;
-  font-family: 'Poppins';
-  font-weight: bold;
-  font-size: 18px;
-  text-align: center;
-  padding: 10px;
-}
-
-#tableHead {
-  background-color: #e8ebee;
-  border-radius: 50px;
-  box-sizing: border-box;
-  filter: blur(1);
-  height: 60px;
-  position: sticky;
-  z-index: 1;
-}
-
-#tableRow {
-  border-radius: 10px;
-  border-bottom: 1px solid #E7E7E7;
-  margin-top: 5px;
-  margin-bottom: 5px;
-  box-sizing: border-box;
-  height: inherit;
-}
-
-#colName {
-  color: #2C4D62;
-  font-family: 'Poppins';
-  font-weight: normal;
-  font-size: 16px;
-  text-align: left;
-  padding: 10px;
-}
-
-.patients-table__status {
-  height: 32px;
-  font-weight: normal;
-  font-size: 14px;
-  border-radius: 60px;
-  background-color: #129C0F;
-  color: #FEFFFE;
-  vertical-align: middle;
-  line-height: 32px;
-  text-align: center;
-}
-
-.patients-table__status__positive {
-  background-color: #db0101;
-}
-
-.patients-table__status__negative {
-  background-color: #129C0F;
-}
-
-.patients-table__status__pending {
-  background-color: #797777;
-}
-
-#lastUpdate {
-  color: #f80d38;
-  font-family: 'Poppins';
-  font-weight: normal;
-  font-size: 16px;
-  text-align: center;
-  padding: 10px;
-}
-
-#colDoc {
-  color: #2C4D62;
-  font-family: 'Poppins';
-  font-weight: normal;
-  font-size: 16px;
-  text-align: left;
-  padding: 10px;
-}
-
-#col {
-  color: #2C4D62;
-  font-family: 'Poppins';
-  font-weight: normal;
-  font-size: 16px;
-  margin: auto;
-  text-align: center;
-  padding: 10px;
-}
-
-.patients-table__flag {
-  text-align: center;
-  font-size: 30px;
-
-  .no-priority {
-    color: gray;
-  }
-
-  .high-priority {
-    color: red;
-  }
-}
-
-ion-button {
-  font-weight: bold;
-  font-size: 12px;
-  font-family: 'Poppins';
-  height: 32px;
 }
