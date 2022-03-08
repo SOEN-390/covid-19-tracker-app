@@ -311,20 +311,20 @@ const PatientInformation: React.FC<{
 										<IonLabel>Patient&rsquo;s Symptom updates</IonLabel>
 									</caption>
 									<thead>
-									<tr>
-										{
-											props.symptomsList.map((el, index) => (
-												<th key={index}>
-													{el.description}
-												</th>)
-											)
-										}
-										<th>Updated on</th>
-									</tr>
+										<tr>
+											{
+												props.symptomsList.map((el, index) => (
+													<th key={index}>
+														{el.description}
+													</th>)
+												)
+											}
+											<th>Updated on</th>
+										</tr>
 									</thead>
 									<tbody>
-									{
-										Array.from(symptomsTable).map((el, index1) => (
+										{
+											Array.from(symptomsTable).map((el, index1) => (
 												<tr key={index1}>
 													{
 														el[1].map((el, index2) => {
@@ -341,9 +341,8 @@ const PatientInformation: React.FC<{
 														<Moment date={el[0]}/>
 													</td>
 												</tr>
-											)
-										)
-									}
+											))
+										}
 									</tbody>
 								</table>
 							}
