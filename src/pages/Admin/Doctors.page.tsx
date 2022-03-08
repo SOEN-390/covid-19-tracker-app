@@ -6,36 +6,43 @@ import { IDoctorTableRow } from '../../interfaces/IDoctorTableRow';
 import DoctorsTable from '../../components/DoctorsTable/DoctorsTable';
 
 const DoctorsPage: React.FC = () => {
-
-	const [doctorsArray, setDoctorssArray] = useState<IDoctorTableRow[]>();
+	const [doctorsArray, setDoctorsArray] = useState<IDoctorTableRow[]>();
 
 	useEffect(() => {
-		doctorssRetrieval();
+		doctorsRetrieval();
 	}, []);
 
-	async function doctorssRetrieval() {
-		HttpService.get('doctors/all').then(async (response) => {
-			setDoctorssArray(response);
-		}).catch((error) => {
-			console.log('ERROR: ', error);
+	const doctorsRetrieval = async (): Promise<IDoctorTableRow[] | void> => {
+		const doctorsResponse: IDoctorTableRow[] = await HttpService.get(
+			'doctors/all'
+		);
+		console.log('doctorsResponse: ', doctorsResponse);
+
+		doctorsResponse.map(async (doctor: IDoctorTableRow) => {
+			console.log('doctor: ', doctor);
+			const numberOfPatientsResponse = await HttpService.get(
+				`doctors/${doctor.licenseId}/patients/assigned`
+			);
+			const modifiedDoctorResponse = {
+				...doctor,
+				numberOfPatients: numberOfPatientsResponse.length,
+			};
+			console.log('modifiedDoctorResponse: ', modifiedDoctorResponse);
+			setDoctorsArray([modifiedDoctorResponse]);
 		});
-	}
+	};
 
 	return (
 		<IonPage>
 			<IonToolbar>
-				<NavBar/>
+				<NavBar />
 			</IonToolbar>
 			<IonContent>
 				<IonTitle id="patientHeader">Doctors</IonTitle>
-				<br/>
-				{
-					doctorsArray !== undefined ? <DoctorsTable doctorTableRows={doctorsArray}/> : null
-				}
+				<br />
+				{doctorsArray && <DoctorsTable doctorTableRows={doctorsArray} />}
 			</IonContent>
 		</IonPage>
 	);
-
 };
-
 export default DoctorsPage;
