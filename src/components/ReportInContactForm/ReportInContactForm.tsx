@@ -68,24 +68,24 @@ const ReportInContactForm: React.FC = () => {
 						<IonGrid key={index}>
 							<div className="report-form__input-div">
 								<IonRow>
-									<IonCol id={'report-form__input-div__column'}>
+									<IonCol className={'report-form__input-div__column'}>
 										<IonLabel>First Name</IonLabel>
 										<IonInput type="text" name="firstname" value={element.firstname || ''}
 												  onIonChange={e => handleChange(index, e)}/>
 									</IonCol>
-									<IonCol id={'report-form__input-div__column'}>
+									<IonCol className={'report-form__input-div__column'}>
 										<IonLabel>Last Name</IonLabel>
 										<IonInput type="text" name="lastname" value={element.lastname || ''}
 												  onIonChange={e => handleChange(index, e)}/>
 									</IonCol>
 								</IonRow>
 								<IonRow>
-									<IonCol id={'report-form__input-div__column'}>
+									<IonCol className={'report-form__input-div__column'}>
 										<IonLabel>Email</IonLabel>
 										<IonInput type="text" name="email" value={element.email || ''}
 												  onIonChange={e => handleChange(index, e)}/>
 									</IonCol>
-									<IonCol id={'report-form__input-div__column'}>
+									<IonCol className={'report-form__input-div__column'}>
 										<IonLabel>Phone</IonLabel>
 										<IonInput type="text" name="phoneNumber" value={element.phoneNumber || ''}
 												  onIonChange={e => handleChange(index, e)}/>
@@ -99,7 +99,7 @@ const ReportInContactForm: React.FC = () => {
 				<div className={'report-form__buttons-div'}>
 					<IonButton className={'report-form__buttons-div__add'} type="button" color="warning" onClick={() => addFormFields()}>Add
 						Another</IonButton>
-					<IonButton className={'report-form__buttons-div__submit'} color="favorite"
+					<IonButton className={'report-form__buttons-div__submit'}
 							   onClick={() => handleSubmit()}>Submit</IonButton>
 				</div>
 			</form>
