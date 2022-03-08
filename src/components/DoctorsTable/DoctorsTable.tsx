@@ -22,37 +22,37 @@ const columns: readonly Column[] = [
 		id: 'name',
 		label: 'Name',
 		minWidth: 170,
-		align: 'center',
+		align: 'center'
 	},
 	{
 		id: 'licenseId',
 		label: 'LicenseId',
 		minWidth: 170,
-		align: 'center',
+		align: 'center'
 	},
 	{
 		id: 'phoneNumber',
 		label: 'Phone Number',
 		minWidth: 170,
-		align: 'center',
+		align: 'center'
 	},
 	{
 		id: 'address',
 		label: 'Address',
 		minWidth: 170,
-		align: 'center',
+		align: 'center'
 	},
 	{
 		id: 'email',
 		label: 'Email',
 		minWidth: 170,
-		align: 'center',
+		align: 'center'
 	},
 	{
 		id: 'numberOfPatients',
 		label: 'Number of Patients',
 		minWidth: 170,
-		align: 'center',
+		align: 'center'
 	},
 ];
 
