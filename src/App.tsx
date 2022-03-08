@@ -2,7 +2,7 @@ import { IonApp, IonRouterOutlet, setupIonicReact } from '@ionic/react';
 import React from 'react';
 import { IonReactRouter } from '@ionic/react-router';
 import { Redirect, Route } from 'react-router-dom';
-import Login from './pages/Login/Login';
+import LoginPage from './pages/Login/Login.page';
 import Register from './pages/Register/Register';
 import PatientRouting from './routings/Patient.routing';
 import RegisterNext from './pages/Register/RegisterNext';
@@ -53,7 +53,7 @@ const App: React.FC = () => {
 							<Redirect to={Pages.login}/>
 						</Route>
 						<Route path={Pages.login} exact={true}>
-							<Login/>
+							<LoginPage/>
 						</Route>
 						<Route path={Pages.register} exact={true}>
 							<Register/>

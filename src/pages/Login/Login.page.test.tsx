@@ -1,8 +1,7 @@
 import React from 'react';
 import { fireEvent, render, RenderResult } from '@testing-library/react';
 import { ionFireEvent } from '@ionic/react-test-utils';
-import Login from './Login';
-import { useAuth } from '../../providers/auth.provider';
+import LoginPage from './Login.page';
 
 jest.mock('../../providers/auth.provider', () => ({
 	useAuth: () => ({
@@ -16,16 +15,16 @@ jest.mock('../../providers/auth.provider', () => ({
 }));
 
 
-test('Login-Page: Renders without crashing', () => {
-	const {baseElement} = render(<Login/>);
+test('LoginPage: Renders without crashing', () => {
+	const {baseElement} = render(<LoginPage/>);
 	expect(baseElement).toBeDefined();
 });
 
-describe("Login-Page: Test login form", () => {
+describe("LoginPage: Test login form", () => {
 	let renderedPage: RenderResult;
 
 	beforeEach(async () => {
-		renderedPage = render(<Login/>);
+		renderedPage = render(<LoginPage/>);
 	});
 
 	test("Insert email", () => {
