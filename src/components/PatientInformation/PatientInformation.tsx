@@ -351,21 +351,21 @@ const PatientInformation: React.FC<{
 					{
 						currentProfile.getRole() === UserType.DOCTOR &&
 						<IonRow>
-							<div className="patient-information__add-symptomContainer2">
+							<div className={'patient-information__add-symptom'}>
 								<IonRow>
-									<IonCol size="5">
+									<IonCol size={'3'}>
 										<IonLabel>Subject</IonLabel>
 									</IonCol>
-									<IonCol size={'7'}>
+									<IonCol size={'9'}>
 										<IonInput/>
 									</IonCol>
 
 								</IonRow>
 								<IonRow>
-									<IonCol size="5">
+									<IonCol size={'3'}>
 										<IonLabel>Description</IonLabel>
 									</IonCol>
-									<IonCol size={'7'}>
+									<IonCol size={'9'}>
 										<IonInput/>
 									</IonCol>
 									<IonCol>

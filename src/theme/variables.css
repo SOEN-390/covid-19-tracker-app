@@ -93,6 +93,15 @@ http://ionicframework.com/docs/theming/ */
     --ion-color-tint: var(--ion-color-dark-blue-tint);
 }
 
+ion-button,
+ion-label,
+ion-text,
+ion-title,
+th,
+td {
+  font-family: 'Poppins';
+}
+
 /* Disabled DarkMode theme */
 /*@media (prefers-color-scheme: dark) {*/
 /*  !**/
