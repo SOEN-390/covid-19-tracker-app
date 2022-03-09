@@ -80,7 +80,7 @@ const DoctorsTable: React.FC<{ doctorTableRows: IDoctorTableRow[] }> = (props) =
 								<Td>{row.phoneNumber}</Td>
 								<Td>{row.address}</Td>
 								<Td>{row.email}</Td>
-								<Td>{row.email}</Td>
+								<Td>{row.numberOfPatients}</Td>
 							</Tr>
 						);
 					})
