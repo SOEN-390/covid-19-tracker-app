@@ -1,0 +1,25 @@
+ion-content.patient-doctor-page__content {
+
+  ion-title {
+
+  }
+
+  ion-col.patient-doctor-page__confirmed {
+    text-align: right;
+  }
+
+  ion-col.patient-doctor-page__unconfirmed {
+    text-align: left;
+  }
+
+  ion-button.patient-doctor-page__button-selected {
+    color: var(--ion-color-primary-contrast);
+    --background: var(--ion-color-dark-blue);
+  }
+
+  ion-button.patient-doctor-page__button-unselected {
+    color: var(--ion-color-dark-blue);
+    --background: var(--ion-color-primary-contrast);
+  }
+
+}

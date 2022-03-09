@@ -16,7 +16,7 @@ const SymptomsFormPage: React.FC = () => {
 		getMyRequestedSymptoms();
 	}, []);
 
-	async function getMyRequestedSymptoms() {
+	async function getMyRequestedSymptoms(): Promise<void> {
 		try {
 			const symptoms: ISymptom[] = [];
 			const data: ISymptom[] = await HttpService.get(`patients/${currentProfile.id}/symptoms`);
@@ -31,7 +31,7 @@ const SymptomsFormPage: React.FC = () => {
 		}
 	}
 
-	function handleSubmit() {
+	function handleSubmit(): void {
 		setRequestExist(false);
 	}
 

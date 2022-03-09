@@ -1,25 +1,28 @@
 import { IonButton, IonCol, IonContent, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
 import NavBar from '../../components/NavBar/NavBar';
-import React, { useEffect, useState } from 'react';
-import HttpService from '../../providers/http.service';
 import PatientsTable from '../../components/PatientsTable/PatientsTable';
-import { Patient } from '../../objects/Patient.class';
+import * as React from 'react';
+import { useEffect, useState } from 'react';
+import HttpService from '../../providers/http.service';
 import { TestResult } from '../../enum/TestResult.enum';
+import { Patient } from '../../objects/Patient.class';
+import './Patients.healthOfficial.page.scss';
 
-const PatientsAdmin: React.FC = () => {
+const PatientsHealthOfficialPage: React.FC = () => {
+
 	const [patients, setPatients] = useState<Patient[]>([]);
 	const [patientsTableRow, setPatientsTableRow] = useState<Patient[]>([]);
 	const [tableSelection, setTableSelection] = useState<'confirmed' | 'unconfirmed'>('confirmed');
 
 	useEffect(() => {
-		getPatients();
+		getAllPatients();
 	}, []);
 
 	useEffect(() => {
 		if (tableSelection === 'confirmed') {
-			getConfirmedPatients();
+			filterConfirmedPatients();
 		} else {
-			getUnconfirmedPatients();
+			filterUnconfirmedPatients();
 		}
 	}, [patients]);
 
@@ -27,7 +30,7 @@ const PatientsAdmin: React.FC = () => {
 		setPatients(patients);
 	}
 
-	async function getPatients() {
+	async function getAllPatients() {
 		HttpService.get('patients/all').then((patients: Patient[]) => {
 			const patientsArranged: Patient[] = [];
 			for (const patient of patients) {
@@ -43,7 +46,7 @@ const PatientsAdmin: React.FC = () => {
 		});
 	}
 
-	function getConfirmedPatients() {
+	function filterConfirmedPatients() {
 		const patientTableRow: Patient[] = [];
 		for (const patient of patients) {
 			if (patient?.testResult === TestResult.POSITIVE || patient?.testResult === TestResult.NEGATIVE) {
@@ -54,7 +57,7 @@ const PatientsAdmin: React.FC = () => {
 		setPatientsTableRow(patientTableRow);
 	}
 
-	function getUnconfirmedPatients() {
+	function filterUnconfirmedPatients() {
 		const patientTableRow: Patient[] = [];
 		for (const patient of patients) {
 			if (patient?.testResult === TestResult.PENDING || patient?.testResult === null) {
@@ -70,18 +73,22 @@ const PatientsAdmin: React.FC = () => {
 			<IonToolbar>
 				<NavBar/>
 			</IonToolbar>
-			<IonContent>
-				<IonTitle id="patientHeader">Patients</IonTitle>
+			<IonContent className={'patient-health-official-page__content'}>
+				<IonTitle>Patients</IonTitle>
 				<div>
 					<IonRow>
 						<IonCol/>
-						<IonCol class="confirmButton">
-							<IonButton color={tableSelection === 'confirmed' ? 'favorite1' : 'favorite'}
-									   onClick={getConfirmedPatients}>Confirmed</IonButton>
+						<IonCol className={'patient-health-official-page__confirmed'}>
+							<IonButton className={tableSelection === 'confirmed' ?
+								'patient-health-official-page__button-selected' :
+								'patient-health-official-page__button-unselected'}
+									   onClick={filterConfirmedPatients}>Confirmed</IonButton>
 						</IonCol>
-						<IonCol class="unconfirmedButton">
-							<IonButton color={tableSelection === 'unconfirmed' ? 'favorite1' : 'favorite'}
-									   onClick={getUnconfirmedPatients}>UnConfirmed</IonButton>
+						<IonCol className={'patient-health-official-page__unconfirmed'}>
+							<IonButton className={tableSelection === 'unconfirmed' ?
+								'patient-health-official-page__button-selected' :
+								'patient-health-official-page__button-unselected'}
+									   onClick={filterUnconfirmedPatients}>UnConfirmed</IonButton>
 						</IonCol>
 						<IonCol/>
 					</IonRow>
@@ -92,9 +99,9 @@ const PatientsAdmin: React.FC = () => {
 						null
 				}
 			</IonContent>
+
 		</IonPage>
 	);
 };
 
-export default PatientsAdmin;
-
+export default PatientsHealthOfficialPage;

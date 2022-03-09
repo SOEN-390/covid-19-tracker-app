@@ -61,8 +61,8 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 	function getRow(patient: Patient, index: number): JSX.Element | null {
 
 		return (
-			<Tr id="tableRow" key={index}>
-				<Td key={index} id="colName">{patient.firstName + ' ' + patient.lastName}</Td>
+			<Tr className="patients-table__table-entries" key={index}>
+				<Td key={index} className="patients-table__table-entries__name">{patient.firstName + ' ' + patient.lastName}</Td>
 				<Td key={index}>
 					<div key={index} className={'patients-table__status ' +
 						(patient.testResult === TestResult.POSITIVE ? 'patients-table__status__positive' : '') +
@@ -74,25 +74,25 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 						{patient.testResult === TestResult.PENDING && 'Pending'}
 					</div>
 				</Td>
-				<Td key={index} id="lastUpdate">
+				<Td key={index} className="patients-table__table-entries__last-updated">
 					March 17, 2021
 				</Td>
 				{
 					currentProfile.getRole() !== UserType.DOCTOR &&
-					<Td key={index} id="colDoc">
+					<Td key={index} className="patients-table__table-entries__doctor-name">
 						Dr.Sue
 					</Td>
 				}
-				<Td key={index} id="col">
-					<IonButton color="favorite" shape="round" size="large">
+				<Td key={index}>
+					<IonButton shape="round">
 						Contact
 					</IonButton>
 				</Td>
 
 				{
 					(currentProfile.getRole() === UserType.HEALTH_OFFICIAL || currentProfile.getRole() === UserType.DOCTOR) &&
-					<Td key={index} id="col">
-						<IonButton color="favorite" shape="round" size="large" onClick={() => {
+					<Td key={index}>
+						<IonButton shape="round" onClick={() => {
 							setShowModal(true);
 							setSymptomsIndex(index);
 						}}>
@@ -133,7 +133,7 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 				}
 
 				<Td key={index} className={'patients-table__flag'}>
-					<IonIcon className={patient.flagged ? 'high-priority' : 'no-priority'}
+					<IonIcon className={patient.flagged ? 'patients-table__flag__high-priority' : 'patients-table__flag__no-priority'}
 							 ios={flag} md={flag}
 							 onClick={() => flagPatient(patient)}
 					/>
@@ -143,12 +143,12 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 	}
 
 	return (
-		<Table>
+		<Table className={'patients-table__table'}>
 			<Thead>
-				<Tr id="tableHead">
+				<Tr className={'patients-table__table-head'}>
 					{
 						columns.map((column, index) => (
-							<Th key={index} id="headCol">
+							<Th key={index} className={'patients-table__table-column-title'}>
 								{column.label}
 							</Th>
 						))
