@@ -14,6 +14,7 @@ export class Patient extends User {
 	private _gender!: Gender;
 	private _lastUpdatedAt!: string;
 	private _flagged!: boolean;
+	private _doctorName!: string;
 
 	// Constructor
 
@@ -77,6 +78,14 @@ export class Patient extends User {
 
 	set flagged(value: boolean) {
 		this._flagged = value;
+	}
+
+	get doctorName(): string {
+		return this._doctorName;
+	}
+
+	set doctorName(value: string) {
+		this._doctorName = value;
 	}
 
 	// Methods
