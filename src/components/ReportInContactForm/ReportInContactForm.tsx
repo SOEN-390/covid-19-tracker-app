@@ -27,7 +27,7 @@ const ReportInContactForm: React.FC = () => {
 	const [present] = useIonToast();
 	const [formValues, setFormValues] = useState<form[]>([{firstname: '', lastname: '', email: '', phoneNumber: ''}]);
 
-	const handleChange = (i: any, e: any): void => {
+	const handleChange = (i: number, e: any): void => {
 		const newFormValues: any = [...formValues];
 		newFormValues[i][e.target.name] = e.target.value;
 		setFormValues(newFormValues);

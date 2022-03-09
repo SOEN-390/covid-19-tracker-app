@@ -1,4 +1,5 @@
 import {
+	InputChangeEventDetail,
 	IonApp,
 	IonButton,
 	IonContent,
@@ -22,7 +23,6 @@ import { IPatient } from '../../interfaces/IPatient';
 import { auth } from '../../config/firebase';
 import { useAuth } from '../../providers/auth.provider';
 import { Gender } from '../../enum/Gender.enum';
-import { Patient } from '../../objects/Patient.class';
 
 setupIonicReact();
 
@@ -133,33 +133,33 @@ const RegisterNext: React.FC = () => {
 				<div className="ion-align-items-center; register__form">
 					<IonLabel className="register__login-text">First Name </IonLabel>
 					<IonInput className="register__text-field" placeholder="Enter your First Name" type="text"
-							  onIonChange={(e: any) => setFirstName(e.target.value)}/>
+							  onIonChange={(e: CustomEvent<InputChangeEventDetail>) => setFirstName(e.detail.value || '')}/>
 
 					<br/>
 
 					<IonLabel className="register__login-text">Last Name</IonLabel>
 					<IonInput className="register__text-field" placeholder="Enter your Last Name" type="text"
-							  onIonChange={(e: any) => setLastName(e.target.value)}/>
+							  onIonChange={(e: CustomEvent<InputChangeEventDetail>) => setLastName(e.detail.value || '')}/>
 					<br/>
 
 					<IonLabel className="register__login-text">Medical Card Number</IonLabel>
 					<IonInput className="register__text-field" placeholder="Enter your medical card number" type="text"
-							  onIonChange={(e: any) => setMedicalNumber(e.target.value)}/>
+							  onIonChange={(e: CustomEvent<InputChangeEventDetail>) => setMedicalNumber(e.detail.value || '')}/>
 					<br/>
 
 					<IonLabel className="register__login-text">Your Date of Birth</IonLabel>
 					<IonInput className="register__text-field" placeholder="MM/DD/YYYY" type="date"
-							  onIonChange={(e: any) => setDOB(e.target.value)}/>
+							  onIonChange={(e: CustomEvent<InputChangeEventDetail>) => setDOB(e.detail.value || '')}/>
 					<br/>
 
 					<IonLabel className="register__login-text">Your Address</IonLabel>
 					<IonInput className="register__text-field" placeholder="Enter your Address" type="text"
-							  onIonChange={(e: any) => setAddress(e.target.value)}/>
+							  onIonChange={(e: CustomEvent<InputChangeEventDetail>) => setAddress(e.detail.value || '')}/>
 					<br/>
 
 					<IonLabel className="register__login-text">Phone number</IonLabel>
 					<IonInput className="register__text-field" placeholder="Enter your phone number" type="text"
-							  onIonChange={(e: any) => setPhoneNumber(e.target.value)}/>
+							  onIonChange={(e: CustomEvent<InputChangeEventDetail>) => setPhoneNumber(e.detail.value || '')}/>
 					<br/>
 					<IonLabel className="register__login-text"> Gender </IonLabel>
 					<IonSelect interface="popover" placeholder="Select" onIonChange={(e: any) => setGender(e.target.value)}>

@@ -24,7 +24,7 @@ const NavBar: React.FC<{ callback?: any }> = (props) => {
 				{
 					currentProfile ? (currentProfile.getRole() === UserType.PATIENT ? null :
 						<div className={'search-bar'}>
-							<IonSearchbar value={searchText} onIonChange={e => setSearchText(e.detail.value!)}
+							<IonSearchbar value={searchText} onIonChange={e => setSearchText(e.detail.value || '')}
 										  showCancelButton="never"/>
 							<IonButton onClick={search}> Search </IonButton>
 						</div>) : null

@@ -1,4 +1,5 @@
 import {
+	InputChangeEventDetail,
 	IonApp,
 	IonButton,
 	IonCheckbox,
@@ -13,16 +14,16 @@ import {
 } from '@ionic/react';
 import CovidTrackerTransparent from '../../assets/images/CovidTrackerTransparent.png';
 import React, { useState } from 'react';
-import './Login.css';
+import './Login.page.scss';
 import { Pages } from '../../providers/pages.enum';
 import { useAuth } from '../../providers/auth.provider';
 
 setupIonicReact();
 
-const Login: React.FC = () => {
+const LoginPage: React.FC = () => {
 	const {login} = useAuth();
 	const [checked] = useState(false);
-	const [email, setEmail] = useState('');
+	const [email, setEmail] = useState<string>('');
 	const [password, setPassword] = useState('');
 	const [present] = useIonToast();
 
@@ -41,13 +42,15 @@ const Login: React.FC = () => {
 				<h2 className="login__text">Sign In</h2>
 				<div className="ion-align-items-center; login__form">
 					<IonLabel className="login__text">Email</IonLabel>
-					<IonInput className="login__text-field" placeholder="Enter your Email" type="text"
-							  onIonChange={(e: any) => setEmail(e.target.value)}/>
+					<IonInput data-testid={'login__email-field'} className="login__text-field"
+							  placeholder="Enter your Email" type="email" value={email}
+							  onIonChange={(e: CustomEvent<InputChangeEventDetail>) => setEmail(e.detail.value || '')}/>
 
 					<br/><br/>
 					<IonLabel className="login__text">Password</IonLabel>
-					<IonInput className="login__text-field" placeholder="Enter your password" type="password"
-							  onIonChange={(e: any) => setPassword(e.target.value)}/>
+					<IonInput data-testid={'login__password-field'} className="login__text-field"
+							  placeholder="Enter your password" type="password" value={password}
+							  onIonChange={(e: CustomEvent<InputChangeEventDetail>) => setPassword(e.detail.value || '')}/>
 
 					<IonItem className="login__ion-item" lines="none">
 						<div slot="start">
@@ -58,7 +61,7 @@ const Login: React.FC = () => {
 					</IonItem>
 					<br/>
 					<IonButton onClick={loginUser} className={'login__btn'} size="large" expand="block" fill="solid"
-							   color={'dark-blue'}>LOGIN</IonButton>
+							   data-testid={'login__button'} color={'dark-blue'}>LOGIN</IonButton>
 					<br/>
 					<p className={'login__register-text'}> Do not have an account? <br/>
 						<a href={Pages.register} className={'.login__register-btn'}>Register</a>
@@ -69,4 +72,4 @@ const Login: React.FC = () => {
 	);
 };
 
-export default Login;
+export default LoginPage;

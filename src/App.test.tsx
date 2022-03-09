@@ -19,9 +19,7 @@ jest.mock('firebase/compat/app', () => {
 	};
 });
 
-test('renders without crashing', () => {
-
+test('App: Renders without crashing', () => {
 	const {baseElement} = render(<App/>);
 	expect(baseElement).toBeDefined();
-
 });
