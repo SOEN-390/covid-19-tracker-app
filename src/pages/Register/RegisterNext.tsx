@@ -58,8 +58,7 @@ const RegisterNext: React.FC = () => {
 			email: auth.currentUser?.email,
 			phoneNumber: phoneNumber,
 			dob: dob,
-			gender: gender,
-			flagged: false
+			gender: gender
 		};
 
 		saveUser(user).then((success) => {
