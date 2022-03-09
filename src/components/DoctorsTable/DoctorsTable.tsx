@@ -47,6 +47,12 @@ const columns: readonly Column[] = [
 		label: 'Email',
 		minWidth: 170,
 		align: 'center'
+	},
+	{
+		id: 'numberOfPatients',
+		label: 'Number of Patients',
+		minWidth: 170,
+		align: 'center'
 	}
 ];
 
@@ -73,6 +79,7 @@ const DoctorsTable: React.FC<{ doctorTableRows: IDoctorTableRow[] }> = (props) =
 								<Td>{row.licenseId}</Td>
 								<Td>{row.phoneNumber}</Td>
 								<Td>{row.address}</Td>
+								<Td>{row.email}</Td>
 								<Td>{row.email}</Td>
 							</Tr>
 						);
