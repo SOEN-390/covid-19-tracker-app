@@ -5,12 +5,11 @@ import RegisterPage from './Register.page';
 
 const mockSignUpFn = jest.fn();
 
-jest.mock('../../providers/auth.provider', () => () => (
-	jest.fn(() => ({
+jest.mock('../../providers/auth.provider', () => ({
+	useAuth: () => ({
 		signup: mockSignUpFn
-	}))
-));
-
+	})
+}));
 
 test('RegisterPage: Renders without crashing', () => {
 	const {baseElement} = render(<RegisterPage />);
@@ -22,6 +21,12 @@ describe('Register: Test register form', () => {
 
 	beforeEach(async () => {
 		renderedPage = render(<RegisterPage />);
+		mockSignUpFn.mockImplementation((email: string, password: string) => {
+			if (email === 'doctor@demo.com') {
+				throw Error('Email already taken');
+			}
+			return true;
+		});
 	});
 
 	test('Insert email', () => {
@@ -74,7 +79,7 @@ describe('Register: Test register form', () => {
 	});
 
 	test('Register with empty email data', async () => {
-		const passwordField = renderedPage.queryByTestId('register__password-confirm-field') as HTMLIonInputElement;
+		const passwordField = renderedPage.queryByTestId('register__password-field') as HTMLIonInputElement;
 		ionFireEvent.ionChange(passwordField, 'Demo123');
 
 		const loginButton = renderedPage.queryByTestId('register__button') as HTMLIonButtonElement;
@@ -87,7 +92,7 @@ describe('Register: Test register form', () => {
 		const emailField = renderedPage.queryByTestId('register__email-field') as HTMLIonInputElement;
 		ionFireEvent.ionChange(emailField, 'demo@demo.com');
 
-		const passwordField = renderedPage.queryByTestId('register__password-confirm-field') as HTMLIonInputElement;
+		const passwordField = renderedPage.queryByTestId('register__password-field') as HTMLIonInputElement;
 		ionFireEvent.ionChange(passwordField, 'Demo123');
 
 		const confirmPasswordField = renderedPage.queryByTestId('register__password-confirm-field') as HTMLIonInputElement;
@@ -97,6 +102,38 @@ describe('Register: Test register form', () => {
 		ionFireEvent.click(loginButton);
 
 		expect(mockSignUpFn).toBeCalledTimes(0);
+	});
+
+	test('Register with correct data', async () => {
+		const emailField = renderedPage.queryByTestId('register__email-field') as HTMLIonInputElement;
+		ionFireEvent.ionChange(emailField, 'demo@demo.com');
+
+		const passwordField = renderedPage.queryByTestId('register__password-field') as HTMLIonInputElement;
+		ionFireEvent.ionChange(passwordField, 'Demo123');
+
+		const confirmPasswordField = renderedPage.queryByTestId('register__password-confirm-field') as HTMLIonInputElement;
+		ionFireEvent.ionChange(confirmPasswordField, 'Demo123');
+
+		const loginButton = renderedPage.queryByTestId('register__button') as HTMLIonButtonElement;
+		ionFireEvent.click(loginButton);
+
+		expect(mockSignUpFn).toReturnWith(true);
+	});
+
+	test('Register with taken email error', async () => {
+		const emailField = renderedPage.queryByTestId('register__email-field') as HTMLIonInputElement;
+		ionFireEvent.ionChange(emailField, 'doctor@demo.com');
+
+		const passwordField = renderedPage.queryByTestId('register__password-field') as HTMLIonInputElement;
+		ionFireEvent.ionChange(passwordField, 'Demo1234');
+
+		const confirmPasswordField = renderedPage.queryByTestId('register__password-confirm-field') as HTMLIonInputElement;
+		ionFireEvent.ionChange(confirmPasswordField, 'Demo1234');
+
+		const loginButton = renderedPage.queryByTestId('register__button') as HTMLIonButtonElement;
+		ionFireEvent.click(loginButton);
+
+		expect(mockSignUpFn.mock.results[0].value).toStrictEqual(Error('Email already taken'));
 	});
 
 });

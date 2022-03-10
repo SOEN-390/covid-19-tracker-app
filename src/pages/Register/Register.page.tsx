@@ -38,11 +38,11 @@ const RegisterPage: React.FC = () => {
 			return;
 		}
 
-		const rest = await signup(email, password);
-
-		if (rest) {
-			//redirect to next page
+		try {
+			await signup(email, password);
 			history.push('/register/2');
+		} catch (error) {
+			present((error as Error).message, 1500);
 		}
 	}
 
