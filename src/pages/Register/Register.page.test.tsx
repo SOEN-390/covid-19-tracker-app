@@ -12,3 +12,11 @@ test('RegisterPage: Renders without crashing', () => {
 	const {baseElement} = render(<RegisterPage />);
 	expect(baseElement).toBeDefined();
 });
+
+describe('Register: Test register form', () => {
+	let renderedPage: RenderResult;
+
+	beforeEach(async () => {
+		renderedPage = render(<RegisterPage />);
+	});
+});
