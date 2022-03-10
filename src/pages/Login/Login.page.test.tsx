@@ -1,21 +1,15 @@
 import React from 'react';
-import { fireEvent, render, RenderResult } from '@testing-library/react';
+import { render, RenderResult } from '@testing-library/react';
 import { ionFireEvent } from '@ionic/react-test-utils';
 import LoginPage from './Login.page';
 
-const mockLoginFn = jest.fn(async (email: string, password: string) => {
-	if (email === 'demo@demo.com' && password === 'Demo123') {
-		return true;
-	}
-	throw Error('Account not found');
-});
+const mockFn = jest.fn();
 
-jest.mock('../../providers/auth.provider', () => () => (
-	jest.fn(() => ({
-		login: mockLoginFn
-	}))
-));
-
+jest.mock('../../providers/auth.provider', () => ({
+	useAuth: () => ({
+		login: mockFn
+	})
+}));
 
 test('LoginPage: Renders without crashing', () => {
 	const {baseElement} = render(<LoginPage/>);
@@ -27,6 +21,12 @@ describe('LoginPage: Test login form', () => {
 
 	beforeEach(async () => {
 		renderedPage = render(<LoginPage/>);
+		mockFn.mockImplementation((email: string, password: string) => {
+			if (email === 'demo@demo.com' && password === 'Demo123') {
+				return true;
+			}
+			throw Error('Account not found');
+		});
 	});
 
 	test('Insert email', () => {
@@ -56,7 +56,6 @@ describe('LoginPage: Test login form', () => {
 	});
 
 	test('Login with correct data', async () => {
-
 		const emailField = renderedPage.queryByTestId('login__email-field') as HTMLIonInputElement;
 		ionFireEvent.ionChange(emailField, 'demo@demo.com');
 
@@ -64,10 +63,9 @@ describe('LoginPage: Test login form', () => {
 		ionFireEvent.ionChange(passwordField, 'Demo123');
 
 		const loginButton = renderedPage.queryByTestId('login__button') as HTMLIonButtonElement;
-		fireEvent.click(loginButton);
+		ionFireEvent.click(loginButton);
 
-		// Validate that
-		// expect(useAuth().login.mock).toBe(true)
+		expect(mockFn).toReturnWith(true);
 	});
 
 	test('Login with wrong data', async () => {
@@ -78,10 +76,8 @@ describe('LoginPage: Test login form', () => {
 		ionFireEvent.ionChange(passwordField, 'Demo123');
 
 		const loginButton = renderedPage.queryByTestId('login__button') as HTMLIonButtonElement;
-		fireEvent.click(loginButton);
+		ionFireEvent.click(loginButton);
 
-		// expect(await renderedPage.findByText("Something went wrong. Please try again.")).toBeInTheDocument()
-		// await useAuth().login('', '');
-		// expect(Error('Account not found'));
+		expect(mockFn).toThrowError(Error('Account not found'));
 	});
 });
