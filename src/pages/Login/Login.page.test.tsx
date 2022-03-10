@@ -3,11 +3,11 @@ import { render, RenderResult } from '@testing-library/react';
 import { ionFireEvent } from '@ionic/react-test-utils';
 import LoginPage from './Login.page';
 
-const mockFn = jest.fn();
+const mockLoginFn = jest.fn();
 
 jest.mock('../../providers/auth.provider', () => ({
 	useAuth: () => ({
-		login: mockFn
+		login: mockLoginFn
 	})
 }));
 
@@ -21,7 +21,7 @@ describe('LoginPage: Test login form', () => {
 
 	beforeEach(async () => {
 		renderedPage = render(<LoginPage/>);
-		mockFn.mockImplementation((email: string, password: string) => {
+		mockLoginFn.mockImplementation((email: string, password: string) => {
 			if (email === 'demo@demo.com' && password === 'Demo123') {
 				return true;
 			}
@@ -65,7 +65,7 @@ describe('LoginPage: Test login form', () => {
 		const loginButton = renderedPage.queryByTestId('login__button') as HTMLIonButtonElement;
 		ionFireEvent.click(loginButton);
 
-		expect(mockFn).toReturnWith(true);
+		expect(mockLoginFnFn).toReturnWith(true);
 	});
 
 	test('Login with wrong data', async () => {
@@ -78,6 +78,6 @@ describe('LoginPage: Test login form', () => {
 		const loginButton = renderedPage.queryByTestId('login__button') as HTMLIonButtonElement;
 		ionFireEvent.click(loginButton);
 
-		expect(mockFn).toThrowError(Error('Account not found'));
+		expect(mockLoginFnFn).toThrowError(Error('Account not found'));
 	});
 });
