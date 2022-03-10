@@ -6,6 +6,7 @@ import HttpService from '../../providers/http.service';
 import { TestResult } from '../../enum/TestResult.enum';
 import PatientsTable from '../../components/PatientsTable/PatientsTable';
 import { Patient } from '../../objects/Patient.class';
+import './Patients.doctor.page.scss';
 
 const PatientsDoctorPage: React.FC = () => {
 	const [patients, setPatients] = useState<Patient[]>([]);
@@ -71,17 +72,17 @@ const PatientsDoctorPage: React.FC = () => {
 		<IonPage>
 			<IonToolbar>
 			</IonToolbar>
-			<IonContent>
-				<IonTitle id="patientHeader">Patients</IonTitle>
+			<IonContent className={'patient-doctor-page__content'}>
+				<IonTitle>Patients</IonTitle>
 				<div>
 					<IonRow>
 						<IonCol/>
-						<IonCol class="confirmButton">
-							<IonButton color={tableSelection === 'confirmed' ? 'favorite1' : 'favorite'}
+						<IonCol className={'patient-doctor-page__confirmed'}>
+							<IonButton className={tableSelection === 'confirmed' ? 'patient-doctor-page__button-selected' : 'patient-doctor-page__button-unselected'}
 									   onClick={getAssignedConfirmedPatients}>Confirmed</IonButton>
 						</IonCol>
-						<IonCol class="unconfirmedButton">
-							<IonButton color={tableSelection === 'unconfirmed' ? 'favorite1' : 'favorite'}
+						<IonCol className={'patient-doctor-page__unconfirmed'}>
+							<IonButton className={tableSelection === 'unconfirmed' ? 'patient-doctor-page__button-selected' : 'patient-doctor-page__button-unselected'}
 									   onClick={getAssignedUnconfirmedPatients}>UnConfirmed</IonButton>
 						</IonCol>
 						<IonCol/>

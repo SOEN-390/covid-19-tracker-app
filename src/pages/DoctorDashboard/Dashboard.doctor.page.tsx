@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { IonCard, IonCol, IonContent, IonPage, IonRow } from '@ionic/react';
 import NavBar from '../../components/NavBar/NavBar';
-import './Dashboard.doctor.page.css';
+import './Dashboard.doctor.page.scss';
 import PieChart, { Connector, Export, Label, Legend, Series, Tooltip, } from 'devextreme-react/pie-chart';
 import HttpService from '../../providers/http.service';
 import { useAuth } from '../../providers/auth.provider';
@@ -93,7 +93,7 @@ const DashboardDoctorPage: React.FC = () => {
 	}
 
 	return (
-		<IonPage>
+		<IonPage className={'dashboard-doctor__page'}>
 			<IonContent>
 
 				<IonCol>

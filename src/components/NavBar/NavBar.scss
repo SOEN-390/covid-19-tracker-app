@@ -1,0 +1,18 @@
+.navbar__row {
+  div.search-bar {
+    width: 70%;
+
+    ion-search-bar {
+      width: 100%;
+    }
+  }
+
+  ion-avatar {
+    align-content: end;
+    align-items: end;
+    text-align: right;
+    width: 60px;
+    height: 60px;
+  }
+
+}
