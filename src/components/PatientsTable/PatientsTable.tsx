@@ -60,8 +60,8 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 
 	function reviewPatient(patient: Patient) {
 		patient.reviewed = !patient.reviewed;
-		HttpService.post(
-			`patients/${patient.medicalId}/${patient.reviewed ? 'reviewed' : 'unreviewed'}`,
+		HttpService.patch(
+			`doctors/${patient.medicalId}/${patient.reviewed ? 'review' : 'unreview'}`,
 			{role: currentProfile.getRole()}
 		).then(() => {
 			props.onChange(props.patients);
