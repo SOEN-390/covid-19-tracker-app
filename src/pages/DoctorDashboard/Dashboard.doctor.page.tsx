@@ -4,7 +4,7 @@ import NavBar from '../../components/NavBar/NavBar';
 import './Dashboard.doctor.page.scss';
 import PieChart, { Connector, Export, Label, Legend, Series, Tooltip, } from 'devextreme-react/pie-chart';
 import HttpService from '../../providers/http.service';
-import { useAuth } from '../../providers/auth.provider';
+import useAuth from '../../providers/auth.provider';
 import { Patient } from '../../objects/Patient.class';
 import { TestResult } from '../../enum/TestResult.enum';
 import { Gender } from '../../enum/Gender.enum';

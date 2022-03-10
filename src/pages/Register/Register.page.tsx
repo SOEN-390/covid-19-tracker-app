@@ -12,7 +12,7 @@ import {
 } from '@ionic/react';
 import CovidTrackerTransparent from '../../assets/images/CovidTrackerTransparent.png';
 import React, { useState } from 'react';
-import { useAuth } from '../../providers/auth.provider';
+import useAuth from '../../providers/auth.provider';
 import './Register.page.css';
 import { useHistory } from 'react-router-dom';
 

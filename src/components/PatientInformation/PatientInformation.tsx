@@ -18,7 +18,7 @@ import {
 } from '@ionic/react';
 import './PatientInformation.scss';
 import { IPatient } from '../../interfaces/IPatient';
-import { useAuth } from '../../providers/auth.provider';
+import useAuth from '../../providers/auth.provider';
 import { UserType } from '../../enum/UserType.enum';
 import React, { useState } from 'react';
 import { TestResult } from '../../enum/TestResult.enum';

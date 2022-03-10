@@ -1,6 +1,6 @@
 import React from 'react';
 import {Route, Redirect} from 'react-router-dom';
-import {useAuth} from '../../providers/auth.provider';
+import useAuth from '../../providers/auth.provider';
 import {UserType} from '../../enum/UserType.enum';
 import {
 	AdminPages,

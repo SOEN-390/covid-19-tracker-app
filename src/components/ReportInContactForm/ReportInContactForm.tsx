@@ -12,7 +12,7 @@ import {
 	IonTitle, useIonToast
 } from '@ionic/react';
 import HttpService from '../../providers/http.service';
-import { useAuth } from '../../providers/auth.provider';
+import useAuth from '../../providers/auth.provider';
 
 interface form {
 	firstname: string,
