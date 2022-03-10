@@ -82,4 +82,17 @@ describe('Register: Test register form', () => {
 		expect(useAuth().signup).toBeCalledTimes(0);
 	});
 
+	test('Register with not same password and confirm password', async () => {
+		const passwordField = renderedPage.queryByTestId('register__password-confirm-field') as HTMLIonInputElement;
+		ionFireEvent.ionChange(passwordField, 'Demo123');
+
+		const confirmPasswordField = renderedPage.queryByTestId('register__password-confirm-field') as HTMLIonInputElement;
+		ionFireEvent.ionChange(confirmPasswordField, 'Demo1234');
+
+		const loginButton = renderedPage.queryByTestId('register__button') as HTMLIonButtonElement;
+		fireEvent.click(loginButton);
+
+		expect(useAuth().signup).toBeCalledTimes(0);
+	});
+
 });
