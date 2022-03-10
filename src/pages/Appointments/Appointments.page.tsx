@@ -2,9 +2,7 @@ import { IonPage } from '@ionic/react';
 import NavBar from '../../components/NavBar/NavBar';
 import React from 'react';
 
-const Appointments: React.FC = () => {
-
-	// const { name } = useParams<{ name: string; }>(); //to get page name
+const AppointmentsPage: React.FC = () => {
 
 	return (
 		<IonPage>
@@ -15,4 +13,4 @@ const Appointments: React.FC = () => {
 	);
 };
 
-export default Appointments;
+export default AppointmentsPage;
