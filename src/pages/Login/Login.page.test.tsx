@@ -3,16 +3,18 @@ import { fireEvent, render, RenderResult } from '@testing-library/react';
 import { ionFireEvent } from '@ionic/react-test-utils';
 import LoginPage from './Login.page';
 
-jest.mock('../../providers/auth.provider', () => ({
-	useAuth: () => ({
-		login: jest.fn(async (email: string, password: string) => {
-			if (email === 'demo@demo.com' && password === 'Demo123') {
-				return true;
-			}
-			throw Error('Account not found');
-		})
-	}),
-}));
+const mockLoginFn = jest.fn(async (email: string, password: string) => {
+	if (email === 'demo@demo.com' && password === 'Demo123') {
+		return true;
+	}
+	throw Error('Account not found');
+});
+
+jest.mock('../../providers/auth.provider', () => () => (
+	jest.fn(() => ({
+		login: mockLoginFn
+	}))
+));
 
 
 test('LoginPage: Renders without crashing', () => {
