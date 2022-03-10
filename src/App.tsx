@@ -3,9 +3,9 @@ import React from 'react';
 import { IonReactRouter } from '@ionic/react-router';
 import { Redirect, Route } from 'react-router-dom';
 import LoginPage from './pages/Login/Login.page';
-import Register from './pages/Register/Register';
+import RegisterPage from './pages/Register/Register.page';
 import PatientRouting from './routings/Patient.routing';
-import RegisterNext from './pages/Register/RegisterNext';
+import RegisterNextPage from './pages/Register/RegisterNext.page';
 import {
 	AdminPages,
 	DoctorPages,
@@ -56,10 +56,10 @@ const App: React.FC = () => {
 							<LoginPage/>
 						</Route>
 						<Route path={Pages.register} exact={true}>
-							<Register/>
+							<RegisterPage/>
 						</Route>
 						<Route path="/register/2" exact={true}>
-							<RegisterNext/>
+							<RegisterNextPage/>
 						</Route>
 						<PrivateRoute path={PatientPages.home} component={PatientRouting}/>
 						<PrivateRoute path={DoctorPages.home} component={DoctorRouting}/>

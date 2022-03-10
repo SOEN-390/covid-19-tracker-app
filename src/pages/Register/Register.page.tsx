@@ -13,12 +13,12 @@ import {
 import CovidTrackerTransparent from '../../assets/images/CovidTrackerTransparent.png';
 import React, { useState } from 'react';
 import { useAuth } from '../../providers/auth.provider';
-import './Register.css';
+import './Register.page.css';
 import { useHistory } from 'react-router-dom';
 
 setupIonicReact();
 
-const Register: React.FC = () => {
+const RegisterPage: React.FC = () => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [cpassword, setCPassword] = useState('');
@@ -87,4 +87,4 @@ const Register: React.FC = () => {
 	);
 };
 
-export default Register;
+export default RegisterPage;
