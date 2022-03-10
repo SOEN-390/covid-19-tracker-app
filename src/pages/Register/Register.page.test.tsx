@@ -50,16 +50,16 @@ describe('Register: Test register form', () => {
 	});
 
 	test('Insert confirm password', () => {
-		const passwordField = renderedPage.queryByTestId('register__password-confirm-field') as HTMLIonInputElement;
-		ionFireEvent.ionChange(passwordField, 'Demo123');
-		expect(passwordField.value).toBe('Demo123');
+		const confirmPasswordField = renderedPage.queryByTestId('register__password-confirm-field') as HTMLIonInputElement;
+		ionFireEvent.ionChange(confirmPasswordField, 'Demo123');
+		expect(confirmPasswordField.value).toBe('Demo123');
 	});
 
 	test('Insert null confirm password', () => {
-		const passwordField = renderedPage.queryByTestId('register__password-confirm-field') as HTMLIonInputElement;
+		const confirmPasswordField = renderedPage.queryByTestId('register__password-confirm-field') as HTMLIonInputElement;
 		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-		ionFireEvent.ionChange(passwordField, null!);
-		expect(passwordField.value).toBe('');
+		ionFireEvent.ionChange(confirmPasswordField, null!);
+		expect(confirmPasswordField.value).toBe('');
 	});
 
 	test('Register with empty password data', async () => {
