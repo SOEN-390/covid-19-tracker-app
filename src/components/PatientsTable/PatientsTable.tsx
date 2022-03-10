@@ -78,7 +78,7 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 					March 17, 2021
 				</Td>
 				{
-					(currentProfile.getRole() === UserType.HEALTH_OFFICIAL || currentProfile.getRole() === UserType.DOCTOR) &&
+					(currentProfile.getRole() === UserType.HEALTH_OFFICIAL || currentProfile.getRole() === UserType.ADMIN) &&
 					<Td key={index} className="patients-table__table-entries__doctor-name">
 						Dr. {patient.doctorName}
 					</Td>
