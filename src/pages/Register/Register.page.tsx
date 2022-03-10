@@ -82,7 +82,9 @@ const RegisterPage: React.FC = () => {
 					<br/><br/>
 
 					<IonButton className={'register__btn'} onClick={register} size="large" expand="block" fill="solid"
-							   color={'dark-blue'}>Next</IonButton>
+							   data-testid={'register__button'} color={'dark-blue'}>
+						Next
+					</IonButton>
 				</div>
 			</IonContent>
 

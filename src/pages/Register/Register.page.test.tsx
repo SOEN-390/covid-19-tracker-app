@@ -72,4 +72,14 @@ describe('Register: Test register form', () => {
 		expect(useAuth().signup).toBeCalledTimes(0);
 	});
 
+	test('Register with empty email data', async () => {
+		const passwordField = renderedPage.queryByTestId('register__password-confirm-field') as HTMLIonInputElement;
+		ionFireEvent.ionChange(passwordField, 'Demo123');
+
+		const loginButton = renderedPage.queryByTestId('register__button') as HTMLIonButtonElement;
+		fireEvent.click(loginButton);
+
+		expect(useAuth().signup).toBeCalledTimes(0);
+	});
+
 });
