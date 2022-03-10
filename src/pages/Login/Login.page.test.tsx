@@ -72,7 +72,7 @@ describe('LoginPage: Test login form', () => {
 		const emailField = renderedPage.queryByTestId('login__email-field') as HTMLIonInputElement;
 		ionFireEvent.ionChange(emailField, 'wrong-demo@demo.com');
 
-		const passwordField = renderedPage.queryByTestId('login__password-field') as HTMLIonInputElement;=
+		const passwordField = renderedPage.queryByTestId('login__password-field') as HTMLIonInputElement;
 		ionFireEvent.ionChange(passwordField, 'Demo123');
 
 		const loginButton = renderedPage.queryByTestId('login__button') as HTMLIonButtonElement;
