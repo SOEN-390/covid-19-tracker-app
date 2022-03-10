@@ -63,20 +63,20 @@ const RegisterPage: React.FC = () => {
 				<div className="ion-align-items-center; register__form">
 					<IonLabel className="register__login-text">Email</IonLabel>
 					<IonInput className="register__text-field" placeholder="Enter your email" type="text"
-							  data-testid={'register__email-field'}
+							  data-testid={'register__email-field'} value={email}
 							  onIonChange={(e: CustomEvent<InputChangeEventDetail>) => setEmail(e.detail.value || '')}/>
 
 					<br/><br/>
 					<IonLabel className="register__login-text">New Password</IonLabel>
 					<IonInput className="register__text-field" placeholder="Enter a password" type="password"
-							  data-testid={'register__password-field'}
+							  data-testid={'register__password-field'} value={password}
 							  onIonChange={(e: CustomEvent<InputChangeEventDetail>) => setPassword(e.detail.value || '')}/>
 
 					<br/><br/>
 
 					<IonLabel className="register__login-text">Confirm your password</IonLabel>
 					<IonInput className="register__text-field" placeholder="Enter the same password" type="password"
-							  data-testid={'register__password-confirm-field'} 
+							  data-testid={'register__password-confirm-field'} value={confirmPassword}
 							  onIonChange={(e: CustomEvent<InputChangeEventDetail>) => setConfirmPassword(e.detail.value || '')}/>
 
 					<br/><br/>
