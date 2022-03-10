@@ -28,37 +28,50 @@ describe('LoginPage: Test login form', () => {
 	});
 
 	test('Insert email', () => {
-		const emailField = renderedPage.queryByTestId('login__email-field');
-		if (!emailField) {
-			throw Error('No email IonInput found.');
-		}
-		fireEvent.change(emailField, {
-			target: {value: 'demo@demo.com'}
-		});
-		expect((emailField as any).value).toBe('demo@demo.com');
-	});
-
-	test('Insert password', () => {
-		const passwordField = renderedPage.queryByTestId('login__password-field');
-		if (!passwordField) {
-			throw Error('No password IonInput found.');
-		}
-		fireEvent.change(passwordField, {
-			target: {value: 'Demo123'}
-		});
-		expect((passwordField as any).value).toBe('Demo123');
-	});
-
-	test('Login with correct data', async () => {
-		const emailField = renderedPage.queryByTestId('login__email-field');
+		const emailField = renderedPage.queryByTestId('login__email-field') as HTMLIonInputElement;
 		if (!emailField) {
 			throw Error('No email IonInput found.');
 		}
 		ionFireEvent.ionChange(emailField, 'demo@demo.com');
-		// emailField.dispatchEvent(
-		// 	new CustomEvent('ionChange', { detail: { value: "demo@demo.com" } })
-		// );
-		const passwordField = renderedPage.queryByTestId('login__password-field');
+		expect(emailField.value).toBe('demo@demo.com');
+	});
+
+	test('Insert null email', () => {
+		const emailField = renderedPage.queryByTestId('login__email-field') as HTMLIonInputElement;
+		if (!emailField) {
+			throw Error('No email IonInput found.');
+		}
+		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+		ionFireEvent.ionChange(emailField, null!);
+		expect(emailField.value).toBe('');
+	});
+
+	test('Insert password', () => {
+		const passwordField = renderedPage.queryByTestId('login__password-field') as HTMLIonInputElement;
+		if (!passwordField) {
+			throw Error('No password IonInput found.');
+		}
+		ionFireEvent.ionChange(passwordField, 'Demo123');
+		expect(passwordField.value).toBe('Demo123');
+	});
+
+	test('Insert null password', () => {
+		const passwordField = renderedPage.queryByTestId('login__password-field') as HTMLIonInputElement;
+		if (!passwordField) {
+			throw Error('No password IonInput found.');
+		}
+		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+		ionFireEvent.ionChange(passwordField, null!);
+		expect(passwordField.value).toBe('');
+	});
+
+	test('Login with correct data', async () => {
+		const emailField = renderedPage.queryByTestId('login__email-field') as HTMLIonInputElement;
+		if (!emailField) {
+			throw Error('No email IonInput found.');
+		}
+		ionFireEvent.ionChange(emailField, 'demo@demo.com');
+		const passwordField = renderedPage.queryByTestId('login__password-field') as HTMLIonInputElement;
 		if (!passwordField) {
 			throw Error('No password IonInput found.');
 		}
@@ -73,12 +86,12 @@ describe('LoginPage: Test login form', () => {
 	});
 
 	test('Login with wrong data', async () => {
-		const emailField = renderedPage.queryByTestId('login__email-field');
+		const emailField = renderedPage.queryByTestId('login__email-field') as HTMLIonInputElement;
 		if (!emailField) {
 			throw Error('No email IonInput found.');
 		}
 		ionFireEvent.ionChange(emailField, 'wrong-demo@demo.com');
-		const passwordField = renderedPage.queryByTestId('login__password-field');
+		const passwordField = renderedPage.queryByTestId('login__password-field') as HTMLIonInputElement;
 		if (!passwordField) {
 			throw Error('No password IonInput found.');
 		}
