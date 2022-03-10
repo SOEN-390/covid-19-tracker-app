@@ -28,11 +28,12 @@ const LoginPage: React.FC = () => {
 	const [present] = useIonToast();
 
 	async function loginUser() {
-		login(email, password).then(() => {
+		try {
+			await login(email, password);
 			present('Successfully logged in.', 1500);
-		}).catch(() => {
+		} catch {
 			present('Something went wrong. Please try again.', 1500);
-		});
+		}
 	}
 
 	return (
