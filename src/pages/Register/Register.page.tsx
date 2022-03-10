@@ -63,6 +63,7 @@ const RegisterPage: React.FC = () => {
 				<div className="ion-align-items-center; register__form">
 					<IonLabel className="register__login-text">Email</IonLabel>
 					<IonInput className="register__text-field" placeholder="Enter your email" type="text"
+							  data-testid={'register__email-field'}
 							  onIonChange={(e: CustomEvent<InputChangeEventDetail>) => setEmail(e.detail.value || '')}/>
 
 					<br/><br/>

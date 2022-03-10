@@ -1,4 +1,6 @@
 import React from 'react';
+import { fireEvent, render, RenderResult } from '@testing-library/react';
+import { ionFireEvent } from '@ionic/react-test-utils';
 import RegisterPage from './Register.page';
 
 jest.mock('../../providers/auth.provider', () => ({
@@ -19,4 +21,18 @@ describe('Register: Test register form', () => {
 	beforeEach(async () => {
 		renderedPage = render(<RegisterPage />);
 	});
+
+	test('Insert email', () => {
+		const emailField = renderedPage.queryByTestId('register__email-field') as HTMLIonInputElement;
+		ionFireEvent.ionChange(emailField, 'demo@demo.com');
+		expect(emailField.value).toBe('demo@demo.com');
+	});
+
+	test('Insert null email', () => {
+		const emailField = renderedPage.queryByTestId('register__email-field') as HTMLIonInputElement;
+		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+		ionFireEvent.ionChange(emailField, null!);
+		expect(emailField.value).toBe('');
+	});
+
 });
