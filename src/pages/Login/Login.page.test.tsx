@@ -65,7 +65,7 @@ describe('LoginPage: Test login form', () => {
 		const loginButton = renderedPage.queryByTestId('login__button') as HTMLIonButtonElement;
 		ionFireEvent.click(loginButton);
 
-		expect(mockLoginFnFn).toReturnWith(true);
+		expect(mockLoginFn).toReturnWith(true);
 	});
 
 	test('Login with wrong data', async () => {
@@ -78,6 +78,6 @@ describe('LoginPage: Test login form', () => {
 		const loginButton = renderedPage.queryByTestId('login__button') as HTMLIonButtonElement;
 		ionFireEvent.click(loginButton);
 
-		expect(mockLoginFnFn).toThrowError(Error('Account not found'));
+		expect(mockLoginFn).toThrowError(Error('Account not found'));
 	});
 });
