@@ -2,7 +2,7 @@ import { IonAvatar, IonButton, IonCol, IonGrid, IonMenuButton, IonRow, IonSearch
 import './NavBar.scss';
 import userIcon from '../../assets/images/UserIcon.png';
 import React, { useState } from 'react';
-import useAuth from '../../providers/auth.provider';
+import { useAuth } from '../../providers/auth.provider';
 import { UserType } from '../../enum/UserType.enum';
 
 const NavBar: React.FC<{ callback?: any }> = (props) => {

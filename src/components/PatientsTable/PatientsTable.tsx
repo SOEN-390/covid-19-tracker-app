@@ -17,7 +17,7 @@ import { Table, Tbody, Td, Th, Thead, Tr } from 'react-super-responsive-table';
 import { UserType } from '../../enum/UserType.enum';
 import { adminColumns, doctorColumns, healthOfficialColumns, PatientsTableColumn } from './patientsTableColumn';
 import { flag } from 'ionicons/icons';
-import useAuth from '../../providers/auth.provider';
+import { useAuth } from '../../providers/auth.provider';
 import { TestResult } from '../../enum/TestResult.enum';
 import { Patient } from '../../objects/Patient.class';
 import HttpService from '../../providers/http.service';

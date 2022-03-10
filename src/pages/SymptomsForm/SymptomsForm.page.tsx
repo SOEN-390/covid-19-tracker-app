@@ -4,7 +4,7 @@ import Symptom from '../../components/Symptom/Symptom';
 import React, { useEffect, useState } from 'react';
 import { ISymptom } from '../../interfaces/ISymptom';
 import HttpService from '../../providers/http.service';
-import useAuth from '../../providers/auth.provider';
+import { useAuth } from '../../providers/auth.provider';
 
 const SymptomsFormPage: React.FC = () => {
 

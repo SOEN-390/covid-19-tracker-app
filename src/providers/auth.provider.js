@@ -14,7 +14,7 @@ import {HealthOfficial} from '../objects/HealthOfficial.class';
 
 export const AuthContext = React.createContext();
 
-export default function useAuth() {
+export function useAuth() {
 	return useContext(AuthContext);
 }
 

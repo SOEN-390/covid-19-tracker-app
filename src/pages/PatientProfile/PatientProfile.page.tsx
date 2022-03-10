@@ -3,7 +3,7 @@ import PatientInformation from '../../components/PatientInformation/PatientInfor
 import NavBar from '../../components/NavBar/NavBar';
 import React, { useEffect, useState } from 'react';
 import HttpService from '../../providers/http.service';
-import useAuth from '../../providers/auth.provider';
+import { useAuth } from '../../providers/auth.provider';
 import { UserType } from '../../enum/UserType.enum';
 import { TestResult } from '../../enum/TestResult.enum';
 import { Gender } from '../../enum/Gender.enum';

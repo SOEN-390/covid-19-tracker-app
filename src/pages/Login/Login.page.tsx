@@ -16,7 +16,7 @@ import CovidTrackerTransparent from '../../assets/images/CovidTrackerTransparent
 import React, { useState } from 'react';
 import './Login.page.scss';
 import { Pages } from '../../providers/pages.enum';
-import useAuth from '../../providers/auth.provider';
+import { useAuth } from '../../providers/auth.provider';
 
 setupIonicReact();
 

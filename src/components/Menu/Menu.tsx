@@ -15,7 +15,7 @@ import Emergency from '../Emergency/Emergency';
 import { useLocation } from 'react-router-dom';
 import { logOutOutline } from 'ionicons/icons';
 import './Menu.scss';
-import useAuth from '../../providers/auth.provider';
+import { useAuth } from '../../providers/auth.provider';
 import { UserType } from '../../enum/UserType.enum';
 import {
 	adminAppPages,

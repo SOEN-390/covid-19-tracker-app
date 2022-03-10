@@ -21,7 +21,7 @@ import HttpService from '../../providers/http.service';
 import { TestResult } from '../../enum/TestResult.enum';
 import { IPatient } from '../../interfaces/IPatient';
 import { auth } from '../../config/firebase';
-import useAuth from '../../providers/auth.provider';
+import { useAuth } from '../../providers/auth.provider';
 import { Gender } from '../../enum/Gender.enum';
 
 setupIonicReact();
