@@ -1,14 +1,15 @@
 import React from 'react';
-import { fireEvent, render, RenderResult } from '@testing-library/react';
+import { render, RenderResult } from '@testing-library/react';
 import { ionFireEvent } from '@ionic/react-test-utils';
 import RegisterPage from './Register.page';
-import { useAuth } from '../../providers/auth.provider';
 
-jest.mock('../../providers/auth.provider', () => ({
-	useAuth: () => ({
-		signup: jest.fn()
-	}),
-}));
+const mockSignUpFn = jest.fn();
+
+jest.mock('../../providers/auth.provider', () => () => (
+	jest.fn(() => ({
+		signup: mockSignUpFn
+	}))
+));
 
 
 test('RegisterPage: Renders without crashing', () => {
@@ -67,9 +68,9 @@ describe('Register: Test register form', () => {
 		ionFireEvent.ionChange(emailField, 'demo@demo.com');
 
 		const loginButton = renderedPage.queryByTestId('register__button') as HTMLIonButtonElement;
-		fireEvent.click(loginButton);
+		ionFireEvent.click(loginButton);
 
-		expect(useAuth().signup).toBeCalledTimes(0);
+		expect(mockSignUpFn).toBeCalledTimes(0);
 	});
 
 	test('Register with empty email data', async () => {
@@ -77,9 +78,9 @@ describe('Register: Test register form', () => {
 		ionFireEvent.ionChange(passwordField, 'Demo123');
 
 		const loginButton = renderedPage.queryByTestId('register__button') as HTMLIonButtonElement;
-		fireEvent.click(loginButton);
+		ionFireEvent.click(loginButton);
 
-		expect(useAuth().signup).toBeCalledTimes(0);
+		expect(mockSignUpFn).toBeCalledTimes(0);
 	});
 
 	test('Register with not same password and confirm password', async () => {
@@ -93,9 +94,9 @@ describe('Register: Test register form', () => {
 		ionFireEvent.ionChange(confirmPasswordField, 'Demo1234');
 
 		const loginButton = renderedPage.queryByTestId('register__button') as HTMLIonButtonElement;
-		fireEvent.click(loginButton);
+		ionFireEvent.click(loginButton);
 
-		expect(useAuth().signup).toBeCalledTimes(0);
+		expect(mockSignUpFn).toBeCalledTimes(0);
 	});
 
 });
