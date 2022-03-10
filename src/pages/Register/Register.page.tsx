@@ -73,7 +73,7 @@ const RegisterPage: React.FC = () => {
 					<br/><br/>
 
 					<IonLabel className="register__login-text">Confirm your password</IonLabel>
-					<IonInput className="register__text-field" placeholder="Enter a password" type="password"
+					<IonInput className="register__text-field" placeholder="Enter the same password" type="password"
 							  onIonChange={(e: CustomEvent<InputChangeEventDetail>) => setCPassword(e.detail.value || '')}/>
 
 					<br/><br/>
