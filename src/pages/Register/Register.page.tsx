@@ -21,7 +21,7 @@ setupIonicReact();
 const RegisterPage: React.FC = () => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
-	const [cpassword, setCPassword] = useState('');
+	const [confirmPassword, setConfirmPassword] = useState('');
 	const {signup} = useAuth();
 	const [present] = useIonToast();
 	const history = useHistory();
@@ -33,7 +33,7 @@ const RegisterPage: React.FC = () => {
 			return;
 		}
 
-		if (password !== cpassword) {
+		if (password !== confirmPassword) {
 			present('The passwords do not match', 1500);
 			return;
 		}
@@ -76,8 +76,8 @@ const RegisterPage: React.FC = () => {
 
 					<IonLabel className="register__login-text">Confirm your password</IonLabel>
 					<IonInput className="register__text-field" placeholder="Enter the same password" type="password"
-							  data-testid={'register__password-confirm-field'}
-							  onIonChange={(e: CustomEvent<InputChangeEventDetail>) => setCPassword(e.detail.value || '')}/>
+							  data-testid={'register__password-confirm-field'} 
+							  onIonChange={(e: CustomEvent<InputChangeEventDetail>) => setConfirmPassword(e.detail.value || '')}/>
 
 					<br/><br/>
 

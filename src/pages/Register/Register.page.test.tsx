@@ -2,6 +2,7 @@ import React from 'react';
 import { fireEvent, render, RenderResult } from '@testing-library/react';
 import { ionFireEvent } from '@ionic/react-test-utils';
 import RegisterPage from './Register.page';
+import { useAuth } from '../../providers/auth.provider';
 
 jest.mock('../../providers/auth.provider', () => ({
 	useAuth: () => ({
@@ -60,4 +61,15 @@ describe('Register: Test register form', () => {
 		ionFireEvent.ionChange(passwordField, null!);
 		expect(passwordField.value).toBe('');
 	});
+
+	test('Register with empty password data', async () => {
+		const emailField = renderedPage.queryByTestId('register__email-field') as HTMLIonInputElement;
+		ionFireEvent.ionChange(emailField, 'demo@demo.com');
+
+		const loginButton = renderedPage.queryByTestId('register__button') as HTMLIonButtonElement;
+		fireEvent.click(loginButton);
+
+		expect(useAuth().signup).toBeCalledTimes(0);
+	});
+
 });
