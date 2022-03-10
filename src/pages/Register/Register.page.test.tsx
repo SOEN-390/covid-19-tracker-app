@@ -35,4 +35,16 @@ describe('Register: Test register form', () => {
 		expect(emailField.value).toBe('');
 	});
 
+	test('Insert password', () => {
+		const passwordField = renderedPage.queryByTestId('register__password-field') as HTMLIonInputElement;
+		ionFireEvent.ionChange(passwordField, 'Demo123');
+		expect(passwordField.value).toBe('Demo123');
+	});
+
+	test('Insert null password', () => {
+		const passwordField = renderedPage.queryByTestId('register__password-field') as HTMLIonInputElement;
+		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+		ionFireEvent.ionChange(passwordField, null!);
+		expect(passwordField.value).toBe('');
+	});
 });
