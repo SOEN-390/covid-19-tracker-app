@@ -29,18 +29,12 @@ describe('LoginPage: Test login form', () => {
 
 	test('Insert email', () => {
 		const emailField = renderedPage.queryByTestId('login__email-field') as HTMLIonInputElement;
-		if (!emailField) {
-			throw Error('No email IonInput found.');
-		}
 		ionFireEvent.ionChange(emailField, 'demo@demo.com');
 		expect(emailField.value).toBe('demo@demo.com');
 	});
 
 	test('Insert null email', () => {
 		const emailField = renderedPage.queryByTestId('login__email-field') as HTMLIonInputElement;
-		if (!emailField) {
-			throw Error('No email IonInput found.');
-		}
 		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 		ionFireEvent.ionChange(emailField, null!);
 		expect(emailField.value).toBe('');
@@ -48,62 +42,44 @@ describe('LoginPage: Test login form', () => {
 
 	test('Insert password', () => {
 		const passwordField = renderedPage.queryByTestId('login__password-field') as HTMLIonInputElement;
-		if (!passwordField) {
-			throw Error('No password IonInput found.');
-		}
 		ionFireEvent.ionChange(passwordField, 'Demo123');
 		expect(passwordField.value).toBe('Demo123');
 	});
 
 	test('Insert null password', () => {
 		const passwordField = renderedPage.queryByTestId('login__password-field') as HTMLIonInputElement;
-		if (!passwordField) {
-			throw Error('No password IonInput found.');
-		}
 		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 		ionFireEvent.ionChange(passwordField, null!);
 		expect(passwordField.value).toBe('');
 	});
 
 	test('Login with correct data', async () => {
+
 		const emailField = renderedPage.queryByTestId('login__email-field') as HTMLIonInputElement;
-		if (!emailField) {
-			throw Error('No email IonInput found.');
-		}
 		ionFireEvent.ionChange(emailField, 'demo@demo.com');
+
 		const passwordField = renderedPage.queryByTestId('login__password-field') as HTMLIonInputElement;
-		if (!passwordField) {
-			throw Error('No password IonInput found.');
-		}
 		ionFireEvent.ionChange(passwordField, 'Demo123');
-		const loginButton = renderedPage.queryByTestId('login__button');
-		if (!loginButton) {
-			throw Error('No login button found.');
-		}
+
+		const loginButton = renderedPage.queryByTestId('login__button') as HTMLIonButtonElement;
 		fireEvent.click(loginButton);
+
 		// Validate that
 		// expect(useAuth().login.mock).toBe(true)
 	});
 
 	test('Login with wrong data', async () => {
 		const emailField = renderedPage.queryByTestId('login__email-field') as HTMLIonInputElement;
-		if (!emailField) {
-			throw Error('No email IonInput found.');
-		}
 		ionFireEvent.ionChange(emailField, 'wrong-demo@demo.com');
-		const passwordField = renderedPage.queryByTestId('login__password-field') as HTMLIonInputElement;
-		if (!passwordField) {
-			throw Error('No password IonInput found.');
-		}
+
+		const passwordField = renderedPage.queryByTestId('login__password-field') as HTMLIonInputElement;=
 		ionFireEvent.ionChange(passwordField, 'Demo123');
-		const loginButton = renderedPage.queryByTestId('login__button');
-		if (!loginButton) {
-			throw Error('No login button found.');
-		}
+
+		const loginButton = renderedPage.queryByTestId('login__button') as HTMLIonButtonElement;
 		fireEvent.click(loginButton);
+
 		// expect(await renderedPage.findByText("Something went wrong. Please try again.")).toBeInTheDocument()
 		// await useAuth().login('', '');
-
 		// expect(Error('Account not found'));
 	});
 });
