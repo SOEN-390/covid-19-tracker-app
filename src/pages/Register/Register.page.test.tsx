@@ -83,6 +83,9 @@ describe('Register: Test register form', () => {
 	});
 
 	test('Register with not same password and confirm password', async () => {
+		const emailField = renderedPage.queryByTestId('register__email-field') as HTMLIonInputElement;
+		ionFireEvent.ionChange(emailField, 'demo@demo.com');
+
 		const passwordField = renderedPage.queryByTestId('register__password-confirm-field') as HTMLIonInputElement;
 		ionFireEvent.ionChange(passwordField, 'Demo123');
 
