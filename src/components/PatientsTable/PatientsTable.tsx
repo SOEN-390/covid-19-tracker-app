@@ -5,9 +5,9 @@ import {
 	IonCardHeader,
 	IonCardSubtitle,
 	IonCardTitle,
-	IonContent,
 	IonIcon,
 	IonModal,
+	useIonActionSheet,
 	useIonToast
 } from '@ionic/react';
 import './PatientsTable.scss';
@@ -16,7 +16,7 @@ import { useEffect, useState } from 'react';
 import { Table, Tbody, Td, Th, Thead, Tr } from 'react-super-responsive-table';
 import { UserType } from '../../enum/UserType.enum';
 import { adminColumns, doctorColumns, healthOfficialColumns, PatientsTableColumn } from './patientsTableColumn';
-import { flag, mailOpen, mailUnread } from 'ionicons/icons';
+import { call, flag, mail, mailOpen, mailUnread } from 'ionicons/icons';
 import { useAuth } from '../../providers/auth.provider';
 import { TestResult } from '../../enum/TestResult.enum';
 import { Patient } from '../../objects/Patient.class';
@@ -99,7 +99,29 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 					</Td>
 				}
 				<Td key={index}>
-					<IonButton shape="round">
+					<IonButton shape="round"
+							   expand="block"
+							   onClick={() => {
+								   presentActionSheet(
+									   [
+										   {
+											   text: 'Email',
+											   icon: mail,
+											   handler: () => {
+												   window.location.href = `mailto:${patient.email}+?subject=COVID-Tracker&body=`;
+											   }
+										   },
+										   {
+											   text: 'Phone',
+											   icon: call,
+											   handler: () => {
+												   window.location.href = `tel:${patient.phoneNumber}`;
+											   }
+										   }],
+									   'Contact by');
+								   setTimeout(dismissActionSheet, 5000);
+							   }}
+					>
 						Contact
 					</IonButton>
 				</Td>
