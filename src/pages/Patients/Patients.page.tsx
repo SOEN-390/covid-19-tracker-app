@@ -57,7 +57,6 @@ const PatientsPage: React.FC = () => {
 	}
 
 	function getAllPatients() {
-		console.log('get all');
 		HttpService.get('patients/all').then((patients: Patient[]) => {
 			const patientsArranged: Patient[] = [];
 			for (const patient of patients) {
