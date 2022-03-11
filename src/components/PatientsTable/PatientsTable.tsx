@@ -73,13 +73,13 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 	function getRow(patient: Patient, index: number): JSX.Element | null {
 
 		return (
-			<Tr id="tableRow" 
-				key={index}  
+			<Tr className="patients-table__table-entries" 
+				key={index} 
 				style={{ background: patient.reviewed==true ? '':'#cfe2f3' }} 						
 				onClick={() => reviewPatient(patient)}
 			>
-				<Td key={index} id="colName">{patient.firstName + ' ' + patient.lastName}</Td>
-				<Td key={index} >
+				<Td key={index} className="patients-table__table-entries__name">{patient.firstName + ' ' + patient.lastName}</Td>
+				<Td key={index}>
 					<div key={index} className={'patients-table__status ' +
 						(patient.testResult === TestResult.POSITIVE ? 'patients-table__status__positive' : '') +
 						(patient.testResult === TestResult.NEGATIVE ? 'patients-table__status__negative' : '') +
@@ -90,23 +90,22 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 						{patient.testResult === TestResult.PENDING && 'Pending'}
 					</div>
 				</Td>
-				
 				{
-					currentProfile.getRole() !== UserType.DOCTOR &&
-					<Td key={index} id="col">
-						Dr.Sue
+					(currentProfile.getRole() === UserType.HEALTH_OFFICIAL || currentProfile.getRole() === UserType.ADMIN) &&
+					<Td key={index} className="patients-table__table-entries__doctor-name">
+						Dr. {patient.doctorName}
 					</Td>
 				}
-				<Td key={index} id="col" >
-					<IonButton color="favorite" shape="round" size="large">
+				<Td key={index}>
+					<IonButton shape="round">
 						Contact
 					</IonButton>
 				</Td>
 
 				{
 					(currentProfile.getRole() === UserType.HEALTH_OFFICIAL || currentProfile.getRole() === UserType.DOCTOR) &&
-					<Td key={index} id="col" >
-						<IonButton color="favorite" shape="round" size="large" onClick={() => {
+					<Td key={index}>
+						<IonButton shape="round" onClick={() => {
 							reviewPatient(patient);
 							setShowModal(true);
 							setSymptomsIndex(index);
@@ -119,30 +118,28 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 				{
 					(currentProfile.getRole() === UserType.HEALTH_OFFICIAL || currentProfile.getRole() === UserType.DOCTOR) &&
 					symptomsIndex !== undefined &&
-					<IonModal isOpen={showModal}>
-						<IonContent fullscreen>
-							<IonCard>
-								<IonCardHeader>
-									<IonCardTitle>{props.patients[symptomsIndex].firstName + ' ' + props.patients[symptomsIndex].lastName}</IonCardTitle>
-									<IonCardSubtitle>Temperature</IonCardSubtitle>
-								</IonCardHeader>
-								<IonCardContent>
-									37.8 Celsius
-								</IonCardContent>
-								<IonCardHeader>
-									<IonCardSubtitle>Breathing</IonCardSubtitle>
-								</IonCardHeader>
-								<IonCardContent>
-									Severe difficulty breathing
-								</IonCardContent>
-								<IonCardHeader>
-									<IonCardSubtitle>Other Symptoms</IonCardSubtitle>
-								</IonCardHeader>
-								<IonCardContent>
-									Fever along with running nose
-								</IonCardContent>
-							</IonCard>
-						</IonContent>
+					<IonModal isOpen={showModal}  breakpoints={[0.1, 0.5, 1]} initialBreakpoint={0.5} swipeToClose={true} onDidDismiss={() => setShowModal(false)}>
+						<IonCard>
+							<IonCardHeader>
+								<IonCardTitle>{props.patients[symptomsIndex].firstName + ' ' + props.patients[symptomsIndex].lastName}</IonCardTitle>
+								<IonCardSubtitle>Temperature</IonCardSubtitle>
+							</IonCardHeader>
+							<IonCardContent>
+								37.8 Celsius
+							</IonCardContent>
+							<IonCardHeader>
+								<IonCardSubtitle>Breathing</IonCardSubtitle>
+							</IonCardHeader>
+							<IonCardContent>
+								Severe difficulty breathing
+							</IonCardContent>
+							<IonCardHeader>
+								<IonCardSubtitle>Other Symptoms</IonCardSubtitle>
+							</IonCardHeader>
+							<IonCardContent>
+								Fever along with running nose
+							</IonCardContent>
+						</IonCard>
 						<IonButton onClick={() => setShowModal(false)}>Close Symptoms Form</IonButton>
 					</IonModal>
 				}
@@ -152,13 +149,13 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 						<IonIcon 
 							ios={patient.reviewed==false? mailUnread: mailOpen} 
 							md={patient.reviewed==false? mailUnread: mailOpen}
-							// onClick={() => reviewPatient(patient)}
 						/>
 					</Td>
 				}
 				<Td key={index} className={'patients-table__flag'}>
-					<IonIcon className={patient.flagged ? 'high-priority' : 'no-priority'}
-							 ios={flag} md={flag} onClick={() => {
+					<IonIcon className={patient.flagged ? 'patients-table__flag__high-priority' : 'patients-table__flag__no-priority'}
+						ios={flag} md={flag}
+						onClick={() => {
 							reviewPatient(patient);
 							flagPatient(patient);
 						}}
@@ -169,12 +166,12 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 	}
 
 	return (
-		<Table>
+		<Table className={'patients-table__table'}>
 			<Thead>
-				<Tr id="tableHead">
+				<Tr className={'patients-table__table-head'}>
 					{
 						columns.map((column, index) => (
-							<Th key={index} id="headCol">
+							<Th key={index} className={'patients-table__table-column-title'}>
 								{column.label}
 							</Th>
 						))

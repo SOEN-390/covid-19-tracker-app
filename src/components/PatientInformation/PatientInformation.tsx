@@ -1,15 +1,22 @@
 import {
-	IonAvatar,
-	IonButton, IonCheckbox,
+	IonButton,
+	IonCheckbox,
 	IonCol,
-	IonContent, IonHeader, IonIcon,
-	IonImg,
-	IonInput, IonItem,
-	IonLabel, IonListHeader, IonModal, IonRadio, IonRadioGroup,
+	IonContent,
+	IonIcon,
+	IonInput,
+	IonItem,
+	IonLabel,
+	IonListHeader,
+	IonModal,
+	IonRadio,
+	IonRadioGroup,
 	IonRow,
-	IonText, IonTitle, useIonToast
+	IonText,
+	IonTitle,
+	useIonToast
 } from '@ionic/react';
-import './PatientInformation.css';
+import './PatientInformation.scss';
 import { IPatient } from '../../interfaces/IPatient';
 import { useAuth } from '../../providers/auth.provider';
 import { UserType } from '../../enum/UserType.enum';
@@ -17,18 +24,24 @@ import React, { useState } from 'react';
 import { TestResult } from '../../enum/TestResult.enum';
 import HttpService from '../../providers/http.service';
 import { flag } from 'ionicons/icons';
-import { ISymptom } from '../../interfaces/ISymptom';
+import { ISymptom, ISymptomResponse, ISymptomTable } from '../../interfaces/ISymptom';
+import Moment from 'react-moment';
+import 'moment-timezone';
 
-
-const PatientInformation: React.FC<{ patient: IPatient, updateStatus?: any, updateFlag?: any, symptomsList?: ISymptom[] }> = (props) => {
+const PatientInformation: React.FC<{
+	patient: IPatient, updateStatus: (status: TestResult) => void, updateFlag: (bool: boolean) => void,
+	symptomsList: ISymptom[], symptomsResponse: ISymptomResponse[]
+}> = (props) => {
 
 	const {currentProfile} = useAuth();
-	const [showStatusModal, setShowStatusModal] = useState(false);
-	const [showSymptomsModal, setShowSymptomsModal] = useState(false);
-	const [status, setStatus] = useState(props.patient.testResult);
+	const [showStatusModal, setShowStatusModal] = useState<boolean>(false);
+	const [showSymptomsModal, setShowSymptomsModal] = useState<boolean>(false);
+	const [status, setStatus] = useState<TestResult>(props.patient.testResult);
 	const [present] = useIonToast();
+	const [seeSymptoms, setSeeSymptoms] = useState<boolean>(false);
+	const [symptomsTable, setSymptomsTable] = useState<Map<Date, ISymptomTable[]>>(new Map<Date, ISymptomTable[]>());
 
-	async function updateStatus() {
+	async function updateStatus(): Promise<void> {
 		if (currentProfile.testResult == status) {
 			return;
 		}
@@ -42,7 +55,7 @@ const PatientInformation: React.FC<{ patient: IPatient, updateStatus?: any, upda
 		}
 	}
 
-	async function flagPatient() {
+	async function flagPatient(): Promise<void> {
 		try {
 			await HttpService.post(`patients/${props.patient.medicalId}/flag`,
 				{role: currentProfile.getRole()});
@@ -53,7 +66,7 @@ const PatientInformation: React.FC<{ patient: IPatient, updateStatus?: any, upda
 		}
 	}
 
-	async function unFlagPatient() {
+	async function unFlagPatient(): Promise<void> {
 		try {
 			await HttpService.post(`patients/${props.patient.medicalId}/unflag`,
 				{role: currentProfile.getRole()});
@@ -64,7 +77,7 @@ const PatientInformation: React.FC<{ patient: IPatient, updateStatus?: any, upda
 		}
 	}
 
-	function handleCheck(e: string) {
+	function handleCheck(e: string): void {
 		if (!props.symptomsList) {
 			return;
 		}
@@ -76,7 +89,7 @@ const PatientInformation: React.FC<{ patient: IPatient, updateStatus?: any, upda
 		}
 	}
 
-	async function submitSymptoms() {
+	async function submitSymptoms(): Promise<void> {
 		if (!props.symptomsList) {
 			return;
 		}
@@ -86,7 +99,7 @@ const PatientInformation: React.FC<{ patient: IPatient, updateStatus?: any, upda
 				symptomsToRequest.push(symp.name);
 			}
 		}
-		if (symptomsToRequest.length ==0) {
+		if (symptomsToRequest.length == 0) {
 			present('Please select symptoms to request', 1500);
 			return;
 		}
@@ -96,238 +109,317 @@ const PatientInformation: React.FC<{ patient: IPatient, updateStatus?: any, upda
 			});
 			setShowSymptomsModal(false);
 			present('Successfully requested symptoms', 1500);
-		}
-		catch (e) {
+		} catch (e) {
 			present('You already have a pending request', 1500);
 		}
 	}
 
+	function generateSymptomsTable() {
+		if (!props.symptomsList || !props.symptomsResponse) {
+			return;
+		}
+		const symptomsTableMap = new Map<Date, ISymptomTable[]>();
+
+		for (let i = 0; i < props.symptomsResponse.length; i++) {
+			if (i == 0) {
+				symptomsTableMap.set(props.symptomsResponse[i].onDate, []);
+			}
+			if (i > 0 && props.symptomsResponse[i].onDate != props.symptomsResponse[i - 1].onDate) {
+				symptomsTableMap.set(props.symptomsResponse[i].onDate, []);
+			}
+		}
+		mapResponseToRow(symptomsTableMap);
+	}
+
+	function mapResponseToRow(symptomsTableMap: Map<Date, ISymptomTable[]>) {
+		for (const [key, value] of symptomsTableMap) {
+			for (let i = 0; i < props.symptomsList.length; i++) {
+				for (const response of props.symptomsResponse) {
+					if (props.symptomsList[i].name == response.name && response.onDate == key) {
+						value[i] = {
+							name: response.name, description: response.description,
+							response: response.response
+						};
+					} else {
+						if (!value[i]) {
+							value[i] = {
+								name: props.symptomsList[i].name, description: props.symptomsList[i].description,
+								response: undefined
+							};
+						}
+
+					}
+				}
+
+			}
+		}
+		setSymptomsTable(symptomsTableMap);
+		setSeeSymptoms(true);
+	}
 
 	return (
 		<IonContent>
 
-			{props.patient.medicalId == '' && <IonTitle>
-				<IonLabel>Enter the medical ID of a patient above and hit search</IonLabel>
-			</IonTitle>}
+			{
+				props.patient.medicalId == '' &&
+				<IonTitle>
+					<IonLabel>Enter the medical ID of a patient above and hit search</IonLabel>
+				</IonTitle>
+			}
 
-			{props.patient.medicalId != '' &&
+			{
+				props.patient.medicalId != '' &&
 
-
-			<div id="Container">
-				<IonRow>
-
-					<IonCol>
-						<IonRow>
-							<div>
-
-								<IonText><strong>First Name</strong></IonText>
-								<p className="box"> {props.patient.firstName}  </p>
-							</div>
-						</IonRow>
-						<IonRow>
-							<div>
-
-								<IonText><strong>Medicare Number</strong></IonText>
-								<p className="box">{props.patient.medicalId}</p>
-							</div>
-						</IonRow>
-						<IonRow>
-							<div>
-
-								<IonText> <strong>Email</strong></IonText>
-								<p className="box">{props.patient.email}</p>
-							</div>
-						</IonRow>
-
-					</IonCol>
-					<IonCol>
-						<IonRow>
-							<div>
-
-								<IonText><strong>Last Name</strong></IonText>
-								<p className="box">{props.patient.lastName}</p>
-							</div>
-						</IonRow>
-						<IonRow>
-							<div>
-
-								<IonText><strong>Phone Number</strong></IonText>
-								<p className="box">{props.patient.phoneNumber}</p>
-							</div>
-						</IonRow>
-
-						<IonRow>
-							<div>
-
-								<IonText><strong>Date of birth</strong></IonText>
-								<p className="box">{props.patient.dob}</p>
-							</div>
-						</IonRow>
-
-					</IonCol>
-					<IonCol>
-						<IonRow>
-							<div>
-
-								<IonText><strong>Address</strong></IonText>
-								<p className="box">{props.patient.address}</p>
-
-							</div>
-						</IonRow>
-
-						<IonRow>
-							<div>
-
-								<IonText><strong>Test Result</strong></IonText>
-								<p className="box">{props.patient.testResult}</p>
-
-							</div>
-						</IonRow>
-
-						<IonRow>
-							<div>
-
-								<IonText><strong>Gender</strong></IonText>
-								<p className="box">{props.patient.gender}</p>
-
-							</div>
-						</IonRow>
-
-					</IonCol>
-					{
-						currentProfile.getRole() != UserType.PATIENT && props.patient.medicalId != '' &&
-						<IonCol>
-							{props.patient.flagged &&
-							<IonButton color="danger" onClick={() => unFlagPatient()}>
-								<IonIcon ios={flag} md={flag}/>
-							</IonButton>
-							}
-							{!props.patient.flagged &&
-							<IonButton color="success" onClick={() => flagPatient()}>
-								<IonIcon ios={flag} md={flag}/>
-							</IonButton>
-							}
-						</IonCol>
-					}
-
-					{currentProfile.getRole() === UserType.PATIENT &&
+				<div className="patient-information__container">
 					<IonRow>
-						<div className="button">
-							<IonCol> <IonButton onClick={() => {
-								setShowStatusModal(true);
-							}} className="buttonc">Edit Status</IonButton> </IonCol>
-						</div>
+						<IonCol>
+							<IonRow>
+								<div>
+
+									<IonText><strong>First Name</strong></IonText>
+									<p className="patient-information__detail"> {props.patient.firstName}  </p>
+								</div>
+							</IonRow>
+							<IonRow>
+								<div>
+									<IonText><strong>Medicare Number</strong></IonText>
+									<p className="patient-information__detail">{props.patient.medicalId}</p>
+								</div>
+							</IonRow>
+							<IonRow>
+								<div>
+									<IonText> <strong>Email</strong></IonText>
+									<p className="patient-information__detail">{props.patient.email}</p>
+								</div>
+							</IonRow>
+						</IonCol>
+						<IonCol>
+							<IonRow>
+								<div>
+									<IonText><strong>Last Name</strong></IonText>
+									<p className="patient-information__detail">{props.patient.lastName}</p>
+								</div>
+							</IonRow>
+							<IonRow>
+								<div>
+									<IonText><strong>Phone Number</strong></IonText>
+									<p className="patient-information__detail">{props.patient.phoneNumber}</p>
+								</div>
+							</IonRow>
+							<IonRow>
+								<div>
+									<IonText><strong>Date of birth</strong></IonText>
+									<p className="patient-information__detail">{props.patient.dob}</p>
+								</div>
+							</IonRow>
+						</IonCol>
+						<IonCol>
+							<IonRow>
+								<div>
+									<IonText><strong>Address</strong></IonText>
+									<p className="patient-information__detail">{props.patient.address}</p>
+								</div>
+							</IonRow>
+							<IonRow>
+								<div>
+									<IonText><strong>Test Result</strong></IonText>
+									<p className="patient-information__detail">{props.patient.testResult}</p>
+								</div>
+							</IonRow>
+							<IonRow>
+								<div>
+									<IonText><strong>Gender</strong></IonText>
+									<p className="patient-information__detail">{props.patient.gender}</p>
+								</div>
+							</IonRow>
+
+						</IonCol>
+						{
+							currentProfile.getRole() != UserType.PATIENT && props.patient.medicalId != '' &&
+							<IonCol>
+								<IonButton color={props.patient.flagged ? 'danger' : 'success'}
+										   onClick={props.patient.flagged ? () => unFlagPatient() : () => flagPatient()}>
+									<IonIcon ios={flag} md={flag}/>
+								</IonButton>
+							</IonCol>
+						}
+
+						{
+							currentProfile.getRole() === UserType.PATIENT &&
+							<IonRow>
+								<div className="patient-information__div-button">
+									<IonCol>
+										<IonButton onClick={() => {
+											setShowStatusModal(true);
+										}}>
+											Edit Status
+										</IonButton>
+									</IonCol>
+								</div>
+							</IonRow>
+						}
+
 					</IonRow>
+					{
+						currentProfile.getRole() === UserType.DOCTOR &&
+						<IonRow>
+							<div className="patient-information__div-button">
+								<IonCol>
+									<IonButton onClick={() => setShowSymptomsModal(true)}>
+										Request symptoms update
+									</IonButton>
+								</IonCol>
+								<IonCol>
+									<IonButton>Set an Appointment</IonButton>
+								</IonCol>
+								<IonCol>
+									<IonButton>Send Email</IonButton>
+								</IonCol>
+								{
+									props.symptomsResponse && props.symptomsResponse.length > 0 &&
+									props.symptomsList && !seeSymptoms &&
+									<IonCol>
+										<IonButton onClick={() => {
+											generateSymptomsTable();
+										}}>See Symptoms</IonButton>
+									</IonCol>
+								}
+								{
+									seeSymptoms &&
+									<IonCol>
+										<IonButton onClick={() => {
+											setSeeSymptoms(false);
+										}}>Hide Symptoms</IonButton>
+									</IonCol>
+								}
+							</div>
+						</IonRow>
+					}
+					{
+						currentProfile.getRole() === UserType.DOCTOR &&
+						<IonRow>
+							{
+								props.symptomsResponse.length == 0 && !seeSymptoms &&
+								<IonTitle>
+									<IonLabel>The patient has not submitted a Symptoms form yet</IonLabel>
+								</IonTitle>
+							}
+							{
+								props.symptomsList && props.symptomsResponse && seeSymptoms &&
+								<table className="patient-information__medical-table">
+									<caption>
+										<IonLabel>Patient&rsquo;s Symptom updates</IonLabel>
+									</caption>
+									<thead>
+										<tr>
+											{
+												props.symptomsList.map((el, index) => (
+													<th key={index}>
+														{el.description}
+													</th>)
+												)
+											}
+											<th>Updated on</th>
+										</tr>
+									</thead>
+									<tbody>
+										{
+											Array.from(symptomsTable).map((el, index1) => (
+												<tr key={index1}>
+													{
+														el[1].map((el, index2) => {
+															if (el.response == true || el.response == false) {
+																return (
+																	<td key={index1 + '-' + index2}>{el.response ? 'Yes' : 'No'}</td>);
+															} else {
+																return (
+																	<td key={index1 + '-' + index2}>Not Requested</td>);
+															}
+														})
+													}
+													<td key={index1}>
+														<Moment date={el[0]}/>
+													</td>
+												</tr>
+											))
+										}
+									</tbody>
+								</table>
+							}
+						</IonRow>
+					}
+					{
+						currentProfile.getRole() === UserType.DOCTOR &&
+						<IonRow>
+							<div className={'patient-information__add-symptom'}>
+								<IonRow>
+									<IonCol size={'3'}>
+										<IonLabel>Subject</IonLabel>
+									</IonCol>
+									<IonCol size={'9'}>
+										<IonInput/>
+									</IonCol>
+
+								</IonRow>
+								<IonRow>
+									<IonCol size={'3'}>
+										<IonLabel>Description</IonLabel>
+									</IonCol>
+									<IonCol size={'9'}>
+										<IonInput/>
+									</IonCol>
+									<IonCol>
+										<IonButton>Add</IonButton>
+									</IonCol>
+								</IonRow>
+
+							</div>
+						</IonRow>
 					}
 
-				</IonRow>
-				{currentProfile.getRole() === UserType.DOCTOR &&
-				<IonRow>
+					<IonModal isOpen={showStatusModal}>
+						<IonContent>
+							<IonRadioGroup value={status} onIonChange={e => setStatus(e.detail.value)}>
+								<IonListHeader>
+									<IonLabel>Edit your Status</IonLabel>
+								</IonListHeader>
+								<IonItem>
+									<IonLabel>Positive</IonLabel>
+									<IonRadio slot="start" value={TestResult.POSITIVE}/>
+								</IonItem>
 
-					<div className="button">
+								<IonItem>
+									<IonLabel>Negative</IonLabel>
+									<IonRadio slot="start" value={TestResult.NEGATIVE}/>
+								</IonItem>
 
-						<IonCol> <IonButton className="buttonc" onClick={() => setShowSymptomsModal(true)}>Request
-							symptoms update</IonButton> </IonCol>
-						<IonCol> <IonButton className="buttonc">Set an Appointment</IonButton> </IonCol>
-						<IonCol> <IonButton className="buttonc">Send Email</IonButton> </IonCol>
-					</div>
-				</IonRow>}
-				{currentProfile.getRole() === UserType.DOCTOR &&
-				<IonRow>
-					<table className="blueTable">
-						<thead>
-							<tr>
-								<th>Date</th>
-								<th>Temperature</th>
-								<th>Breathing</th>
-								<th>Other Symptoms</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td>cell1_1</td>
-								<td>cell2_1</td>
-								<td>cell3_1</td>
-								<td>cell4_1</td>
-							</tr>
-							<tr>
-								<td>cell1_2</td>
-								<td>cell2_2</td>
-								<td>cell3_2</td>
-								<td>cell4_2</td>
-							</tr>
-							<tr>
-								<td>cell1_3</td>
-								<td>cell2_3</td>
-								<td>cell3_3</td>
-								<td>cell4_3</td>
-							</tr>
-						</tbody>
-					</table>
-				</IonRow>
-				}
+								<IonItem>
+									<IonLabel>Not tested/Pending</IonLabel>
+									<IonRadio slot="start" value={TestResult.PENDING}/>
+								</IonItem>
 
-				{currentProfile.getRole() === UserType.DOCTOR &&
-				<IonRow>
-					<div id="Container2">
-						<IonRow>
-							<IonCol size="3"><IonLabel>Subject</IonLabel></IonCol>
-							<IonCol><IonInput className="login-text-field"></IonInput></IonCol>
+							</IonRadioGroup>
 
-						</IonRow>
-						<IonRow>
-							<IonCol size="3"><IonLabel>Description</IonLabel></IonCol>
-							<IonCol><IonInput className="login-text-field"></IonInput></IonCol>
-							<IonButton className="buttonc">Add</IonButton>
+						</IonContent>
+						<IonButton color="success" onClick={() => updateStatus()}>Save</IonButton>
+						<IonButton color="danger" onClick={() => setShowStatusModal(false)}>Cancel</IonButton>
+					</IonModal>
 
-						</IonRow>
+					<IonModal isOpen={showSymptomsModal}>
+						<IonContent>
 
-					</div>
-				</IonRow>
-				}
+							{props.symptomsList && props.symptomsList.map((el, index) => <IonItem
+								key={index}>
+								<IonCheckbox value={el.name} checked={el.isChecked}
+											 onIonChange={e => handleCheck(e.detail.value)}/>
+								<IonLabel>{el.description}</IonLabel></IonItem>)}
 
-				<IonModal isOpen={showStatusModal}>
-					<IonContent>
-						<IonRadioGroup value={status} onIonChange={e => setStatus(e.detail.value)}>
-							<IonListHeader>
-								<IonLabel>Edit your Status</IonLabel>
-							</IonListHeader>
-							<IonItem>
-								<IonLabel>Positive</IonLabel>
-								<IonRadio slot="start" value={TestResult.POSITIVE}/>
-							</IonItem>
+						</IonContent>
+						<IonButton color="success" onClick={() => submitSymptoms()}>Request</IonButton>
+						<IonButton color="danger" onClick={() => setShowSymptomsModal(false)}>Cancel</IonButton>
+					</IonModal>
 
-							<IonItem>
-								<IonLabel>Negative</IonLabel>
-								<IonRadio slot="start" value={TestResult.NEGATIVE}/>
-							</IonItem>
-
-							<IonItem>
-								<IonLabel>Not tested/Pending</IonLabel>
-								<IonRadio slot="start" value={TestResult.PENDING}/>
-							</IonItem>
-
-						</IonRadioGroup>
-
-					</IonContent>
-					<IonButton color="success" onClick={() => updateStatus()}>Save</IonButton>
-					<IonButton color="danger" onClick={() => setShowStatusModal(false)}>Cancel</IonButton>
-				</IonModal>
-
-				<IonModal isOpen={showSymptomsModal}>
-					<IonContent>
-
-						{props.symptomsList && props.symptomsList.map((el, index) => <IonItem
-							key={index}>
-							<IonCheckbox value={el.name} checked={el.isChecked} onIonChange={e => handleCheck(e.detail.value)} />
-							<IonLabel>{el.description}</IonLabel></IonItem>)}
-
-					</IonContent>
-					<IonButton color="success" onClick={() => submitSymptoms()}>Request</IonButton>
-					<IonButton color="danger" onClick={() => setShowSymptomsModal(false)}>Cancel</IonButton>
-				</IonModal>
-
-			</div>
+				</div>
 
 			}
 		</IonContent>

@@ -2,7 +2,7 @@ import { IonRouterOutlet, IonSplitPane, setupIonicReact } from '@ionic/react';
 import { Redirect, Route } from 'react-router-dom';
 import Menu from '../components/Menu/Menu';
 import PatientProfile from '../pages/PatientProfile/PatientProfile.page';
-import HealthOfficialPatientsPage from '../pages/Patients/Patients.page';
+import PatientsHealthOfficialPage from '../pages/HealthOfficialPatients/Patients.healthOfficial.page';
 import { HealthOfficialPages } from '../providers/pages.enum';
 import { UserType } from '../enum/UserType.enum';
 import React from 'react';
@@ -18,7 +18,7 @@ const HealthOfficialRouting: React.FC = () => {
 					<Redirect to={HealthOfficialPages.patients}/>
 				</Route>
 				<Route path={HealthOfficialPages.patients}>
-					<HealthOfficialPatientsPage/>
+					<PatientsHealthOfficialPage/>
 				</Route>
 				<Route path={HealthOfficialPages.patientProfile}>
 					<PatientProfile/>

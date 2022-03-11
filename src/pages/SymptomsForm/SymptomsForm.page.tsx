@@ -1,4 +1,4 @@
-import { IonHeader, IonLabel, IonPage, IonTitle } from '@ionic/react';
+import { IonLabel, IonPage, IonTitle } from '@ionic/react';
 import NavBar from '../../components/NavBar/NavBar';
 import Symptom from '../../components/Symptom/Symptom';
 import React, { useEffect, useState } from 'react';
@@ -16,7 +16,7 @@ const SymptomsFormPage: React.FC = () => {
 		getMyRequestedSymptoms();
 	}, []);
 
-	async function getMyRequestedSymptoms() {
+	async function getMyRequestedSymptoms(): Promise<void> {
 		try {
 			const symptoms: ISymptom[] = [];
 			const data: ISymptom[] = await HttpService.get(`patients/${currentProfile.id}/symptoms`);
@@ -31,7 +31,7 @@ const SymptomsFormPage: React.FC = () => {
 		}
 	}
 
-	function handleSubmit() {
+	function handleSubmit(): void {
 		setRequestExist(false);
 	}
 

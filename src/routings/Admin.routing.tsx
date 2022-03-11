@@ -4,11 +4,11 @@ import Menu from '../components/Menu/Menu';
 import PatientProfile from '../pages/PatientProfile/PatientProfile.page';
 import { AdminPages } from '../providers/pages.enum';
 import AdminOverviewPage from '../pages/Admin/AdminOverview.page';
-import DoctorsPage from '../pages/Admin/Doctors.page';
+import DoctorsAdminPage from '../pages/AdminDoctors/Doctors.admin.page';
 import SettingsPage from '../pages/Settings/Settings.page';
 import { UserType } from '../enum/UserType.enum';
 import React from 'react';
-import PatientsAdmin from '../pages/AdminPatients/Patients.admin';
+import PatientsAdminPage from '../pages/AdminPatients/Patients.admin.page';
 
 setupIonicReact();
 
@@ -27,10 +27,10 @@ const AdminRouting: React.FC = () => {
 					<PatientProfile/>
 				</Route>
 				<Route path={AdminPages.patients}>
-					<PatientsAdmin />
+					<PatientsAdminPage />
 				</Route>
 				<Route path={AdminPages.doctors}>
-					<DoctorsPage/>
+					<DoctorsAdminPage/>
 				</Route>
 				<Route path={AdminPages.settings}>
 					<SettingsPage/>

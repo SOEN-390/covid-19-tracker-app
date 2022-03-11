@@ -15,6 +15,8 @@ export class Patient extends User {
 	private _lastUpdatedAt!: string;
 	private _flagged!: boolean;
 	private _reviewed!: boolean;
+	private _doctorName!: string;
+
 	// Constructor
 
 	public constructor(id: string, firstName: string, lastName: string, phoneNumber: string, address: string,
@@ -86,6 +88,14 @@ export class Patient extends User {
 
 	set reviewed(value: boolean) {
 		this._reviewed = value;
+	}
+	
+	get doctorName(): string {
+		return this._doctorName;
+	}
+
+	set doctorName(value: string) {
+		this._doctorName = value;
 	}
 
 	// Methods
