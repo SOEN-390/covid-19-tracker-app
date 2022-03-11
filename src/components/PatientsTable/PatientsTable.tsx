@@ -22,7 +22,7 @@ import { TestResult } from '../../enum/TestResult.enum';
 import { Patient } from '../../objects/Patient.class';
 import HttpService from '../../providers/http.service';
 
-const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient[]) => void }> = (props) => {
+const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient) => void }> = (props) => {
 
 	const {currentProfile} = useAuth();
 	const [columns, setColumns] = useState<readonly PatientsTableColumn[]>([]);
@@ -51,7 +51,7 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 			`patients/${patient.medicalId}/${patient.flagged ? 'flag' : 'unflag'}`,
 			{role: currentProfile.getRole()}
 		).then(() => {
-			props.onChange(props.patients);
+			props.onChange(patient);
 		}).catch(() => {
 			present('An error has occurred. Please try again.', 1500);
 		});
