@@ -2,7 +2,7 @@ import { IonRouterOutlet, IonSplitPane, setupIonicReact } from '@ionic/react';
 import { Redirect, Route } from 'react-router-dom';
 import Menu from '../components/Menu/Menu';
 import Overview from '../pages/Overview/Overview.page';
-import Appointments from '../pages/Appointments/Appointments';
+import AppointmentsPage from '../pages/Appointments/Appointments.page';
 import SymptomsForm from '../pages/SymptomsForm/SymptomsForm.page';
 import PatientProfile from '../pages/PatientProfile/PatientProfile.page';
 import { PatientPages } from '../providers/pages.enum';
@@ -24,7 +24,7 @@ const PatientRouting: React.FC = () => {
 					<Overview />
 				</Route>
 				<Route path={PatientPages.appointments}>
-					<Appointments />
+					<AppointmentsPage />
 				</Route>
 				<Route path={PatientPages.symptoms}>
 					<SymptomsForm />
