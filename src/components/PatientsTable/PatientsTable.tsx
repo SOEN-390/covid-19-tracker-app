@@ -16,7 +16,7 @@ import { useEffect, useState } from 'react';
 import { Table, Tbody, Td, Th, Thead, Tr } from 'react-super-responsive-table';
 import { UserType } from '../../enum/UserType.enum';
 import { adminColumns, doctorColumns, healthOfficialColumns, PatientsTableColumn } from './patientsTableColumn';
-import { flag } from 'ionicons/icons';
+import { flag, mailOpen, mailUnread } from 'ionicons/icons';
 import { useAuth } from '../../providers/auth.provider';
 import { TestResult } from '../../enum/TestResult.enum';
 import { Patient } from '../../objects/Patient.class';
@@ -52,16 +52,32 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 			{role: currentProfile.getRole()}
 		).then(() => {
 			props.onChange(patient);
+			present(`Successfully ${patient.flagged ? 'FLAGGED': 'UNFLAGGED'} patient'`, 1000);
+		}).catch(() => {
+			present('An error has occurred. Please try again.', 1000);
+		});
+	}
+
+	function reviewPatient(patient: Patient) {
+		patient.reviewed = !patient.reviewed;
+		HttpService.patch(
+			`doctors/${patient.medicalId}/${patient.reviewed ? 'review' : 'unreview'}`,
+			{role: currentProfile.getRole()}
+		).then(() => {
+			props.onChange(patient);
 		}).catch(() => {
 			present('An error has occurred. Please try again.', 1500);
 		});
 	}
 
-
 	function getRow(patient: Patient, index: number): JSX.Element | null {
 
 		return (
-			<Tr className="patients-table__table-entries" key={index}>
+			<Tr className="patients-table__table-entries"
+				key={index}
+				style={{ background: patient.reviewed ? '':'#cfe2f3' }}
+				onClick={() => reviewPatient(patient)}
+			>
 				<Td key={index} className="patients-table__table-entries__name">{patient.firstName + ' ' + patient.lastName}</Td>
 				<Td key={index}>
 					<div key={index} className={'patients-table__status ' +
@@ -73,9 +89,6 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 						{patient.testResult === TestResult.NEGATIVE && 'Negative'}
 						{patient.testResult === TestResult.PENDING && 'Pending'}
 					</div>
-				</Td>
-				<Td key={index} className="patients-table__table-entries__last-updated">
-					March 17, 2021
 				</Td>
 				{
 					(currentProfile.getRole() === UserType.HEALTH_OFFICIAL || currentProfile.getRole() === UserType.ADMIN) &&
@@ -93,6 +106,7 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 					(currentProfile.getRole() === UserType.HEALTH_OFFICIAL || currentProfile.getRole() === UserType.DOCTOR) &&
 					<Td key={index}>
 						<IonButton shape="round" onClick={() => {
+							reviewPatient(patient);
 							setShowModal(true);
 							setSymptomsIndex(index);
 						}}>
@@ -104,38 +118,47 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 				{
 					(currentProfile.getRole() === UserType.HEALTH_OFFICIAL || currentProfile.getRole() === UserType.DOCTOR) &&
 					symptomsIndex !== undefined &&
-					<IonModal isOpen={showModal}>
-						<IonContent fullscreen>
-							<IonCard>
-								<IonCardHeader>
-									<IonCardTitle>{props.patients[symptomsIndex].firstName + ' ' + props.patients[symptomsIndex].lastName}</IonCardTitle>
-									<IonCardSubtitle>Temperature</IonCardSubtitle>
-								</IonCardHeader>
-								<IonCardContent>
-									37.8 Celsius
-								</IonCardContent>
-								<IonCardHeader>
-									<IonCardSubtitle>Breathing</IonCardSubtitle>
-								</IonCardHeader>
-								<IonCardContent>
-									Severe difficulty breathing
-								</IonCardContent>
-								<IonCardHeader>
-									<IonCardSubtitle>Other Symptoms</IonCardSubtitle>
-								</IonCardHeader>
-								<IonCardContent>
-									Fever along with running nose
-								</IonCardContent>
-							</IonCard>
-						</IonContent>
+					<IonModal isOpen={showModal}  breakpoints={[0.1, 0.5, 1]} initialBreakpoint={0.5} swipeToClose={true} onDidDismiss={() => setShowModal(false)}>
+						<IonCard>
+							<IonCardHeader>
+								<IonCardTitle>{props.patients[symptomsIndex].firstName + ' ' + props.patients[symptomsIndex].lastName}</IonCardTitle>
+								<IonCardSubtitle>Temperature</IonCardSubtitle>
+							</IonCardHeader>
+							<IonCardContent>
+								37.8 Celsius
+							</IonCardContent>
+							<IonCardHeader>
+								<IonCardSubtitle>Breathing</IonCardSubtitle>
+							</IonCardHeader>
+							<IonCardContent>
+								Severe difficulty breathing
+							</IonCardContent>
+							<IonCardHeader>
+								<IonCardSubtitle>Other Symptoms</IonCardSubtitle>
+							</IonCardHeader>
+							<IonCardContent>
+								Fever along with running nose
+							</IonCardContent>
+						</IonCard>
 						<IonButton onClick={() => setShowModal(false)}>Close Symptoms Form</IonButton>
 					</IonModal>
 				}
-
+				{
+					(currentProfile.getRole() === UserType.DOCTOR) &&
+					<Td key={index} className={'patients-table__flag'} >
+						<IonIcon
+							ios={patient.reviewed==false? mailUnread: mailOpen}
+							md={patient.reviewed==false? mailUnread: mailOpen}
+						/>
+					</Td>
+				}
 				<Td key={index} className={'patients-table__flag'}>
 					<IonIcon className={patient.flagged ? 'patients-table__flag__high-priority' : 'patients-table__flag__no-priority'}
-							 ios={flag} md={flag}
-							 onClick={() => flagPatient(patient)}
+						ios={flag} md={flag}
+						onClick={() => {
+							reviewPatient(patient);
+							flagPatient(patient);
+						}}
 					/>
 				</Td>
 			</Tr>
