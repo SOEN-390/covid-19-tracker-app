@@ -119,7 +119,7 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 											   }
 										   }],
 									   'Contact by');
-								   setTimeout(dismissActionSheet, 5000);
+								   setTimeout(dismissActionSheet, 10000);
 							   }}
 					>
 						Contact
