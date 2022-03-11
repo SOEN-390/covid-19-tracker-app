@@ -12,21 +12,20 @@ export class Patient extends User {
 	private _testResult!: TestResult;
 	private _dob!: string;
 	private _gender!: Gender;
-	private _lastUpdatedAt!: string;
-	private _flagged!: boolean;
-	private _reviewed!: boolean;
-	private _doctorName!: string;
+	private _lastUpdatedAt?: string;
+	private _flagged?: boolean;
+	private _reviewed?: boolean;
+	private _doctorName?: string;
 
 	// Constructor
 
 	public constructor(id: string, firstName: string, lastName: string, phoneNumber: string, address: string,
-					   medicalId: string, testResult: TestResult, dob: string, gender: Gender, reviewed:boolean) {
+					   medicalId: string, testResult: TestResult, dob: string, gender: Gender) {
 		super(id, firstName, lastName, phoneNumber, address);
 		this._medicalId = medicalId;
 		this._testResult = testResult;
 		this._dob = dob;
 		this._gender = gender;
-		this._reviewed= reviewed;
 	}
 
 	// Getters & Setters
@@ -67,7 +66,7 @@ export class Patient extends User {
 		this._email = value;
 	}
 	get lastUpdatedAt(): string {
-		return this._lastUpdatedAt;
+		return this._lastUpdatedAt || '';
 	}
 
 	set lastUpdatedAt(value: string) {
@@ -75,7 +74,7 @@ export class Patient extends User {
 	}
 
 	get flagged(): boolean {
-		return this._flagged;
+		return this._flagged || false;
 	}
 
 	set flagged(value: boolean) {
@@ -83,15 +82,15 @@ export class Patient extends User {
 	}
 
 	get reviewed(): boolean {
-		return this._reviewed;
+		return this._reviewed || false;
 	}
 
 	set reviewed(value: boolean) {
 		this._reviewed = value;
 	}
-	
+
 	get doctorName(): string {
-		return this._doctorName;
+		return this._doctorName || '';
 	}
 
 	set doctorName(value: string) {
