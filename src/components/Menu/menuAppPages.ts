@@ -149,13 +149,13 @@ export const adminAppPages: readonly AppPage[] = [
 		mdIcon: appsOutline
 	},
 	{
-		title: 'Confirmed Patients',
+		title: 'Patients',
 		url: AdminPages.patients,
 		iosIcon: calendarOutline,
 		mdIcon: calendarOutline
 	},
 	{
-		title: 'Doctor',
+		title: 'Doctors',
 		url: AdminPages.doctors,
 		iosIcon: heartHalfOutline,
 		mdIcon: heartHalfSharp

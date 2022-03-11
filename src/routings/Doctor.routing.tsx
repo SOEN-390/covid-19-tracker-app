@@ -6,7 +6,7 @@ import { DoctorPages } from '../providers/pages.enum';
 import DashboardDoctorPage from '../pages/DoctorDashboard/Dashboard.doctor.page';
 import { UserType } from '../enum/UserType.enum';
 import React from 'react';
-import PatientsDoctorPage from '../pages/DoctorPatients/Patients.doctor.page';
+import PatientsPage from '../pages/Patients/Patients.page';
 
 setupIonicReact();
 
@@ -25,7 +25,7 @@ const DoctorRouting: React.FC = () => {
 					<PatientProfile/>
 				</Route>
 				<Route path={DoctorPages.patients}>
-					<PatientsDoctorPage/>
+					<PatientsPage/>
 				</Route>
 			</IonRouterOutlet>
 		</IonSplitPane>

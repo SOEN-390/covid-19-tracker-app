@@ -1,19 +1,26 @@
 import { IonButton, IonCol, IonContent, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
-import NavBar from '../../components/NavBar/NavBar';
 import React, { useEffect, useState } from 'react';
+import NavBar from '../../components/NavBar/NavBar';
+import { useAuth } from '../../providers/auth.provider';
 import HttpService from '../../providers/http.service';
+import { TestResult } from '../../enum/TestResult.enum';
 import PatientsTable from '../../components/PatientsTable/PatientsTable';
 import { Patient } from '../../objects/Patient.class';
-import { TestResult } from '../../enum/TestResult.enum';
-import './Patients.admin.page.scss';
+import './Patients.page.scss';
+import { UserType } from '../../enum/UserType.enum';
 
-const PatientsAdminPage: React.FC = () => {
+const PatientsPage: React.FC = () => {
 	const [patients, setPatients] = useState<Patient[]>([]);
 	const [patientsTableRow, setPatientsTableRow] = useState<Patient[]>([]);
+	const {currentProfile} = useAuth();
 	const [tableSelection, setTableSelection] = useState<'confirmed' | 'unconfirmed'>('confirmed');
 
 	useEffect(() => {
-		getPatients();
+		if (currentProfile.getRole() === UserType.DOCTOR) {
+			getAssignedPatients();
+		} else if (currentProfile.getRole() === UserType.ADMIN || currentProfile.getRole() === UserType.HEALTH_OFFICIAL) {
+			getAllPatients();
+		}
 	}, []);
 
 	useEffect(() => {
@@ -24,11 +31,32 @@ const PatientsAdminPage: React.FC = () => {
 		}
 	}, [patients]);
 
-	function onPatientsChanged(patients: Patient[]) {
-		setPatients(patients);
+	function onPatientsChanged(changedPatient: Patient) {
+		for (const [index, patient] of patients.entries()) {
+			if (patient.medicalId === changedPatient.medicalId) {
+				patients[index] = changedPatient;
+			}
+		}
+		setPatients([...patients]);
 	}
 
-	async function getPatients() {
+	function getAssignedPatients() {
+		HttpService.get(`doctors/${currentProfile.id}/patients/assigned`).then((patients: Patient[]) => {
+			const patientsArranged: Patient[] = [];
+			for (const patient of patients) {
+				if (patient.flagged) {
+					patientsArranged.unshift(patient);
+				} else {
+					patientsArranged.push(patient);
+				}
+			}
+			setPatients(patientsArranged);
+		}).catch((error) => {
+			console.log('ERROR: ', error);
+		});
+	}
+
+	function getAllPatients() {
 		HttpService.get('patients/all').then((patients: Patient[]) => {
 			const patientsArranged: Patient[] = [];
 			for (const patient of patients) {
@@ -69,24 +97,25 @@ const PatientsAdminPage: React.FC = () => {
 	return (
 		<IonPage>
 			<IonToolbar>
-				<NavBar/>
 			</IonToolbar>
-			<IonContent className={'patient-admin-page__content'}>
+			<IonContent className={'patients-page__content'}>
 				<IonTitle>Patients</IonTitle>
 				<div>
 					<IonRow>
 						<IonCol/>
-						<IonCol className={'patient-admin-page__confirmed'}>
-							<IonButton className={tableSelection === 'confirmed' ?
-								'patient-admin-page__button-selected' :
-								'patient-admin-page__button-unselected'}
-									   onClick={getConfirmedPatients}>Confirmed</IonButton>
+						<IonCol className={'patients-page__confirmed'}>
+							<IonButton
+								className={tableSelection === 'confirmed' ?
+									'patients-page__button-selected' :
+									'patients-page__button-unselected'}
+								onClick={getConfirmedPatients}>Confirmed</IonButton>
 						</IonCol>
-						<IonCol className={'patient-admin-page__unconfirmed'}>
-							<IonButton className={tableSelection === 'unconfirmed' ?
-								'patient-admin-page__button-selected' :
-								'patient-admin-page__button-unselected'}
-									   onClick={getUnconfirmedPatients}>UnConfirmed</IonButton>
+						<IonCol className={'patients-page__unconfirmed'}>
+							<IonButton
+								className={tableSelection === 'unconfirmed' ?
+									'patients-page__button-selected' :
+									'patients-page__button-unselected'}
+								onClick={getUnconfirmedPatients}>UnConfirmed</IonButton>
 						</IonCol>
 						<IonCol/>
 					</IonRow>
@@ -101,5 +130,4 @@ const PatientsAdminPage: React.FC = () => {
 	);
 };
 
-export default PatientsAdminPage;
-
+export default PatientsPage;

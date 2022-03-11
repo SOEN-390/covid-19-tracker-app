@@ -1,23 +1,23 @@
-ion-content.patient-doctor-page__content {
+ion-content.patients-page__content {
 
   ion-title {
 
   }
 
-  ion-col.patient-doctor-page__confirmed {
+  ion-col.patients-page__confirmed {
     text-align: right;
   }
 
-  ion-col.patient-doctor-page__unconfirmed {
+  ion-col.patients-page__unconfirmed {
     text-align: left;
   }
 
-  ion-button.patient-doctor-page__button-selected {
+  ion-button.patients-page__button-selected {
     color: var(--ion-color-primary-contrast);
     --background: var(--ion-color-dark-blue);
   }
 
-  ion-button.patient-doctor-page__button-unselected {
+  ion-button.patients-page__button-unselected {
     color: var(--ion-color-dark-blue);
     --background: var(--ion-color-primary-contrast);
   }

@@ -101,7 +101,7 @@ const Menu: React.FC<{ ionMenuId: string, userType: UserType }> = (props) => {
 										<IonLabel>{appPage.title}</IonLabel>
 									</IonItem>
 									{
-										appPage.title === 'Doctor' && getRole() === 'Admin' &&
+										appPage.title === 'Doctors' && getRole() === 'Admin' &&
 											<><IonTitle>Account</IonTitle></>
 									}
 
