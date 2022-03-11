@@ -52,7 +52,7 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 			{role: currentProfile.getRole()}
 		).then(() => {
 			props.onChange(patient);
-			present(`Successfully ${patient.flagged ? 'FLAGGED': 'UNFLAGGED'} patient'`, 1000);
+			present(`Successfully ${patient.flagged ? 'FLAGGED' : 'UNFLAGGED'} patient'`, 1000);
 		}).catch(() => {
 			present('An error has occurred. Please try again.', 1000);
 		});
@@ -75,10 +75,11 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 		return (
 			<Tr className="patients-table__table-entries"
 				key={index}
-				style={{ background: patient.reviewed ? '':'#cfe2f3' }}
+				style={{background: patient.reviewed ? '' : '#cfe2f3'}}
 				onClick={() => reviewPatient(patient)}
 			>
-				<Td key={index} className="patients-table__table-entries__name">{patient.firstName + ' ' + patient.lastName}</Td>
+				<Td key={index}
+					className="patients-table__table-entries__name">{patient.firstName + ' ' + patient.lastName}</Td>
 				<Td key={index}>
 					<div key={index} className={'patients-table__status ' +
 						(patient.testResult === TestResult.POSITIVE ? 'patients-table__status__positive' : '') +
@@ -118,7 +119,8 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 				{
 					(currentProfile.getRole() === UserType.HEALTH_OFFICIAL || currentProfile.getRole() === UserType.DOCTOR) &&
 					symptomsIndex !== undefined &&
-					<IonModal isOpen={showModal}  breakpoints={[0.1, 0.5, 1]} initialBreakpoint={0.5} swipeToClose={true} onDidDismiss={() => setShowModal(false)}>
+					<IonModal isOpen={showModal} breakpoints={[0.1, 0.5, 1]} initialBreakpoint={0.5} swipeToClose={true}
+							  onDidDismiss={() => setShowModal(false)}>
 						<IonCard>
 							<IonCardHeader>
 								<IonCardTitle>{props.patients[symptomsIndex].firstName + ' ' + props.patients[symptomsIndex].lastName}</IonCardTitle>
@@ -145,15 +147,16 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 				}
 				{
 					(currentProfile.getRole() === UserType.DOCTOR) &&
-					<Td key={index} className={'patients-table__flag'} >
+					<Td key={index} className={'patients-table__flag'}>
 						<IonIcon
-							ios={patient.reviewed==false? mailUnread: mailOpen}
-							md={patient.reviewed==false? mailUnread: mailOpen}
+							ios={patient.reviewed ? mailUnread : mailOpen}
+							md={patient.reviewed ? mailUnread : mailOpen}
 						/>
 					</Td>
 				}
 				<Td key={index} className={'patients-table__flag'}>
-					<IonIcon className={patient.flagged ? 'patients-table__flag__high-priority' : 'patients-table__flag__no-priority'}
+					<IonIcon
+						className={patient.flagged ? 'patients-table__flag__high-priority' : 'patients-table__flag__no-priority'}
 						ios={flag} md={flag}
 						onClick={() => {
 							reviewPatient(patient);
