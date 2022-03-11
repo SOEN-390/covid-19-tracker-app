@@ -29,7 +29,8 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 	const [showModal, setShowModal] = useState(false);
 	const [symptomsIndex, setSymptomsIndex] = useState<number>();
 
-	const [present] = useIonToast();
+	const [presentToast] = useIonToast();
+	const [presentActionSheet, dismissActionSheet] = useIonActionSheet();
 
 	useEffect(() => {
 		switch (currentProfile.getRole()) {
@@ -52,9 +53,9 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 			{role: currentProfile.getRole()}
 		).then(() => {
 			props.onChange(patient);
-			present(`Successfully ${patient.flagged ? 'FLAGGED' : 'UNFLAGGED'} patient'`, 1000);
+			presentToast(`Successfully ${patient.flagged ? 'FLAGGED' : 'UNFLAGGED'} patient'`, 1000);
 		}).catch(() => {
-			present('An error has occurred. Please try again.', 1000);
+			presentToast('An error has occurred. Please try again.', 1000);
 		});
 	}
 
@@ -66,7 +67,7 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 		).then(() => {
 			props.onChange(patient);
 		}).catch(() => {
-			present('An error has occurred. Please try again.', 1500);
+			presentToast('An error has occurred. Please try again.', 1500);
 		});
 	}
 
