@@ -1,4 +1,5 @@
 import {
+	ActionSheetButton,
 	IonButton,
 	IonCard,
 	IonCardContent,
@@ -16,7 +17,7 @@ import { useEffect, useState } from 'react';
 import { Table, Tbody, Td, Th, Thead, Tr } from 'react-super-responsive-table';
 import { UserType } from '../../enum/UserType.enum';
 import { adminColumns, doctorColumns, healthOfficialColumns, PatientsTableColumn } from './patientsTableColumn';
-import { call, flag, mail, mailOpen, mailUnread } from 'ionicons/icons';
+import { call, flag, mail, mailOpen, mailUnread, close } from 'ionicons/icons';
 import { useAuth } from '../../providers/auth.provider';
 import { TestResult } from '../../enum/TestResult.enum';
 import { Patient } from '../../objects/Patient.class';
@@ -71,6 +72,32 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 		});
 	}
 
+	function generateContactList(patient: Patient): ActionSheetButton[] {
+		const contactOption: ActionSheetButton[] = [];
+		if (patient.email) {
+			contactOption.push({
+				text: 'Email',
+				icon: mail,
+				handler: () => {
+					window.location.href = `mailto:${patient.email}+?subject=COVID-Tracker&body=`;
+				}});
+		}
+		if (patient.email) {
+			contactOption.push({
+				text: 'Phone',
+				icon: call,
+				handler: () => {
+					window.location.href = `tel:${patient.phoneNumber}`;
+				}});
+		}
+		contactOption.push({
+			text: 'Cancel',
+			icon: close,
+			role: 'cancel'
+		});
+		return contactOption;
+	}
+
 	function getRow(patient: Patient, index: number): JSX.Element | null {
 
 		return (
@@ -103,21 +130,7 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 							   expand="block"
 							   onClick={() => {
 								   presentActionSheet(
-									   [
-										   {
-											   text: 'Email',
-											   icon: mail,
-											   handler: () => {
-												   window.location.href = `mailto:${patient.email}+?subject=COVID-Tracker&body=`;
-											   }
-										   },
-										   {
-											   text: 'Phone',
-											   icon: call,
-											   handler: () => {
-												   window.location.href = `tel:${patient.phoneNumber}`;
-											   }
-										   }],
+									   generateContactList(patient),
 									   'Contact by');
 								   setTimeout(dismissActionSheet, 10000);
 							   }}
