@@ -3,12 +3,12 @@ import { Redirect, Route } from 'react-router-dom';
 import Menu from '../components/Menu/Menu';
 import PatientProfile from '../pages/PatientProfile/PatientProfile.page';
 import { AdminPages } from '../providers/pages.enum';
-import AdminOverviewPage from '../pages/Admin/AdminOverview.page';
+import AdminOverviewPage from '../pages/AdminOverview/AdminOverview.page';
 import DoctorsAdminPage from '../pages/AdminDoctors/Doctors.admin.page';
 import SettingsPage from '../pages/Settings/Settings.page';
 import { UserType } from '../enum/UserType.enum';
 import React from 'react';
-import PatientsAdminPage from '../pages/AdminPatients/Patients.admin.page';
+import PatientsPage from '../pages/Patients/Patients.page';
 
 setupIonicReact();
 
@@ -27,7 +27,7 @@ const AdminRouting: React.FC = () => {
 					<PatientProfile/>
 				</Route>
 				<Route path={AdminPages.patients}>
-					<PatientsAdminPage />
+					<PatientsPage />
 				</Route>
 				<Route path={AdminPages.doctors}>
 					<DoctorsAdminPage/>

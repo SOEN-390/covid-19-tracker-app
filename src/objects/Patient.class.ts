@@ -12,9 +12,10 @@ export class Patient extends User {
 	private _testResult!: TestResult;
 	private _dob!: string;
 	private _gender!: Gender;
-	private _lastUpdatedAt!: string;
-	private _flagged!: boolean;
-	private _doctorName!: string;
+	private _lastUpdatedAt?: string;
+	private _flagged?: boolean;
+	private _reviewed?: boolean;
+	private _doctorName?: string;
 
 	// Constructor
 
@@ -65,7 +66,7 @@ export class Patient extends User {
 		this._email = value;
 	}
 	get lastUpdatedAt(): string {
-		return this._lastUpdatedAt;
+		return this._lastUpdatedAt || '';
 	}
 
 	set lastUpdatedAt(value: string) {
@@ -73,15 +74,23 @@ export class Patient extends User {
 	}
 
 	get flagged(): boolean {
-		return this._flagged;
+		return this._flagged || false;
 	}
 
 	set flagged(value: boolean) {
 		this._flagged = value;
 	}
 
+	get reviewed(): boolean {
+		return this._reviewed || false;
+	}
+
+	set reviewed(value: boolean) {
+		this._reviewed = value;
+	}
+
 	get doctorName(): string {
-		return this._doctorName;
+		return this._doctorName || '';
 	}
 
 	set doctorName(value: string) {

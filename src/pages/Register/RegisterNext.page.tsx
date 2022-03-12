@@ -14,7 +14,7 @@ import {
 } from '@ionic/react';
 import CovidTrackerTransparent from '../../assets/images/CovidTrackerTransparent.png';
 import { useHistory } from 'react-router-dom';
-import './Register.css';
+import './Register.page.css';
 import { Pages } from '../../providers/pages.enum';
 import React, { useState } from 'react';
 import HttpService from '../../providers/http.service';
@@ -26,7 +26,7 @@ import { Gender } from '../../enum/Gender.enum';
 
 setupIonicReact();
 
-const RegisterNext: React.FC = () => {
+const RegisterNextPage: React.FC = () => {
 
 	const [firstName, setFirstName] = useState<string>('');
 	const [lastName, setLastName] = useState<string>('');
@@ -184,4 +184,4 @@ const RegisterNext: React.FC = () => {
 
 };
 
-export default RegisterNext;
+export default RegisterNextPage;
