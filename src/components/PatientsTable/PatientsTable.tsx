@@ -1,13 +1,14 @@
 import {
+	ActionSheetButton,
 	IonButton,
 	IonCard,
 	IonCardContent,
 	IonCardHeader,
 	IonCardSubtitle,
 	IonCardTitle,
-	IonContent,
 	IonIcon,
 	IonModal,
+	useIonActionSheet,
 	useIonToast
 } from '@ionic/react';
 import './PatientsTable.scss';
@@ -16,7 +17,7 @@ import { useEffect, useState } from 'react';
 import { Table, Tbody, Td, Th, Thead, Tr } from 'react-super-responsive-table';
 import { UserType } from '../../enum/UserType.enum';
 import { adminColumns, doctorColumns, healthOfficialColumns, PatientsTableColumn } from './patientsTableColumn';
-import { flag, mailOpen, mailUnread } from 'ionicons/icons';
+import { call, flag, mail, mailOpen, mailUnread, close } from 'ionicons/icons';
 import { useAuth } from '../../providers/auth.provider';
 import { TestResult } from '../../enum/TestResult.enum';
 import { Patient } from '../../objects/Patient.class';
@@ -29,7 +30,8 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 	const [showModal, setShowModal] = useState(false);
 	const [symptomsIndex, setSymptomsIndex] = useState<number>();
 
-	const [present] = useIonToast();
+	const [presentToast] = useIonToast();
+	const [presentActionSheet, dismissActionSheet] = useIonActionSheet();
 
 	useEffect(() => {
 		switch (currentProfile.getRole()) {
@@ -52,9 +54,9 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 			{role: currentProfile.getRole()}
 		).then(() => {
 			props.onChange(patient);
-			present(`Successfully ${patient.flagged ? 'FLAGGED' : 'UNFLAGGED'} patient'`, 1000);
+			presentToast(`Successfully ${patient.flagged ? 'FLAGGED' : 'UNFLAGGED'} patient'`, 1000);
 		}).catch(() => {
-			present('An error has occurred. Please try again.', 1000);
+			presentToast('An error has occurred. Please try again.', 1000);
 		});
 	}
 
@@ -66,8 +68,34 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 		).then(() => {
 			props.onChange(patient);
 		}).catch(() => {
-			present('An error has occurred. Please try again.', 1500);
+			presentToast('An error has occurred. Please try again.', 1500);
 		});
+	}
+
+	function generateContactList(patient: Patient): ActionSheetButton[] {
+		const contactOption: ActionSheetButton[] = [];
+		if (patient.email) {
+			contactOption.push({
+				text: 'Email',
+				icon: mail,
+				handler: () => {
+					window.location.href = `mailto:${patient.email}+?subject=COVID-Tracker&body=`;
+				}});
+		}
+		if (patient.email) {
+			contactOption.push({
+				text: 'Phone',
+				icon: call,
+				handler: () => {
+					window.location.href = `tel:${patient.phoneNumber}`;
+				}});
+		}
+		contactOption.push({
+			text: 'Cancel',
+			icon: close,
+			role: 'cancel'
+		});
+		return contactOption;
 	}
 
 	function getRow(patient: Patient, index: number): JSX.Element | null {
@@ -98,7 +126,15 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 					</Td>
 				}
 				<Td key={index}>
-					<IonButton shape="round">
+					<IonButton shape="round"
+							   expand="block"
+							   onClick={() => {
+								   presentActionSheet(
+									   generateContactList(patient),
+									   'Contact by');
+								   setTimeout(dismissActionSheet, 10000);
+							   }}
+					>
 						Contact
 					</IonButton>
 				</Td>
