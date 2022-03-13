@@ -39,7 +39,7 @@ const NavBar: React.FC<{ callback?: any }> = (props) => {
 								<IonSearchbar value={searchText} onIonChange={e => setSearchText(e.detail.value || '')}
 											  showCancelButton="never"
 								/>
-								<IonButton color={'dark-blue'} onClick={search}> Search </IonButton>
+								<IonButton onClick={search}> Search </IonButton>
 							</IonItem>
 						</div>) : null
 				}
