@@ -90,10 +90,10 @@ const PatientProfilePage: React.FC = () => {
 		setFirstName(data.firstName);
 		setLastName(data.lastName);
 		switch (data.testResult) {
-			case 'positive':
+			case 'POSITIVE':
 				setTestResult(TestResult.POSITIVE);
 				break;
-			case 'negative':
+			case 'NEGATIVE':
 				setTestResult(TestResult.NEGATIVE);
 				break;
 			default:

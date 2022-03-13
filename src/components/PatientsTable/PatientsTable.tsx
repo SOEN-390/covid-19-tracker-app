@@ -80,7 +80,8 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 				icon: mail,
 				handler: () => {
 					window.location.href = `mailto:${patient.email}+?subject=COVID-Tracker&body=`;
-				}});
+				}
+			});
 		}
 		if (patient.email) {
 			contactOption.push({
@@ -88,7 +89,8 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 				icon: call,
 				handler: () => {
 					window.location.href = `tel:${patient.phoneNumber}`;
-				}});
+				}
+			});
 		}
 		contactOption.push({
 			text: 'Cancel',
@@ -103,7 +105,7 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 		return (
 			<Tr className="patients-table__table-entries"
 				key={index}
-				style={{background: patient.reviewed ? '' : '#cfe2f3'}}
+				style={{background: patient.reviewed ? '' : '#F5F6F6'}}
 				onClick={() => reviewPatient(patient)}
 			>
 				<Td key={index}
@@ -114,9 +116,9 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 						(patient.testResult === TestResult.NEGATIVE ? 'patients-table__status__negative' : '') +
 						(patient.testResult === TestResult.PENDING ? 'patients-table__status__pending' : '')
 					}>
-						{patient.testResult === TestResult.POSITIVE && 'Positive'}
-						{patient.testResult === TestResult.NEGATIVE && 'Negative'}
-						{patient.testResult === TestResult.PENDING && 'Pending'}
+						{patient.testResult === TestResult.POSITIVE && 'POSITIVE'}
+						{patient.testResult === TestResult.NEGATIVE && 'NEGATIVE'}
+						{patient.testResult === TestResult.PENDING && 'PENDING'}
 					</div>
 				</Td>
 				{
