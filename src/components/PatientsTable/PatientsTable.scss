@@ -19,9 +19,9 @@ table.patients-table__table {
     height: 60px;
 
     th.patients-table__table-column-title {
-      color: var(--ion-color-dark-blue);
+      color: #2C4D62;
       font-weight: bold;
-      font-size: 18px;
+      font-size: 15px;
       text-align: center;
       padding: 10px;
     }
@@ -36,7 +36,7 @@ table.patients-table__table {
     height: inherit;
 
     td {
-      color: var(--ion-color-dark-blue);
+      color: #2C4D62;
       font-weight: normal;
       font-size: 16px;
       margin: auto;
@@ -51,6 +51,8 @@ table.patients-table__table {
 
     td.patients-table__table-entries__name {
       text-align: left;
+      padding-left: 4%;
+      font-weight: bold;
     }
 
     div.patients-table__status {
@@ -66,15 +68,18 @@ table.patients-table__table {
     }
 
     div.patients-table__status__positive {
-      background-color: #db0101;
+      background-color: #F6FFED;
+      color: #129C0F ;
     }
 
     div.patients-table__status__negative {
-      background-color: #129C0F;
+      background-color: #FFF1F0;
+      color: #CF1322;
     }
 
     div.patients-table__status__pending {
-      background-color: #797777;
+      background-color: #EBEBEB;
+      color: #959595;
     }
 
     td.patients-table__table-entries__last-updated {
@@ -98,3 +103,4 @@ table.patients-table__table {
   }
 
 }
+

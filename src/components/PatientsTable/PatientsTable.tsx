@@ -114,7 +114,7 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 		return (
 			<Tr className="patients-table__table-entries"
 				key={index}
-				style={{background: currentProfile.getRole() === UserType.DOCTOR ? (patient.reviewed ? '' : '#cfe2f3') : ''}}
+				style={{background: currentProfile.getRole() === UserType.DOCTOR ? (patient.reviewed ? '' : '#F5F6F6') : ''}}
 				onClick={() => {
 					// TODO: Forward to profile page
 				}}
@@ -127,9 +127,9 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 						(patient.testResult === TestResult.NEGATIVE ? 'patients-table__status__negative' : '') +
 						(patient.testResult === TestResult.PENDING ? 'patients-table__status__pending' : '')
 					}>
-						{patient.testResult === TestResult.POSITIVE && 'Positive'}
-						{patient.testResult === TestResult.NEGATIVE && 'Negative'}
-						{patient.testResult === TestResult.PENDING && 'Pending'}
+						{patient.testResult === TestResult.POSITIVE && 'POSITIVE'}
+						{patient.testResult === TestResult.NEGATIVE && 'NEGATIVE'}
+						{patient.testResult === TestResult.PENDING && 'PENDING'}
 					</div>
 				</Td>
 				{

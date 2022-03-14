@@ -99,7 +99,7 @@ const PatientsPage: React.FC = () => {
 			<IonToolbar>
 			</IonToolbar>
 			<IonContent className={'patients-page__content'}>
-				<IonTitle>Patients</IonTitle>
+				<IonTitle>PATIENTS</IonTitle>
 				<div>
 					<IonRow>
 						<IonCol/>
@@ -119,6 +119,7 @@ const PatientsPage: React.FC = () => {
 						</IonCol>
 						<IonCol/>
 					</IonRow>
+					<br/>
 				</div>
 				{
 					patients !== undefined ?
