@@ -1,13 +1,7 @@
 import {
 	ActionSheetButton,
 	IonButton,
-	IonCard,
-	IonCardContent,
-	IonCardHeader,
-	IonCardSubtitle,
-	IonCardTitle,
 	IonIcon,
-	IonModal,
 	useIonActionSheet,
 	useIonToast
 } from '@ionic/react';
@@ -21,10 +15,7 @@ import {
 	call,
 	flag,
 	mail,
-	mailOpen,
-	mailUnread,
 	close,
-	checkmarkCircle,
 	checkmarkCircleOutline,
 	checkmarkDoneCircleOutline
 } from 'ionicons/icons';
