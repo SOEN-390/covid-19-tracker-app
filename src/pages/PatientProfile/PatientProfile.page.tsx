@@ -44,6 +44,11 @@ const PatientProfilePage: React.FC = () => {
 		if (medicalNumber === 'id' || medicalNumber === '') {
 			return;
 		}
+		setPatientProfile(
+			new Patient('', '', '', '', '', '', '', TestResult.PENDING, '', Gender.NONE)
+		);
+		setSymptomsList([]);
+		setSymptomsResponse([]);
 		getPatientWithId().then(() => {
 			if (currentProfile.getRole() === UserType.DOCTOR) {
 				getSymptoms();
