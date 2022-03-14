@@ -8,26 +8,34 @@ import './Doctors.admin.page.scss';
 
 const DoctorsAdminPage: React.FC = () => {
 
-	const [doctorsArray, setDoctorsArray] = useState<IDoctorTableRow[]>();
+	const [doctorsArray, setDoctorsArray] = useState<IDoctorTableRow[]>([]);
 
 	useEffect(() => {
 		doctorsRetrieval();
 	}, []);
 
 	async function doctorsRetrieval() {
+		setDoctorsArray([]);
 		const doctorsResponse: IDoctorTableRow[] = await HttpService.get(
 			'doctors/all'
 		);
-		doctorsResponse.map(async (doctor: IDoctorTableRow) => {
-			const numberOfPatientsResponse = await HttpService.get(
-				`doctors/${doctor.licenseId}/patients/assigned`
-			);
-			const modifiedDoctorResponse = {
-				...doctor,
-				numberOfPatients: numberOfPatientsResponse.length,
-			};
-			setDoctorsArray([modifiedDoctorResponse]);
-		});
+		for(const [index, doctor] of doctorsResponse.entries()) {
+			try {
+				const numberOfPatientsResponse = await HttpService.get(
+					`doctors/${doctor.licenseId}/patients/assigned`
+				);
+				doctorsResponse[index] = {
+					...doctor,
+					numberOfPatients: numberOfPatientsResponse.length,
+				};
+			} catch (error) {
+				doctorsResponse[index] = {
+					...doctor,
+					numberOfPatients: '0'
+				};
+			}
+		}
+		setDoctorsArray(doctorsResponse);
 	}
 
 	return (
@@ -39,7 +47,7 @@ const DoctorsAdminPage: React.FC = () => {
 				<IonTitle>Doctors</IonTitle>
 				<br/>
 				{
-					doctorsArray ? <DoctorsTable doctorTableRows={doctorsArray}/> : null
+					doctorsArray.length !== 0 ? <DoctorsTable doctorTableRows={doctorsArray}/> : null
 				}
 			</IonContent>
 		</IonPage>
