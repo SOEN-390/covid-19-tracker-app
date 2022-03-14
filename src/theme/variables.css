@@ -96,12 +96,16 @@ http://ionicframework.com/docs/theming/ */
 ion-button,
 ion-label,
 ion-text,
-ion-title,
 th,
 td {
-  font-family: 'Poppins';
+  font-family: 'Roboto', sans-serif;
 }
 
+ion-title {
+  color: var(--ion-color-dark-blue);
+  font-weight: bold;
+  font-size: 24px;
+}
 /* Disabled DarkMode theme */
 /*@media (prefers-color-scheme: dark) {*/
 /*  !**/
@@ -325,3 +329,4 @@ td {
     font-weight: 600;
   }
 }
+

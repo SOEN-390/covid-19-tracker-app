@@ -1,4 +1,14 @@
-import { IonAvatar, IonButton, IonCol, IonGrid, IonMenuButton, IonRow, IonSearchbar, IonToolbar } from '@ionic/react';
+import {
+	IonAvatar,
+	IonButton,
+	IonCol,
+	IonGrid,
+	IonItem,
+	IonMenuButton,
+	IonRow,
+	IonSearchbar,
+	IonToolbar
+} from '@ionic/react';
 import './NavBar.scss';
 import userIcon from '../../assets/images/UserIcon.png';
 import React, { useState } from 'react';
@@ -19,14 +29,18 @@ const NavBar: React.FC<{ callback?: any }> = (props) => {
 	return (
 		<IonToolbar>
 			<IonMenuButton slot="start"/>
-			<IonRow className={'ion-align-items-end navbar__row'} >
+			<IonRow className={'ion-align-items-end navbar__row'}>
 
 				{
 					currentProfile ? (currentProfile.getRole() === UserType.PATIENT ? null :
 						<div className={'search-bar'}>
-							<IonSearchbar value={searchText} onIonChange={e => setSearchText(e.detail.value || '')}
-										  showCancelButton="never"/>
-							<IonButton onClick={search}> Search </IonButton>
+							<IonItem lines={'none'}>
+
+								<IonSearchbar value={searchText} onIonChange={e => setSearchText(e.detail.value || '')}
+											  showCancelButton="never"
+								/>
+								<IonButton onClick={search}> Search </IonButton>
+							</IonItem>
 						</div>) : null
 				}
 

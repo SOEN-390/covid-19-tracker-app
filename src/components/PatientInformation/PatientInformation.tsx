@@ -331,8 +331,10 @@ const PatientInformation: React.FC<{
 								props.symptomsList && props.symptomsResponse && seeSymptoms &&
 								<table className="patient-information__medical-table">
 									<caption>
-										<IonLabel>Patient&rsquo;s Symptom updates</IonLabel>
+										<IonTitle>Patient&rsquo;s Symptom Updates </IonTitle>
+										<br/>
 									</caption>
+
 									<thead>
 										<tr>
 											{
@@ -342,7 +344,7 @@ const PatientInformation: React.FC<{
 													</th>)
 												)
 											}
-											<th>Updated on</th>
+											<th>Updated On</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -434,7 +436,7 @@ const PatientInformation: React.FC<{
 							{props.symptomsList && props.symptomsList.map((el, index) => <IonItem
 								key={index}>
 								<IonCheckbox value={el.name} checked={el.isChecked}
-											 onIonChange={e => handleCheck(e.detail.value)}/>
+											 onIonChange={e => handleCheck(e.detail.value)}/>&nbsp;
 								<IonLabel>{el.description}</IonLabel></IonItem>)}
 
 						</IonContent>
