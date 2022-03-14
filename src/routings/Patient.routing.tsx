@@ -1,5 +1,6 @@
 import { IonRouterOutlet, IonSplitPane, setupIonicReact } from '@ionic/react';
 import { Redirect, Route } from 'react-router-dom';
+import { IonReactRouter } from '@ionic/react-router';
 import Menu from '../components/Menu/Menu';
 import Overview from '../pages/Overview/Overview.page';
 import AppointmentsPage from '../pages/Appointments/Appointments.page';
@@ -14,29 +15,31 @@ setupIonicReact();
 
 const PatientRouting: React.FC = () => {
 	return (
-		<IonSplitPane contentId="home">
-			<Menu ionMenuId={'home'} userType={UserType.PATIENT} />
-			<IonRouterOutlet id="home">
-				<Route path={PatientPages.home} exact={true}>
-					<Redirect to={PatientPages.overview} />
-				</Route>
-				<Route path={PatientPages.overview}>
-					<Overview />
-				</Route>
-				<Route path={PatientPages.appointments}>
-					<AppointmentsPage />
-				</Route>
-				<Route path={PatientPages.symptoms}>
-					<SymptomsForm />
-				</Route>
-				<Route path={PatientPages.patientProfile}>
-					<PatientProfile />
-				</Route>
-				<Route path={PatientPages.reportInContact}>
-					<ReportInContactPage />
-				</Route>
-			</IonRouterOutlet>
-		</IonSplitPane>
+		<IonReactRouter>
+			<IonSplitPane contentId="home">
+				<Menu ionMenuId={'home'} userType={UserType.PATIENT}/>
+				<IonRouterOutlet id="home">
+					<Route path={PatientPages.home} exact={true}>
+						<Redirect to={PatientPages.overview}/>
+					</Route>
+					<Route path={PatientPages.overview}>
+						<Overview/>
+					</Route>
+					<Route path={PatientPages.appointments}>
+						<AppointmentsPage/>
+					</Route>
+					<Route path={PatientPages.symptoms}>
+						<SymptomsForm/>
+					</Route>
+					<Route path={PatientPages.patientProfile}>
+						<PatientProfile/>
+					</Route>
+					<Route path={PatientPages.reportInContact}>
+						<ReportInContactPage/>
+					</Route>
+				</IonRouterOutlet>
+			</IonSplitPane>
+		</IonReactRouter>
 	);
 };
 
