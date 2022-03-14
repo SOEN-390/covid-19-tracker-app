@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Patient } from '../../objects/Patient.class';
 import {
 	IonButton,
@@ -12,8 +12,11 @@ import {
 
 const SymptomsCardComponent: React.FC<{ patient: Patient, trigger: string}> = (props) => {
 
+	const [modalOpen, setModalOpen] = useState<boolean>(false);
+
 	return (
-		<IonModal trigger={props.trigger} onClick={() => {return;}}>
+		<IonModal isOpen={modalOpen} trigger={props.trigger}
+				  onIonModalDidPresent={() => setModalOpen(true)}>
 			<IonCard>
 				<IonCardHeader>
 					<IonCardTitle>{props.patient.firstName + ' ' + props.patient.lastName}</IonCardTitle>
@@ -35,7 +38,7 @@ const SymptomsCardComponent: React.FC<{ patient: Patient, trigger: string}> = (p
 					Fever along with running nose
 				</IonCardContent>
 			</IonCard>
-			<IonButton>Close Symptoms Form</IonButton>
+			<IonButton onClick={() => setModalOpen(false)}>Close Symptoms Form</IonButton>
 		</IonModal>
 	);
 };
