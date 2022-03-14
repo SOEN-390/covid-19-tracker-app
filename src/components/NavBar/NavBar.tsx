@@ -25,15 +25,15 @@ const NavBar: React.FC = () => {
 			return;
 		}
 		if (currentProfile.getRole() === UserType.ADMIN) {
-			history.replace({
+			history.push({
 				pathname: AdminPages.patientProfile + '/' + searchText
 			});
 		} else if (currentProfile.getRole() === UserType.HEALTH_OFFICIAL) {
-			history.replace({
+			history.push({
 				pathname: HealthOfficialPages.patientProfile + '/' + searchText
 			});
 		} else if (currentProfile.getRole() === UserType.DOCTOR) {
-			history.replace({
+			history.push({
 				pathname: DoctorPages.patientProfile + '/' + searchText
 			});
 		}
