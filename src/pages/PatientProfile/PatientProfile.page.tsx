@@ -34,7 +34,7 @@ const PatientProfilePage: React.FC = () => {
 	}, []);
 
 	useEffect(() => {
-		if (!params.medicalId || params.medicalId === 'id') {
+		if (!params.medicalId) {
 			return;
 		}
 		setMedicalNumber(params.medicalId);
