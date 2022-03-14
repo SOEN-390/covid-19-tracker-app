@@ -43,13 +43,6 @@ const PatientInformation: React.FC<{
 	const [symptomsTable, setSymptomsTable] = useState<Map<Date, ISymptomTable[]>>(new Map<Date, ISymptomTable[]>());
 	const [contacts, setContacts] = useState<IContact[]>([]);
 
-	useEffect(() => {
-		if (!props.patient.medicalId) {
-			return;
-		}
-		getPatientsContacts();
-	}, [props.patient.medicalId]);
-
 	async function updateStatus(): Promise<void> {
 		if (currentProfile.testResult == status) {
 			return;
@@ -167,6 +160,7 @@ const PatientInformation: React.FC<{
 	}
 
 	async function getPatientsContacts() {
+		setContacts([]);
 		try {
 			const data = await HttpService.get(`doctors/patient/${props.patient.medicalId}/contacts`);
 			setContacts(data);
