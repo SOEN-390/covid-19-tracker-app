@@ -103,7 +103,7 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 		return (
 			<Tr className="patients-table__table-entries"
 				key={index}
-				style={{background: patient.reviewed ? '' : '#cfe2f3'}}
+				style={{background: currentProfile.getRole() === UserType.DOCTOR ? (patient.reviewed ? '' : '#cfe2f3') : ''}}
 				onClick={() => reviewPatient(patient)}
 			>
 				<Td key={index}
