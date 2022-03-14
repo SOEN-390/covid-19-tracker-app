@@ -28,6 +28,13 @@ const RegisterPage: React.FC = () => {
 
 	async function register() {
 		//validation
+		if (email.trim() === '' || password.trim() === '') {
+			present('Email and Password are required', 1500);
+			return;
+		}
+
+
+
 		if (password !== confirmPassword) {
 			present('The passwords do not match', 1500);
 			return;

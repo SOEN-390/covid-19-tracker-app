@@ -63,10 +63,29 @@ const RegisterNextPage: React.FC = () => {
 		};
 
 		function validateInput(): boolean {
+			if (medicalNumber.trim() === '') {
+				present('Please enter your medical card number', 1500);
+				return false;
+			}
+			if (firstName.trim() === '' || lastName.trim() === '') {
+				present('Please enter your name', 1500);
+				return false;
+			}
+			if (address.trim() === '') {
+				present('Please enter your address', 1500);
+				return false;
+			}
+			if (phoneNumber.trim() === '') {
+				present('Please enter your phone number', 1500);
+				return false;
+			}
 			if (gender.trim() === '') {
 				present('Please choose one of the options for gender', 1500);
 				return false;
-
+			}
+			if (dob.trim() === '') {
+				present('Please enter your date of birth', 1500);
+				return false;
 			}
 			if (testResult.trim() === '') {
 				present('Please choose one of the options for test result', 1500);
