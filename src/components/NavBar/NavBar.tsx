@@ -13,7 +13,7 @@ import React, { useState } from 'react';
 import { useAuth } from '../../providers/auth.provider';
 import { UserType } from '../../enum/UserType.enum';
 
-const NavBar: React.FC<{ callback?: any }> = (props) => {
+const NavBar: React.FC = () => {
 	const [searchText, setSearchText] = useState('');
 	const {currentProfile} = useAuth();
 

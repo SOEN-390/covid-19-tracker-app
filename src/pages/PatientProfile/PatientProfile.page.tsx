@@ -11,8 +11,11 @@ import { ISymptom, ISymptomResponse } from '../../interfaces/ISymptom';
 import { Patient } from '../../objects/Patient.class';
 import './PatientProfile.page.scss';
 import { IPatient } from '../../interfaces/IPatient';
+import { useParams } from 'react-router';
 
 const PatientProfilePage: React.FC = () => {
+
+	const params = useParams<{medicalId: string | undefined}>();
 
 	const {currentProfile} = useAuth();
 
@@ -31,7 +34,14 @@ const PatientProfilePage: React.FC = () => {
 	}, []);
 
 	useEffect(() => {
-		if (medicalNumber === '') {
+		if (!params.medicalId || params.medicalId === 'id') {
+			return;
+		}
+		setMedicalNumber(params.medicalId);
+	}, [params.medicalId]);
+
+	useEffect(() => {
+		if (medicalNumber === 'id' || medicalNumber === '') {
 			return;
 		}
 		getPatientWithId().then(() => {
@@ -87,10 +97,6 @@ const PatientProfilePage: React.FC = () => {
 		}
 	}
 
-	const handleCallBack = (medicalId: string) => {
-		setMedicalNumber(medicalId);
-	};
-
 	const handleStatus = (testResult: TestResult) => {
 		patientProfile.testResult = testResult;
 		setPatientProfile(patientProfile);
@@ -103,7 +109,7 @@ const PatientProfilePage: React.FC = () => {
 
 	return (
 		<IonPage>
-			<NavBar callback={handleCallBack}/>
+			<NavBar/>
 			{
 				patientProfile.medicalId !== '' ?
 					<PatientInformation patient={patientProfile} updateStatus={handleStatus}
