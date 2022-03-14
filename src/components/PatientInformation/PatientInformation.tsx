@@ -1,4 +1,5 @@
 import {
+	ActionSheetButton,
 	IonButton,
 	IonCheckbox,
 	IonCol,
@@ -14,6 +15,7 @@ import {
 	IonRow,
 	IonText,
 	IonTitle,
+	useIonActionSheet,
 	useIonToast
 } from '@ionic/react';
 import './PatientInformation.scss';
@@ -23,7 +25,7 @@ import { UserType } from '../../enum/UserType.enum';
 import React, { useEffect, useState } from 'react';
 import { TestResult } from '../../enum/TestResult.enum';
 import HttpService from '../../providers/http.service';
-import { flag } from 'ionicons/icons';
+import { call, close, flag, mail } from 'ionicons/icons';
 import { ISymptom, ISymptomResponse, ISymptomTable } from '../../interfaces/ISymptom';
 import Moment from 'react-moment';
 import 'moment-timezone';
@@ -35,13 +37,17 @@ const PatientInformation: React.FC<{
 }> = (props) => {
 
 	const {currentProfile} = useAuth();
+
 	const [showStatusModal, setShowStatusModal] = useState<boolean>(false);
 	const [showSymptomsModal, setShowSymptomsModal] = useState<boolean>(false);
+
 	const [status, setStatus] = useState<TestResult>(props.patient.testResult);
-	const [present] = useIonToast();
 	const [seeSymptoms, setSeeSymptoms] = useState<boolean>(false);
 	const [symptomsTable, setSymptomsTable] = useState<Map<Date, ISymptomTable[]>>(new Map<Date, ISymptomTable[]>());
 	const [contacts, setContacts] = useState<IContact[]>([]);
+
+	const [presentActionSheet, dismissActionSheet] = useIonActionSheet();
+	const [present] = useIonToast();
 
 	useEffect(() => {
 		if (currentProfile.getRole() === UserType.DOCTOR || currentProfile.getRole() === UserType.HEALTH_OFFICIAL) {
@@ -165,6 +171,34 @@ const PatientInformation: React.FC<{
 		}
 	}
 
+	function generateContactList(patient: IPatient): ActionSheetButton[] {
+		const contactOption: ActionSheetButton[] = [];
+		if (patient.email) {
+			contactOption.push({
+				text: 'Email',
+				icon: mail,
+				handler: () => {
+					window.location.href = `mailto:${patient.email}+?subject=COVID-Tracker&body=`;
+				}
+			});
+		}
+		if (patient.email) {
+			contactOption.push({
+				text: 'Phone',
+				icon: call,
+				handler: () => {
+					window.location.href = `tel:${patient.phoneNumber}`;
+				}
+			});
+		}
+		contactOption.push({
+			text: 'Cancel',
+			icon: close,
+			role: 'cancel'
+		});
+		return contactOption;
+	}
+
 	return (
 		<IonContent>
 			{
@@ -275,7 +309,15 @@ const PatientInformation: React.FC<{
 									<IonButton>Set an Appointment</IonButton>
 								</IonCol>
 								<IonCol>
-									<IonButton>Send Email</IonButton>
+									<IonButton onClick={() => {
+												   presentActionSheet(
+													   generateContactList(props.patient),
+													   'Contact by');
+												   setTimeout(dismissActionSheet, 10000);
+											   }}
+									>
+										Contact
+									</IonButton>
 								</IonCol>
 								{
 									props.symptomsResponse && props.symptomsResponse.length > 0 &&
