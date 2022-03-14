@@ -24,18 +24,26 @@ const NavBar: React.FC = () => {
 		if (searchText.trim() === '') {
 			return;
 		}
+		let pathname: string;
 		if (currentProfile.getRole() === UserType.ADMIN) {
-			history.push({
-				pathname: AdminPages.patientProfile + '/' + searchText
-			});
+			pathname = AdminPages.patientProfile + '/' + searchText;
 		} else if (currentProfile.getRole() === UserType.HEALTH_OFFICIAL) {
-			history.push({
-				pathname: HealthOfficialPages.patientProfile + '/' + searchText
-			});
+			pathname = HealthOfficialPages.patientProfile + '/' + searchText;
 		} else if (currentProfile.getRole() === UserType.DOCTOR) {
-			history.push({
-				pathname: DoctorPages.patientProfile + '/' + searchText
-			});
+			pathname = DoctorPages.patientProfile + '/' + searchText;
+		} else {
+			return;
+		}
+
+		const currentPath = history.location.pathname.split('/');
+		if (
+			currentPath[0] + '/' + currentPath[1] === AdminPages.patientProfile ||
+			currentPath[0] + '/' + currentPath[1] === HealthOfficialPages.patientProfile ||
+			currentPath[0] + '/' + currentPath[1] === DoctorPages.patientProfile
+		) {
+			history.replace(pathname);
+		} else {
+			history.push(pathname);
 		}
 	}
 
