@@ -41,7 +41,7 @@ const PatientsPage: React.FC = () => {
 	}
 
 	function getAssignedPatients() {
-		HttpService.get(`doctors/${currentProfile.id}/patients/assigned`).then((patients: Patient[]) => {
+		HttpService.get(`doctors/${currentProfile.licenseId}/patients/assigned`).then((patients: Patient[]) => {
 			const patientsArranged: Patient[] = [];
 			for (const patient of patients) {
 				if (patient.flagged) {

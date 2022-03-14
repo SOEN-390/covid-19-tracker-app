@@ -86,7 +86,7 @@ export function AuthProvider({children}) {
 					userData.dob, userData.gender);
 			case UserType.DOCTOR:
 				return new Doctor(auth.currentUser.uid, userData.firstName, userData.lastName, auth.currentUser.email,
-					userData.phoneNumber, userData.address);
+					userData.phoneNumber, userData.address, userData.licenseId);
 			case UserType.IMMIGRATION_OFFICER:
 				return new ImmigrationOfficer(auth.currentUser.uid, userData.firstName, userData.lastName, auth.currentUser.email,
 					userData.phoneNumber, userData.address);

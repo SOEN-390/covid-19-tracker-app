@@ -80,7 +80,7 @@ const PatientProfilePage: React.FC = () => {
 	async function getPatientSymptomHistory() {
 		try {
 			const data: ISymptomResponse[] =
-				await HttpService.get(`doctors/${currentProfile.id}/patient/${medicalNumber}/symptoms/history`);
+				await HttpService.get(`doctors/${currentProfile.licenseId}/patient/${medicalNumber}/symptoms/history`);
 			setSymptomsResponse(data);
 		} catch (e) {
 			setSymptomsResponse([]);

@@ -19,7 +19,7 @@ const SymptomsFormPage: React.FC = () => {
 	async function getMyRequestedSymptoms(): Promise<void> {
 		try {
 			const symptoms: ISymptom[] = [];
-			const data: ISymptom[] = await HttpService.get(`patients/${currentProfile.id}/symptoms`);
+			const data: ISymptom[] = await HttpService.get(`patients/${currentProfile.medicalId}/symptoms`);
 			for (const symp of data) {
 				symptoms.push({name: symp.name, description: symp.description, isChecked: false});
 			}
