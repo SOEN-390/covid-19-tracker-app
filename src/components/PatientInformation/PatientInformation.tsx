@@ -44,6 +44,7 @@ const PatientInformation: React.FC<{
 	const [symptomsTable, setSymptomsTable] = useState<Map<Date, ISymptomTable[]>>(new Map<Date, ISymptomTable[]>());
 	const [contactTracingPopUp, setContactTracingPopUp] = useState(false);
 	const [contacts, setContacts] = useState<IContact[]>([]);
+
 	async function updateStatus(): Promise<void> {
 		if (currentProfile.testResult == status) {
 			return;
@@ -102,7 +103,7 @@ const PatientInformation: React.FC<{
 				symptomsToRequest.push(symp.name);
 			}
 		}
-		if (symptomsToRequest.length ==0) {
+		if (symptomsToRequest.length == 0) {
 			present('Please select symptoms to request', 1500);
 			return;
 		}
@@ -159,6 +160,7 @@ const PatientInformation: React.FC<{
 		setSymptomsTable(symptomsTableMap);
 		setSeeSymptoms(true);
 	}
+
 	async function getPatientsContacts() {
 		try {
 			const data = await HttpService.get(`doctors/patient/${props.patient.medicalId}/contacts`);
@@ -306,7 +308,11 @@ const PatientInformation: React.FC<{
 									</IonCol>
 								}
 								{
-									<IonCol> <IonButton onClick={getPatientsContacts} className="buttonc">Contact tracing</IonButton> </IonCol>
+									<IonCol>
+										<IonButton onClick={getPatientsContacts}>
+											Contact tracing
+										</IonButton>
+									</IonCol>
 								}
 							</div>
 						</IonRow>
@@ -314,18 +320,27 @@ const PatientInformation: React.FC<{
 					{
 						currentProfile.getRole() == UserType.HEALTH_OFFICIAL &&
 						<div className="patient-information__div-button">
-							<IonCol> <IonButton onClick={getPatientsContacts} className="buttonc">Contact tracing</IonButton> </IonCol>
+							<IonCol>
+								<IonButton onClick={getPatientsContacts}>
+									Contact tracing
+								</IonButton>
+							</IonCol>
 						</div>
 					}
-					{contactTracingPopUp && (
-						<div className='model'>
-							<div className='overlay' onClick={() => setContactTracingPopUp(false)}></div>
-							<div className='model-content'>
-								<ContactTracingTable contacts={contacts} />
-								<IonButton onClick={() => setContactTracingPopUp(false)} className="buttonc">CLOSE</IonButton>
+					{
+						contactTracingPopUp && (
+							<div className={'patient-information__model'}>
+								<div className={'patient-information__overlay'}
+									 onClick={() => setContactTracingPopUp(false)}/>
+								<div className={'patient-information__model-content'}>
+									<ContactTracingTable contacts={contacts}/>
+									<IonButton onClick={() => setContactTracingPopUp(false)}>
+										CLOSE
+									</IonButton>
+								</div>
 							</div>
-						</div>
-					)}
+						)
+					}
 					{
 						currentProfile.getRole() === UserType.DOCTOR &&
 						<IonRow>

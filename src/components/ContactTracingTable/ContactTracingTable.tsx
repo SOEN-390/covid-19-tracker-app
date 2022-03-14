@@ -1,24 +1,9 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
 import { Table, Tbody, Td, Th, Thead, Tr } from 'react-super-responsive-table';
-import { IonButton, IonCard, IonContent } from '@ionic/react';
-import Box from '@mui/material/Box';
-import Collapse from '@mui/material/Collapse';
-import Typography from '@mui/material/Typography';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-
-import { IContact } from '../../interfaces/IPatient';
+import { IonButton, IonCard } from '@ionic/react';
 import { TestResult } from '../../enum/TestResult.enum';
 import './ContactTracingTable.scss';
-import { PatientsTableColumn } from '../PatientsTable/patientsTableColumn';
-import Paper from '@mui/material/Paper';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import TableCell from '@mui/material/TableCell';
-import TableBody from '@mui/material/TableBody';
-import { Patient } from '../../objects/Patient.class';
+import { IContact } from '../../interfaces/IPatient';
 
 const contactTracingColumns = [
 	{
