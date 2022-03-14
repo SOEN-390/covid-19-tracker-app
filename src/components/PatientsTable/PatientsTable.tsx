@@ -12,7 +12,6 @@ import {
 	useIonToast
 } from '@ionic/react';
 import './PatientsTable.scss';
-import '../ContactTracingTable/ContactTracingTable.scss';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { Table, Tbody, Td, Th, Thead, Tr } from 'react-super-responsive-table';
