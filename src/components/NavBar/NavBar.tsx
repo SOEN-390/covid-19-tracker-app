@@ -12,16 +12,31 @@ import userIcon from '../../assets/images/UserIcon.png';
 import React, { useState } from 'react';
 import { useAuth } from '../../providers/auth.provider';
 import { UserType } from '../../enum/UserType.enum';
+import { AdminPages, DoctorPages, HealthOfficialPages } from '../../providers/pages.enum';
+import { useHistory } from 'react-router-dom';
 
 const NavBar: React.FC = () => {
 	const [searchText, setSearchText] = useState('');
 	const {currentProfile} = useAuth();
+	const history = useHistory();
 
 	async function search() {
 		if (searchText.trim() === '') {
 			return;
 		}
-		props.callback(searchText);
+		if (currentProfile.getRole() === UserType.ADMIN) {
+			history.replace({
+				pathname: AdminPages.patientProfile + '/' + searchText
+			});
+		} else if (currentProfile.getRole() === UserType.HEALTH_OFFICIAL) {
+			history.replace({
+				pathname: HealthOfficialPages.patientProfile + '/' + searchText
+			});
+		} else if (currentProfile.getRole() === UserType.DOCTOR) {
+			history.replace({
+				pathname: DoctorPages.patientProfile + '/' + searchText
+			});
+		}
 	}
 
 	return (
