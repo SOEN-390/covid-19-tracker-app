@@ -13,3 +13,11 @@ export interface IPatient {
 	gender: Gender;
 	flagged?: boolean
 }
+
+
+export interface IContact {
+	medicalId: string,
+	firstName: string,
+	lastName: string,
+	testResult: TestResult
+}
