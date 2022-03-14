@@ -37,13 +37,17 @@ const NavBar: React.FC = () => {
 
 		const currentPath = history.location.pathname.split('/');
 		if (
-			currentPath[0] + '/' + currentPath[1] === AdminPages.patientProfile ||
-			currentPath[0] + '/' + currentPath[1] === HealthOfficialPages.patientProfile ||
-			currentPath[0] + '/' + currentPath[1] === DoctorPages.patientProfile
+			'/' + currentPath[1] + '/' + currentPath[2] === AdminPages.patientProfile ||
+			'/' + currentPath[1] + '/' + currentPath[2] === HealthOfficialPages.patientProfile ||
+			'/' + currentPath[1] + '/' + currentPath[2] === DoctorPages.patientProfile
 		) {
-			history.replace(pathname);
+			history.replace({
+				pathname: pathname
+			});
 		} else {
-			history.push(pathname);
+			history.push({
+				pathname: pathname
+			});
 		}
 	}
 
