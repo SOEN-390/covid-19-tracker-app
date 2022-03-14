@@ -20,7 +20,7 @@ import './PatientInformation.scss';
 import { IContact, IPatient } from '../../interfaces/IPatient';
 import { useAuth } from '../../providers/auth.provider';
 import { UserType } from '../../enum/UserType.enum';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { TestResult } from '../../enum/TestResult.enum';
 import HttpService from '../../providers/http.service';
 import { flag } from 'ionicons/icons';
@@ -42,6 +42,12 @@ const PatientInformation: React.FC<{
 	const [seeSymptoms, setSeeSymptoms] = useState<boolean>(false);
 	const [symptomsTable, setSymptomsTable] = useState<Map<Date, ISymptomTable[]>>(new Map<Date, ISymptomTable[]>());
 	const [contacts, setContacts] = useState<IContact[]>([]);
+
+	useEffect(() => {
+		if (currentProfile.getRole() === UserType.DOCTOR || currentProfile.getRole() === UserType.HEALTH_OFFICIAL) {
+			getPatientsContacts();
+		}
+	}, [props.patient]);
 
 	async function updateStatus(): Promise<void> {
 		if (currentProfile.testResult == status) {
@@ -156,7 +162,6 @@ const PatientInformation: React.FC<{
 			setContacts(data);
 		} catch (e) {
 			console.log(e);
-			present('The patient has not been in contact with anyone', 1500);
 		}
 	}
 
@@ -290,7 +295,9 @@ const PatientInformation: React.FC<{
 									</IonCol>
 								}
 								<IonCol>
-									<IonButton id={'patient-information__contact-tracing-trigger'} onClick={getPatientsContacts}>Contact tracing</IonButton>
+									<IonButton id={'patient-information__contact-tracing-trigger'}>
+										Contact tracing
+									</IonButton>
 								</IonCol>
 							</div>
 						</IonRow>
@@ -300,7 +307,9 @@ const PatientInformation: React.FC<{
 						currentProfile.getRole() == UserType.HEALTH_OFFICIAL &&
 						<div className="patient-information__div-button">
 							<IonCol>
-								<IonButton id={'patient-information__contact-tracing-trigger'} onClick={getPatientsContacts}>Contact tracing</IonButton>
+								<IonButton id={'patient-information__contact-tracing-trigger'}>
+									Contact tracing
+								</IonButton>
 							</IonCol>
 						</div>
 					}
