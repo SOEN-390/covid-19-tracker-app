@@ -130,6 +130,230 @@ describe('Register: Test register form', () => {
 		expect(resultField.value).toBe(Gender);
 	});
 
+	test('Register with empty first name data', async () => {
+		const lNameField = renderedPage.queryByTestId('register__last_name-field') as HTMLIonInputElement;
+		ionFireEvent.ionChange(lNameField, 'soliman');
+
+		const medicalCardField = renderedPage.queryByTestId('register__medicalCard-field') as HTMLIonInputElement;
+		ionFireEvent.ionChange(medicalCardField, '111');
+
+		const dobField = renderedPage.queryByTestId('register__dob-field') as HTMLIonInputElement;
+		ionFireEvent.ionChange(dobField, '1998-22-08');
+
+		const addressField = renderedPage.queryByTestId('register__address-field') as HTMLIonInputElement;
+		ionFireEvent.ionChange(addressField, 'Canada');
+
+		const phoneField = renderedPage.queryByTestId('register__phone-field') as HTMLIonInputElement;
+		ionFireEvent.ionChange(phoneField, '5141111111');
+
+		const genderField = renderedPage.queryByTestId('register__gender-field') as HTMLIonSelectOptionElement;
+		ionFireEvent.ionChange(genderField, Gender.MALE);
+
+		const resultField = renderedPage.queryByTestId('register__result-field') as HTMLIonSelectOptionElement;
+		ionFireEvent.ionChange(resultField, TestResult.NEGATIVE);
+
+		const loginButton = renderedPage.queryByTestId('register__button') as HTMLIonButtonElement;
+		ionFireEvent.click(loginButton);
+
+		expect(mockSignUpFn).toBeCalledTimes(0)
+	});
+
+	test('Register with empty last name data', async () => {
+		const fNameField = renderedPage.queryByTestId('register__first_name-field') as HTMLIonInputElement;
+		ionFireEvent.ionChange(fNameField, 'beshoy');
+
+		const medicalCardField = renderedPage.queryByTestId('register__medicalCard-field') as HTMLIonInputElement;
+		ionFireEvent.ionChange(medicalCardField, '111');
+
+		const dobField = renderedPage.queryByTestId('register__dob-field') as HTMLIonInputElement;
+		ionFireEvent.ionChange(dobField, '1998-22-08');
+
+		const addressField = renderedPage.queryByTestId('register__address-field') as HTMLIonInputElement;
+		ionFireEvent.ionChange(addressField, 'Canada');
+
+		const phoneField = renderedPage.queryByTestId('register__phone-field') as HTMLIonInputElement;
+		ionFireEvent.ionChange(phoneField, '5141111111');
+
+		const genderField = renderedPage.queryByTestId('register__gender-field') as HTMLIonSelectOptionElement;
+		ionFireEvent.ionChange(genderField, Gender.MALE);
+
+		const resultField = renderedPage.queryByTestId('register__result-field') as HTMLIonSelectOptionElement;
+		ionFireEvent.ionChange(resultField, TestResult.NEGATIVE);
+
+		const loginButton = renderedPage.queryByTestId('register__button') as HTMLIonButtonElement;
+		ionFireEvent.click(loginButton);
+
+		expect(mockSignUpFn).toBeCalledTimes(0)
+	});
+
+	test('Register with empty medical card id data', async () => {
+		const fNameField = renderedPage.queryByTestId('register__first_name-field') as HTMLIonInputElement;
+		ionFireEvent.ionChange(fNameField, 'beshoy');
+
+		const lNameField = renderedPage.queryByTestId('register__last_name-field') as HTMLIonInputElement;
+		ionFireEvent.ionChange(lNameField, 'soliman');
+
+		const dobField = renderedPage.queryByTestId('register__dob-field') as HTMLIonInputElement;
+		ionFireEvent.ionChange(dobField, '1998-22-08');
+
+		const addressField = renderedPage.queryByTestId('register__address-field') as HTMLIonInputElement;
+		ionFireEvent.ionChange(addressField, 'Canada');
+
+		const phoneField = renderedPage.queryByTestId('register__phone-field') as HTMLIonInputElement;
+		ionFireEvent.ionChange(phoneField, '5141111111');
+
+		const genderField = renderedPage.queryByTestId('register__gender-field') as HTMLIonSelectOptionElement;
+		ionFireEvent.ionChange(genderField, Gender.MALE);
+
+		const resultField = renderedPage.queryByTestId('register__result-field') as HTMLIonSelectOptionElement;
+		ionFireEvent.ionChange(resultField, TestResult.NEGATIVE);
+
+		const loginButton = renderedPage.queryByTestId('register__button') as HTMLIonButtonElement;
+		ionFireEvent.click(loginButton);
+
+		expect(mockSignUpFn).toBeCalledTimes(0)
+	});
+
+	test('Register with empty date of birth data', async () => {
+		const fNameField = renderedPage.queryByTestId('register__first_name-field') as HTMLIonInputElement;
+		ionFireEvent.ionChange(fNameField, 'beshoy');
+
+		const lNameField = renderedPage.queryByTestId('register__last_name-field') as HTMLIonInputElement;
+		ionFireEvent.ionChange(lNameField, 'soliman');
+
+		const medicalCardField = renderedPage.queryByTestId('register__medicalCard-field') as HTMLIonInputElement;
+		ionFireEvent.ionChange(medicalCardField, '111');
+
+		const addressField = renderedPage.queryByTestId('register__address-field') as HTMLIonInputElement;
+		ionFireEvent.ionChange(addressField, 'Canada');
+
+		const phoneField = renderedPage.queryByTestId('register__phone-field') as HTMLIonInputElement;
+		ionFireEvent.ionChange(phoneField, '5141111111');
+
+		const genderField = renderedPage.queryByTestId('register__gender-field') as HTMLIonSelectOptionElement;
+		ionFireEvent.ionChange(genderField, Gender.MALE);
+
+		const resultField = renderedPage.queryByTestId('register__result-field') as HTMLIonSelectOptionElement;
+		ionFireEvent.ionChange(resultField, TestResult.NEGATIVE);
+
+		const loginButton = renderedPage.queryByTestId('register__button') as HTMLIonButtonElement;
+		ionFireEvent.click(loginButton);
+
+		expect(mockSignUpFn).toBeCalledTimes(0)
+	});
+
+	test('Register with empty address data', async () => {
+		const fNameField = renderedPage.queryByTestId('register__first_name-field') as HTMLIonInputElement;
+		ionFireEvent.ionChange(fNameField, 'beshoy');
+
+		const lNameField = renderedPage.queryByTestId('register__last_name-field') as HTMLIonInputElement;
+		ionFireEvent.ionChange(lNameField, 'soliman');
+
+		const medicalCardField = renderedPage.queryByTestId('register__medicalCard-field') as HTMLIonInputElement;
+		ionFireEvent.ionChange(medicalCardField, '111');
+
+		const dobField = renderedPage.queryByTestId('register__dob-field') as HTMLIonInputElement;
+		ionFireEvent.ionChange(dobField, '1998-22-08');
+
+		const phoneField = renderedPage.queryByTestId('register__phone-field') as HTMLIonInputElement;
+		ionFireEvent.ionChange(phoneField, '5141111111');
+
+		const genderField = renderedPage.queryByTestId('register__gender-field') as HTMLIonSelectOptionElement;
+		ionFireEvent.ionChange(genderField, Gender.MALE);
+
+		const resultField = renderedPage.queryByTestId('register__result-field') as HTMLIonSelectOptionElement;
+		ionFireEvent.ionChange(resultField, TestResult.NEGATIVE);
+
+		const loginButton = renderedPage.queryByTestId('register__button') as HTMLIonButtonElement;
+		ionFireEvent.click(loginButton);
+
+		expect(mockSignUpFn).toBeCalledTimes(0)
+	});
+
+	test('Register with empty phone', async () => {
+		const fNameField = renderedPage.queryByTestId('register__first_name-field') as HTMLIonInputElement;
+		ionFireEvent.ionChange(fNameField, 'beshoy');
+
+		const lNameField = renderedPage.queryByTestId('register__last_name-field') as HTMLIonInputElement;
+		ionFireEvent.ionChange(lNameField, 'soliman');
+
+		const medicalCardField = renderedPage.queryByTestId('register__medicalCard-field') as HTMLIonInputElement;
+		ionFireEvent.ionChange(medicalCardField, '111');
+
+		const dobField = renderedPage.queryByTestId('register__dob-field') as HTMLIonInputElement;
+		ionFireEvent.ionChange(dobField, '1998-22-08');
+
+		const addressField = renderedPage.queryByTestId('register__address-field') as HTMLIonInputElement;
+		ionFireEvent.ionChange(addressField, 'Canada');
+
+		const genderField = renderedPage.queryByTestId('register__gender-field') as HTMLIonSelectOptionElement;
+		ionFireEvent.ionChange(genderField, Gender.MALE);
+
+		const resultField = renderedPage.queryByTestId('register__result-field') as HTMLIonSelectOptionElement;
+		ionFireEvent.ionChange(resultField, TestResult.NEGATIVE);
+
+		const loginButton = renderedPage.queryByTestId('register__button') as HTMLIonButtonElement;
+		ionFireEvent.click(loginButton);
+
+		expect(mockSignUpFn).toBeCalledTimes(0)
+	});
+
+	test('Register with empty gender data', async () => {
+		const fNameField = renderedPage.queryByTestId('register__first_name-field') as HTMLIonInputElement;
+		ionFireEvent.ionChange(fNameField, 'beshoy');
+
+		const lNameField = renderedPage.queryByTestId('register__last_name-field') as HTMLIonInputElement;
+		ionFireEvent.ionChange(lNameField, 'soliman');
+
+		const medicalCardField = renderedPage.queryByTestId('register__medicalCard-field') as HTMLIonInputElement;
+		ionFireEvent.ionChange(medicalCardField, '111');
+
+		const dobField = renderedPage.queryByTestId('register__dob-field') as HTMLIonInputElement;
+		ionFireEvent.ionChange(dobField, '1998-22-08');
+
+		const addressField = renderedPage.queryByTestId('register__address-field') as HTMLIonInputElement;
+		ionFireEvent.ionChange(addressField, 'Canada');
+
+		const phoneField = renderedPage.queryByTestId('register__phone-field') as HTMLIonInputElement;
+		ionFireEvent.ionChange(phoneField, '5141111111');
+
+		const resultField = renderedPage.queryByTestId('register__result-field') as HTMLIonSelectOptionElement;
+		ionFireEvent.ionChange(resultField, TestResult.NEGATIVE);
+
+		const loginButton = renderedPage.queryByTestId('register__button') as HTMLIonButtonElement;
+		ionFireEvent.click(loginButton);
+
+		expect(mockSignUpFn).toBeCalledTimes(0)
+	});
+
+	test('Register with empty result data', async () => {
+		const fNameField = renderedPage.queryByTestId('register__first_name-field') as HTMLIonInputElement;
+		ionFireEvent.ionChange(fNameField, 'beshoy');
+
+		const lNameField = renderedPage.queryByTestId('register__last_name-field') as HTMLIonInputElement;
+		ionFireEvent.ionChange(lNameField, 'soliman');
+
+		const medicalCardField = renderedPage.queryByTestId('register__medicalCard-field') as HTMLIonInputElement;
+		ionFireEvent.ionChange(medicalCardField, '111');
+
+		const dobField = renderedPage.queryByTestId('register__dob-field') as HTMLIonInputElement;
+		ionFireEvent.ionChange(dobField, '1998-22-08');
+
+		const addressField = renderedPage.queryByTestId('register__address-field') as HTMLIonInputElement;
+		ionFireEvent.ionChange(addressField, 'Canada');
+
+		const phoneField = renderedPage.queryByTestId('register__phone-field') as HTMLIonInputElement;
+		ionFireEvent.ionChange(phoneField, '5141111111');
+
+		const genderField = renderedPage.queryByTestId('register__gender-field') as HTMLIonSelectOptionElement;
+		ionFireEvent.ionChange(genderField, Gender.MALE);
+
+		const loginButton = renderedPage.queryByTestId('register__button') as HTMLIonButtonElement;
+		ionFireEvent.click(loginButton);
+
+		expect(mockSignUpFn).toBeCalledTimes(0)
+	});
+
 	test('Register with correct data', async () => {
 		const fNameField = renderedPage.queryByTestId('register__first_name-field') as HTMLIonInputElement;
 		ionFireEvent.ionChange(fNameField, 'beshoy');
@@ -155,13 +379,41 @@ describe('Register: Test register form', () => {
 		const resultField = renderedPage.queryByTestId('register__result-field') as HTMLIonSelectOptionElement;
 		ionFireEvent.ionChange(resultField, TestResult.NEGATIVE);
 
-
-
-
 		const loginButton = renderedPage.queryByTestId('register__button') as HTMLIonButtonElement;
 		ionFireEvent.click(loginButton);
 
 		expect(mockSignUpFn).toReturnWith(true);
+	});
+
+	test('Register with taken medical id error', async () => {
+		const fNameField = renderedPage.queryByTestId('register__first_name-field') as HTMLIonInputElement;
+		ionFireEvent.ionChange(fNameField, 'beshoy');
+
+		const lNameField = renderedPage.queryByTestId('register__last_name-field') as HTMLIonInputElement;
+		ionFireEvent.ionChange(lNameField, 'soliman');
+
+		const medicalCardField = renderedPage.queryByTestId('register__medicalCard-field') as HTMLIonInputElement;
+		ionFireEvent.ionChange(medicalCardField, '55');
+
+		const dobField = renderedPage.queryByTestId('register__dob-field') as HTMLIonInputElement;
+		ionFireEvent.ionChange(dobField, '1998-22-08');
+
+		const addressField = renderedPage.queryByTestId('register__address-field') as HTMLIonInputElement;
+		ionFireEvent.ionChange(addressField, 'Canada');
+
+		const phoneField = renderedPage.queryByTestId('register__phone-field') as HTMLIonInputElement;
+		ionFireEvent.ionChange(phoneField, '5141111111');
+
+		const genderField = renderedPage.queryByTestId('register__gender-field') as HTMLIonSelectOptionElement;
+		ionFireEvent.ionChange(genderField, Gender.MALE);
+
+		const resultField = renderedPage.queryByTestId('register__result-field') as HTMLIonSelectOptionElement;
+		ionFireEvent.ionChange(resultField, TestResult.NEGATIVE);
+
+		const loginButton = renderedPage.queryByTestId('register__button') as HTMLIonButtonElement;
+		ionFireEvent.click(loginButton);
+
+		expect(mockSignUpFn.mock.results[0].value).toStrictEqual(Error('Medical Id already taken'));
 	});
 
 
