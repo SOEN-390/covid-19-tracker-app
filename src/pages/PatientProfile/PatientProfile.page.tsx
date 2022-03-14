@@ -1,4 +1,4 @@
-import { IonPage } from '@ionic/react';
+import { IonLabel, IonPage, IonTitle } from '@ionic/react';
 import PatientInformation from '../../components/PatientInformation/PatientInformation';
 import NavBar from '../../components/NavBar/NavBar';
 import React, { useEffect, useState } from 'react';
@@ -9,21 +9,17 @@ import { TestResult } from '../../enum/TestResult.enum';
 import { Gender } from '../../enum/Gender.enum';
 import { ISymptom, ISymptomResponse } from '../../interfaces/ISymptom';
 import { Patient } from '../../objects/Patient.class';
+import './PatientProfile.page.scss';
+import { IPatient } from '../../interfaces/IPatient';
 
 const PatientProfilePage: React.FC = () => {
 
 	const {currentProfile} = useAuth();
 
 	const [medicalNumber, setMedicalNumber] = useState<string>('');
-	const [firstName, setFirstName] = useState<string>('');
-	const [lastName, setLastName] = useState<string>('');
-	const [testResult, setTestResult] = useState<TestResult>(currentProfile.testResult);
-	const [phoneNumber, setPhoneNumber] = useState<string>('');
-	const [address, setAddress] = useState<string>('');
-	const [email, setEmail] = useState<string>('');
-	const [dob, setDOB] = useState<string>('');
-	const [gender, setGender] = useState<Gender>(Gender.NONE);
-	const [flagged, setFlagged] = useState<boolean>(false);
+	const [patientProfile, setPatientProfile] = useState<IPatient>(
+		new Patient('', '', '', '', '', '', TestResult.PENDING, '', Gender.NONE)
+	);
 	const [symptomsList, setSymptomsList] = useState<ISymptom[]>([]);
 	const [symptomsResponse, setSymptomsResponse] = useState<ISymptomResponse[]>([]);
 
@@ -34,23 +30,37 @@ const PatientProfilePage: React.FC = () => {
 	}, []);
 
 	useEffect(() => {
-		if (currentProfile.getRole() == UserType.DOCTOR) {
-			getPatientWithIdAsDoctor();
-			getSymptoms();
-			getPatientSymptomHistory();
-		} else {
-			getPatientWithId();
+		if (medicalNumber === '') {
+			return;
 		}
-
+		getPatientWithId().then(() => {
+			if (currentProfile.getRole() === UserType.DOCTOR) {
+				getSymptoms();
+				getPatientSymptomHistory();
+			}
+		}).catch((error) => {
+			console.log(error);
+			setPatientProfile(
+				new Patient('', '', '', '', '', '', TestResult.PENDING, '', Gender.NONE)
+			);
+		});
 	}, [medicalNumber]);
 
+	// Throwable function. Always try-catch
 	async function getPatientWithId() {
-		try {
-			const data: Patient = await HttpService.get(`patients/${medicalNumber}`);
-			setData(data);
-		} catch (e) {
-			console.log(e);
+		let path: string;
+		if (currentProfile.getRole() === UserType.DOCTOR) {
+			path = `doctors/patient/${medicalNumber}`;
+		} else if (currentProfile.getRole() !== UserType.PATIENT) {
+			path = `patients/${medicalNumber}`;
+		} else {
+			return;
 		}
+		const data = await HttpService.get(path) as Patient;
+		if (!data.medicalId) {
+			return;
+		}
+		setPatientProfile(data);
 	}
 
 	async function getSymptoms() {
@@ -71,40 +81,9 @@ const PatientProfilePage: React.FC = () => {
 			const data: ISymptomResponse[] =
 				await HttpService.get(`doctors/${currentProfile.id}/patient/${medicalNumber}/symptoms/history`);
 			setSymptomsResponse(data);
-		}
-		catch (e) {
+		} catch (e) {
 			setSymptomsResponse([]);
 		}
-	}
-
-	async function getPatientWithIdAsDoctor() {
-		try {
-			const data = await HttpService.get(`doctors/patient/${medicalNumber}`);
-			setData(data);
-		} catch (e) {
-			console.log(e);
-		}
-	}
-
-	function setData(data: Patient) {
-		setFirstName(data.firstName);
-		setLastName(data.lastName);
-		switch (data.testResult) {
-			case 'positive':
-				setTestResult(TestResult.POSITIVE);
-				break;
-			case 'negative':
-				setTestResult(TestResult.NEGATIVE);
-				break;
-			default:
-				setTestResult(TestResult.PENDING);
-		}
-		setPhoneNumber(data.phoneNumber);
-		setAddress(data.address);
-		setEmail(data.email);
-		setDOB(data.dob);
-		setGender(data.gender);
-		setFlagged(data.flagged);
 	}
 
 	const handleCallBack = (medicalId: string) => {
@@ -112,29 +91,28 @@ const PatientProfilePage: React.FC = () => {
 	};
 
 	const handleStatus = (testResult: TestResult) => {
-		setTestResult(testResult);
+		patientProfile.testResult = testResult;
+		setPatientProfile(patientProfile);
 	};
 
 	const handleFlag = (flagged: boolean) => {
-		setFlagged(flagged);
+		patientProfile.flagged = flagged;
+		setPatientProfile(patientProfile);
 	};
 
 	return (
 		<IonPage>
 			<NavBar callback={handleCallBack}/>
-			<PatientInformation patient={{
-				medicalId: medicalNumber,
-				firstName: firstName,
-				lastName: lastName,
-				testResult: testResult,
-				address: address,
-				email: email,
-				phoneNumber: phoneNumber,
-				dob: dob,
-				gender: gender,
-				flagged: flagged
-			}} updateStatus={handleStatus} updateFlag={handleFlag} symptomsList ={symptomsList}
-			symptomsResponse = {symptomsResponse}/>
+			{
+				patientProfile.medicalId !== '' ?
+					<PatientInformation patient={patientProfile} updateStatus={handleStatus}
+						updateFlag={handleFlag} symptomsList={symptomsList}
+						symptomsResponse={symptomsResponse}
+					/> :
+					<IonTitle className={'patient-profile'}>
+						<IonLabel>Enter the medical ID of a patient above and hit search</IonLabel>
+					</IonTitle>
+			}
 		</IonPage>
 	);
 };

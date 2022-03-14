@@ -20,15 +20,14 @@ import './PatientInformation.scss';
 import { IContact, IPatient } from '../../interfaces/IPatient';
 import { useAuth } from '../../providers/auth.provider';
 import { UserType } from '../../enum/UserType.enum';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { TestResult } from '../../enum/TestResult.enum';
 import HttpService from '../../providers/http.service';
 import { flag } from 'ionicons/icons';
 import { ISymptom, ISymptomResponse, ISymptomTable } from '../../interfaces/ISymptom';
 import Moment from 'react-moment';
 import 'moment-timezone';
-import ContactTracingTable from '../ContactTracingTable/ContactTracingTable';
-
+import ContactTracingTableModal from '../ContactTracingTable/ContactTracingTable.modal';
 
 const PatientInformation: React.FC<{
 	patient: IPatient, updateStatus: (status: TestResult) => void, updateFlag: (bool: boolean) => void,
@@ -42,8 +41,14 @@ const PatientInformation: React.FC<{
 	const [present] = useIonToast();
 	const [seeSymptoms, setSeeSymptoms] = useState<boolean>(false);
 	const [symptomsTable, setSymptomsTable] = useState<Map<Date, ISymptomTable[]>>(new Map<Date, ISymptomTable[]>());
-	const [contactTracingPopUp, setContactTracingPopUp] = useState(false);
 	const [contacts, setContacts] = useState<IContact[]>([]);
+
+	useEffect(() => {
+		if (!props.patient.medicalId) {
+			return;
+		}
+		getPatientsContacts();
+	}, [props.patient.medicalId]);
 
 	async function updateStatus(): Promise<void> {
 		if (currentProfile.testResult == status) {
@@ -165,7 +170,6 @@ const PatientInformation: React.FC<{
 		try {
 			const data = await HttpService.get(`doctors/patient/${props.patient.medicalId}/contacts`);
 			setContacts(data);
-			setContactTracingPopUp(true);
 		} catch (e) {
 			console.log(e);
 			present('The patient has not been in contact with anyone', 1500);
@@ -174,16 +178,8 @@ const PatientInformation: React.FC<{
 
 	return (
 		<IonContent>
-
 			{
-				props.patient.medicalId == '' &&
-				<IonTitle>
-					<IonLabel>Enter the medical ID of a patient above and hit search</IonLabel>
-				</IonTitle>
-			}
-
-			{
-				props.patient.medicalId != '' &&
+				props.patient.medicalId !== '' &&
 
 				<div className="patient-information__container">
 					<IonRow>
@@ -307,39 +303,20 @@ const PatientInformation: React.FC<{
 										}}>Hide Symptoms</IonButton>
 									</IonCol>
 								}
-								{
-									<IonCol>
-										<IonButton onClick={getPatientsContacts}>
-											Contact tracing
-										</IonButton>
-									</IonCol>
-								}
+								<IonCol>
+									<IonButton id={'patient-information__contact-tracing-trigger'} onClick={getPatientsContacts}>Contact tracing</IonButton>
+								</IonCol>
 							</div>
 						</IonRow>
 					}
+					<ContactTracingTableModal trigger={'patient-information__contact-tracing-trigger'} contacts={contacts} />
 					{
 						currentProfile.getRole() == UserType.HEALTH_OFFICIAL &&
 						<div className="patient-information__div-button">
 							<IonCol>
-								<IonButton onClick={getPatientsContacts}>
-									Contact tracing
-								</IonButton>
+								<IonButton id={'patient-information__contact-tracing-trigger'} onClick={getPatientsContacts}>Contact tracing</IonButton>
 							</IonCol>
 						</div>
-					}
-					{
-						contactTracingPopUp && (
-							<div className={'patient-information__model'}>
-								<div className={'patient-information__overlay'}
-									 onClick={() => setContactTracingPopUp(false)}/>
-								<div className={'patient-information__model-content'}>
-									<ContactTracingTable contacts={contacts}/>
-									<IonButton onClick={() => setContactTracingPopUp(false)}>
-										CLOSE
-									</IonButton>
-								</div>
-							</div>
-						)
 					}
 					{
 						currentProfile.getRole() === UserType.DOCTOR &&
