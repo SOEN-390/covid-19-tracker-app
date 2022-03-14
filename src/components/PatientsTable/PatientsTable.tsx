@@ -184,9 +184,10 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 				{
 					(currentProfile.getRole() === UserType.DOCTOR) &&
 					<Td key={index} className={'patients-table__flag'}>
-						<IonIcon
-							ios={patient.reviewed ? mailUnread : mailOpen}
-							md={patient.reviewed ? mailUnread : mailOpen}
+						<IonIcon icon={patient.reviewed ? mailOpen : mailUnread}
+								 onClick={() => {
+									 reviewPatient(patient);
+								 }}
 						/>
 					</Td>
 				}
