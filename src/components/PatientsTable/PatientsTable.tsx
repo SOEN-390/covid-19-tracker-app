@@ -17,7 +17,17 @@ import { useEffect, useState } from 'react';
 import { Table, Tbody, Td, Th, Thead, Tr } from 'react-super-responsive-table';
 import { UserType } from '../../enum/UserType.enum';
 import { adminColumns, doctorColumns, healthOfficialColumns, PatientsTableColumn } from './patientsTableColumn';
-import { call, flag, mail, mailOpen, mailUnread, close } from 'ionicons/icons';
+import {
+	call,
+	flag,
+	mail,
+	mailOpen,
+	mailUnread,
+	close,
+	checkmarkCircle,
+	checkmarkCircleOutline,
+	checkmarkDoneCircleOutline
+} from 'ionicons/icons';
 import { useAuth } from '../../providers/auth.provider';
 import { TestResult } from '../../enum/TestResult.enum';
 import { Patient } from '../../objects/Patient.class';
@@ -158,7 +168,8 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 				{
 					(currentProfile.getRole() === UserType.DOCTOR) &&
 					<Td key={index} className={'patients-table__flag'}>
-						<IonIcon icon={patient.reviewed ? mailOpen : mailUnread}
+						<IonIcon icon={patient.reviewed ? checkmarkDoneCircleOutline : checkmarkCircleOutline}
+								 color={patient.reviewed ? 'success': ''}
 								 onClick={() => {
 									 reviewPatient(patient);
 								 }}
