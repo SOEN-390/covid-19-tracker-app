@@ -3,7 +3,7 @@ import { Redirect, Route } from 'react-router-dom';
 import Menu from '../components/Menu/Menu';
 import PatientProfile from '../pages/PatientProfile/PatientProfile.page';
 import ImmigrationDashboard from '../pages/ImmigrationOfficer/immigrationDashboard';
-import { ImmigrationOfficerPages } from '../providers/pages.enum';
+import { HealthOfficialPages, ImmigrationOfficerPages } from '../providers/pages.enum';
 import { UserType } from '../enum/UserType.enum';
 import React from 'react';
 
@@ -17,11 +17,13 @@ const ImmigrationOfficerRouting: React.FC = () => {
 				<Route path={ImmigrationOfficerPages.home} exact={true}>
 					<Redirect to={ImmigrationOfficerPages.dashboard}/>
 				</Route>
-
 				<Route path={ImmigrationOfficerPages.dashboard}>
 					<ImmigrationDashboard/>
 				</Route>
-				<Route path={ImmigrationOfficerPages.patientProfile}>
+				<Route exact={true} path={ImmigrationOfficerPages.patientProfile}>
+					<PatientProfile/>
+				</Route>
+				<Route path={ImmigrationOfficerPages.patientProfile + '/:medicalId'}>
 					<PatientProfile/>
 				</Route>
 			</IonRouterOutlet>

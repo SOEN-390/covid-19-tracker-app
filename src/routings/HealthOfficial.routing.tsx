@@ -20,7 +20,10 @@ const HealthOfficialRouting: React.FC = () => {
 				<Route path={HealthOfficialPages.patients}>
 					<PatientsPage/>
 				</Route>
-				<Route path={HealthOfficialPages.patientProfile}>
+				<Route exact={true} path={HealthOfficialPages.patientProfile}>
+					<PatientProfile/>
+				</Route>
+				<Route path={HealthOfficialPages.patientProfile + '/:medicalId'}>
 					<PatientProfile/>
 				</Route>
 			</IonRouterOutlet>
