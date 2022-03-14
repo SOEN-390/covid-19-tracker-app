@@ -53,7 +53,7 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 			{role: currentProfile.getRole()}
 		).then(() => {
 			props.onChange(patient);
-			presentToast(`Successfully ${patient.flagged ? 'FLAGGED' : 'UNFLAGGED'} patient'`, 1000);
+			presentToast(`Successfully ${patient.flagged ? 'FLAGGED' : 'UNFLAGGED'} patient.`, 1000);
 		}).catch(() => {
 			presentToast('An error has occurred. Please try again.', 1000);
 		});
@@ -168,10 +168,7 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 				<Td key={index} className={'patients-table__flag'}>
 					<IonIcon
 						className={patient.flagged ? 'patients-table__flag__high-priority' : 'patients-table__flag__no-priority'}
-						ios={flag} md={flag}
-						onClick={() => {
-							flagPatient(patient);
-						}}
+						icon={flag} onClick={() => flagPatient(patient) }
 					/>
 				</Td>
 			</Tr>
