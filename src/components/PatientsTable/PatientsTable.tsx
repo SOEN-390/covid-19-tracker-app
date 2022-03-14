@@ -109,24 +109,27 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 			<Tr className="patients-table__table-entries"
 				key={index}
 				style={{background: currentProfile.getRole() === UserType.DOCTOR ? (patient.reviewed ? '' : '#F5F6F6') : ''}}
-				onClick={() => {
-					if (currentProfile.getRole() === UserType.ADMIN) {
-						history.replace({
-							pathname: AdminPages.patientProfile + '/' + patient.medicalId
-						});
-					} else if (currentProfile.getRole() === UserType.HEALTH_OFFICIAL) {
-						history.replace({
-							pathname: HealthOfficialPages.patientProfile + '/' + patient.medicalId
-						});
-					} else if (currentProfile.getRole() === UserType.DOCTOR) {
-						history.replace({
-							pathname: DoctorPages.patientProfile + '/' + patient.medicalId
-						});
-					}
-				}}
 			>
 				<Td key={index}
-					className="patients-table__table-entries__name">{patient.firstName + ' ' + patient.lastName}</Td>
+					className="patients-table__table-entries__name"
+					onClick={() => {
+						if (currentProfile.getRole() === UserType.ADMIN) {
+							history.push({
+								pathname: AdminPages.patientProfile + '/' + patient.medicalId
+							});
+						} else if (currentProfile.getRole() === UserType.HEALTH_OFFICIAL) {
+							history.push({
+								pathname: HealthOfficialPages.patientProfile + '/' + patient.medicalId
+							});
+						} else if (currentProfile.getRole() === UserType.DOCTOR) {
+							history.push({
+								pathname: DoctorPages.patientProfile + '/' + patient.medicalId
+							});
+						}
+					}}
+				>
+					{patient.firstName + ' ' + patient.lastName}
+				</Td>
 				<Td key={index}>
 					<div key={index} className={'patients-table__status ' +
 						(patient.testResult === TestResult.POSITIVE ? 'patients-table__status__positive' : '') +
