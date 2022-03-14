@@ -130,58 +130,73 @@ const RegisterNextPage: React.FC = () => {
 				</div>
 
 				<div className="ion-align-items-center; register__form">
-					<IonLabel className="register__login-text">First Name </IonLabel>
+					<IonLabel className="register__login-text">First Name</IonLabel>
 					<IonInput className="register__text-field" placeholder="Enter your First Name" type="text"
-						data-testid={'register__first_name-field'} onIonChange={(e: CustomEvent<InputChangeEventDetail>) => setFirstName(e.detail.value || '')} />
+							  value={firstName} data-testid={'register__first_name-field'}
+							  onIonChange={(e: CustomEvent<InputChangeEventDetail>) =>
+								  setFirstName(e.detail.value || '')} />
 
 					<br />
 
 					<IonLabel className="register__login-text">Last Name</IonLabel>
 					<IonInput className="register__text-field" placeholder="Enter your Last Name" type="text"
-						data-testid={'register__last_name-field'} onIonChange={(e: CustomEvent<InputChangeEventDetail>) => setLastName(e.detail.value || '')} />
+							  value={lastName} data-testid={'register__last_name-field'}
+							  onIonChange={(e: CustomEvent<InputChangeEventDetail>) =>
+								  setLastName(e.detail.value || '')} />
 					<br />
 
 					<IonLabel className="register__login-text">Medical Card Number</IonLabel>
 					<IonInput className="register__text-field" placeholder="Enter your medical card number" type="text"
-						data-testid={'register__medicalCard-field'} onIonChange={(e: CustomEvent<InputChangeEventDetail>) => setMedicalNumber(e.detail.value || '')} />
+							  value={medicalNumber} data-testid={'register__medicalCard-field'}
+							  onIonChange={(e: CustomEvent<InputChangeEventDetail>) =>
+								  setMedicalNumber(e.detail.value || '')} />
 					<br />
 
 					<IonLabel className="register__login-text">Your Date of Birth</IonLabel>
 					<IonInput className="register__text-field" placeholder="MM/DD/YYYY" type="date"
-						data-testid={'register__dob-field'} onIonChange={(e: CustomEvent<InputChangeEventDetail>) => setDOB(e.detail.value || '')} />
+							  value={dob} data-testid={'register__dob-field'}
+							  onIonChange={(e: CustomEvent<InputChangeEventDetail>) =>
+								  setDOB(e.detail.value || '')} />
 					<br />
 
 					<IonLabel className="register__login-text">Your Address</IonLabel>
 					<IonInput className="register__text-field" placeholder="Enter your Address" type="text"
-						data-testid={'register__address-field'} onIonChange={(e: CustomEvent<InputChangeEventDetail>) => setAddress(e.detail.value || '')} />
+							  value={address} data-testid={'register__address-field'}
+							  onIonChange={(e: CustomEvent<InputChangeEventDetail>) =>
+								  setAddress(e.detail.value || '')} />
 					<br />
 
 					<IonLabel className="register__login-text">Phone number</IonLabel>
-					<IonInput className="register__text-field" placeholder="Enter your phone number" type="text"
-						data-testid={'register__phone-field'} onIonChange={(e: CustomEvent<InputChangeEventDetail>) => setPhoneNumber(e.detail.value || '')} />
+					<IonInput className="register__text-field" placeholder="Enter your phone number" type={'tel'}
+							  value={phoneNumber} data-testid={'register__phone-field'}
+							  onIonChange={(e: CustomEvent<InputChangeEventDetail>) =>
+								  setPhoneNumber(e.detail.value || '')} />
 					<br />
 					<IonLabel className="register__login-text"> Gender </IonLabel>
 					<IonSelect interface="popover" placeholder="Select"
-							   data-testid={'register__gender-field'}
+							   value={gender} data-testid={'register__gender-field'}
 							   onIonChange={(e: CustomEvent<InputChangeEventDetail>) =>
 								   setGender(e.detail.value as Gender || Gender.NONE)}>
-						<IonSelectOption value={Gender.MALE}> Male</IonSelectOption>
-						<IonSelectOption value={Gender.FEMALE}> Female</IonSelectOption>
-						<IonSelectOption value={Gender.NONE}> Prefer not to respond</IonSelectOption>
+						<IonSelectOption value={Gender.MALE}>Male</IonSelectOption>
+						<IonSelectOption value={Gender.FEMALE}>Female</IonSelectOption>
+						<IonSelectOption value={Gender.NONE}>Prefer not to respond</IonSelectOption>
 					</IonSelect>
 					<br />
 					<IonLabel className="register__login-text"> Test Results </IonLabel>
 					<IonSelect interface="popover" placeholder="Select"
-							   data-testid={'register__result-field'}
+							   value={testResult} data-testid={'register__result-field'}
 							   onIonChange={(e: CustomEvent<InputChangeEventDetail>) =>
 								   setTestResult(e.detail.value as TestResult || TestResult.PENDING)}>
-						<IonSelectOption value={TestResult.POSITIVE}> Positive</IonSelectOption>
-						<IonSelectOption value={TestResult.NEGATIVE}> Negative</IonSelectOption>
-						<IonSelectOption value={TestResult.PENDING}> Not tested/Pending</IonSelectOption>
+						<IonSelectOption value={TestResult.POSITIVE}>Positive</IonSelectOption>
+						<IonSelectOption value={TestResult.NEGATIVE}>Negative</IonSelectOption>
+						<IonSelectOption value={TestResult.PENDING}>Not tested/Pending</IonSelectOption>
 					</IonSelect>
 					<br /><br />
 					<IonButton className={'register__btn'} size="large" expand="block" fill="solid" color={'dark-blue'}
-						data-testid={'register__button'} onClick={registration}>Register</IonButton>
+						data-testid={'register__button'} onClick={registration}
+					>
+						Register
+					</IonButton>
 				</div>
 			</IonContent>
 
