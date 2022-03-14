@@ -55,7 +55,7 @@ const PatientInformation: React.FC<{
 			return;
 		}
 		try {
-			await HttpService.patch(`patients/${currentProfile.id}/status`, {status: status});
+			await HttpService.patch(`patients/${currentProfile.medicalId}/status`, {status: status});
 			props.updateStatus(status);
 			setShowStatusModal(false);
 			present('Successfully updated status', 1500);
@@ -113,7 +113,7 @@ const PatientInformation: React.FC<{
 			return;
 		}
 		try {
-			await HttpService.post(`doctors/${currentProfile.id}/patient/${props.patient.medicalId}/symptoms`, {
+			await HttpService.post(`doctors/${currentProfile.licenseId}/patient/${props.patient.medicalId}/symptoms`, {
 				checklist: symptomsToRequest
 			});
 			setShowSymptomsModal(false);

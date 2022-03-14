@@ -18,7 +18,7 @@ const PatientProfilePage: React.FC = () => {
 
 	const [medicalNumber, setMedicalNumber] = useState<string>('');
 	const [patientProfile, setPatientProfile] = useState<IPatient>(
-		new Patient('', '', '', '', '', '', TestResult.PENDING, '', Gender.NONE)
+		new Patient('', '', '', '', '', '', '', TestResult.PENDING, '', Gender.NONE)
 	);
 	const [symptomsList, setSymptomsList] = useState<ISymptom[]>([]);
 	const [symptomsResponse, setSymptomsResponse] = useState<ISymptomResponse[]>([]);
@@ -42,7 +42,7 @@ const PatientProfilePage: React.FC = () => {
 		}).catch((error) => {
 			console.log(error);
 			setPatientProfile(
-				new Patient('', '', '', '', '', '', TestResult.PENDING, '', Gender.NONE)
+				new Patient('', '', '', '', '', '', '', TestResult.PENDING, '', Gender.NONE)
 			);
 		});
 	}, [medicalNumber]);
@@ -80,7 +80,7 @@ const PatientProfilePage: React.FC = () => {
 	async function getPatientSymptomHistory() {
 		try {
 			const data: ISymptomResponse[] =
-				await HttpService.get(`doctors/${currentProfile.id}/patient/${medicalNumber}/symptoms/history`);
+				await HttpService.get(`doctors/${currentProfile.licenseId}/patient/${medicalNumber}/symptoms/history`);
 			setSymptomsResponse(data);
 		} catch (e) {
 			setSymptomsResponse([]);
