@@ -161,14 +161,20 @@ const RegisterNextPage: React.FC = () => {
 						data-testid={'register__phone-field'} onIonChange={(e: CustomEvent<InputChangeEventDetail>) => setPhoneNumber(e.detail.value || '')} />
 					<br />
 					<IonLabel className="register__login-text"> Gender </IonLabel>
-					<IonSelect data-testid={'register__gender-field'} interface="popover" placeholder="Select" onIonChange={(e: any) => setGender(e.target.value)}>
+					<IonSelect interface="popover" placeholder="Select"
+							   data-testid={'register__gender-field'}
+							   onIonChange={(e: CustomEvent<InputChangeEventDetail>) =>
+								   setGender(e.detail.value as Gender || Gender.NONE)}>
 						<IonSelectOption value={Gender.MALE}> Male</IonSelectOption>
 						<IonSelectOption value={Gender.FEMALE}> Female</IonSelectOption>
 						<IonSelectOption value={Gender.NONE}> Prefer not to respond</IonSelectOption>
 					</IonSelect>
 					<br />
 					<IonLabel className="register__login-text"> Test Results </IonLabel>
-					<IonSelect data-testid={'register__result-field'} interface="popover" placeholder="Select" onIonChange={(e: any) => setTestResult(e.target.value)}>
+					<IonSelect interface="popover" placeholder="Select"
+							   data-testid={'register__result-field'}
+							   onIonChange={(e: CustomEvent<InputChangeEventDetail>) =>
+								   setTestResult(e.detail.value as TestResult || TestResult.PENDING)}>
 						<IonSelectOption value={TestResult.POSITIVE}> Positive</IonSelectOption>
 						<IonSelectOption value={TestResult.NEGATIVE}> Negative</IonSelectOption>
 						<IonSelectOption value={TestResult.PENDING}> Not tested/Pending</IonSelectOption>

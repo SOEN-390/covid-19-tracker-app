@@ -11,6 +11,7 @@ ion-menu {
     }
     ion-item {
       --background: #F7F7F7 !important;
+      color: #2C4D62;
     }
   }
 
@@ -32,6 +33,7 @@ ion-menu {
   ion-title {
     --background: #9d9b9b;
     margin-top: 1px;
+    font-size: 18px;
   }
 
   ion-item-divider {

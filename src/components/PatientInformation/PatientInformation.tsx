@@ -17,16 +17,17 @@ import {
 	useIonToast
 } from '@ionic/react';
 import './PatientInformation.scss';
-import { IPatient } from '../../interfaces/IPatient';
+import { IContact, IPatient } from '../../interfaces/IPatient';
 import { useAuth } from '../../providers/auth.provider';
 import { UserType } from '../../enum/UserType.enum';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { TestResult } from '../../enum/TestResult.enum';
 import HttpService from '../../providers/http.service';
 import { flag } from 'ionicons/icons';
 import { ISymptom, ISymptomResponse, ISymptomTable } from '../../interfaces/ISymptom';
 import Moment from 'react-moment';
 import 'moment-timezone';
+import ContactTracingTableModal from '../ContactTracingTable/ContactTracingTable.modal';
 
 const PatientInformation: React.FC<{
 	patient: IPatient, updateStatus: (status: TestResult) => void, updateFlag: (bool: boolean) => void,
@@ -40,6 +41,14 @@ const PatientInformation: React.FC<{
 	const [present] = useIonToast();
 	const [seeSymptoms, setSeeSymptoms] = useState<boolean>(false);
 	const [symptomsTable, setSymptomsTable] = useState<Map<Date, ISymptomTable[]>>(new Map<Date, ISymptomTable[]>());
+	const [contacts, setContacts] = useState<IContact[]>([]);
+
+	useEffect(() => {
+		if (!props.patient.medicalId) {
+			return;
+		}
+		getPatientsContacts();
+	}, [props.patient.medicalId]);
 
 	async function updateStatus(): Promise<void> {
 		if (currentProfile.testResult == status) {
@@ -157,18 +166,20 @@ const PatientInformation: React.FC<{
 		setSeeSymptoms(true);
 	}
 
+	async function getPatientsContacts() {
+		try {
+			const data = await HttpService.get(`doctors/patient/${props.patient.medicalId}/contacts`);
+			setContacts(data);
+		} catch (e) {
+			console.log(e);
+			present('The patient has not been in contact with anyone', 1500);
+		}
+	}
+
 	return (
 		<IonContent>
-
 			{
-				props.patient.medicalId == '' &&
-				<IonTitle>
-					<IonLabel>Enter the medical ID of a patient above and hit search</IonLabel>
-				</IonTitle>
-			}
-
-			{
-				props.patient.medicalId != '' &&
+				props.patient.medicalId !== '' &&
 
 				<div className="patient-information__container">
 					<IonRow>
@@ -292,8 +303,20 @@ const PatientInformation: React.FC<{
 										}}>Hide Symptoms</IonButton>
 									</IonCol>
 								}
+								<IonCol>
+									<IonButton id={'patient-information__contact-tracing-trigger'} onClick={getPatientsContacts}>Contact tracing</IonButton>
+								</IonCol>
 							</div>
 						</IonRow>
+					}
+					<ContactTracingTableModal trigger={'patient-information__contact-tracing-trigger'} contacts={contacts} />
+					{
+						currentProfile.getRole() == UserType.HEALTH_OFFICIAL &&
+						<div className="patient-information__div-button">
+							<IonCol>
+								<IonButton id={'patient-information__contact-tracing-trigger'} onClick={getPatientsContacts}>Contact tracing</IonButton>
+							</IonCol>
+						</div>
 					}
 					{
 						currentProfile.getRole() === UserType.DOCTOR &&
@@ -308,8 +331,10 @@ const PatientInformation: React.FC<{
 								props.symptomsList && props.symptomsResponse && seeSymptoms &&
 								<table className="patient-information__medical-table">
 									<caption>
-										<IonLabel>Patient&rsquo;s Symptom updates</IonLabel>
+										<IonTitle>Patient&rsquo;s Symptom Updates </IonTitle>
+										<br/>
 									</caption>
+
 									<thead>
 										<tr>
 											{
@@ -319,7 +344,7 @@ const PatientInformation: React.FC<{
 													</th>)
 												)
 											}
-											<th>Updated on</th>
+											<th>Updated On</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -411,7 +436,7 @@ const PatientInformation: React.FC<{
 							{props.symptomsList && props.symptomsList.map((el, index) => <IonItem
 								key={index}>
 								<IonCheckbox value={el.name} checked={el.isChecked}
-											 onIonChange={e => handleCheck(e.detail.value)}/>
+											 onIonChange={e => handleCheck(e.detail.value)}/>&nbsp;
 								<IonLabel>{el.description}</IonLabel></IonItem>)}
 
 						</IonContent>

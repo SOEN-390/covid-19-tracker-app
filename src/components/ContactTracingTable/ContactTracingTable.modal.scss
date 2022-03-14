@@ -1,0 +1,77 @@
+table.contact-tracing-table__table {
+  width: 100%;
+
+  th:first-child {
+    position: sticky;
+    top: 0;
+    z-index: 9999;
+  }
+
+  tr.contact-tracing-table__table-head {
+    background-color: rgba(44, 77, 98, .12);
+    border-radius: 50px;
+    box-sizing: border-box;
+    filter: blur(1);
+    height: 60px;
+
+    th.contact-tracing-table__table-column-title {
+      color: var(--ion-color-dark-blue);
+      font-weight: bold;
+      font-size: 18px;
+      text-align: center;
+      padding: 10px;
+    }
+  }
+
+  tr.contact-tracing-table__table-entries {
+    border-radius: 10px;
+    border-bottom: 1px solid #E7E7E7;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    box-sizing: border-box;
+    height: inherit;
+
+    td {
+      color: var(--ion-color-dark-blue);
+      font-weight: normal;
+      font-size: 16px;
+      margin: auto;
+      text-align: center;
+      padding: 10px;
+
+      ion-button {
+        color: var(--ion-color-dark-blue);
+        --background: var(--ion-color-primary-contrast);
+      }
+    }
+
+    td.contact-tracing-table__table-entries__name {
+      text-align: left;
+    }
+
+    div.contact-tracing-table__status {
+      height: 32px;
+      font-weight: normal;
+      font-size: 14px;
+      border-radius: 60px;
+      background-color: #129C0F;
+      color: #FEFFFE;
+      vertical-align: middle;
+      line-height: 32px;
+      text-align: center;
+    }
+
+    div.contact-tracing-table__status__positive {
+      background-color: #db0101;
+    }
+
+    div.contact-tracing-table__status__negative {
+      background-color: #129C0F;
+    }
+
+    div.contact-tracing-table__status__pending {
+      background-color: #797777;
+    }
+
+  }
+}
