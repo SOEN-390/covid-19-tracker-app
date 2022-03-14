@@ -72,7 +72,7 @@ const PatientProfilePage: React.FC = () => {
 		} else {
 			return;
 		}
-		const data = await HttpService.get(path) as Patient;
+		const data = await HttpService.get(path) as IPatient;
 		if (!data.medicalId) {
 			return;
 		}
@@ -104,12 +104,12 @@ const PatientProfilePage: React.FC = () => {
 
 	const handleStatus = (testResult: TestResult) => {
 		patientProfile.testResult = testResult;
-		setPatientProfile(patientProfile);
+		setPatientProfile({...patientProfile});
 	};
 
 	const handleFlag = (flagged: boolean) => {
 		patientProfile.flagged = flagged;
-		setPatientProfile(patientProfile);
+		setPatientProfile({...patientProfile});
 	};
 
 	return (

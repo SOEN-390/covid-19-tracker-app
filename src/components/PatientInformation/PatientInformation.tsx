@@ -20,7 +20,7 @@ import './PatientInformation.scss';
 import { IContact, IPatient } from '../../interfaces/IPatient';
 import { useAuth } from '../../providers/auth.provider';
 import { UserType } from '../../enum/UserType.enum';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { TestResult } from '../../enum/TestResult.enum';
 import HttpService from '../../providers/http.service';
 import { flag } from 'ionicons/icons';
@@ -59,23 +59,13 @@ const PatientInformation: React.FC<{
 
 	async function flagPatient(): Promise<void> {
 		try {
-			await HttpService.post(`patients/${props.patient.medicalId}/flag`,
+			await HttpService.post(`patients/${props.patient.medicalId}/${props.patient.flagged ? 'unflag' : 'flag'}`,
 				{role: currentProfile.getRole()});
-			props.updateFlag(true);
-			present('Successfully flagged patient', 1500);
+			props.patient.flagged = !props.patient.flagged;
+			props.updateFlag(props.patient.flagged);
+			present(`Successfully ${props.patient.flagged ? 'flagged' : 'unflagged'} patient`, 1500);
 		} catch (e) {
-			present('Failed to flag patient', 1500);
-		}
-	}
-
-	async function unFlagPatient(): Promise<void> {
-		try {
-			await HttpService.post(`patients/${props.patient.medicalId}/unflag`,
-				{role: currentProfile.getRole()});
-			props.updateFlag(false);
-			present('Successfully unflagged patient', 1500);
-		} catch (e) {
-			present('Failed to unflag patient', 1500);
+			present(`Failed to ${props.patient.flagged ? 'unflag' : 'flag'} patient`, 1500);
 		}
 	}
 
@@ -242,10 +232,12 @@ const PatientInformation: React.FC<{
 						{
 							currentProfile.getRole() != UserType.PATIENT && props.patient.medicalId != '' &&
 							<IonCol>
-								<IonButton color={props.patient.flagged ? 'danger' : 'success'}
-										   onClick={props.patient.flagged ? () => unFlagPatient() : () => flagPatient()}>
-									<IonIcon ios={flag} md={flag}/>
-								</IonButton>
+								<IonIcon icon={flag} color={props.patient.flagged ? 'success' : ''}
+										 onClick={() => {
+											 flagPatient();
+										 }}
+										 size={'large'}
+								/>
 							</IonCol>
 						}
 
