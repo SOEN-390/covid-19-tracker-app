@@ -20,7 +20,7 @@ const DashboardDoctorPage: React.FC = () => {
 	}, []);
 
 	function getAssignedPatients() {
-		HttpService.get(`doctors/${currentProfile.id}/patients/assigned`).then((patients: Patient[]) => {
+		HttpService.get(`doctors/${currentProfile.licenseId}/patients/assigned`).then((patients: Patient[]) => {
 			generateDiagnosticGraph(patients);
 			generateGenderGraph(patients);
 		}).catch((error) => {

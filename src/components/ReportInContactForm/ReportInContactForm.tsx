@@ -52,7 +52,7 @@ const ReportInContactForm: React.FC = () => {
 
 	async function reportForm(): Promise<void> {
 		try {
-			await HttpService.post(`patients/${currentProfile.id}/report`, {people: formValues});
+			await HttpService.post(`patients/${currentProfile.medicalId}/report`, {people: formValues});
 			present('Successfully submitted report', 1500);
 		} catch (error) {
 			present('Failed to submit. Please try again later', 1500);
