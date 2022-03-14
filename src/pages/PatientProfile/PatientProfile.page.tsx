@@ -109,9 +109,12 @@ const PatientProfilePage: React.FC = () => {
 						updateFlag={handleFlag} symptomsList={symptomsList}
 						symptomsResponse={symptomsResponse}
 					/> :
-					<IonTitle className={'patient-profile'}>
-						<IonLabel>Enter the medical ID of a patient above and hit search</IonLabel>
-					</IonTitle>
+					<>
+						<br />
+						<IonTitle className={'patient-profile'}>
+							<IonLabel>Enter the Medical ID of a patient above then press Search</IonLabel>
+						</IonTitle>
+					</>
 			}
 		</IonPage>
 	);
