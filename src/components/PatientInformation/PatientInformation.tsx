@@ -299,7 +299,8 @@ const PatientInformation: React.FC<{
 
 					</IonRow>
 					{
-						currentProfile.getRole() === UserType.DOCTOR &&
+						currentProfile.getRole() === UserType.DOCTOR && props.patient.doctorName &&
+						props.patient.doctorName == currentProfile.firstName + ' '+ currentProfile.lastName &&
 						<IonRow>
 							<div className="patient-information__div-button">
 								<IonCol>
@@ -358,7 +359,8 @@ const PatientInformation: React.FC<{
 						</div>
 					}
 					{
-						currentProfile.getRole() === UserType.DOCTOR &&
+						currentProfile.getRole() === UserType.DOCTOR && props.patient.doctorName &&
+						props.patient.doctorName == currentProfile.firstName + ' '+ currentProfile.lastName &&
 						<IonRow>
 							{
 								props.symptomsResponse.length == 0 && !seeSymptoms &&
@@ -413,7 +415,8 @@ const PatientInformation: React.FC<{
 						</IonRow>
 					}
 					{
-						currentProfile.getRole() === UserType.DOCTOR &&
+						currentProfile.getRole() === UserType.DOCTOR && props.patient.doctorName &&
+						props.patient.doctorName == currentProfile.firstName + ' '+ currentProfile.lastName &&
 						<IonRow>
 							<div className={'patient-information__add-symptom'}>
 								<IonRow>

@@ -6,6 +6,7 @@ export interface IPatient {
 	firstName: string;
 	lastName: string;
 	testResult: TestResult;
+	doctorName?: string;
 	address: string;
 	email: string | null | undefined;
 	phoneNumber: string;
