@@ -98,7 +98,7 @@ const Menu: React.FC<{ ionMenuId: string, userType: UserType }> = (props) => {
 									<IonItem className={location.pathname === appPage.url ? 'selected' : ''}
 										routerLink={appPage.url} routerDirection="none" lines="none"
 										detail={false}>
-										<IonIcon slot="start" ios={appPage.iosIcon} md={appPage.mdIcon} />
+										<IonIcon slot="start" icon={appPage.iosIcon} />
 										<IonLabel>{appPage.title}</IonLabel>
 									</IonItem>
 									<br />
@@ -113,11 +113,11 @@ const Menu: React.FC<{ ionMenuId: string, userType: UserType }> = (props) => {
 						})
 					}
 
-					<IonMenuToggle key={sideMenuPages.length + 1} autoHide={false}>
-						<IonButton color='danger' routerDirection="none" onClick={logout}>
-							<IonIcon slot="start" ios={logOutOutline} md={logOutOutline} />
+					<IonMenuToggle autoHide={false}>
+						<IonItem routerDirection="none" lines="none" routerLink={'/'} onClick={logout}>
+							<IonIcon slot="start" icon={logOutOutline} />
 							<IonLabel>Logout</IonLabel>
-						</IonButton>
+						</IonItem>
 					</IonMenuToggle>
 				</IonList>
 				{/*  <IonList id="labels-list">*/}
