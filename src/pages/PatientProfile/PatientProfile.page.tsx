@@ -102,24 +102,21 @@ const PatientProfilePage: React.FC = () => {
 		}
 	}
 
-	const handleStatus = (testResult: TestResult) => {
-		patientProfile.testResult = testResult;
-		setPatientProfile({...patientProfile});
-	};
-
-	const handleFlag = (flagged: boolean) => {
-		patientProfile.flagged = flagged;
-		setPatientProfile({...patientProfile});
-	};
+	function handleChange(patient: IPatient) {
+		if (currentProfile.getRole() === UserType.PATIENT) {
+			setPatientProfile(patient);
+			return;
+		}
+		setPatientProfile({...patient} as IPatient);
+	}
 
 	return (
 		<IonPage>
 			<NavBar/>
 			{
 				patientProfile.medicalId !== '' ?
-					<PatientInformation patient={patientProfile} updateStatus={handleStatus}
-						updateFlag={handleFlag} symptomsList={symptomsList}
-						symptomsResponse={symptomsResponse}
+					<PatientInformation patient={patientProfile} onChange={handleChange}
+						symptomsList={symptomsList} symptomsResponse={symptomsResponse}
 					/> :
 					<>
 						<br />

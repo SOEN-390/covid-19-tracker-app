@@ -1,5 +1,5 @@
 import {
-	ActionSheetButton,
+	ActionSheetButton, InputChangeEventDetail,
 	IonButton,
 	IonCheckbox,
 	IonCol,
@@ -33,7 +33,7 @@ import ContactTracingTableModal from '../ContactTracingTable/ContactTracingTable
 
 
 const PatientInformation: React.FC<{
-	patient: IPatient, updateStatus: (status: TestResult) => void, updateFlag: (bool: boolean) => void,
+	patient: IPatient, onChange: (patient: IPatient) => void,
 	symptomsList: ISymptom[], symptomsResponse: ISymptomResponse[]
 }> = (props) => {
 
@@ -42,7 +42,6 @@ const PatientInformation: React.FC<{
 	const [showStatusModal, setShowStatusModal] = useState<boolean>(false);
 	const [showSymptomsModal, setShowSymptomsModal] = useState<boolean>(false);
 
-	const [status, setStatus] = useState<TestResult>(props.patient.testResult);
 	const [seeSymptoms, setSeeSymptoms] = useState<boolean>(false);
 	const [symptomsTable, setSymptomsTable] = useState<Map<Date, ISymptomTable[]>>(new Map<Date, ISymptomTable[]>());
 	const [contacts, setContacts] = useState<IContact[]>([]);
@@ -57,12 +56,10 @@ const PatientInformation: React.FC<{
 	}, [props.patient]);
 
 	async function updateStatus(): Promise<void> {
-		if (currentProfile.testResult == status) {
-			return;
-		}
 		try {
-			await HttpService.patch(`patients/${currentProfile.medicalId}/status`, {status: status});
-			props.updateStatus(status);
+			await HttpService.patch(`patients/${currentProfile.medicalId}/status`, {status: props.patient.testResult});
+			props.onChange(props.patient);
+			currentProfile.testResult = props.patient.testResult;
 			setShowStatusModal(false);
 			present('Successfully updated status', 1500);
 		} catch (e) {
@@ -75,7 +72,7 @@ const PatientInformation: React.FC<{
 			await HttpService.post(`patients/${props.patient.medicalId}/${props.patient.flagged ? 'unflag' : 'flag'}`,
 				{role: currentProfile.getRole()});
 			props.patient.flagged = !props.patient.flagged;
-			props.updateFlag(props.patient.flagged);
+			props.onChange(props.patient);
 			present(`Successfully ${props.patient.flagged ? 'flagged' : 'unflagged'} patient`, 1500);
 		} catch (e) {
 			present(`Failed to ${props.patient.flagged ? 'unflag' : 'flag'} patient`, 1500);
@@ -211,7 +208,6 @@ const PatientInformation: React.FC<{
 						<IonCol>
 							<IonRow>
 								<div>
-
 									<IonText><strong>First Name</strong></IonText>
 									<p className="patient-information__detail"> {props.patient.firstName}  </p>
 								</div>
@@ -446,7 +442,13 @@ const PatientInformation: React.FC<{
 
 					<IonModal isOpen={showStatusModal}>
 						<IonContent>
-							<IonRadioGroup value={status} onIonChange={e => setStatus(e.detail.value)}>
+							<IonRadioGroup value={props.patient.testResult}
+										   onIonChange={(e: CustomEvent<InputChangeEventDetail>) => {
+											   if (e.detail.value) {
+												   props.patient.testResult = e.detail.value as TestResult;
+											   }
+										   }}
+							>
 								<IonListHeader>
 									<IonLabel>Edit your Status</IonLabel>
 								</IonListHeader>
@@ -487,7 +489,6 @@ const PatientInformation: React.FC<{
 					</IonModal>
 
 				</div>
-
 			}
 		</IonContent>
 

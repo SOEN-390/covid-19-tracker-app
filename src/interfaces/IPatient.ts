@@ -2,6 +2,7 @@ import { TestResult } from '../enum/TestResult.enum';
 import { Gender } from '../enum/Gender.enum';
 
 export interface IPatient {
+	id?: string;
 	medicalId: string;
 	firstName: string;
 	lastName: string;
