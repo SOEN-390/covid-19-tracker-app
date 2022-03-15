@@ -251,6 +251,8 @@ const PatientInformation: React.FC<{
 					<IonButton color="success" onClick={() => submitSymptoms()}>Request</IonButton>
 					<IonButton color="danger" onClick={() => setShowSymptomsModal(false)}>Cancel</IonButton>
 				</IonModal>
+				<ContactTracingTableModal trigger={'patient-information__contact-tracing-trigger'}
+										  contacts={contacts}/>
 			</>
 		);
 	}
@@ -324,7 +326,7 @@ const PatientInformation: React.FC<{
 
 						</IonCol>
 						{
-							currentProfile.getRole() != UserType.PATIENT && props.patient.medicalId != '' &&
+							currentProfile.getRole() !== UserType.PATIENT && props.patient.medicalId !== '' &&
 							<IonCol>
 								<IonIcon icon={flag} color={props.patient.flagged ? 'success' : ''}
 										 onClick={() => {
@@ -353,55 +355,133 @@ const PatientInformation: React.FC<{
 					</IonRow>
 					{
 						currentProfile.getRole() === UserType.DOCTOR && props.patient.doctorName &&
-						props.patient.doctorName == currentProfile.firstName + ' ' + currentProfile.lastName &&
-						<IonRow>
-							<div className="patient-information__div-button">
-								<IonCol>
-									<IonButton onClick={() => setShowSymptomsModal(true)}>
-										Request symptoms update
-									</IonButton>
-								</IonCol>
-								<IonCol>
-									<IonButton>Set an Appointment</IonButton>
-								</IonCol>
-								<IonCol>
-									<IonButton onClick={() => {
-										presentActionSheet(
-											generateContactList(props.patient),
-											'Contact by');
-										setTimeout(dismissActionSheet, 10000);
-									}}
-									>
-										Contact
-									</IonButton>
-								</IonCol>
-								{
-									props.symptomsResponse && props.symptomsResponse.length > 0 &&
-									props.symptomsList && !seeSymptoms &&
+						props.patient.doctorName === (currentProfile.firstName + ' ' + currentProfile.lastName) &&
+						<>
+							<IonRow>
+								<div className="patient-information__div-button">
+									<IonCol>
+										<IonButton onClick={() => setShowSymptomsModal(true)}>
+											Request symptoms update
+										</IonButton>
+									</IonCol>
+									<IonCol>
+										<IonButton>Set an Appointment</IonButton>
+									</IonCol>
 									<IonCol>
 										<IonButton onClick={() => {
-											generateSymptomsTable();
-										}}>See Symptoms</IonButton>
+											presentActionSheet(
+												generateContactList(props.patient),
+												'Contact by');
+											setTimeout(dismissActionSheet, 10000);
+										}}
+										>
+											Contact
+										</IonButton>
 									</IonCol>
+									{
+										props.symptomsResponse && props.symptomsResponse.length > 0 &&
+										props.symptomsList && !seeSymptoms &&
+										<IonCol>
+											<IonButton onClick={() => {
+												generateSymptomsTable();
+											}}>See Symptoms</IonButton>
+										</IonCol>
+									}
+									{
+										seeSymptoms &&
+										<IonCol>
+											<IonButton onClick={() => {
+												setSeeSymptoms(false);
+											}}>Hide Symptoms</IonButton>
+										</IonCol>
+									}
+									<IonCol>
+										<IonButton id={'patient-information__contact-tracing-trigger'}>
+											Contact tracing
+										</IonButton>
+									</IonCol>
+								</div>
+							</IonRow>
+							<IonRow>
+								{
+									props.symptomsResponse.length == 0 && !seeSymptoms &&
+									<IonTitle>
+										<IonLabel>The patient has not submitted a Symptoms form yet</IonLabel>
+									</IonTitle>
 								}
 								{
-									seeSymptoms &&
-									<IonCol>
-										<IonButton onClick={() => {
-											setSeeSymptoms(false);
-										}}>Hide Symptoms</IonButton>
-									</IonCol>
+									props.symptomsList && props.symptomsResponse && seeSymptoms &&
+									<table className="patient-information__medical-table">
+										<caption>
+											<IonTitle>Patient&rsquo;s Symptom Updates </IonTitle>
+											<br/>
+										</caption>
+
+										<thead>
+											<tr>
+												{
+													props.symptomsList.map((el, index) => (
+														<th key={index}>
+															{el.description}
+														</th>)
+													)
+												}
+												<th>Updated On</th>
+											</tr>
+										</thead>
+										<tbody>
+											{
+												Array.from(symptomsTable).map((el, index1) => (
+													<tr key={index1}>
+														{
+															el[1].map((el, index2) => {
+																if (el.response == true || el.response == false) {
+																	return (
+																		<td key={index1 + '-' + index2}>{el.response ? 'Yes' : 'No'}</td>);
+																} else {
+																	return (
+																		<td key={index1 + '-' + index2}>Not Requested</td>);
+																}
+															})
+														}
+														<td key={index1}>
+															<Moment date={el[0]}/>
+														</td>
+													</tr>
+												))
+											}
+										</tbody>
+									</table>
 								}
-								<IonCol>
-									<IonButton id={'patient-information__contact-tracing-trigger'}>
-										Contact tracing
-									</IonButton>
-								</IonCol>
-							</div>
-						</IonRow>
+							</IonRow>
+							<IonRow>
+								<div className={'patient-information__add-symptom'}>
+									<IonRow>
+										<IonCol size={'3'}>
+											<IonLabel>Subject</IonLabel>
+										</IonCol>
+										<IonCol size={'9'}>
+											<IonInput/>
+										</IonCol>
+
+									</IonRow>
+									<IonRow>
+										<IonCol size={'3'}>
+											<IonLabel>Description</IonLabel>
+										</IonCol>
+										<IonCol size={'9'}>
+											<IonInput/>
+										</IonCol>
+										<IonCol>
+											<IonButton>Add</IonButton>
+										</IonCol>
+									</IonRow>
+
+								</div>
+							</IonRow>
+						</>
 					}
-					<ContactTracingTableModal trigger={'patient-information__contact-tracing-trigger'}
-											  contacts={contacts}/>
+
 					{
 						currentProfile.getRole() == UserType.HEALTH_OFFICIAL &&
 						<div className="patient-information__div-button">
@@ -411,91 +491,6 @@ const PatientInformation: React.FC<{
 								</IonButton>
 							</IonCol>
 						</div>
-					}
-					{
-						currentProfile.getRole() === UserType.DOCTOR && props.patient.doctorName &&
-						props.patient.doctorName == currentProfile.firstName + ' ' + currentProfile.lastName &&
-						<IonRow>
-							{
-								props.symptomsResponse.length == 0 && !seeSymptoms &&
-								<IonTitle>
-									<IonLabel>The patient has not submitted a Symptoms form yet</IonLabel>
-								</IonTitle>
-							}
-							{
-								props.symptomsList && props.symptomsResponse && seeSymptoms &&
-								<table className="patient-information__medical-table">
-									<caption>
-										<IonTitle>Patient&rsquo;s Symptom Updates </IonTitle>
-										<br/>
-									</caption>
-
-									<thead>
-										<tr>
-											{
-												props.symptomsList.map((el, index) => (
-													<th key={index}>
-														{el.description}
-													</th>)
-												)
-											}
-											<th>Updated On</th>
-										</tr>
-									</thead>
-									<tbody>
-										{
-											Array.from(symptomsTable).map((el, index1) => (
-												<tr key={index1}>
-													{
-														el[1].map((el, index2) => {
-															if (el.response == true || el.response == false) {
-																return (
-																	<td key={index1 + '-' + index2}>{el.response ? 'Yes' : 'No'}</td>);
-															} else {
-																return (
-																	<td key={index1 + '-' + index2}>Not Requested</td>);
-															}
-														})
-													}
-													<td key={index1}>
-														<Moment date={el[0]}/>
-													</td>
-												</tr>
-											))
-										}
-									</tbody>
-								</table>
-							}
-						</IonRow>
-					}
-					{
-						currentProfile.getRole() === UserType.DOCTOR && props.patient.doctorName &&
-						props.patient.doctorName === currentProfile.firstName + ' ' + currentProfile.lastName &&
-						<IonRow>
-							<div className={'patient-information__add-symptom'}>
-								<IonRow>
-									<IonCol size={'3'}>
-										<IonLabel>Subject</IonLabel>
-									</IonCol>
-									<IonCol size={'9'}>
-										<IonInput/>
-									</IonCol>
-
-								</IonRow>
-								<IonRow>
-									<IonCol size={'3'}>
-										<IonLabel>Description</IonLabel>
-									</IonCol>
-									<IonCol size={'9'}>
-										<IonInput/>
-									</IonCol>
-									<IonCol>
-										<IonButton>Add</IonButton>
-									</IonCol>
-								</IonRow>
-
-							</div>
-						</IonRow>
 					}
 
 					{
