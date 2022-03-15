@@ -44,11 +44,7 @@ const PatientProfilePage: React.FC = () => {
 		if (medicalNumber === '' || currentProfile.getRole() === UserType.PATIENT) {
 			return;
 		}
-		setPatientProfile(
-			new Patient('', '', '', '', '', '', '', TestResult.PENDING, '', Gender.NONE)
-		);
-		setSymptomsList([]);
-		setSymptomsResponse([]);
+		reset();
 		getPatientWithId().then(() => {
 			if (currentProfile.getRole() === UserType.DOCTOR) {
 				getSymptoms();
@@ -56,11 +52,17 @@ const PatientProfilePage: React.FC = () => {
 			}
 		}).catch((error) => {
 			console.log(error);
-			setPatientProfile(
-				new Patient('', '', '', '', '', '', '', TestResult.PENDING, '', Gender.NONE)
-			);
+			reset();
 		});
 	}, [medicalNumber]);
+
+	function reset() {
+		setPatientProfile(
+			new Patient('', '', '', '', '', '', '', TestResult.PENDING, '', Gender.NONE)
+		);
+		setSymptomsList([]);
+		setSymptomsResponse([]);
+	}
 
 	// Throwable function. Always try-catch
 	async function getPatientWithId() {

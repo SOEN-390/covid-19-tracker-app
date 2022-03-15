@@ -28,7 +28,6 @@ import HttpService from '../../providers/http.service';
 import { call, close, flag, mail } from 'ionicons/icons';
 import { ISymptom, ISymptomResponse, ISymptomTable } from '../../interfaces/ISymptom';
 import Moment from 'react-moment';
-import moment from 'moment-timezone';
 import ContactTracingTableModal from '../ContactTracingTable/ContactTracingTable.modal';
 
 
@@ -198,6 +197,64 @@ const PatientInformation: React.FC<{
 		return contactOption;
 	}
 
+	function setupModals() {
+		return (
+			<>
+				<IonModal isOpen={showStatusModal}>
+					<IonContent>
+						<IonRadioGroup value={props.patient.testResult}
+									   onIonChange={(e: CustomEvent<InputChangeEventDetail>) => {
+										   if (e.detail.value) {
+											   props.patient.testResult = e.detail.value as TestResult;
+										   }
+									   }}
+						>
+							<IonListHeader>
+								<IonLabel>Edit your Status</IonLabel>
+							</IonListHeader>
+							<IonItem>
+								<IonLabel>Positive</IonLabel>
+								<IonRadio slot="start" value={TestResult.POSITIVE}/>
+							</IonItem>
+
+							<IonItem>
+								<IonLabel>Negative</IonLabel>
+								<IonRadio slot="start" value={TestResult.NEGATIVE}/>
+							</IonItem>
+
+							<IonItem>
+								<IonLabel>Not tested/Pending</IonLabel>
+								<IonRadio slot="start" value={TestResult.PENDING}/>
+							</IonItem>
+
+						</IonRadioGroup>
+
+					</IonContent>
+					<IonButton color="success" onClick={() => updateStatus()}>Save</IonButton>
+					<IonButton color="danger" onClick={() => setShowStatusModal(false)}>Cancel</IonButton>
+				</IonModal>
+
+				<IonModal isOpen={showSymptomsModal}>
+					<IonContent>
+						{
+							props.symptomsList &&
+							props.symptomsList.map((el, index) =>
+								<IonItem key={index}>
+									<IonCheckbox value={el.name} checked={el.isChecked}
+												 onIonChange={e => handleCheck(e.detail.value)}/>
+									&nbsp;
+									<IonLabel>{el.description}</IonLabel>
+								</IonItem>
+							)
+						}
+					</IonContent>
+					<IonButton color="success" onClick={() => submitSymptoms()}>Request</IonButton>
+					<IonButton color="danger" onClick={() => setShowSymptomsModal(false)}>Cancel</IonButton>
+				</IonModal>
+			</>
+		);
+	}
+
 	return (
 		<IonContent>
 			{
@@ -296,7 +353,7 @@ const PatientInformation: React.FC<{
 					</IonRow>
 					{
 						currentProfile.getRole() === UserType.DOCTOR && props.patient.doctorName &&
-						props.patient.doctorName == currentProfile.firstName + ' '+ currentProfile.lastName &&
+						props.patient.doctorName == currentProfile.firstName + ' ' + currentProfile.lastName &&
 						<IonRow>
 							<div className="patient-information__div-button">
 								<IonCol>
@@ -309,11 +366,11 @@ const PatientInformation: React.FC<{
 								</IonCol>
 								<IonCol>
 									<IonButton onClick={() => {
-												   presentActionSheet(
-													   generateContactList(props.patient),
-													   'Contact by');
-												   setTimeout(dismissActionSheet, 10000);
-											   }}
+										presentActionSheet(
+											generateContactList(props.patient),
+											'Contact by');
+										setTimeout(dismissActionSheet, 10000);
+									}}
 									>
 										Contact
 									</IonButton>
@@ -343,7 +400,8 @@ const PatientInformation: React.FC<{
 							</div>
 						</IonRow>
 					}
-					<ContactTracingTableModal trigger={'patient-information__contact-tracing-trigger'} contacts={contacts} />
+					<ContactTracingTableModal trigger={'patient-information__contact-tracing-trigger'}
+											  contacts={contacts}/>
 					{
 						currentProfile.getRole() == UserType.HEALTH_OFFICIAL &&
 						<div className="patient-information__div-button">
@@ -356,7 +414,7 @@ const PatientInformation: React.FC<{
 					}
 					{
 						currentProfile.getRole() === UserType.DOCTOR && props.patient.doctorName &&
-						props.patient.doctorName == currentProfile.firstName + ' '+ currentProfile.lastName &&
+						props.patient.doctorName == currentProfile.firstName + ' ' + currentProfile.lastName &&
 						<IonRow>
 							{
 								props.symptomsResponse.length == 0 && !seeSymptoms &&
@@ -412,7 +470,7 @@ const PatientInformation: React.FC<{
 					}
 					{
 						currentProfile.getRole() === UserType.DOCTOR && props.patient.doctorName &&
-						props.patient.doctorName == currentProfile.firstName + ' '+ currentProfile.lastName &&
+						props.patient.doctorName === currentProfile.firstName + ' ' + currentProfile.lastName &&
 						<IonRow>
 							<div className={'patient-information__add-symptom'}>
 								<IonRow>
@@ -440,53 +498,9 @@ const PatientInformation: React.FC<{
 						</IonRow>
 					}
 
-					<IonModal isOpen={showStatusModal}>
-						<IonContent>
-							<IonRadioGroup value={props.patient.testResult}
-										   onIonChange={(e: CustomEvent<InputChangeEventDetail>) => {
-											   if (e.detail.value) {
-												   props.patient.testResult = e.detail.value as TestResult;
-											   }
-										   }}
-							>
-								<IonListHeader>
-									<IonLabel>Edit your Status</IonLabel>
-								</IonListHeader>
-								<IonItem>
-									<IonLabel>Positive</IonLabel>
-									<IonRadio slot="start" value={TestResult.POSITIVE}/>
-								</IonItem>
-
-								<IonItem>
-									<IonLabel>Negative</IonLabel>
-									<IonRadio slot="start" value={TestResult.NEGATIVE}/>
-								</IonItem>
-
-								<IonItem>
-									<IonLabel>Not tested/Pending</IonLabel>
-									<IonRadio slot="start" value={TestResult.PENDING}/>
-								</IonItem>
-
-							</IonRadioGroup>
-
-						</IonContent>
-						<IonButton color="success" onClick={() => updateStatus()}>Save</IonButton>
-						<IonButton color="danger" onClick={() => setShowStatusModal(false)}>Cancel</IonButton>
-					</IonModal>
-
-					<IonModal isOpen={showSymptomsModal}>
-						<IonContent>
-
-							{props.symptomsList && props.symptomsList.map((el, index) => <IonItem
-								key={index}>
-								<IonCheckbox value={el.name} checked={el.isChecked}
-											 onIonChange={e => handleCheck(e.detail.value)}/>&nbsp;
-								<IonLabel>{el.description}</IonLabel></IonItem>)}
-
-						</IonContent>
-						<IonButton color="success" onClick={() => submitSymptoms()}>Request</IonButton>
-						<IonButton color="danger" onClick={() => setShowSymptomsModal(false)}>Cancel</IonButton>
-					</IonModal>
+					{
+						setupModals()
+					}
 
 				</div>
 			}
