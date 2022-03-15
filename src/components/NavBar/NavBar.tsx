@@ -63,8 +63,8 @@ const NavBar: React.FC = () => {
 					currentProfile ? (currentProfile.getRole() === UserType.PATIENT ? null :
 						<div className={'search-bar'}>
 							<IonItem lines={'none'}>
-
-								<IonSearchbar value={searchText} onIonChange={e => setSearchText(e.detail.value || '')}
+								<IonSearchbar value={searchText} placeholder={'Enter the Medical ID of a patient'}
+											  onIonChange={e => setSearchText(e.detail.value || '')}
 											  showCancelButton="never"
 								/>
 								<IonButton onClick={search}> Search </IonButton>
