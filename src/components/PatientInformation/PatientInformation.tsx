@@ -28,8 +28,9 @@ import HttpService from '../../providers/http.service';
 import { call, close, flag, mail } from 'ionicons/icons';
 import { ISymptom, ISymptomResponse, ISymptomTable } from '../../interfaces/ISymptom';
 import Moment from 'react-moment';
-import 'moment-timezone';
+import moment from 'moment-timezone';
 import ContactTracingTableModal from '../ContactTracingTable/ContactTracingTable.modal';
+
 
 const PatientInformation: React.FC<{
 	patient: IPatient, updateStatus: (status: TestResult) => void, updateFlag: (bool: boolean) => void,
@@ -128,7 +129,8 @@ const PatientInformation: React.FC<{
 			if (i == 0) {
 				symptomsTableMap.set(props.symptomsResponse[i].onDate, []);
 			}
-			if (i > 0 && props.symptomsResponse[i].onDate != props.symptomsResponse[i - 1].onDate) {
+			if (i > 0 && new Date(props.symptomsResponse[i].onDate).setSeconds(0)
+				!= new Date(props.symptomsResponse[i - 1].onDate).setSeconds(0)) {
 				symptomsTableMap.set(props.symptomsResponse[i].onDate, []);
 			}
 		}
@@ -139,7 +141,8 @@ const PatientInformation: React.FC<{
 		for (const [key, value] of symptomsTableMap) {
 			for (let i = 0; i < props.symptomsList.length; i++) {
 				for (const response of props.symptomsResponse) {
-					if (props.symptomsList[i].name == response.name && response.onDate == key) {
+					if (props.symptomsList[i].name == response.name &&
+						new Date(response.onDate).setSeconds(0) == new Date(key).setSeconds(0)) {
 						value[i] = {
 							name: response.name, description: response.description,
 							response: response.response
@@ -154,7 +157,6 @@ const PatientInformation: React.FC<{
 
 					}
 				}
-
 			}
 		}
 		setSymptomsTable(symptomsTableMap);
