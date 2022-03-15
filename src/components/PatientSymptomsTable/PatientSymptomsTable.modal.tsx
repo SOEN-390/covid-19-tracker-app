@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Table, Tbody, Td, Th, Thead, Tr } from 'react-super-responsive-table';
-import { IonButton, IonModal, useIonToast } from '@ionic/react';
+import { IonButton, IonContent, IonInfiniteScroll, IonModal, useIonToast } from '@ionic/react';
 import './PatientSymptomsTable.modal.scss';
 import { useEffect, useState } from 'react';
 import Moment from 'react-moment';
@@ -67,7 +67,6 @@ const PatientSymptomsTableModal: React.FC<{
 				}
 			}
 		}
-		console.log(symptomsTableMap);
 		setSymptomsTable(symptomsTableMap);
 	}
 
@@ -78,50 +77,46 @@ const PatientSymptomsTableModal: React.FC<{
 				  }}
 				  hidden={!props.symptomsResponse || props.symptomsResponse.length === 0}
 		>
-			<Table className={'contact-tracing-table__table'}>
-				<Thead>
-					<Tr className={'contact-tracing-table__table-head'}>
+			<IonContent scrollX={true} className={'patient-symptoms-table'}>
+				<Table className={'patient-symptoms-table__table'}>
+					<Thead>
+						<Tr className={'patient-symptoms-table__table-head'}>
+							<Th>
+								{/*Updated On*/}
+							</Th>
+							{
+								Array.from(symptomsTable).map((el, index1) =>
+									<Td className={'patient-symptoms-table__table-head__date'} key={index1}>
+										<Moment date={el[0]}/>
+									</Td>
+								)
+							}
+						</Tr>
+					</Thead>
+					<Tbody>
 						{
-							props.symptomsList.map((el, index) =>
-								<Th key={index}>
-									{el.description}
-								</Th>
+							props.symptomsList.map((el, index1) =>
+								<Tr key={index1}>
+									<Th>
+										{el.description}
+									</Th>
+									{
+										Array.from(symptomsTable).map((el, index2) => (
+											<Td key={index1 + ' ' + index2} className="contact-tracing-table__table-entries">
+												{
+													(el[1][index2].response || !el[1][index2].response) ?
+														(el[1][index2].response ? 'Yes' : 'No') :
+														'Not Requested'
+												}
+											</Td>
+										))
+									}
+								</Tr>
 							)
 						}
-						<Th>Updated On</Th>
-					</Tr>
-				</Thead>
-				<Tbody>
-					{
-						Array.from(symptomsTable).map((el, index1) => (
-							<Tr key={index1} className="contact-tracing-table__table-entries">
-								{
-									el[1].map((el, index2) => {
-										if (el.response == true || el.response == false) {
-											return (
-												<Td key={index1 + ' ' + index2}
-													className={'contact-tracing-table__table-entries__name'}>
-													{el.response ? 'Yes' : 'No'}
-												</Td>
-											);
-										} else {
-											return (
-												<Td key={index1 + ' ' + index2}
-													className={'contact-tracing-table__table-entries__name'}>
-													Not Requested
-												</Td>
-											);
-										}
-									})
-								}
-								<Td className={'contact-tracing-table__table-entries__name'} key={index1}>
-									<Moment date={el[0]}/>
-								</Td>
-							</Tr>
-						))
-					}
-				</Tbody>
-			</Table>
+					</Tbody>
+				</Table>
+			</IonContent>
 			<IonButton onClick={() => setModalOpen(false)}>Close</IonButton>
 		</IonModal>
 	);
