@@ -348,18 +348,6 @@ const PatientInformation: React.FC<{
 								</div>
 							</IonRow>
 							<IonRow>
-								{
-									props.symptomsResponse.length == 0 &&
-									<IonTitle>
-										<IonLabel>The patient has not submitted a Symptoms form yet</IonLabel>
-									</IonTitle>
-								}
-								{/*{*/}
-								{/*	props.symptomsList && props.symptomsResponse && seeSymptoms &&*/}
-
-								{/*}*/}
-							</IonRow>
-							<IonRow>
 								<div className={'patient-information__add-symptom'}>
 									<IonRow>
 										<IonCol size={'3'}>
