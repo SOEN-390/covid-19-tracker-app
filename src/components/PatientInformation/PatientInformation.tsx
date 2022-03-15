@@ -26,10 +26,9 @@ import React, { useEffect, useState } from 'react';
 import { TestResult } from '../../enum/TestResult.enum';
 import HttpService from '../../providers/http.service';
 import { call, close, flag, mail } from 'ionicons/icons';
-import { ISymptom, ISymptomResponse, ISymptomTable } from '../../interfaces/ISymptom';
-import Moment from 'react-moment';
+import { ISymptom, ISymptomResponse } from '../../interfaces/ISymptom';
 import ContactTracingTableModal from '../ContactTracingTable/ContactTracingTable.modal';
-
+import PatientSymptomsTableModal from '../PatientSymptomsTable/PatientSymptomsTable.modal';
 
 const PatientInformation: React.FC<{
 	patient: IPatient, onChange: (patient: IPatient) => void,
@@ -41,8 +40,6 @@ const PatientInformation: React.FC<{
 	const [showStatusModal, setShowStatusModal] = useState<boolean>(false);
 	const [showSymptomsModal, setShowSymptomsModal] = useState<boolean>(false);
 
-	const [seeSymptoms, setSeeSymptoms] = useState<boolean>(false);
-	const [symptomsTable, setSymptomsTable] = useState<Map<Date, ISymptomTable[]>>(new Map<Date, ISymptomTable[]>());
 	const [contacts, setContacts] = useState<IContact[]>([]);
 
 	const [presentActionSheet, dismissActionSheet] = useIonActionSheet();
@@ -113,50 +110,6 @@ const PatientInformation: React.FC<{
 		} catch (e) {
 			present('You already have a pending request', 1500);
 		}
-	}
-
-	function generateSymptomsTable() {
-		if (!props.symptomsList || !props.symptomsResponse) {
-			return;
-		}
-		const symptomsTableMap = new Map<Date, ISymptomTable[]>();
-
-		for (let i = 0; i < props.symptomsResponse.length; i++) {
-			if (i == 0) {
-				symptomsTableMap.set(props.symptomsResponse[i].onDate, []);
-			}
-			if (i > 0 && new Date(props.symptomsResponse[i].onDate).setSeconds(0)
-				!= new Date(props.symptomsResponse[i - 1].onDate).setSeconds(0)) {
-				symptomsTableMap.set(props.symptomsResponse[i].onDate, []);
-			}
-		}
-		mapResponseToRow(symptomsTableMap);
-	}
-
-	function mapResponseToRow(symptomsTableMap: Map<Date, ISymptomTable[]>) {
-		for (const [key, value] of symptomsTableMap) {
-			for (let i = 0; i < props.symptomsList.length; i++) {
-				for (const response of props.symptomsResponse) {
-					if (props.symptomsList[i].name == response.name &&
-						new Date(response.onDate).setSeconds(0) == new Date(key).setSeconds(0)) {
-						value[i] = {
-							name: response.name, description: response.description,
-							response: response.response
-						};
-					} else {
-						if (!value[i]) {
-							value[i] = {
-								name: props.symptomsList[i].name, description: props.symptomsList[i].description,
-								response: undefined
-							};
-						}
-
-					}
-				}
-			}
-		}
-		setSymptomsTable(symptomsTableMap);
-		setSeeSymptoms(true);
 	}
 
 	async function getPatientsContacts() {
@@ -251,8 +204,12 @@ const PatientInformation: React.FC<{
 					<IonButton color="success" onClick={() => submitSymptoms()}>Request</IonButton>
 					<IonButton color="danger" onClick={() => setShowSymptomsModal(false)}>Cancel</IonButton>
 				</IonModal>
+
 				<ContactTracingTableModal trigger={'patient-information__contact-tracing-trigger'}
 										  contacts={contacts}/>
+
+				<PatientSymptomsTableModal symptomsList={props.symptomsList} symptomsResponse={props.symptomsResponse}
+										   trigger={'patient-information__patient-symptoms-trigger'} />
 			</>
 		);
 	}
@@ -378,23 +335,11 @@ const PatientInformation: React.FC<{
 											Contact
 										</IonButton>
 									</IonCol>
-									{
-										props.symptomsResponse && props.symptomsResponse.length > 0 &&
-										props.symptomsList && !seeSymptoms &&
-										<IonCol>
-											<IonButton onClick={() => {
-												generateSymptomsTable();
-											}}>See Symptoms</IonButton>
-										</IonCol>
-									}
-									{
-										seeSymptoms &&
-										<IonCol>
-											<IonButton onClick={() => {
-												setSeeSymptoms(false);
-											}}>Hide Symptoms</IonButton>
-										</IonCol>
-									}
+									<IonCol>
+										<IonButton id={'patient-information__patient-symptoms-trigger'}>
+											See Symptoms
+										</IonButton>
+									</IonCol>
 									<IonCol>
 										<IonButton id={'patient-information__contact-tracing-trigger'}>
 											Contact tracing
@@ -404,55 +349,15 @@ const PatientInformation: React.FC<{
 							</IonRow>
 							<IonRow>
 								{
-									props.symptomsResponse.length == 0 && !seeSymptoms &&
+									props.symptomsResponse.length == 0 &&
 									<IonTitle>
 										<IonLabel>The patient has not submitted a Symptoms form yet</IonLabel>
 									</IonTitle>
 								}
-								{
-									props.symptomsList && props.symptomsResponse && seeSymptoms &&
-									<table className="patient-information__medical-table">
-										<caption>
-											<IonTitle>Patient&rsquo;s Symptom Updates </IonTitle>
-											<br/>
-										</caption>
+								{/*{*/}
+								{/*	props.symptomsList && props.symptomsResponse && seeSymptoms &&*/}
 
-										<thead>
-											<tr>
-												{
-													props.symptomsList.map((el, index) => (
-														<th key={index}>
-															{el.description}
-														</th>)
-													)
-												}
-												<th>Updated On</th>
-											</tr>
-										</thead>
-										<tbody>
-											{
-												Array.from(symptomsTable).map((el, index1) => (
-													<tr key={index1}>
-														{
-															el[1].map((el, index2) => {
-																if (el.response == true || el.response == false) {
-																	return (
-																		<td key={index1 + '-' + index2}>{el.response ? 'Yes' : 'No'}</td>);
-																} else {
-																	return (
-																		<td key={index1 + '-' + index2}>Not Requested</td>);
-																}
-															})
-														}
-														<td key={index1}>
-															<Moment date={el[0]}/>
-														</td>
-													</tr>
-												))
-											}
-										</tbody>
-									</table>
-								}
+								{/*}*/}
 							</IonRow>
 							<IonRow>
 								<div className={'patient-information__add-symptom'}>
