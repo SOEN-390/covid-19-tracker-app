@@ -113,6 +113,9 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 				<Td key={index}
 					className="patients-table__table-entries__name"
 					onClick={() => {
+						if (!patient.reviewed) {
+							reviewPatient(patient);
+						}
 						if (currentProfile.getRole() === UserType.ADMIN) {
 							history.push({
 								pathname: AdminPages.patientProfile + '/' + patient.medicalId
