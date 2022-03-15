@@ -2,9 +2,6 @@ table.patients-table__table {
 
   th:first-child {
     border-radius: 10px 0 0 10px;
-    position: sticky;
-    top: 0;
-    z-index: 9999;
   }
 
   th:last-child {
@@ -12,11 +9,13 @@ table.patients-table__table {
   }
 
   tr.patients-table__table-head {
-    background-color: rgba(44, 77, 98, .12);
+    background-color: #e2e3e3;
     border-radius: 50px;
     box-sizing: border-box;
-    filter: blur(1);
     height: 60px;
+    position: sticky;
+    top: 0;
+    z-index: 9999;
 
     th.patients-table__table-column-title {
       color: #2C4D62;
