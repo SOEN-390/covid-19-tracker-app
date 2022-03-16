@@ -25,7 +25,10 @@ const AdminRouting: React.FC = () => {
 					<Route path={AdminPages.overview}>
 						<AdminOverviewPage/>
 					</Route>
-					<Route path={AdminPages.patientProfile}>
+					<Route exact={true} path={AdminPages.patientProfile}>
+						<PatientProfile/>
+					</Route>
+					<Route path={AdminPages.patientProfile + '/:medicalId'}>
 						<PatientProfile/>
 					</Route>
 					<Route path={AdminPages.patients}>

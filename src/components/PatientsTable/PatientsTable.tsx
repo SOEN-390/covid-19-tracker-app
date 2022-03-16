@@ -24,6 +24,8 @@ import { TestResult } from '../../enum/TestResult.enum';
 import { Patient } from '../../objects/Patient.class';
 import HttpService from '../../providers/http.service';
 import SymptomsCardComponent from '../SymptomsCard/SymptomsCard.component';
+import { useHistory } from 'react-router-dom';
+import { AdminPages, DoctorPages, HealthOfficialPages } from '../../providers/pages.enum';
 
 const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient) => void }> = (props) => {
 
@@ -32,6 +34,7 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 
 	const [presentToast] = useIonToast();
 	const [presentActionSheet, dismissActionSheet] = useIonActionSheet();
+	const history = useHistory();
 
 	useEffect(() => {
 		switch (currentProfile.getRole()) {
@@ -106,12 +109,30 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 			<Tr className="patients-table__table-entries"
 				key={index}
 				style={{background: currentProfile.getRole() === UserType.DOCTOR ? (patient.reviewed ? '' : '#F5F6F6') : ''}}
-				onClick={() => {
-					// TODO: Forward to profile page
-				}}
 			>
 				<Td key={index}
-					className="patients-table__table-entries__name">{patient.firstName + ' ' + patient.lastName}</Td>
+					className="patients-table__table-entries__name"
+					onClick={() => {
+						if (!patient.reviewed) {
+							reviewPatient(patient);
+						}
+						if (currentProfile.getRole() === UserType.ADMIN) {
+							history.push({
+								pathname: AdminPages.patientProfile + '/' + patient.medicalId
+							});
+						} else if (currentProfile.getRole() === UserType.HEALTH_OFFICIAL) {
+							history.push({
+								pathname: HealthOfficialPages.patientProfile + '/' + patient.medicalId
+							});
+						} else if (currentProfile.getRole() === UserType.DOCTOR) {
+							history.push({
+								pathname: DoctorPages.patientProfile + '/' + patient.medicalId
+							});
+						}
+					}}
+				>
+					{patient.firstName + ' ' + patient.lastName}
+				</Td>
 				<Td key={index}>
 					<div key={index} className={'patients-table__status ' +
 						(patient.testResult === TestResult.POSITIVE ? 'patients-table__status__positive' : '') +
@@ -160,7 +181,7 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 					(currentProfile.getRole() === UserType.DOCTOR) &&
 					<Td key={index} className={'patients-table__flag'}>
 						<IonIcon icon={patient.reviewed ? checkmarkDoneCircleOutline : checkmarkCircleOutline}
-								 color={patient.reviewed ? 'success': ''}
+								 color={patient.reviewed ? 'success' : ''}
 								 onClick={() => {
 									 reviewPatient(patient);
 								 }}
@@ -170,7 +191,7 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 				<Td key={index} className={'patients-table__flag'}>
 					<IonIcon
 						className={patient.flagged ? 'patients-table__flag__high-priority' : 'patients-table__flag__no-priority'}
-						icon={flag} onClick={() => flagPatient(patient) }
+						icon={flag} onClick={() => flagPatient(patient)}
 					/>
 				</Td>
 			</Tr>

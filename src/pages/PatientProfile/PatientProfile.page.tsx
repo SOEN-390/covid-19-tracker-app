@@ -11,8 +11,11 @@ import { ISymptom, ISymptomResponse } from '../../interfaces/ISymptom';
 import { Patient } from '../../objects/Patient.class';
 import './PatientProfile.page.scss';
 import { IPatient } from '../../interfaces/IPatient';
+import { useParams } from 'react-router';
 
 const PatientProfilePage: React.FC = () => {
+
+	const params = useParams<{medicalId: string | undefined}>();
 
 	const {currentProfile} = useAuth();
 
@@ -31,9 +34,17 @@ const PatientProfilePage: React.FC = () => {
 	}, []);
 
 	useEffect(() => {
-		if (medicalNumber === '') {
+		if (!params.medicalId) {
 			return;
 		}
+		setMedicalNumber(params.medicalId);
+	}, [params.medicalId]);
+
+	useEffect(() => {
+		if (medicalNumber === '' || currentProfile.getRole() === UserType.PATIENT) {
+			return;
+		}
+		reset();
 		getPatientWithId().then(() => {
 			if (currentProfile.getRole() === UserType.DOCTOR) {
 				getSymptoms();
@@ -41,11 +52,17 @@ const PatientProfilePage: React.FC = () => {
 			}
 		}).catch((error) => {
 			console.log(error);
-			setPatientProfile(
-				new Patient('', '', '', '', '', '', '', TestResult.PENDING, '', Gender.NONE)
-			);
+			reset();
 		});
 	}, [medicalNumber]);
+
+	function reset() {
+		setPatientProfile(
+			new Patient('', '', '', '', '', '', '', TestResult.PENDING, '', Gender.NONE)
+		);
+		setSymptomsList([]);
+		setSymptomsResponse([]);
+	}
 
 	// Throwable function. Always try-catch
 	async function getPatientWithId() {
@@ -57,7 +74,7 @@ const PatientProfilePage: React.FC = () => {
 		} else {
 			return;
 		}
-		const data = await HttpService.get(path) as Patient;
+		const data = await HttpService.get(path) as IPatient;
 		if (!data.medicalId) {
 			return;
 		}
@@ -87,28 +104,21 @@ const PatientProfilePage: React.FC = () => {
 		}
 	}
 
-	const handleCallBack = (medicalId: string) => {
-		setMedicalNumber(medicalId);
-	};
-
-	const handleStatus = (testResult: TestResult) => {
-		patientProfile.testResult = testResult;
-		setPatientProfile(patientProfile);
-	};
-
-	const handleFlag = (flagged: boolean) => {
-		patientProfile.flagged = flagged;
-		setPatientProfile(patientProfile);
-	};
+	function handleChange(patient: IPatient) {
+		if (currentProfile.getRole() === UserType.PATIENT) {
+			setPatientProfile(patient);
+			return;
+		}
+		setPatientProfile({...patient} as IPatient);
+	}
 
 	return (
 		<IonPage>
-			<NavBar callback={handleCallBack}/>
+			<NavBar/>
 			{
 				patientProfile.medicalId !== '' ?
-					<PatientInformation patient={patientProfile} updateStatus={handleStatus}
-						updateFlag={handleFlag} symptomsList={symptomsList}
-						symptomsResponse={symptomsResponse}
+					<PatientInformation patient={patientProfile} onChange={handleChange}
+						symptomsList={symptomsList} symptomsResponse={symptomsResponse}
 					/> :
 					<>
 						<br />

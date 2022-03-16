@@ -23,7 +23,10 @@ const ImmigrationOfficerRouting: React.FC = () => {
 					<Route path={ImmigrationOfficerPages.dashboard}>
 						<ImmigrationDashboard/>
 					</Route>
-					<Route path={ImmigrationOfficerPages.patientProfile}>
+					<Route exact={true} path={ImmigrationOfficerPages.patientProfile}>
+						<PatientProfile/>
+					</Route>
+					<Route path={ImmigrationOfficerPages.patientProfile + '/:medicalId'}>
 						<PatientProfile/>
 					</Route>
 				</IonRouterOutlet>
