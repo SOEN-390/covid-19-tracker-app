@@ -102,11 +102,10 @@ const PatientSymptomsTableModal: React.FC<{
 									</Th>
 									{
 										Array.from(symptomsTable).map((el, index2) => (
-											<Td key={index1 + ' ' + index2} className="contact-tracing-table__table-entries">
+											<Td key={index1 + '-' + index2} className="contact-tracing-table__table-entries">
 												{
-													(el[1][index2].response || !el[1][index2].response) ?
-														(el[1][index2].response ? 'Yes' : 'No') :
-														'Not Requested'
+													(el[1][index1].response == undefined) ? '---' :
+														(el[1][index1].response ? 'Yes' : 'No')
 												}
 											</Td>
 										))
