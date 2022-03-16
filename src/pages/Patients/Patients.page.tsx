@@ -97,6 +97,7 @@ const PatientsPage: React.FC = () => {
 	return (
 		<IonPage>
 			<IonToolbar>
+				<NavBar/>
 			</IonToolbar>
 			<IonContent className={'patients-page__content'}>
 				<IonTitle>PATIENTS</IonTitle>

@@ -12,7 +12,7 @@ import userIcon from '../../assets/images/UserIcon.png';
 import React, { useState } from 'react';
 import { useAuth } from '../../providers/auth.provider';
 import { UserType } from '../../enum/UserType.enum';
-import { AdminPages, DoctorPages, HealthOfficialPages } from '../../providers/pages.enum';
+import { AdminPages, DoctorPages, HealthOfficialPages, ImmigrationOfficerPages } from '../../providers/pages.enum';
 import { useHistory } from 'react-router-dom';
 
 const NavBar: React.FC = () => {
@@ -27,6 +27,8 @@ const NavBar: React.FC = () => {
 		let pathname: string;
 		if (currentProfile.getRole() === UserType.ADMIN) {
 			pathname = AdminPages.patientProfile + '/' + searchText;
+		} else if (currentProfile.getRole() === UserType.IMMIGRATION_OFFICER) {
+			pathname = ImmigrationOfficerPages.patientProfile + '/' + searchText;
 		} else if (currentProfile.getRole() === UserType.HEALTH_OFFICIAL) {
 			pathname = HealthOfficialPages.patientProfile + '/' + searchText;
 		} else if (currentProfile.getRole() === UserType.DOCTOR) {
@@ -38,6 +40,7 @@ const NavBar: React.FC = () => {
 		const currentPath = history.location.pathname.split('/');
 		if (
 			'/' + currentPath[1] + '/' + currentPath[2] === AdminPages.patientProfile ||
+			'/' + currentPath[1] + '/' + currentPath[2] === ImmigrationOfficerPages.patientProfile ||
 			'/' + currentPath[1] + '/' + currentPath[2] === HealthOfficialPages.patientProfile ||
 			'/' + currentPath[1] + '/' + currentPath[2] === DoctorPages.patientProfile
 		) {
@@ -60,8 +63,8 @@ const NavBar: React.FC = () => {
 					currentProfile ? (currentProfile.getRole() === UserType.PATIENT ? null :
 						<div className={'search-bar'}>
 							<IonItem lines={'none'}>
-
-								<IonSearchbar value={searchText} onIonChange={e => setSearchText(e.detail.value || '')}
+								<IonSearchbar value={searchText} placeholder={'Enter the Medical ID of a patient'}
+											  onIonChange={e => setSearchText(e.detail.value || '')}
 											  showCancelButton="never"
 								/>
 								<IonButton onClick={search}> Search </IonButton>

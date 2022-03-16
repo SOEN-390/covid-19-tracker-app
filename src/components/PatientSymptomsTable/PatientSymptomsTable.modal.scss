@@ -1,0 +1,52 @@
+ion-content.patient-symptoms-table {
+
+  overflow-x: scroll;
+
+  table.patient-symptoms-table__table {
+
+    width: max-content;
+    min-width: 100%;
+
+    tr.patient-symptoms-table__table-head {
+      background-color: #e2e3e3;
+      border-radius: 50px;
+      box-sizing: border-box;
+      height: 60px;
+      position: sticky;
+      top: 0;
+      z-index: 9999;
+    }
+
+    th {
+      position: sticky;
+      left: 0;
+      z-index: 9998;
+      width: 12em;
+    }
+
+    td {
+      width: 10em;
+    }
+
+    th,
+    td.patient-symptoms-table__table-head__date {
+      color: var(--ion-color-dark-blue);
+      font-weight: bold;
+      font-size: 18px;
+      text-align: center;
+      padding: 10px 1.5% 10px 1.5%;
+      background-color: #e2e3e3;
+    }
+
+    td.contact-tracing-table__table-entries {
+      border-radius: 10px;
+      border-left: 1px solid #E7E7E7;
+      border-right: 1px solid #E7E7E7;
+      margin-top: 5px;
+      margin-bottom: 5px;
+      box-sizing: border-box;
+      height: inherit;
+      text-align: center;
+    }
+  }
+}
