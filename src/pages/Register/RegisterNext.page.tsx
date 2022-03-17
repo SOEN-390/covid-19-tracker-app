@@ -48,7 +48,6 @@ const RegisterNextPage: React.FC = () => {
 			return;
 		}
 
-
 		const user: IPatient = {
 			medicalId: medicalNumber,
 			firstName: firstName,
@@ -79,34 +78,23 @@ const RegisterNextPage: React.FC = () => {
 				present('Please enter your phone number', 1500);
 				return false;
 			}
-			if (gender.trim() === '') {
-				present('Please choose one of the options for gender', 1500);
-				return false;
-			}
 			if (dob.trim() === '') {
 				present('Please enter your date of birth', 1500);
-				return false;
-			}
-			if (testResult.trim() === '') {
-				present('Please choose one of the options for test result', 1500);
 				return false;
 			}
 			return true;
 		}
 
-		saveUser(user).then((success) => {
+		saveUser(user).then(async (success) => {
 			if (success) {
-				present('Successfully registered.', 1500).then(() => {
-					logout();
-					history.push(Pages.login);
-				});
+				logout();
+				present('Successfully registered.', 0);
+				history.push(Pages.login);
 			} else {
 				present('Something went wrong.', 1500);
 			}
 		});
 	}
-
-
 
 	async function saveUser(user: IPatient): Promise<boolean> {
 		try {
