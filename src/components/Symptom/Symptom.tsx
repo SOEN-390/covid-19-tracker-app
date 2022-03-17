@@ -34,7 +34,7 @@ const Symptom: React.FC<{symptomsList: ISymptom[], handleSubmit: () => void}> = 
 
 	async function submitSymptoms(): Promise<void> {
 		try {
-			await HttpService.post(`patients/${currentProfile.id}/symptoms/response`, {
+			await HttpService.post(`patients/${currentProfile.medicalId}/symptoms/response`, {
 				responseList: props.symptomsList
 			});
 			present('Successfully submitted response', 1500);

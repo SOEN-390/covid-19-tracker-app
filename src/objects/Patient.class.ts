@@ -19,10 +19,11 @@ export class Patient extends User {
 
 	// Constructor
 
-	public constructor(id: string, firstName: string, lastName: string, phoneNumber: string, address: string,
+	public constructor(id: string, firstName: string, lastName: string, email: string, phoneNumber: string, address: string,
 					   medicalId: string, testResult: TestResult, dob: string, gender: Gender) {
 		super(id, firstName, lastName, phoneNumber, address);
 		this._medicalId = medicalId;
+		this._email = email;
 		this._testResult = testResult;
 		this._dob = dob;
 		this._gender = gender;

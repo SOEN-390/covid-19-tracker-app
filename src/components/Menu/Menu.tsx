@@ -28,7 +28,7 @@ import {
 import React from 'react';
 
 const Menu: React.FC<{ ionMenuId: string, userType: UserType }> = (props) => {
-	const {currentUser, currentProfile, logout} = useAuth();
+	const { currentUser, currentProfile, logout } = useAuth();
 	const location = useLocation();
 
 	const sideMenuPages: readonly AppPage[] = getMenuAppPagesByRole();
@@ -81,28 +81,29 @@ const Menu: React.FC<{ ionMenuId: string, userType: UserType }> = (props) => {
 		<IonMenu contentId={props.ionMenuId} type="push">
 
 			<IonContent>
-				<IonImg src={appLogo}/>
+				<IonImg src={appLogo} />
 				<IonList className={'menu__inbox-list'}>
 
 					<IonTitle>Welcome {getName()}</IonTitle>
-					<br/>
+					<br />
 					<IonTitle>{currentUser?.email}</IonTitle>
 					<IonTitle>{getRole()}</IonTitle>
-					<IonItemDivider/>
+					<IonItemDivider />
 
 					{
 						sideMenuPages.map((appPage, index) => {
 							return (
 								<IonMenuToggle key={index} autoHide={false}>
 									<IonItem className={location.pathname === appPage.url ? 'selected' : ''}
-											 routerLink={appPage.url} routerDirection="none" lines="none"
-											 detail={false}>
-										<IonIcon slot="start" ios={appPage.iosIcon} md={appPage.mdIcon}/>
+										routerLink={appPage.url} routerDirection="none" lines="none"
+										detail={false}>
+										<IonIcon slot="start" icon={appPage.iosIcon} />
 										<IonLabel>{appPage.title}</IonLabel>
 									</IonItem>
+									<br />
 									{
 										appPage.title === 'Doctors' && getRole() === 'Admin' &&
-											<><IonTitle>Account</IonTitle></>
+										<><IonTitle>Account</IonTitle><br /></>
 									}
 
 								</IonMenuToggle>
@@ -111,9 +112,9 @@ const Menu: React.FC<{ ionMenuId: string, userType: UserType }> = (props) => {
 						})
 					}
 
-					<IonMenuToggle key={sideMenuPages.length + 1} autoHide={false}>
-						<IonItem routerDirection="none" lines="none" detail={false} onClick={logout}>
-							<IonIcon slot="start" ios={logOutOutline} md={logOutOutline}/>
+					<IonMenuToggle autoHide={false}>
+						<IonItem routerDirection="none" lines="none" routerLink={'/'} onClick={logout}>
+							<IonIcon slot="start" icon={logOutOutline} />
 							<IonLabel>Logout</IonLabel>
 						</IonItem>
 					</IonMenuToggle>
@@ -129,7 +130,7 @@ const Menu: React.FC<{ ionMenuId: string, userType: UserType }> = (props) => {
 				{/*  </IonList>*/}
 
 			</IonContent>
-			<Emergency/>
+			<Emergency />
 		</IonMenu>
 	);
 };

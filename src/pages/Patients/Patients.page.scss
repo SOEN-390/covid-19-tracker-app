@@ -1,7 +1,8 @@
 ion-content.patients-page__content {
 
   ion-title {
-
+    color: #2C4D62;
+    align-items: baseline;
   }
 
   ion-col.patients-page__confirmed {
@@ -12,12 +13,12 @@ ion-content.patients-page__content {
     text-align: left;
   }
 
-  ion-button.patients-page__button-selected {
+  ion-button.patients-page__button-unselected {
     color: var(--ion-color-primary-contrast);
     --background: var(--ion-color-dark-blue);
   }
 
-  ion-button.patients-page__button-unselected {
+  ion-button.patients-page__button-selected {
     color: var(--ion-color-dark-blue);
     --background: var(--ion-color-primary-contrast);
   }

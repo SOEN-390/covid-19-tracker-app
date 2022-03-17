@@ -1,4 +1,4 @@
-import { IonPage } from '@ionic/react';
+import { IonLabel, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import PatientInformation from '../../components/PatientInformation/PatientInformation';
 import NavBar from '../../components/NavBar/NavBar';
 import React, { useEffect, useState } from 'react';
@@ -9,48 +9,76 @@ import { TestResult } from '../../enum/TestResult.enum';
 import { Gender } from '../../enum/Gender.enum';
 import { ISymptom, ISymptomResponse } from '../../interfaces/ISymptom';
 import { Patient } from '../../objects/Patient.class';
+import './PatientProfile.page.scss';
+import { IPatient } from '../../interfaces/IPatient';
+import { useParams } from 'react-router';
 
 const PatientProfilePage: React.FC = () => {
+
+	const params = useParams<{medicalId: string | undefined}>();
 
 	const {currentProfile} = useAuth();
 
 	const [medicalNumber, setMedicalNumber] = useState<string>('');
-	const [firstName, setFirstName] = useState<string>('');
-	const [lastName, setLastName] = useState<string>('');
-	const [testResult, setTestResult] = useState<TestResult>(currentProfile.testResult);
-	const [phoneNumber, setPhoneNumber] = useState<string>('');
-	const [address, setAddress] = useState<string>('');
-	const [email, setEmail] = useState<string>('');
-	const [dob, setDOB] = useState<string>('');
-	const [gender, setGender] = useState<Gender>(Gender.NONE);
-	const [flagged, setFlagged] = useState<boolean>(false);
+	const [patientProfile, setPatientProfile] = useState<IPatient>(
+		new Patient('', '', '', '', '', '', '', TestResult.PENDING, '', Gender.NONE)
+	);
 	const [symptomsList, setSymptomsList] = useState<ISymptom[]>([]);
 	const [symptomsResponse, setSymptomsResponse] = useState<ISymptomResponse[]>([]);
 
 	useEffect(() => {
 		if (currentProfile.getRole() === UserType.PATIENT) {
-			setMedicalNumber(currentProfile.id);
+			setMedicalNumber(currentProfile.medicalId);
+			setPatientProfile(currentProfile);
 		}
 	}, []);
 
 	useEffect(() => {
-		if (currentProfile.getRole() == UserType.DOCTOR) {
-			getPatientWithIdAsDoctor();
-			getSymptoms();
-			getPatientSymptomHistory();
-		} else {
-			getPatientWithId();
+		if (!params.medicalId) {
+			return;
 		}
+		setMedicalNumber(params.medicalId);
+	}, [params.medicalId]);
 
+	useEffect(() => {
+		if (medicalNumber === '' || currentProfile.getRole() === UserType.PATIENT) {
+			return;
+		}
+		reset();
+		getPatientWithId().then(() => {
+			if (currentProfile.getRole() === UserType.DOCTOR) {
+				getSymptoms();
+				getPatientSymptomHistory();
+			}
+		}).catch((error) => {
+			console.log(error);
+			reset();
+		});
 	}, [medicalNumber]);
 
+	function reset() {
+		setPatientProfile(
+			new Patient('', '', '', '', '', '', '', TestResult.PENDING, '', Gender.NONE)
+		);
+		setSymptomsList([]);
+		setSymptomsResponse([]);
+	}
+
+	// Throwable function. Always try-catch
 	async function getPatientWithId() {
-		try {
-			const data: Patient = await HttpService.get(`patients/${medicalNumber}`);
-			setData(data);
-		} catch (e) {
-			console.log(e);
+		let path: string;
+		if (currentProfile.getRole() === UserType.DOCTOR) {
+			path = `doctors/patient/${medicalNumber}`;
+		} else if (currentProfile.getRole() !== UserType.PATIENT) {
+			path = `patients/${medicalNumber}`;
+		} else {
+			return;
 		}
+		const data = await HttpService.get(path) as IPatient;
+		if (!data.medicalId) {
+			return;
+		}
+		setPatientProfile(data);
 	}
 
 	async function getSymptoms() {
@@ -69,72 +97,37 @@ const PatientProfilePage: React.FC = () => {
 	async function getPatientSymptomHistory() {
 		try {
 			const data: ISymptomResponse[] =
-				await HttpService.get(`doctors/${currentProfile.id}/patient/${medicalNumber}/symptoms/history`);
+				await HttpService.get(`doctors/${currentProfile.licenseId}/patient/${medicalNumber}/symptoms/history`);
 			setSymptomsResponse(data);
-		}
-		catch (e) {
+		} catch (e) {
 			setSymptomsResponse([]);
 		}
 	}
 
-	async function getPatientWithIdAsDoctor() {
-		try {
-			const data = await HttpService.get(`doctors/patient/${medicalNumber}`);
-			setData(data);
-		} catch (e) {
-			console.log(e);
+	function handleChange(patient: IPatient) {
+		if (currentProfile.getRole() === UserType.PATIENT) {
+			setPatientProfile(patient);
+			return;
 		}
+		setPatientProfile({...patient} as IPatient);
 	}
-
-	function setData(data: Patient) {
-		setFirstName(data.firstName);
-		setLastName(data.lastName);
-		switch (data.testResult) {
-			case 'positive':
-				setTestResult(TestResult.POSITIVE);
-				break;
-			case 'negative':
-				setTestResult(TestResult.NEGATIVE);
-				break;
-			default:
-				setTestResult(TestResult.PENDING);
-		}
-		setPhoneNumber(data.phoneNumber);
-		setAddress(data.address);
-		setEmail(data.email);
-		setDOB(data.dob);
-		setGender(data.gender);
-		setFlagged(data.flagged);
-	}
-
-	const handleCallBack = (medicalId: string) => {
-		setMedicalNumber(medicalId);
-	};
-
-	const handleStatus = (testResult: TestResult) => {
-		setTestResult(testResult);
-	};
-
-	const handleFlag = (flagged: boolean) => {
-		setFlagged(flagged);
-	};
 
 	return (
 		<IonPage>
-			<NavBar callback={handleCallBack}/>
-			<PatientInformation patient={{
-				medicalId: medicalNumber,
-				firstName: firstName,
-				lastName: lastName,
-				testResult: testResult,
-				address: address,
-				email: email,
-				phoneNumber: phoneNumber,
-				dob: dob,
-				gender: gender,
-				flagged: flagged
-			}} updateStatus={handleStatus} updateFlag={handleFlag} symptomsList ={symptomsList}
-			symptomsResponse = {symptomsResponse}/>
+			<IonToolbar>
+				<NavBar/>
+			</IonToolbar>
+			{
+				patientProfile.medicalId !== '' ?
+					<PatientInformation patient={patientProfile} onChange={handleChange}
+						symptomsList={symptomsList} symptomsResponse={symptomsResponse}
+					/> :
+					<>
+						<IonTitle className={'patient-profile'}>
+							<IonLabel>Enter the Medical ID of a patient above then press Search</IonLabel>
+						</IonTitle>
+					</>
+			}
 		</IonPage>
 	);
 };

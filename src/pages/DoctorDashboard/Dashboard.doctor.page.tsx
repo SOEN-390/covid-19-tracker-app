@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { IonCard, IonCol, IonContent, IonPage, IonRow } from '@ionic/react';
+import { IonCard, IonCol, IonContent, IonPage, IonRow, IonToolbar } from '@ionic/react';
 import NavBar from '../../components/NavBar/NavBar';
 import './Dashboard.doctor.page.scss';
 import PieChart, { Connector, Export, Label, Legend, Series, Tooltip, } from 'devextreme-react/pie-chart';
@@ -20,7 +20,7 @@ const DashboardDoctorPage: React.FC = () => {
 	}, []);
 
 	function getAssignedPatients() {
-		HttpService.get(`doctors/${currentProfile.id}/patients/assigned`).then((patients: Patient[]) => {
+		HttpService.get(`doctors/${currentProfile.licenseId}/patients/assigned`).then((patients: Patient[]) => {
 			generateDiagnosticGraph(patients);
 			generateGenderGraph(patients);
 		}).catch((error) => {
@@ -94,8 +94,10 @@ const DashboardDoctorPage: React.FC = () => {
 
 	return (
 		<IonPage className={'dashboard-doctor__page'}>
+			<IonToolbar>
+				<NavBar/>
+			</IonToolbar>
 			<IonContent>
-
 				<IonCol>
 					<IonRow>
 						<IonCard>

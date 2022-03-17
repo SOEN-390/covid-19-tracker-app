@@ -1,4 +1,4 @@
-import { IonLabel, IonPage, IonTitle } from '@ionic/react';
+import { IonLabel, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import NavBar from '../../components/NavBar/NavBar';
 import Symptom from '../../components/Symptom/Symptom';
 import React, { useEffect, useState } from 'react';
@@ -19,7 +19,7 @@ const SymptomsFormPage: React.FC = () => {
 	async function getMyRequestedSymptoms(): Promise<void> {
 		try {
 			const symptoms: ISymptom[] = [];
-			const data: ISymptom[] = await HttpService.get(`patients/${currentProfile.id}/symptoms`);
+			const data: ISymptom[] = await HttpService.get(`patients/${currentProfile.medicalId}/symptoms`);
 			for (const symp of data) {
 				symptoms.push({name: symp.name, description: symp.description, isChecked: false});
 			}
@@ -37,6 +37,10 @@ const SymptomsFormPage: React.FC = () => {
 
 	return (
 		<IonPage>
+
+			<IonToolbar>
+				<NavBar/>
+			</IonToolbar>
 
 			{!requestExist && <IonTitle>
 				<IonLabel>You do not have any pending symptoms form requested by your Doctor</IonLabel>

@@ -41,7 +41,7 @@ const PatientsPage: React.FC = () => {
 	}
 
 	function getAssignedPatients() {
-		HttpService.get(`doctors/${currentProfile.id}/patients/assigned`).then((patients: Patient[]) => {
+		HttpService.get(`doctors/${currentProfile.licenseId}/patients/assigned`).then((patients: Patient[]) => {
 			const patientsArranged: Patient[] = [];
 			for (const patient of patients) {
 				if (patient.flagged) {
@@ -97,9 +97,10 @@ const PatientsPage: React.FC = () => {
 	return (
 		<IonPage>
 			<IonToolbar>
+				<NavBar/>
 			</IonToolbar>
 			<IonContent className={'patients-page__content'}>
-				<IonTitle>Patients</IonTitle>
+				<IonTitle>PATIENTS</IonTitle>
 				<div>
 					<IonRow>
 						<IonCol/>
@@ -119,6 +120,7 @@ const PatientsPage: React.FC = () => {
 						</IonCol>
 						<IonCol/>
 					</IonRow>
+					<br/>
 				</div>
 				{
 					patients !== undefined ?

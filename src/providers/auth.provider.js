@@ -81,16 +81,21 @@ export function AuthProvider({children}) {
 		}
 		switch (userData.role) {
 			case UserType.PATIENT:
-				return new Patient(userData.id, userData.firstName, userData.lastName, userData.phoneNumber,
-					userData.address, userData.medicalId, userData.testResult, userData.dob, userData.gender);
+				return new Patient(auth.currentUser.uid, userData.firstName, userData.lastName, auth.currentUser.email,
+					userData.phoneNumber, userData.address, userData.medicalId, userData.testResult,
+					userData.dob, userData.gender);
 			case UserType.DOCTOR:
-				return new Doctor(userData.id, userData.firstName, userData.lastName, userData.phoneNumber, userData.address);
+				return new Doctor(auth.currentUser.uid, userData.firstName, userData.lastName, auth.currentUser.email,
+					userData.phoneNumber, userData.address, userData.licenseId);
 			case UserType.IMMIGRATION_OFFICER:
-				return new ImmigrationOfficer(userData.id, userData.firstName, userData.lastName, userData.phoneNumber, userData.address);
+				return new ImmigrationOfficer(auth.currentUser.uid, userData.firstName, userData.lastName, auth.currentUser.email,
+					userData.phoneNumber, userData.address);
 			case UserType.HEALTH_OFFICIAL:
-				return new HealthOfficial(userData.id, userData.firstName, userData.lastName, userData.phoneNumber, userData.address);
+				return new HealthOfficial(auth.currentUser.uid, userData.firstName, userData.lastName, auth.currentUser.email,
+					userData.phoneNumber, userData.address);
 			case UserType.ADMIN:
-				return new Admin(userData.id, userData.firstName, userData.lastName, userData.phoneNumber, userData.address);
+				return new Admin(auth.currentUser.uid, userData.firstName, userData.lastName, auth.currentUser.email,
+					userData.phoneNumber, userData.address);
 			default:
 				return undefined;
 		}
