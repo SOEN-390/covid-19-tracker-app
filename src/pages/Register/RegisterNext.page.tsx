@@ -103,7 +103,8 @@ const RegisterNextPage: React.FC = () => {
 			await HttpService.post('patients/create', user);
 			return true;
 		} catch (error) {
-			console.log(error);
+			// console.log(error);
+			present('Something went wrong', 1500);
 			return false;
 		}
 	}
