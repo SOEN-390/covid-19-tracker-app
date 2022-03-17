@@ -4,7 +4,6 @@ import { IonReactRouter } from '@ionic/react-router';
 import { Redirect, Route } from 'react-router-dom';
 import LoginPage from './pages/Login/Login.page';
 import RegisterPage from './pages/Register/Register.page';
-import Chatapp from './chat/Chat';
 import PatientRouting from './routings/Patient.routing';
 import RegisterNextPage from './pages/Register/RegisterNext.page';
 import {
@@ -55,9 +54,6 @@ const App: React.FC = () => {
 						</Route>
 						<Route path={Pages.login} exact={true}>
 							<LoginPage/>
-						</Route>
-						<Route path='/chat' exact={true}>
-							<Chatapp/>
 						</Route>
 						<Route path={Pages.register} exact={true}>
 							<RegisterPage/>
