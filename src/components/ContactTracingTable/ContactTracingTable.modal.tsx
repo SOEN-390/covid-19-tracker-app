@@ -33,7 +33,7 @@ const ContactTracingTableModal: React.FC<{ contacts: IContact[], trigger: string
 	const [present] = useIonToast();
 
 	useEffect(() => {
-		if (modalOpen && props.contacts.length === 0) {
+		if (modalOpen && props.contacts && props.contacts.length === 0) {
 			setModalOpen(false);
 			present('The patient has not been in contact with anyone', 1500);
 		}

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Table, Tbody, Td, Th, Thead, Tr } from 'react-super-responsive-table';
-import { IonButton, IonContent, IonInfiniteScroll, IonModal, useIonToast } from '@ionic/react';
+import { IonButton, IonContent, IonModal, useIonToast } from '@ionic/react';
 import './PatientSymptomsTable.modal.scss';
 import { useEffect, useState } from 'react';
 import Moment from 'react-moment';
@@ -104,8 +104,9 @@ const PatientSymptomsTableModal: React.FC<{
 										Array.from(symptomsTable).map((el, index2) => (
 											<Td key={index1 + '-' + index2} className="contact-tracing-table__table-entries">
 												{
-													(el[1][index1].response == undefined) ? '---' :
-														(el[1][index1].response ? 'Yes' : 'No')
+													el[1][index1] === undefined ? 'Error' :
+														((el[1][index1].response === undefined) ? '---' :
+															(el[1][index1].response ? 'Yes' : 'No'))
 												}
 											</Td>
 										))
