@@ -285,7 +285,9 @@ const PatientInformation: React.FC<{
 						{
 							currentProfile.getRole() !== UserType.PATIENT && props.patient.medicalId !== '' &&
 							<IonCol>
-								<IonIcon icon={flag} color={props.patient.flagged ? 'success' : ''}
+								<IonIcon icon={flag}
+										 className={props.patient.flagged ?
+											 'patient-information__flag__high-priority' : 'patient-information__flag__no-priority'}
 										 onClick={() => {
 											 flagPatient();
 										 }}
