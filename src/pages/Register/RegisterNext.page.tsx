@@ -65,7 +65,7 @@ const RegisterNextPage: React.FC = () => {
 
 		saveUser(user).then((success) => {
 			if (success) {
-				present('Successfully registered.', 0);
+				present('Successfully registered.', 1500);
 				logout();
 				history.push(Pages.login);
 			} else {
