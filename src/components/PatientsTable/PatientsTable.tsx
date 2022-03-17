@@ -106,6 +106,8 @@ const PatientsTable: React.FC<{
 			});
 	}
 
+
+
 	function generateContactList(patient: Patient): ActionSheetButton[] {
 		const contactOption: ActionSheetButton[] = [];
 		if (patient.email) {
