@@ -15,18 +15,14 @@ import HttpService from '../../providers/http.service';
 import { IPatient } from '../../interfaces/IPatient';
 
 const AssignedComponent: React.FC<{
-	patient: IPatient;
-	trigger: string;
-	setPatients: (patient: Patient[]) => void;
-}> = ({ patient, trigger, setPatients }) => {
-	const [modalOpen, setModalOpen] = useState<boolean>(false);
-	console.log('trigger: ', trigger);
-	console.log('modalOpen: ', modalOpen);
+	patient: IPatient; trigger: string; setPatients: (patient: Patient[]) => void;
+}> = ({patient, trigger, setPatients}) => {
 
+	const [modalOpen, setModalOpen] = useState<boolean>(false);
 	const [doctors, setDoctors] = useState<IDoctorTableRow[]>([]);
 
 	useEffect(() => {
-		console.log('tick');
+
 		if (!patient.doctorName) {
 			HttpService.get('doctors/all').then((value) => setDoctors(value));
 		}
@@ -84,29 +80,25 @@ const DoctorsRow: React.FC<{
 	setPatients?: (patient: Patient[]) => void;
 	setModalOpen?: (open: boolean) => void;
 }> = ({
-	name,
-	isAssign = false,
-	medicalId,
-	licenseId,
-	setPatients,
-	setModalOpen,
-}) => {
+		  name,
+		  isAssign = false,
+		  medicalId,
+		  licenseId,
+		  setPatients,
+		  setModalOpen,
+	  }) => {
+
 	const [present] = useIonToast();
-	const unAssignPatient = async (
-		medicalId: string,
-		licenseId: string
-	): Promise<void> => {
+
+	async function unAssignPatient(medicalId: string, licenseId: string): Promise<void> {
 		try {
-			await HttpService.patch(
-				`admins/patient/${medicalId}
-				/doctor/${licenseId}/unassign`,
-				{}
-			);
+			const path = `admins/patient/${medicalId}/doctor/${licenseId}/un-assign`;
+			await HttpService.patch(path);
 			present('Successfully unAssigned Doctor', 1500);
 		} catch (e) {
 			present('Failed to unAssign Doctor', 1500);
 		}
-	};
+	}
 
 	const assignPatient = async (
 		medicalId: string,
@@ -125,18 +117,17 @@ const DoctorsRow: React.FC<{
 	};
 
 	function getAllPatients() {
-		HttpService.get('patients/all')
-			.then((patients: Patient[]) => {
-				const patientsArranged: Patient[] = [];
-				for (const patient of patients) {
-					if (patient.flagged) {
-						patientsArranged.unshift(patient);
-					} else {
-						patientsArranged.push(patient);
-					}
+		HttpService.get('patients/all').then((patients: Patient[]) => {
+			const patientsArranged: Patient[] = [];
+			for (const patient of patients) {
+				if (patient.flagged) {
+					patientsArranged.unshift(patient);
+				} else {
+					patientsArranged.push(patient);
 				}
-				setPatients?.(patientsArranged);
-			})
+			}
+			setPatients?.(patientsArranged);
+		})
 			.catch((error) => {
 				console.log('ERROR: ', error);
 			});
@@ -144,7 +135,7 @@ const DoctorsRow: React.FC<{
 
 	const onClickHandler = async () => {
 		if (!isAssign) {
-			await unAssignPatient(medicalId!, licenseId!).then(() => {
+			unAssignPatient(medicalId!, licenseId!).then(() => {
 				getAllPatients();
 			});
 			return;
