@@ -90,23 +90,6 @@ const PatientsTable: React.FC<{
 			});
 	}
 
-	function assignPatient(patient: Patient) {
-		patient.assigned = !patient.assigned;
-		HttpService.patch(
-			`admins/${patient.medicalId}/${
-				patient.assigned ? 'assigned' : 'unassigned'
-			}`,
-			{ role: currentProfile.getRole() }
-		)
-			.then(() => {
-				props.onChange(patient);
-			})
-			.catch(() => {
-				presentToast('An error has occurred. Please try again.', 1500);
-			});
-	}
-
-
 
 	function generateContactList(patient: Patient): ActionSheetButton[] {
 		const contactOption: ActionSheetButton[] = [];
@@ -183,13 +166,7 @@ const PatientsTable: React.FC<{
 						key={index}
 						className="patients-table__table-entries__doctor-name"
 						id={`patients-table__assigned-${patient.medicalId}`}
-						onClick={() => {
-							if (!patient.assigned) {
-								assignPatient(patient);
-								console.log('first click');
-								console.log(`patients-table__assigned-${patient.medicalId}`);
-							}
-						}}
+
 					>
 						{patient.doctorName ? 'Dr.' + patient.doctorName : 'Not Assigned'}
 						<AssignedComponent

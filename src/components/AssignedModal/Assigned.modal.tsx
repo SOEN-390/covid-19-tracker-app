@@ -93,7 +93,7 @@ const DoctorsRow: React.FC<{
 	async function unAssignPatient(medicalId: string, licenseId: string): Promise<void> {
 		try {
 			const path = `admins/patient/${medicalId}/doctor/${licenseId}/un-assign`;
-			await HttpService.patch(path);
+			await HttpService.patch(path, {});
 			present('Successfully unAssigned Doctor', 1500);
 		} catch (e) {
 			present('Failed to unAssign Doctor', 1500);

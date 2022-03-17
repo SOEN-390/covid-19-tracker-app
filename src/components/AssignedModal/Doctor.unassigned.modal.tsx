@@ -107,7 +107,7 @@ const DoctorsRow: React.FC<{
 		try {
 			await HttpService.patch(
 				`admins/patient/${medicalId}
-				/doctor/${licenseId}/unassign`,
+				/doctor/${licenseId}/un-assign`,
 				{}
 			);
 			present('Successfully unAssigned Doctor', 1500);
