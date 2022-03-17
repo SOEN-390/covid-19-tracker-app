@@ -52,7 +52,6 @@ const RegisterNextPage: React.FC = () => {
 			medicalId: medicalNumber,
 			firstName: firstName,
 			lastName: lastName,
-			// TODO - drop down for test result
 			testResult: testResult,
 			address: address,
 			email: auth.currentUser?.email,
@@ -61,39 +60,40 @@ const RegisterNextPage: React.FC = () => {
 			gender: gender
 		};
 
-		function validateInput(): boolean {
-			if (medicalNumber.trim() === '') {
-				present('Please enter your medical card number', 1500);
-				return false;
-			}
-			if (firstName.trim() === '' || lastName.trim() === '') {
-				present('Please enter your name', 1500);
-				return false;
-			}
-			if (address.trim() === '') {
-				present('Please enter your address', 1500);
-				return false;
-			}
-			if (phoneNumber.trim() === '') {
-				present('Please enter your phone number', 1500);
-				return false;
-			}
-			if (dob.trim() === '') {
-				present('Please enter your date of birth', 1500);
-				return false;
-			}
-			return true;
-		}
-
 		saveUser(user).then(async (success) => {
 			if (success) {
-				logout();
-				present('Successfully registered.', 0);
-				history.push(Pages.login);
+				present('Successfully registered.', 0).then(() => {
+					history.push(Pages.login);
+					// logout();
+				});
 			} else {
 				present('Something went wrong.', 1500);
 			}
 		});
+	}
+
+	function validateInput(): boolean {
+		if (medicalNumber.trim() === '') {
+			present('Please enter your medical card number', 1500);
+			return false;
+		}
+		if (firstName.trim() === '' || lastName.trim() === '') {
+			present('Please enter your name', 1500);
+			return false;
+		}
+		if (address.trim() === '') {
+			present('Please enter your address', 1500);
+			return false;
+		}
+		if (phoneNumber.trim() === '') {
+			present('Please enter your phone number', 1500);
+			return false;
+		}
+		if (dob.trim() === '') {
+			present('Please enter your date of birth', 1500);
+			return false;
+		}
+		return true;
 	}
 
 	async function saveUser(user: IPatient): Promise<boolean> {

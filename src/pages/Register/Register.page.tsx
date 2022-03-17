@@ -33,8 +33,6 @@ const RegisterPage: React.FC = () => {
 			return;
 		}
 
-
-
 		if (password !== confirmPassword) {
 			present('The passwords do not match', 1500);
 			return;
