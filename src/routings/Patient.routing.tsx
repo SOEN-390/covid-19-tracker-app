@@ -38,7 +38,7 @@ const PatientRouting: React.FC = () => {
 					<Route path={PatientPages.reportInContact}>
 						<ReportInContactPage/>
 					</Route>
-					<Route path={PatientPages.chat} exact={true}>
+					<Route path={PatientPages.chat}>
 						<ChatPage/>
 					</Route>
 				</IonRouterOutlet>

@@ -19,7 +19,8 @@ export enum DoctorPages {
 	dashboard = '/doctor/dashboard',
 	patientProfile = '/doctor/patient-profile',
 	patients = '/doctor/patients',
-	settings = '/doctor/settings'
+	settings = '/doctor/settings',
+	chat = '/doctor/chat'
 }
 
 export enum HealthOfficialPages {
