@@ -5,19 +5,20 @@ export interface IPatient {
 	medicalId: string;
 	firstName: string;
 	lastName: string;
+	doctorName?: string | null;
+	doctorId?: string | null;
 	testResult: TestResult;
 	address: string;
-	email: string | null | undefined;
+	email: string | null;
 	phoneNumber: string;
 	dob: string;
 	gender: Gender;
-	flagged?: boolean
+	flagged?: boolean;
 }
 
-
 export interface IContact {
-	medicalId: string,
-	firstName: string,
-	lastName: string,
-	testResult: TestResult
+	medicalId: string;
+	firstName: string;
+	lastName: string;
+	testResult: TestResult;
 }
