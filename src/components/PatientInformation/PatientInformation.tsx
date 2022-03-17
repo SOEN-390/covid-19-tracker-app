@@ -386,6 +386,17 @@ const PatientInformation: React.FC<{
 									Contact tracing
 								</IonButton>
 							</IonCol>
+							<IonCol>
+								<IonButton onClick={() => {
+									presentActionSheet(
+										generateContactList(props.patient),
+										'Contact by');
+									setTimeout(dismissActionSheet, 10000);
+								}}
+								>
+									Contact
+								</IonButton>
+							</IonCol>
 						</div>
 					}
 
