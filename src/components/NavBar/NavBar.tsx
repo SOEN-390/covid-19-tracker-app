@@ -83,6 +83,8 @@ const NavBar: React.FC = () => {
 				{/*</IonCol>*/}
 
 			</IonRow>
+			<br />
+			<br />
 		</IonToolbar>
 
 	);
