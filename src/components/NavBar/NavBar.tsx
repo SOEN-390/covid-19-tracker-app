@@ -37,6 +37,9 @@ const NavBar: React.FC = () => {
 			return;
 		}
 
+		// Reset search text
+		setSearchText('');
+
 		const currentPath = history.location.pathname.split('/');
 		if (
 			'/' + currentPath[1] + '/' + currentPath[2] === AdminPages.patientProfile ||
@@ -83,6 +86,8 @@ const NavBar: React.FC = () => {
 				{/*</IonCol>*/}
 
 			</IonRow>
+			<br />
+			<br />
 		</IonToolbar>
 
 	);

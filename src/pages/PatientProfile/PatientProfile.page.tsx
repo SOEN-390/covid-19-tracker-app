@@ -123,7 +123,6 @@ const PatientProfilePage: React.FC = () => {
 						symptomsList={symptomsList} symptomsResponse={symptomsResponse}
 					/> :
 					<>
-						<br />
 						<IonTitle className={'patient-profile'}>
 							<IonLabel>Enter the Medical ID of a patient above then press Search</IonLabel>
 						</IonTitle>

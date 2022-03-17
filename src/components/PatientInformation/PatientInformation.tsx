@@ -14,7 +14,6 @@ import {
 	IonRadioGroup,
 	IonRow,
 	IonText,
-	IonTitle,
 	useIonActionSheet,
 	useIonToast
 } from '@ionic/react';
@@ -284,8 +283,12 @@ const PatientInformation: React.FC<{
 						</IonCol>
 						{
 							currentProfile.getRole() !== UserType.PATIENT && props.patient.medicalId !== '' &&
+							(currentProfile.getRole() !== UserType.DOCTOR || props.patient.doctorName &&
+								props.patient.doctorName === (currentProfile.firstName + ' ' + currentProfile.lastName)) &&
 							<IonCol>
-								<IonIcon icon={flag} color={props.patient.flagged ? 'success' : ''}
+								<IonIcon icon={flag}
+										 className={props.patient.flagged ?
+											 'patient-information__flag__high-priority' : 'patient-information__flag__no-priority'}
 										 onClick={() => {
 											 flagPatient();
 										 }}
@@ -381,6 +384,17 @@ const PatientInformation: React.FC<{
 							<IonCol>
 								<IonButton id={'patient-information__contact-tracing-trigger'}>
 									Contact tracing
+								</IonButton>
+							</IonCol>
+							<IonCol>
+								<IonButton onClick={() => {
+									presentActionSheet(
+										generateContactList(props.patient),
+										'Contact by');
+									setTimeout(dismissActionSheet, 10000);
+								}}
+								>
+									Contact
 								</IonButton>
 							</IonCol>
 						</div>
