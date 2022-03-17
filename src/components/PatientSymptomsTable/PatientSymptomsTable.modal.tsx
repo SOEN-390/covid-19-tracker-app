@@ -22,11 +22,6 @@ const PatientSymptomsTableModal: React.FC<{
 		}
 	}, [modalOpen]);
 
-	useEffect(() => {
-		setSymptomsTable(new Map<Date, ISymptomTable[]>());
-		generateSymptomsTable();
-	}, [props.symptomsResponse]);
-
 	function generateSymptomsTable() {
 		if (!props.symptomsList || !props.symptomsResponse) {
 			return;
@@ -34,11 +29,11 @@ const PatientSymptomsTableModal: React.FC<{
 		const symptomsTableMap = new Map<Date, ISymptomTable[]>();
 
 		for (let i = 0; i < props.symptomsResponse.length; i++) {
-			if (i == 0) {
+			if (i === 0) {
 				symptomsTableMap.set(props.symptomsResponse[i].onDate, []);
 			}
 			if (i > 0 && new Date(props.symptomsResponse[i].onDate).setSeconds(0)
-				!= new Date(props.symptomsResponse[i - 1].onDate).setSeconds(0)) {
+				!== new Date(props.symptomsResponse[i - 1].onDate).setSeconds(0)) {
 				symptomsTableMap.set(props.symptomsResponse[i].onDate, []);
 			}
 		}
@@ -73,6 +68,8 @@ const PatientSymptomsTableModal: React.FC<{
 	return (
 		<IonModal trigger={props.trigger} isOpen={modalOpen}
 				  onWillPresent={() => {
+					  setSymptomsTable(new Map<Date, ISymptomTable[]>());
+					  generateSymptomsTable();
 					  setModalOpen(true);
 				  }}
 				  hidden={!props.symptomsResponse || props.symptomsResponse.length === 0}
