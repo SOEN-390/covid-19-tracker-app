@@ -58,6 +58,14 @@ div.patient-information__container {
     }
   }
 
+  ion-icon.patient-information__flag__no-priority {
+    color: gray;
+  }
+
+  ion-icon.patient-information__flag__high-priority {
+    color: red;
+  }
+
   table.patient-information__medical-table {
     border: 1px solid #1C6EA4;
     background-color: #EEEEEE;
