@@ -350,31 +350,32 @@ const PatientInformation: React.FC<{
 									</IonCol>
 								</div>
 							</IonRow>
-							<IonRow>
-								<div className={'patient-information__add-symptom'}>
-									<IonRow>
-										<IonCol size={'3'}>
-											<IonLabel>Subject</IonLabel>
-										</IonCol>
-										<IonCol size={'9'}>
-											<IonInput/>
-										</IonCol>
+							{/*Not sure what this is. Should be deleted later.*/}
+							{/*<IonRow>*/}
+							{/*	<div className={'patient-information__add-symptom'}>*/}
+							{/*		<IonRow>*/}
+							{/*			<IonCol size={'3'}>*/}
+							{/*				<IonLabel>Subject</IonLabel>*/}
+							{/*			</IonCol>*/}
+							{/*			<IonCol size={'9'}>*/}
+							{/*				<IonInput/>*/}
+							{/*			</IonCol>*/}
 
-									</IonRow>
-									<IonRow>
-										<IonCol size={'3'}>
-											<IonLabel>Description</IonLabel>
-										</IonCol>
-										<IonCol size={'9'}>
-											<IonInput/>
-										</IonCol>
-										<IonCol>
-											<IonButton>Add</IonButton>
-										</IonCol>
-									</IonRow>
+							{/*		</IonRow>*/}
+							{/*		<IonRow>*/}
+							{/*			<IonCol size={'3'}>*/}
+							{/*				<IonLabel>Description</IonLabel>*/}
+							{/*			</IonCol>*/}
+							{/*			<IonCol size={'9'}>*/}
+							{/*				<IonInput/>*/}
+							{/*			</IonCol>*/}
+							{/*			<IonCol>*/}
+							{/*				<IonButton>Add</IonButton>*/}
+							{/*			</IonCol>*/}
+							{/*		</IonRow>*/}
 
-								</div>
-							</IonRow>
+							{/*	</div>*/}
+							{/*</IonRow>*/}
 						</>
 					}
 
