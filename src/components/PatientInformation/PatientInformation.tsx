@@ -14,7 +14,6 @@ import {
 	IonRadioGroup,
 	IonRow,
 	IonText,
-	IonTitle,
 	useIonActionSheet,
 	useIonToast
 } from '@ionic/react';
@@ -284,6 +283,8 @@ const PatientInformation: React.FC<{
 						</IonCol>
 						{
 							currentProfile.getRole() !== UserType.PATIENT && props.patient.medicalId !== '' &&
+							(currentProfile.getRole() !== UserType.DOCTOR || props.patient.doctorName &&
+								props.patient.doctorName === (currentProfile.firstName + ' ' + currentProfile.lastName)) &&
 							<IonCol>
 								<IonIcon icon={flag}
 										 className={props.patient.flagged ?
