@@ -10,7 +10,8 @@ export enum PatientPages {
 	symptoms = '/home/symptoms',
 	patientProfile = '/home/patient-profile',
 	settings = '/home/settings',
-	reportInContact = '/home/report'
+	reportInContact = '/home/report',
+	chat = '/home/chat'
 }
 
 export enum DoctorPages {
