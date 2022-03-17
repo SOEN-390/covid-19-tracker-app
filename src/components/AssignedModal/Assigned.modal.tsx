@@ -6,12 +6,11 @@ import {
 	IonCardContent,
 	IonCardHeader,
 	IonCardSubtitle,
-	IonCardTitle,
 	IonModal,
 	useIonToast,
 } from '@ionic/react';
 import { IDoctorTableRow } from '../../interfaces/IDoctorTableRow';
-import { Table, Tbody, Td, Th, Thead, Tr } from 'react-super-responsive-table';
+import { Table, Td, Tr } from 'react-super-responsive-table';
 import HttpService from '../../providers/http.service';
 import { IPatient } from '../../interfaces/IPatient';
 
@@ -21,6 +20,8 @@ const AssignedComponent: React.FC<{
 	setPatients: (patient: Patient[]) => void;
 }> = ({ patient, trigger, setPatients }) => {
 	const [modalOpen, setModalOpen] = useState<boolean>(false);
+	console.log('trigger: ', trigger);
+	console.log('modalOpen: ', modalOpen);
 
 	const [doctors, setDoctors] = useState<IDoctorTableRow[]>([]);
 
@@ -30,13 +31,6 @@ const AssignedComponent: React.FC<{
 			HttpService.get('doctors/all').then((value) => setDoctors(value));
 		}
 	}, []);
-
-	// useEffect(() => {
-	// 	HttpService.patch('admins/patient/:medicalId/doctor/:licenseId/unassign', {
-	// 		doctorId: 'abc',
-	// 		userId: 'bcd',
-	// 	}).then((value) => console.log('value', value));
-	// }, []);
 
 	return (
 		<IonModal
@@ -59,6 +53,9 @@ const AssignedComponent: React.FC<{
 										key={index}
 										name={row.firstName + ' ' + row.lastName}
 										isAssign
+										setModalOpen={setModalOpen}
+										medicalId={patient.medicalId}
+										licenseId={row.licenseId}
 									/>
 								);
 							})
@@ -85,7 +82,15 @@ const DoctorsRow: React.FC<{
 	medicalId?: string;
 	licenseId?: string;
 	setPatients?: (patient: Patient[]) => void;
-}> = ({ name, isAssign = false, medicalId, licenseId, setPatients }) => {
+	setModalOpen?: (open: boolean) => void;
+}> = ({
+	name,
+	isAssign = false,
+	medicalId,
+	licenseId,
+	setPatients,
+	setModalOpen,
+}) => {
 	const [present] = useIonToast();
 	const unAssignPatient = async (
 		medicalId: string,
@@ -95,6 +100,22 @@ const DoctorsRow: React.FC<{
 			await HttpService.patch(
 				`admins/patient/${medicalId}
 				/doctor/${licenseId}/unassign`,
+				{}
+			);
+			present('Successfully unAssigned Doctor', 1500);
+		} catch (e) {
+			present('Failed to unAssign Doctor', 1500);
+		}
+	};
+
+	const assignPatient = async (
+		medicalId: string,
+		licenseId: string
+	): Promise<void> => {
+		try {
+			await HttpService.patch(
+				`admins/patient/${medicalId}
+				/doctor/${licenseId}/assign`,
 				{}
 			);
 			present('Successfully unAssigned Doctor', 1500);
@@ -127,11 +148,23 @@ const DoctorsRow: React.FC<{
 				getAllPatients();
 			});
 			return;
+		} else {
+			assignPatient(medicalId!, licenseId!).then(() => {
+				getAllPatients();
+				return setModalOpen?.(false);
+			});
 		}
 	};
 
 	return (
-		<Tr className={'doctor-table__table-row'}>
+		<Tr
+			style={{
+				display: 'flex',
+				justifyContent: 'space-between',
+				alignItems: 'center',
+			}}
+			className={'doctor-table__table-row'}
+		>
 			<Td className={'doctor-table__doctor-name'}>{name}</Td>
 			<IonButton onClick={onClickHandler}>
 				{isAssign ? 'Add' : 'UnAssign'}

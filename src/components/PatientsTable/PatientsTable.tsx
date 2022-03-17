@@ -30,10 +30,6 @@ import { Patient } from '../../objects/Patient.class';
 import HttpService from '../../providers/http.service';
 import SymptomsCardComponent from '../SymptomsCard/SymptomsCard.component';
 import AssignedComponent from '../AssignedModal/Assigned.modal';
-import { Doctor } from '../../objects/Doctor.class';
-import doctorsTable from '../DoctorsTable/DoctorsTable';
-import DoctorsTable from '../DoctorsTable/DoctorsTable';
-import { IDoctorTableRow } from '../../interfaces/IDoctorTableRow';
 
 const PatientsTable: React.FC<{
 	patients: Patient[];
@@ -138,24 +134,6 @@ const PatientsTable: React.FC<{
 		return contactOption;
 	}
 
-	function getAllPatients() {
-		HttpService.get('patients/all')
-			.then((patients: Patient[]) => {
-				const patientsArranged: Patient[] = [];
-				for (const patient of patients) {
-					if (patient.flagged) {
-						patientsArranged.unshift(patient);
-					} else {
-						patientsArranged.push(patient);
-					}
-				}
-				props.setPatients(patientsArranged);
-			})
-			.catch((error) => {
-				console.log('ERROR: ', error);
-			});
-	}
-
 	function getRow(patient: Patient, index: number): JSX.Element | null {
 		return (
 			<Tr
@@ -206,6 +184,8 @@ const PatientsTable: React.FC<{
 						onClick={() => {
 							if (!patient.assigned) {
 								assignPatient(patient);
+								console.log('first click');
+								console.log(`patients-table__assigned-${patient.medicalId}`);
 							}
 						}}
 					>

@@ -8,7 +8,6 @@ import {
 	IonToolbar,
 } from '@ionic/react';
 import React, { useEffect, useState } from 'react';
-import NavBar from '../../components/NavBar/NavBar';
 import { useAuth } from '../../providers/auth.provider';
 import HttpService from '../../providers/http.service';
 import { TestResult } from '../../enum/TestResult.enum';
