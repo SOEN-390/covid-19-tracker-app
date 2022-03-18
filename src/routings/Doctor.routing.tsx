@@ -23,7 +23,11 @@ const DoctorRouting: React.FC = () => {
 					<Route path={DoctorPages.dashboard}>
 						<DashboardDoctorPage/>
 					</Route>
-					<Route path={DoctorPages.patientProfile}>
+					<Route exact={true} path={DoctorPages.patientProfile}>
+						<PatientProfile/>
+					</Route>
+					{/*render={ (props) =>*/}
+					<Route path={DoctorPages.patientProfile + '/:medicalId'}>
 						<PatientProfile/>
 					</Route>
 					<Route path={DoctorPages.patients}>

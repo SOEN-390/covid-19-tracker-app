@@ -29,6 +29,8 @@ import { TestResult } from '../../enum/TestResult.enum';
 import { Patient } from '../../objects/Patient.class';
 import HttpService from '../../providers/http.service';
 import SymptomsCardComponent from '../SymptomsCard/SymptomsCard.component';
+import { useHistory } from 'react-router-dom';
+import { AdminPages, DoctorPages, HealthOfficialPages } from '../../providers/pages.enum';
 import AssignedComponent from '../AssignedModal/Assigned.modal';
 
 const PatientsTable: React.FC<{
@@ -41,6 +43,7 @@ const PatientsTable: React.FC<{
 
 	const [presentToast] = useIonToast();
 	const [presentActionSheet, dismissActionSheet] = useIonActionSheet();
+	const history = useHistory();
 
 	useEffect(() => {
 		switch (currentProfile.getRole()) {
@@ -90,7 +93,6 @@ const PatientsTable: React.FC<{
 			});
 	}
 
-
 	function generateContactList(patient: Patient): ActionSheetButton[] {
 		const contactOption: ActionSheetButton[] = [];
 		if (patient.email) {
@@ -108,18 +110,19 @@ const PatientsTable: React.FC<{
 				icon: call,
 				handler: () => {
 					window.location.href = `tel:${patient.phoneNumber}`;
-				},
+				}
 			});
 		}
 		contactOption.push({
 			text: 'Cancel',
 			icon: close,
-			role: 'cancel',
+			role: 'cancel'
 		});
 		return contactOption;
 	}
 
 	function getRow(patient: Patient, index: number): JSX.Element | null {
+
 		return (
 			<Tr
 				className="patients-table__table-entries"
@@ -132,11 +135,28 @@ const PatientsTable: React.FC<{
 								: '#F5F6F6'
 							: '',
 				}}
-				onClick={() => {
-					// TODO: Forward to profile page
-				}}
 			>
-				<Td key={index} className="patients-table__table-entries__name">
+				<Td key={index}
+					className="patients-table__table-entries__name"
+					onClick={() => {
+						if (!patient.reviewed) {
+							reviewPatient(patient);
+						}
+						if (currentProfile.getRole() === UserType.ADMIN) {
+							history.push({
+								pathname: AdminPages.patientProfile + '/' + patient.medicalId
+							});
+						} else if (currentProfile.getRole() === UserType.HEALTH_OFFICIAL) {
+							history.push({
+								pathname: HealthOfficialPages.patientProfile + '/' + patient.medicalId
+							});
+						} else if (currentProfile.getRole() === UserType.DOCTOR) {
+							history.push({
+								pathname: DoctorPages.patientProfile + '/' + patient.medicalId
+							});
+						}
+					}}
+				>
 					{patient.firstName + ' ' + patient.lastName}
 				</Td>
 				<Td key={index}>

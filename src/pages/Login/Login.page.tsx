@@ -12,7 +12,6 @@ import {
 	setupIonicReact,
 	useIonToast
 } from '@ionic/react';
-import CovidTrackerTransparent from '../../assets/images/CovidTrackerTransparent.png';
 import React, { useState } from 'react';
 import './Login.page.scss';
 import { Pages } from '../../providers/pages.enum';
@@ -39,7 +38,7 @@ const LoginPage: React.FC = () => {
 	return (
 		<IonApp>
 			<IonContent>
-				<IonImg className="login__logo" src={CovidTrackerTransparent}/>
+				<IonImg className="login__logo" src={'/assets/logo/covid-tracker-transparent.png'} alt={'logo'} />
 				<h2 className="login__text">Sign In</h2>
 				<div className="ion-align-items-center; login__form">
 					<IonLabel className="login__text">Email</IonLabel>

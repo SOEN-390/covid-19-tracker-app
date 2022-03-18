@@ -1,0 +1,40 @@
+.register-next__login-text {
+  color: #2C4D62;
+  line-height: 10px;
+  text-align: center;
+}
+
+.register-next__logo::part(image) {
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  top: 25%;
+  height: 150px;
+  padding-bottom: 40px;
+}
+
+.register-next__form {
+  max-width: 500px;
+  min-width: 40px;
+  margin: 0 auto;
+  padding: 50px 20px;
+}
+
+.register-next__btn {
+  font-size: 20px;
+  height: 50px;
+}
+
+.register-next__text-field {
+  border: solid 1px #ABABAB;
+  border-radius: 10px;
+  height: 59px;
+  width: 100%;
+  --padding-start: 10px;
+}
+.my-custom-interface .register-next__status-option {
+  --color: #2C4D62;
+  --color-hover: #708898;
+}
+
+

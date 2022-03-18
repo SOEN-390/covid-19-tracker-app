@@ -10,7 +10,6 @@ import {
 	IonMenuToggle,
 	IonTitle
 } from '@ionic/react';
-import appLogo from '../../assets/images/CovidTrackerTransparent.png';
 import Emergency from '../Emergency/Emergency';
 import { useLocation } from 'react-router-dom';
 import { logOutOutline } from 'ionicons/icons';
@@ -81,7 +80,7 @@ const Menu: React.FC<{ ionMenuId: string, userType: UserType }> = (props) => {
 		<IonMenu contentId={props.ionMenuId} type="push">
 
 			<IonContent>
-				<IonImg src={appLogo} />
+				<IonImg src={'/assets/logo/covid-tracker-transparent.png'} alt={'logo'}/>
 				<IonList className={'menu__inbox-list'}>
 
 					<IonTitle>Welcome {getName()}</IonTitle>
@@ -94,18 +93,17 @@ const Menu: React.FC<{ ionMenuId: string, userType: UserType }> = (props) => {
 						sideMenuPages.map((appPage, index) => {
 							return (
 								<IonMenuToggle key={index} autoHide={false}>
+									{
+										appPage.title === 'Settings' &&
+										<><IonTitle>Account</IonTitle><br /></>
+									}
 									<IonItem className={location.pathname === appPage.url ? 'selected' : ''}
 										routerLink={appPage.url} routerDirection="none" lines="none"
 										detail={false}>
-										<IonIcon slot="start" icon={appPage.iosIcon} />
+										<IonIcon slot="start" icon={appPage.icon} />
 										<IonLabel>{appPage.title}</IonLabel>
 									</IonItem>
 									<br />
-									{
-										appPage.title === 'Doctors' && getRole() === 'Admin' &&
-										<><IonTitle>Account</IonTitle><br /></>
-									}
-
 								</IonMenuToggle>
 
 							);

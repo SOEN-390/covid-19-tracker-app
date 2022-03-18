@@ -1,18 +1,14 @@
 table.contact-tracing-table__table {
   width: 100%;
 
-  th:first-child {
+  tr.contact-tracing-table__table-head {
+    background-color: #e2e3e3;
+    border-radius: 50px;
+    box-sizing: border-box;
+    height: 60px;
     position: sticky;
     top: 0;
     z-index: 9999;
-  }
-
-  tr.contact-tracing-table__table-head {
-    background-color: rgba(44, 77, 98, .12);
-    border-radius: 50px;
-    box-sizing: border-box;
-    filter: blur(1);
-    height: 60px;
 
     th.contact-tracing-table__table-column-title {
       color: var(--ion-color-dark-blue);

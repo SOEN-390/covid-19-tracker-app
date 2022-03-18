@@ -6,24 +6,19 @@ import {
 	PatientPages
 } from '../../providers/pages.enum';
 import {
-	appsOutline,
-	archiveOutline,
-	archiveSharp,
 	calendarOutline,
-	heartHalfOutline,
-	heartHalfSharp,
 	heartOutline,
-	heartSharp,
+	homeOutline,
+	medkitOutline,
+	peopleOutline,
+	personOutline,
 	settingsOutline,
-	settingsSharp,
-	warningOutline,
-	warningSharp
+	warningOutline
 } from 'ionicons/icons';
 
 export interface AppPage {
 	url: string;
-	iosIcon: string;
-	mdIcon: string;
+	icon: string;
 	title: string;
 }
 
@@ -31,38 +26,33 @@ export const patientAppPages: readonly AppPage[] = [
 	{
 		title: 'Overview',
 		url: PatientPages.overview,
-		iosIcon: appsOutline,
-		mdIcon: appsOutline
+		icon: homeOutline
 	},
 	{
 		title: 'Appointments',
 		url: PatientPages.appointments,
-		iosIcon: calendarOutline,
-		mdIcon: calendarOutline
+		icon: calendarOutline
 	},
 	{
 		title: 'Symptoms form',
 		url: PatientPages.symptoms,
-		iosIcon: heartOutline,
-		mdIcon: heartSharp
+		icon: heartOutline
 	},
 	{
 		title: 'My Profile',
 		url: PatientPages.patientProfile,
-		iosIcon: archiveOutline,
-		mdIcon: archiveSharp
+		icon: personOutline
+	},
+
+	{
+		title: 'Report',
+		url: PatientPages.reportInContact,
+		icon: warningOutline
 	},
 	{
 		title: 'Settings',
 		url: PatientPages.settings,
-		iosIcon: settingsOutline,
-		mdIcon: settingsSharp
-	},
-	{
-		title: 'Report',
-		url: PatientPages.reportInContact,
-		iosIcon: warningOutline,
-		mdIcon: warningSharp
+		icon: settingsOutline
 	}
 ];
 
@@ -70,26 +60,22 @@ export const doctorAppPages: readonly AppPage[] = [
 	{
 		title: 'Dashboard',
 		url: DoctorPages.dashboard,
-		iosIcon: appsOutline,
-		mdIcon: appsOutline
-	},
-	{
-		title: 'Patient Profile',
-		url: DoctorPages.patientProfile,
-		iosIcon: calendarOutline,
-		mdIcon: calendarOutline
+		icon: homeOutline
 	},
 	{
 		title: 'Patients',
 		url: DoctorPages.patients,
-		iosIcon: calendarOutline,
-		mdIcon: calendarOutline
+		icon: peopleOutline
+	},
+	{
+		title: 'Patient Profile',
+		url: DoctorPages.patientProfile,
+		icon: personOutline
 	},
 	{
 		title: 'Settings',
 		url: DoctorPages.settings,
-		iosIcon: settingsOutline,
-		mdIcon: settingsSharp
+		icon: settingsOutline
 	},
 ];
 
@@ -97,26 +83,22 @@ export const healthOfficialAppPages: readonly AppPage[] = [
 	{
 		title: 'Overview',
 		url: '',
-		iosIcon: appsOutline,
-		mdIcon: appsOutline
+		icon: homeOutline
 	},
 	{
 		title: 'Patients',
 		url: HealthOfficialPages.patients,
-		iosIcon: calendarOutline,
-		mdIcon: calendarOutline
+		icon: peopleOutline
 	},
 	{
 		title: 'Patient Profile',
 		url: HealthOfficialPages.patientProfile,
-		iosIcon: heartOutline,
-		mdIcon: heartSharp
+		icon: personOutline
 	},
 	{
 		title: 'Settings',
 		url: AdminPages.settings,
-		iosIcon: settingsOutline,
-		mdIcon: settingsSharp
+		icon: settingsOutline
 	}
 ];
 
@@ -124,20 +106,17 @@ export const immigrationOfficerAppPages: readonly AppPage[] = [
 	{
 		title: 'Overview',
 		url: ImmigrationOfficerPages.dashboard,
-		iosIcon: appsOutline,
-		mdIcon: appsOutline
+		icon: homeOutline
 	},
 	{
 		title: 'Patient Profile',
 		url: ImmigrationOfficerPages.patientProfile,
-		iosIcon: calendarOutline,
-		mdIcon: calendarOutline
+		icon: personOutline
 	},
 	{
 		title: 'Settings',
 		url: ImmigrationOfficerPages.settings,
-		iosIcon: settingsOutline,
-		mdIcon: settingsSharp
+		icon: settingsOutline
 	}
 ];
 
@@ -145,25 +124,26 @@ export const adminAppPages: readonly AppPage[] = [
 	{
 		title: 'Overview',
 		url: AdminPages.overview,
-		iosIcon: appsOutline,
-		mdIcon: appsOutline
-	},
-	{
-		title: 'Patients',
-		url: AdminPages.patients,
-		iosIcon: calendarOutline,
-		mdIcon: calendarOutline
+		icon: homeOutline
 	},
 	{
 		title: 'Doctors',
 		url: AdminPages.doctors,
-		iosIcon: heartHalfOutline,
-		mdIcon: heartHalfSharp
+		icon: medkitOutline
+	},
+	{
+		title: 'Patients',
+		url: AdminPages.patients,
+		icon: peopleOutline
+	},
+	{
+		title: 'Patient Profile',
+		url: AdminPages.patientProfile,
+		icon: personOutline
 	},
 	{
 		title: 'Settings',
 		url: AdminPages.settings,
-		iosIcon: settingsOutline,
-		mdIcon: settingsSharp
+		icon: settingsOutline
 	}
 ];
