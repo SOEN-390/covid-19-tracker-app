@@ -62,4 +62,8 @@ export abstract class User {
 
 	public abstract getRole(): UserType;
 
+	public getFullName(): string {
+		return this._firstName + ' ' + this._lastName;
+	}
+
 }

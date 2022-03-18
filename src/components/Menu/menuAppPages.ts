@@ -6,7 +6,7 @@ import {
 	PatientPages
 } from '../../providers/pages.enum';
 import {
-	calendarOutline,
+	calendarOutline, chatbubblesOutline,
 	heartOutline,
 	homeOutline,
 	medkitOutline,
@@ -43,11 +43,15 @@ export const patientAppPages: readonly AppPage[] = [
 		url: PatientPages.patientProfile,
 		icon: personOutline
 	},
-
 	{
 		title: 'Report',
 		url: PatientPages.reportInContact,
 		icon: warningOutline
+	},
+	{
+		title: 'Doctor Chat',
+		url: PatientPages.chat,
+		icon: chatbubblesOutline
 	},
 	{
 		title: 'Settings',
@@ -73,10 +77,15 @@ export const doctorAppPages: readonly AppPage[] = [
 		icon: personOutline
 	},
 	{
+		title: 'Chats',
+		url: DoctorPages.chat,
+		icon: chatbubblesOutline
+	},
+	{
 		title: 'Settings',
 		url: DoctorPages.settings,
 		icon: settingsOutline
-	},
+	}
 ];
 
 export const healthOfficialAppPages: readonly AppPage[] = [
