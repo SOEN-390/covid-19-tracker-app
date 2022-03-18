@@ -10,7 +10,6 @@ import {
 	setupIonicReact,
 	useIonToast
 } from '@ionic/react';
-import CovidTrackerTransparent from '../../assets/images/CovidTrackerTransparent.png';
 import React, { useState } from 'react';
 import { useAuth } from '../../providers/auth.provider';
 import './Register.page.css';
@@ -52,7 +51,7 @@ const RegisterPage: React.FC = () => {
 			</IonHeader>
 
 			<IonContent>
-				<IonImg className="register__logo" src={CovidTrackerTransparent} />
+				<IonImg className="register__logo" src={'/assets/logo/covid-tracker-transparent.png'} alt={'logo'} />
 				<h2 className="register__login-text">Sign Up</h2>
 
 				<br />

@@ -8,7 +8,6 @@ import {
 	IonToolbar
 } from '@ionic/react';
 import './NavBar.scss';
-import userIcon from '../../assets/images/UserIcon.png';
 import React, { useState } from 'react';
 import { useAuth } from '../../providers/auth.provider';
 import { UserType } from '../../enum/UserType.enum';
@@ -76,7 +75,11 @@ const NavBar: React.FC = () => {
 				}
 
 				<IonAvatar>
-					<img src={userIcon} alt=""/>
+					{
+						currentProfile.getRole() === UserType.DOCTOR ?
+							<img src={'/assets/avatar/doctor-avatar.png'} alt="doctor-avatar"/> :
+							<img src={'/assets/avatar/user-avatar.png'} alt="user-avatar"/>
+					}
 				</IonAvatar>
 				{/*<IonCol size="2">*/}
 

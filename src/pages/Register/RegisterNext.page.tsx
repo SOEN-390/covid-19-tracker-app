@@ -12,7 +12,6 @@ import {
 	setupIonicReact,
 	useIonToast
 } from '@ionic/react';
-import CovidTrackerTransparent from '../../assets/images/CovidTrackerTransparent.png';
 import { useHistory } from 'react-router-dom';
 import './RegisterNext.page.scss';
 import { Pages } from '../../providers/pages.enum';
@@ -115,7 +114,7 @@ const RegisterNextPage: React.FC = () => {
 			</IonHeader>
 
 			<IonContent>
-				<IonImg className="register-next__logo" src={CovidTrackerTransparent} />
+				<IonImg className="register-next__logo" src={'/assets/logo/covid-tracker-transparent.png'} alt={'logo'}/>
 				<h2 className="register-next__login-text">Sign Up</h2>
 
 				<br />
