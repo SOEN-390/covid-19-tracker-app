@@ -18,7 +18,8 @@ import { Patient } from '../../objects/Patient.class';
 import './Chats.page.scss';
 import ChatService, { chatClient } from '../../providers/chat.service';
 import { Doctor } from '../../objects/Doctor.class';
-import { IonAvatar, IonCol, IonGrid, IonRow, IonTitle } from '@ionic/react';
+import { IonAvatar, IonCol, IonContent, IonGrid, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
+import NavBar from '../../components/NavBar/NavBar';
 
 const ChatsPage: React.FC = () => {
 
@@ -33,7 +34,6 @@ const ChatsPage: React.FC = () => {
 		if (!chatClient.clientID) {
 			return;
 		}
-
 		if (currentProfile.id !== chatClient.clientID.split('--')[0]) {
 			ChatService.connectUser(currentProfile).then(() => {
 				getChats();
@@ -123,7 +123,7 @@ const ChatsPage: React.FC = () => {
 				<IonRow>
 					<IonCol>
 						<IonAvatar>
-							<img src={'/assets/avatar/user-avatar.png'} />
+							<img src={'/assets/avatar/user-avatar.png'}/>
 						</IonAvatar>
 					</IonCol>
 					<IonCol>
@@ -136,46 +136,51 @@ const ChatsPage: React.FC = () => {
 	};
 
 	return (
-		<>
-			{
-				chatClient.clientID &&
-				currentProfile.id === chatClient.clientID.split('--')[0] &&
-				<>
-					<Chat client={chatClient} theme="messaging light">
-						{
-							currentProfile.getRole() === UserType.DOCTOR &&
-							<>
-								<div className="messaging__sidebar" id="mobile-channel-list">
-									<ChannelList filters={filters} Preview={CustomChannelPreview}/>
-								</div>
-								<Channel>
-									<Window>
-										<ChannelHeader/>
-										<MessageList/>
-										<MessageInput/>
-									</Window>
-									<Thread/>
-								</Channel>
-							</>
-						}
-						{
-							currentProfile.getRole() === UserType.PATIENT &&
-							patientChannel &&
-							<>
-								<Channel channel={patientChannel}>
-									<Window>
-										<ChannelHeader/>
-										<MessageList/>
-										<MessageInput/>
-									</Window>
-									<Thread/>
-								</Channel>
-							</>
-						}
-					</Chat>
-				</>
-			}
-		</>
+		<IonPage>
+			{/*<IonToolbar>*/}
+			{/*	<NavBar/>*/}
+			{/*</IonToolbar>*/}
+			<IonContent>
+				{
+					chatClient.clientID &&
+					currentProfile.id === chatClient.clientID.split('--')[0] &&
+					<>
+						<Chat client={chatClient} theme="messaging light">
+							{
+								currentProfile.getRole() === UserType.DOCTOR &&
+								<>
+									<div className="messaging__sidebar" id="mobile-channel-list">
+										<ChannelList filters={filters} Preview={CustomChannelPreview}/>
+									</div>
+									<Channel>
+										<Window>
+											<ChannelHeader/>
+											<MessageList/>
+											<MessageInput/>
+										</Window>
+										<Thread/>
+									</Channel>
+								</>
+							}
+							{
+								currentProfile.getRole() === UserType.PATIENT &&
+								patientChannel &&
+								<>
+									<Channel channel={patientChannel}>
+										<Window>
+											<ChannelHeader/>
+											<MessageList/>
+											<MessageInput/>
+										</Window>
+										<Thread/>
+									</Channel>
+								</>
+							}
+						</Chat>
+					</>
+				}
+			</IonContent>
+		</IonPage>
 	);
 };
 
