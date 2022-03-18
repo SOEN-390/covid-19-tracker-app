@@ -11,6 +11,7 @@ import {ImmigrationOfficer} from '../objects/ImmigrationOfficer.class';
 import {Admin} from '../objects/Admin.class';
 import {useIonToast} from '@ionic/react';
 import {HealthOfficial} from '../objects/HealthOfficial.class';
+import ChatService from './chat.service';
 
 export const AuthContext = React.createContext();
 
@@ -109,6 +110,7 @@ export function AuthProvider({children}) {
 				idToken = await user.getIdToken();
 				getCurrentUserProfile(user).then((profile) => {
 					setCurrentProfile(profile);
+					ChatService.connectUser(profile);
 					if (window.location.pathname === Pages.login || window.location.pathname === '/') {
 						window.location.pathname = PatientPages.home;
 					}
