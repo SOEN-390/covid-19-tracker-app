@@ -9,7 +9,6 @@ export interface IPatient {
 	doctorName?: string | null;
 	doctorId?: string | null;
 	testResult: TestResult;
-	doctorName?: string;
 	address: string;
 	email: string | null;
 	phoneNumber: string;

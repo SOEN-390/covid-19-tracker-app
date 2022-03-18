@@ -32,6 +32,7 @@ import SymptomsCardComponent from '../SymptomsCard/SymptomsCard.component';
 import { useHistory } from 'react-router-dom';
 import { AdminPages, DoctorPages, HealthOfficialPages } from '../../providers/pages.enum';
 import AssignedComponent from '../AssignedModal/Assigned.modal';
+import { IPatient } from '../../interfaces/IPatient';
 
 const PatientsTable: React.FC<{
 	patients: Patient[];
@@ -186,13 +187,15 @@ const PatientsTable: React.FC<{
 						key={index}
 						className="patients-table__table-entries__doctor-name"
 						id={`patients-table__assigned-${patient.medicalId}`}
-
+						onClick={() => console.log('tick')}
 					>
 						{patient.doctorName ? 'Dr.' + patient.doctorName : 'Not Assigned'}
 						<AssignedComponent
 							trigger={`patients-table__assigned-${patient.medicalId}`}
 							patient={patient}
-							setPatients={props.setPatients}
+							onChange={(patient: IPatient) => {
+								props.onChange(patient as Patient);
+							}}
 						/>
 					</Td>
 				)}
