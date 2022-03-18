@@ -76,7 +76,7 @@ const NavBar: React.FC = () => {
 
 				<IonAvatar>
 					{
-						currentProfile.getRole() === UserType.DOCTOR ?
+						currentProfile?.getRole() === UserType.DOCTOR ?
 							<img src={'/assets/avatar/doctor-avatar.png'} alt="doctor-avatar"/> :
 							<img src={'/assets/avatar/user-avatar.png'} alt="user-avatar"/>
 					}

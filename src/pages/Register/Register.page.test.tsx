@@ -16,7 +16,7 @@ test('RegisterPage: Renders without crashing', () => {
 	expect(baseElement).toBeDefined();
 });
 
-describe('Register: Test register form', () => {
+describe('RegisterPage: Test register form', () => {
 	let renderedPage: RenderResult;
 
 	beforeEach(async () => {
