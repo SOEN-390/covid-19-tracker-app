@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { StreamChat } from 'stream-chat';
 import {
 	Chat,
 	Channel,
@@ -11,15 +10,14 @@ import {
 	Window
 } from 'stream-chat-react';
 import 'stream-chat-react/dist/css/index.css';
-import { useAuth, idToken } from '../../providers/auth.provider';
+import { useAuth } from '../../providers/auth.provider';
 import { UserType } from '../../enum/UserType.enum';
 import HttpService from '../../providers/http.service';
 import { Patient } from '../../objects/Patient.class';
 import './Chats.page.scss';
 import ChatService, { chatClient } from '../../providers/chat.service';
 import { Doctor } from '../../objects/Doctor.class';
-import { IonAvatar, IonCol, IonContent, IonGrid, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
-import NavBar from '../../components/NavBar/NavBar';
+import { IonAvatar, IonCol, IonContent, IonPage, IonRow, IonTitle } from '@ionic/react';
 
 const ChatsPage: React.FC = () => {
 
@@ -164,17 +162,22 @@ const ChatsPage: React.FC = () => {
 							}
 							{
 								currentProfile.getRole() === UserType.PATIENT &&
-								patientChannel &&
-								<>
-									<Channel channel={patientChannel}>
-										<Window>
-											<ChannelHeader/>
-											<MessageList/>
-											<MessageInput/>
-										</Window>
-										<Thread/>
-									</Channel>
-								</>
+								patientChannel ?
+									<>
+										<Channel channel={patientChannel}>
+											<Window>
+												<ChannelHeader/>
+												<MessageList/>
+												<MessageInput/>
+											</Window>
+											<Thread/>
+										</Channel>
+									</> :
+									<>
+										<br />
+										<br />
+										<IonTitle className={'chats__title'}>You do not have a doctor</IonTitle>
+									</>
 							}
 						</Chat>
 					</>
