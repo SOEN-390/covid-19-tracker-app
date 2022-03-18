@@ -10,7 +10,6 @@ import {
 	IonMenuToggle,
 	IonTitle
 } from '@ionic/react';
-import appLogo from '../../assets/images/CovidTrackerTransparent.png';
 import Emergency from '../Emergency/Emergency';
 import { useLocation } from 'react-router-dom';
 import { logOutOutline } from 'ionicons/icons';
@@ -81,7 +80,7 @@ const Menu: React.FC<{ ionMenuId: string, userType: UserType }> = (props) => {
 		<IonMenu contentId={props.ionMenuId} type="push">
 
 			<IonContent>
-				<IonImg src={appLogo} />
+				<IonImg src={'/assets/logo/covid-tracker-transparent.png'} alt={'logo'}/>
 				<IonList className={'menu__inbox-list'}>
 
 					<IonTitle>Welcome {getName()}</IonTitle>
