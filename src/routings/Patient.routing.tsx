@@ -10,7 +10,7 @@ import { PatientPages } from '../providers/pages.enum';
 import { UserType } from '../enum/UserType.enum';
 import React from 'react';
 import ReportInContactPage from '../pages/ReportInContact/ReportInContact.page';
-import ChatPage from '../pages/Chat/Chat.page';
+import ChatsPage from '../pages/Chats/Chats.page';
 
 setupIonicReact();
 
@@ -39,7 +39,7 @@ const PatientRouting: React.FC = () => {
 						<ReportInContactPage/>
 					</Route>
 					<Route path={PatientPages.chat}>
-						<ChatPage/>
+						<ChatsPage/>
 					</Route>
 				</IonRouterOutlet>
 			</IonSplitPane>

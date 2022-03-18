@@ -8,7 +8,7 @@ import DashboardDoctorPage from '../pages/DoctorDashboard/Dashboard.doctor.page'
 import { UserType } from '../enum/UserType.enum';
 import React from 'react';
 import PatientsPage from '../pages/Patients/Patients.page';
-import DoctorChatsPage from '../pages/DoctorChats/DoctorChats.page';
+import ChatsPage from '../pages/Chats/Chats.page';
 
 setupIonicReact();
 
@@ -35,7 +35,7 @@ const DoctorRouting: React.FC = () => {
 						<PatientsPage/>
 					</Route>
 					<Route path={DoctorPages.chat}>
-						<DoctorChatsPage/>
+						<ChatsPage/>
 					</Route>
 				</IonRouterOutlet>
 			</IonSplitPane>
