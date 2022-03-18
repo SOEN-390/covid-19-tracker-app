@@ -33,12 +33,12 @@ jest.mock('react-router-dom', () => ({
 
 const mockHttpPostFn = jest.spyOn(HttpService, 'post');
 
-test('RegisterPageNext: Renders without crashing', () => {
+test('RegisterNextPage: Renders without crashing', () => {
 	const { baseElement } = render(<RegisterPageNext />);
 	expect(baseElement).toBeDefined();
 });
 
-describe('RegisterNext: Test register form', () => {
+describe('RegisterNextPage: Test register form', () => {
 	let renderedPage: RenderResult;
 
 	beforeEach(async () => {
