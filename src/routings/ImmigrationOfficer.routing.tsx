@@ -6,6 +6,7 @@ import PatientProfile from '../pages/PatientProfile/PatientProfile.page';
 import { ImmigrationOfficerPages } from '../providers/pages.enum';
 import { UserType } from '../enum/UserType.enum';
 import React from 'react';
+import PatientsPage from '../pages/Patients/Patients.page';
 
 setupIonicReact();
 
@@ -19,7 +20,7 @@ const ImmigrationOfficerRouting: React.FC = () => {
 						<Redirect to={ImmigrationOfficerPages.flaggedPatients}/>
 					</Route>
 					<Route path={ImmigrationOfficerPages.flaggedPatients}>
-						{/*<PatientProfile/>*/}
+						<PatientsPage />
 					</Route>
 					<Route exact={true} path={ImmigrationOfficerPages.patientProfile}>
 						<PatientProfile/>
