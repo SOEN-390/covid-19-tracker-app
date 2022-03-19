@@ -26,6 +26,8 @@ import HttpService from '../../providers/http.service';
 import SymptomsCardComponent from '../SymptomsCard/SymptomsCard.component';
 import { useHistory } from 'react-router-dom';
 import { AdminPages, DoctorPages, HealthOfficialPages } from '../../providers/pages.enum';
+import moment from 'moment';
+import { patientAppPages } from '../Menu/menuAppPages';
 
 const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient) => void }> = (props) => {
 
@@ -37,6 +39,9 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 	const [presentToast] = useIonToast();
 	const [presentActionSheet, dismissActionSheet] = useIonActionSheet();
 	const history = useHistory();
+	const currentHour = moment().format('mm');
+	const [time, setTime] = useState<string>(moment().format('mm'));
+
 
 	useEffect(() => {
 		switch (currentProfile.getRole()) {
@@ -66,7 +71,7 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 	}
 	function remindPatient(patient: Patient) {
 		patient.reminded = !patient.reminded;
-		resetButton(true);
+		resetButton(patient.reminded);
 		HttpService.post(
 			`patients/${patient.medicalId}/${patient.reminded ? 'remind' : 'unremind'}`,
 			{ role: currentProfile.getRole() }
@@ -79,7 +84,18 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 	}
 
 	function resetButton(reminded: boolean) {
-		return reminded;
+		console.log(currentHour);
+		console.log(time);
+
+		if (reminded == true) {
+			if (currentHour > time) {
+				return true;
+			}
+
+		}
+		else return reminded;
+
+
 	}
 
 	function reviewPatient(patient: Patient) {
