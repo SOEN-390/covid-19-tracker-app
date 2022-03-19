@@ -32,6 +32,8 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 	const { currentProfile } = useAuth();
 	const [columns, setColumns] = useState<readonly PatientsTableColumn[]>([]);
 
+
+
 	const [presentToast] = useIonToast();
 	const [presentActionSheet, dismissActionSheet] = useIonActionSheet();
 	const history = useHistory();
@@ -61,6 +63,23 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 		}).catch(() => {
 			presentToast('An error has occurred. Please try again.', 1000);
 		});
+	}
+	function remindPatient(patient: Patient) {
+		patient.reminded = !patient.reminded;
+		resetButton(true);
+		HttpService.post(
+			`patients/${patient.medicalId}/${patient.reminded ? 'remind' : 'unremind'}`,
+			{ role: currentProfile.getRole() }
+		).then(() => {
+			props.onChange(patient);
+			presentToast(`Successfully ${patient.flagged ? 'REMINDED' : 'UNREMINDED'} patient.`, 1000);
+		}).catch(() => {
+			presentToast('An error has occurred. Please try again.', 1000);
+		});
+	}
+
+	function resetButton(reminded: boolean) {
+		return reminded;
 	}
 
 	function reviewPatient(patient: Patient) {
@@ -189,10 +208,8 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 					</Td>
 				}
 				<Td key={index} className={'patients-table__reminder'}>
-					<IonIcon
-						className={patient ? 'patients-table__flag__high-priority' : 'patients-table__flag__no-priority'}
-						icon={flag} onClick={() => flagPatient(patient)}
-					/>
+					<IonButton disabled={resetButton(patient.reminded)} onClick={() => remindPatient(patient)} >
+						Remind patient</IonButton>
 				</Td>
 
 				<Td key={index} className={'patients-table__flag'}>

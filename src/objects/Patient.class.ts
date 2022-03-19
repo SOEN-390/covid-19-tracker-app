@@ -14,13 +14,14 @@ export class Patient extends User {
 	private _gender!: Gender;
 	private _lastUpdatedAt?: string;
 	private _flagged?: boolean;
+	private _reminded?: boolean;
 	private _reviewed?: boolean;
 	private _doctorName?: string;
 
 	// Constructor
 
 	public constructor(id: string, firstName: string, lastName: string, email: string, phoneNumber: string, address: string,
-					   medicalId: string, testResult: TestResult, dob: string, gender: Gender) {
+		medicalId: string, testResult: TestResult, dob: string, gender: Gender) {
 		super(id, firstName, lastName, phoneNumber, address);
 		this._medicalId = medicalId;
 		this._email = email;
@@ -80,6 +81,14 @@ export class Patient extends User {
 
 	set flagged(value: boolean) {
 		this._flagged = value;
+	}
+
+	get reminded(): boolean {
+		return this._reminded || false;
+	}
+
+	set reminded(value: boolean) {
+		this._reminded = value;
 	}
 
 	get reviewed(): boolean {
