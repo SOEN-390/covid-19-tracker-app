@@ -8,6 +8,7 @@ import {
 	IonModal,
 	useIonToast,
 } from '@ionic/react';
+import './Assigned.modal.scss';
 import { IDoctorTableRow } from '../../interfaces/IDoctorTableRow';
 import { Table, Td, Tr } from 'react-super-responsive-table';
 import HttpService from '../../providers/http.service';
@@ -61,14 +62,9 @@ const AssignedComponent: React.FC<{
 
 	function getDoctorRow(doctorTableRow: IDoctorTableRow, isAssign: boolean): JSX.Element {
 		return (
-			<Table>
+			<Table className={'patients-modal__Table'}>
 				<Tr
-					style={{
-						display: 'flex',
-						justifyContent: 'space-between',
-						alignItems: 'center',
-					}}
-					className={'doctor-table__table-row'}
+					className={'patients-modal__table-row'}
 					key={doctorTableRow.licenseId}
 				>
 					<Td className={'doctor-table__doctor-name'}>

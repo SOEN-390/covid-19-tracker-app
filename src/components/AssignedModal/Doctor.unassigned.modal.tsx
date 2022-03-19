@@ -9,6 +9,7 @@ import {
 	IonModal,
 	useIonToast,
 } from '@ionic/react';
+import './Doctor.unassigned.modal.scss';
 import { IDoctorTableRow } from '../../interfaces/IDoctorTableRow';
 import { Table, Td, Tr } from 'react-super-responsive-table';
 import HttpService from '../../providers/http.service';
@@ -124,17 +125,15 @@ const DoctorsRow: React.FC<{
 	};
 
 	return (
-		<Tr
-			style={{
-				display: 'flex',
-				justifyContent: 'space-between',
-				alignItems: 'center',
-			}}
-			className={'doctor-table__table-row'}
-		>
-			<Td className={'doctor-table__doctor-name'}>{name}</Td>
-			<IonButton onClick={onClickHandler}>{'UnAssign'}</IonButton>
-		</Tr>
+		<Table className={'doctor-modal__Table'}>
+			<Tr
+				className={'doctor-modal__table-row'}
+			>
+				<Td className={'doctor-table__doctor-name'}>{name}</Td>
+				<IonButton onClick={onClickHandler}>{'UnAssign'}</IonButton>
+			</Tr>
+		</Table>
+
 	);
 };
 

@@ -22,7 +22,7 @@ import {
 	mail,
 	close,
 	checkmarkCircleOutline,
-	checkmarkDoneCircleOutline,
+	checkmarkDoneCircleOutline, personRemoveOutline, personAddOutline,
 } from 'ionicons/icons';
 import { useAuth } from '../../providers/auth.provider';
 import { TestResult } from '../../enum/TestResult.enum';
@@ -39,7 +39,7 @@ const PatientsTable: React.FC<{
 	onChange: (patient: Patient) => void;
 	setPatients: (patient: Patient[]) => void;
 }> = (props) => {
-	const { currentProfile } = useAuth();
+	const {currentProfile} = useAuth();
 	const [columns, setColumns] = useState<readonly PatientsTableColumn[]>([]);
 
 	const [presentToast] = useIonToast();
@@ -64,7 +64,7 @@ const PatientsTable: React.FC<{
 		patient.flagged = !patient.flagged;
 		HttpService.post(
 			`patients/${patient.medicalId}/${patient.flagged ? 'flag' : 'unflag'}`,
-			{ role: currentProfile.getRole() }
+			{role: currentProfile.getRole()}
 		)
 			.then(() => {
 				props.onChange(patient);
@@ -84,7 +84,7 @@ const PatientsTable: React.FC<{
 			`doctors/${patient.medicalId}/${
 				patient.reviewed ? 'review' : 'unreview'
 			}`,
-			{ role: currentProfile.getRole() }
+			{role: currentProfile.getRole()}
 		)
 			.then(() => {
 				props.onChange(patient);
@@ -187,9 +187,19 @@ const PatientsTable: React.FC<{
 						key={index}
 						className="patients-table__table-entries__doctor-name"
 						id={`patients-table__assigned-${patient.medicalId}`}
-						onClick={() => console.log('tick')}
 					>
-						{patient.doctorName ? 'Dr.' + patient.doctorName : 'Not Assigned'}
+						{
+							patient.doctorName ?
+								<>
+									{'Dr.' + patient.doctorName + ' '}
+									<IonIcon icon={personRemoveOutline}/>
+								</> :
+								<>
+									{'Not Assigned'}
+									<IonIcon icon={personAddOutline}/>
+								</>
+						}
+
 						<AssignedComponent
 							trigger={`patients-table__assigned-${patient.medicalId}`}
 							patient={patient}
