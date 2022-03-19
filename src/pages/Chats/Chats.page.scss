@@ -3,6 +3,14 @@ ion-title.chats__title {
   align-items: baseline;
 }
 
+.chats__flag__no-priority {
+  color: gray;
+}
+
+.chats__flag__high-priority {
+  color: red;
+}
+
 //Bad CSS tbh, better without it
 //#root {
 //  height: 100%;
