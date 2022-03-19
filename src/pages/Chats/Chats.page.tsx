@@ -17,7 +17,8 @@ import { Patient } from '../../objects/Patient.class';
 import './Chats.page.scss';
 import ChatService, { chatClient } from '../../providers/chat.service';
 import { Doctor } from '../../objects/Doctor.class';
-import { IonAvatar, IonCol, IonContent, IonPage, IonRow, IonTitle } from '@ionic/react';
+import { IonAvatar, IonCol, IonContent, IonIcon, IonPage, IonRow, IonTitle, useIonToast } from '@ionic/react';
+import { flag } from 'ionicons/icons';
 
 const ChatsPage: React.FC = () => {
 
@@ -26,6 +27,7 @@ const ChatsPage: React.FC = () => {
 	const filters = {type: 'messaging', members: {$in: [currentProfile.id]}};
 	const sort = {last_message_at: -1};
 
+	const [doctorPatients, setDoctorPatients] = useState<{ patient: Patient, channelId: string }[]>([]);
 	const [patientChannel, setPatientChannel] = useState<any>();
 
 	useEffect(() => {
@@ -86,6 +88,8 @@ const ChatsPage: React.FC = () => {
 					});
 					if (channel.id) {
 						channelsIds.push(channel.id);
+						doctorPatients.push({patient: patient, channelId: channel.id});
+						setDoctorPatients([...doctorPatients]);
 					}
 				}
 				const channel = chatClient.channel('messaging', {
@@ -116,17 +120,56 @@ const ChatsPage: React.FC = () => {
 		const {messages} = channel.state;
 		const messagePreview = messages[messages.length - 1]?.text.slice(0, 30);
 
+		const [flagClassName, setFlagClassName] = useState<string>('chats__flag__no-priority');
+
+		useEffect(() => {
+			for (const {patient, channelId} of doctorPatients) {
+				if (channel.id === channelId && patient.flagged) {
+					setFlagClassName('chats__flag__high-priority');
+					return;
+				}
+			}
+			setFlagClassName('chats__flag__no-priority');
+		}, [doctorPatients]);
+
+		const [presentToast] = useIonToast();
+
+		function flagPatient(channel: any) {
+			for (const {patient, channelId} of doctorPatients) {
+				if (channel.id === channelId) {
+					patient.flagged = !patient.flagged;
+					HttpService.post(
+						`patients/${patient.medicalId}/${patient.flagged ? 'flag' : 'unflag'}`,
+						{role: currentProfile.getRole()}
+					).then(() => {
+						setFlagClassName(patient.flagged ? 'chats__flag__high-priority' : 'chats__flag__no-priority');
+						presentToast(`Successfully ${patient.flagged ? 'FLAGGED' : 'UNFLAGGED'} patient.`, 1000);
+					}).catch(() => {
+						presentToast('An error has occurred. Please try again.', 1000);
+					});
+					return;
+				}
+			}
+		}
+
 		return (
 			<div onClick={() => setActiveChannel(channel)} style={{margin: '12px'}}>
 				<IonRow>
 					<IonCol>
 						<IonAvatar>
-							<img src={'/assets/avatar/user-avatar.png'}/>
+							<img src={channel.data.image}/>
 						</IonAvatar>
 					</IonCol>
 					<IonCol>
 						<div>{channel.data.name || 'Unnamed Channel'}</div>
 						<div style={{fontSize: '14px'}}>{messagePreview}</div>
+					</IonCol>
+					<IonCol>
+						<IonIcon
+							size={'large'}
+							className={flagClassName}
+							icon={flag} onClick={() => flagPatient(channel)}
+						/>
 					</IonCol>
 				</IonRow>
 			</div>
