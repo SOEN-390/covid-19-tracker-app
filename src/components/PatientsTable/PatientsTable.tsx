@@ -29,7 +29,7 @@ import { AdminPages, DoctorPages, HealthOfficialPages } from '../../providers/pa
 
 const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient) => void }> = (props) => {
 
-	const {currentProfile} = useAuth();
+	const { currentProfile } = useAuth();
 	const [columns, setColumns] = useState<readonly PatientsTableColumn[]>([]);
 
 	const [presentToast] = useIonToast();
@@ -54,7 +54,7 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 		patient.flagged = !patient.flagged;
 		HttpService.post(
 			`patients/${patient.medicalId}/${patient.flagged ? 'flag' : 'unflag'}`,
-			{role: currentProfile.getRole()}
+			{ role: currentProfile.getRole() }
 		).then(() => {
 			props.onChange(patient);
 			presentToast(`Successfully ${patient.flagged ? 'FLAGGED' : 'UNFLAGGED'} patient.`, 1000);
@@ -67,7 +67,7 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 		patient.reviewed = !patient.reviewed;
 		HttpService.patch(
 			`doctors/${patient.medicalId}/${patient.reviewed ? 'review' : 'unreview'}`,
-			{role: currentProfile.getRole()}
+			{ role: currentProfile.getRole() }
 		).then(() => {
 			props.onChange(patient);
 		}).catch(() => {
@@ -108,7 +108,7 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 		return (
 			<Tr className="patients-table__table-entries"
 				key={index}
-				style={{background: currentProfile.getRole() === UserType.DOCTOR ? (patient.reviewed ? '' : '#F5F6F6') : ''}}
+				style={{ background: currentProfile.getRole() === UserType.DOCTOR ? (patient.reviewed ? '' : '#F5F6F6') : '' }}
 			>
 				<Td key={index}
 					className="patients-table__table-entries__name"
@@ -152,13 +152,13 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 				}
 				<Td key={index}>
 					<IonButton shape="round"
-							   expand="block"
-							   onClick={() => {
-								   presentActionSheet(
-									   generateContactList(patient),
-									   'Contact by');
-								   setTimeout(dismissActionSheet, 10000);
-							   }}
+						expand="block"
+						onClick={() => {
+							presentActionSheet(
+								generateContactList(patient),
+								'Contact by');
+							setTimeout(dismissActionSheet, 10000);
+						}}
 					>
 						Contact
 					</IonButton>
@@ -174,20 +174,27 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 							Monitor Symptoms
 						</IonButton>
 						<SymptomsCardComponent trigger={`patients-table__monitor-${patient.medicalId}`}
-											   patient={patient}/>
+							patient={patient} />
 					</Td>
 				}
 				{
 					(currentProfile.getRole() === UserType.DOCTOR) &&
 					<Td key={index} className={'patients-table__flag'}>
 						<IonIcon icon={patient.reviewed ? checkmarkDoneCircleOutline : checkmarkCircleOutline}
-								 color={patient.reviewed ? 'success' : ''}
-								 onClick={() => {
-									 reviewPatient(patient);
-								 }}
+							color={patient.reviewed ? 'success' : ''}
+							onClick={() => {
+								reviewPatient(patient);
+							}}
 						/>
 					</Td>
 				}
+				<Td key={index} className={'patients-table__reminder'}>
+					<IonIcon
+						className={patient ? 'patients-table__flag__high-priority' : 'patients-table__flag__no-priority'}
+						icon={flag} onClick={() => flagPatient(patient)}
+					/>
+				</Td>
+
 				<Td key={index} className={'patients-table__flag'}>
 					<IonIcon
 						className={patient.flagged ? 'patients-table__flag__high-priority' : 'patients-table__flag__no-priority'}
