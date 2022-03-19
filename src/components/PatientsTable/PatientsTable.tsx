@@ -39,8 +39,8 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 	const [presentToast] = useIonToast();
 	const [presentActionSheet, dismissActionSheet] = useIonActionSheet();
 	const history = useHistory();
-	const currentHour = moment().format('mm');
-	const [time, setTime] = useState<string>(moment().format('mm'));
+	const currentHour = moment().format('HH:mm');
+	const [timeReviewd, setTime] = useState<string>('');
 
 
 	useEffect(() => {
@@ -71,7 +71,10 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 	}
 	function remindPatient(patient: Patient) {
 		patient.reminded = !patient.reminded;
-		resetButton(patient.reminded);
+		resetButton(true);
+		setTime(currentHour);
+		console.log(timeReviewd);
+
 		HttpService.post(
 			`patients/${patient.medicalId}/${patient.reminded ? 'remind' : 'unremind'}`,
 			{ role: currentProfile.getRole() }
@@ -84,16 +87,14 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 	}
 
 	function resetButton(reminded: boolean) {
-		console.log(currentHour);
-		console.log(time);
 
 		if (reminded == true) {
-			if (currentHour > time) {
-				return true;
+			if (currentHour > timeReviewd) {
+				return reminded = false;
 			}
 
 		}
-		else return reminded;
+		return reminded;
 
 
 	}
