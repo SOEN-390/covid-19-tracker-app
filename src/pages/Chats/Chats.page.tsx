@@ -23,12 +23,19 @@ import { flag } from 'ionicons/icons';
 const ChatsPage: React.FC = () => {
 
 	const {currentProfile} = useAuth();
+	const [presentToast] = useIonToast();
 
 	const filters = {type: 'messaging', members: {$in: [currentProfile.id]}};
 	const sort = {last_message_at: -1};
 
 	const [doctorPatients, setDoctorPatients] = useState<{ patient: Patient, channelId: string }[]>([]);
 	const [patientChannel, setPatientChannel] = useState<any>();
+	const [flagClassName, setFlagClassName] = useState<string>('chats__flag__no-priority');
+
+	useEffect(() => {
+		console.log(currentProfile.flagged);
+		setFlagClassName(currentProfile.flagged ? 'chats__flag__high-priority' : 'chats__flag__no-priority');
+	}, [currentProfile]);
 
 	useEffect(() => {
 		if (!chatClient.clientID) {
@@ -114,6 +121,19 @@ const ChatsPage: React.FC = () => {
 		}
 	}
 
+	function flagChat() {
+		currentProfile.flagged = !currentProfile.flagged;
+		HttpService.post(
+			`patients/${currentProfile.medicalId}/${currentProfile.flagged ? 'flag' : 'unflag'}`,
+			{role: currentProfile.getRole()}
+		).then(() => {
+			setFlagClassName(currentProfile.flagged ? 'chats__flag__high-priority' : 'chats__flag__no-priority');
+			presentToast(`Successfully ${currentProfile.flagged ? 'FLAGGED' : 'UNFLAGGED'} patient.`, 1000);
+		}).catch(() => {
+			presentToast('An error has occurred. Please try again.', 1000);
+		});
+	}
+
 	const CustomChannelPreview = (props: any) => {
 		const {channel, setActiveChannel} = props;
 
@@ -131,8 +151,6 @@ const ChatsPage: React.FC = () => {
 			}
 			setFlagClassName('chats__flag__no-priority');
 		}, [doctorPatients]);
-
-		const [presentToast] = useIonToast();
 
 		function flagPatient(channel: any) {
 			for (const {patient, channelId} of doctorPatients) {
@@ -209,9 +227,15 @@ const ChatsPage: React.FC = () => {
 									<>
 										<Channel channel={patientChannel}>
 											<Window>
-												<ChannelHeader/>
+
+												<ChannelHeader />
 												<MessageList/>
 												<MessageInput/>
+												<IonIcon
+													size={'large'}
+													className={flagClassName}
+													icon={flag} onClick={() => flagChat()}
+												/>
 											</Window>
 											<Thread/>
 										</Channel>
