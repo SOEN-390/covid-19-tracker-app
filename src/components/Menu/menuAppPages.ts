@@ -113,9 +113,9 @@ export const healthOfficialAppPages: readonly AppPage[] = [
 
 export const immigrationOfficerAppPages: readonly AppPage[] = [
 	{
-		title: 'Overview',
-		url: ImmigrationOfficerPages.dashboard,
-		icon: homeOutline
+		title: 'Flagged Patients',
+		url: ImmigrationOfficerPages.flaggedPatients,
+		icon: peopleOutline
 	},
 	{
 		title: 'Patient Profile',
