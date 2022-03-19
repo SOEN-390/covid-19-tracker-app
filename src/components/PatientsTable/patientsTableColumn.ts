@@ -1,5 +1,5 @@
 export interface PatientsTableColumn {
-	id: 'patients' | 'status' | 'lastUpdate' | 'doctor' | 'action' | 'priority' | 'monitorSymptoms' | 'reviewed';
+	id: 'patients' | 'status' | 'lastUpdate' | 'doctor' | 'action' | 'priority' | 'monitorSymptoms' | 'reviewed' | 'reminder';
 	label: string;
 	minWidth?: number;
 	align?: 'center';
@@ -106,6 +106,12 @@ export const healthOfficialColumns: readonly PatientsTableColumn[] = [
 	{
 		id: 'monitorSymptoms',
 		label: 'Monitor',
+		minWidth: 170,
+		align: 'center'
+	},
+	{
+		id: 'reminder',
+		label: 'Reminder',
 		minWidth: 170,
 		align: 'center'
 	},
