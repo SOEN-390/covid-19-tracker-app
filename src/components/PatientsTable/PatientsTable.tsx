@@ -31,7 +31,7 @@ import { Patient } from '../../objects/Patient.class';
 import HttpService from '../../providers/http.service';
 import SymptomsCardComponent from '../SymptomsCard/SymptomsCard.component';
 import { useHistory } from 'react-router-dom';
-import { AdminPages, DoctorPages, HealthOfficialPages } from '../../providers/pages.enum';
+import { AdminPages, DoctorPages, HealthOfficialPages, ImmigrationOfficerPages } from '../../providers/pages.enum';
 import Moment from 'react-moment';
 
 const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient) => void }> = (props) => {
@@ -61,6 +61,7 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 	}, []);
 
 	function flagPatient(patient: Patient) {
+
 		patient.flagged = !patient.flagged;
 		HttpService.post(
 			`patients/${patient.medicalId}/${patient.flagged ? 'flag' : 'unflag'}`,
@@ -132,6 +133,10 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 						if (currentProfile.getRole() === UserType.ADMIN) {
 							history.push({
 								pathname: AdminPages.patientProfile + '/' + patient.medicalId
+							});
+						} else if (currentProfile.getRole() === UserType.IMMIGRATION_OFFICER) {
+							history.push({
+								pathname: ImmigrationOfficerPages.patientProfile + '/' + patient.medicalId
 							});
 						} else if (currentProfile.getRole() === UserType.HEALTH_OFFICIAL) {
 							history.push({
