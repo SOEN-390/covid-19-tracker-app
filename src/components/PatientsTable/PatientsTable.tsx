@@ -10,7 +10,13 @@ import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { Table, Tbody, Td, Th, Thead, Tr } from 'react-super-responsive-table';
 import { UserType } from '../../enum/UserType.enum';
-import { adminColumns, doctorColumns, healthOfficialColumns, PatientsTableColumn } from './patientsTableColumn';
+import {
+	adminColumns,
+	doctorColumns,
+	healthOfficialColumns,
+	immigrationOfficerColumns,
+	PatientsTableColumn
+} from './patientsTableColumn';
 import {
 	call,
 	flag,
@@ -43,6 +49,9 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 				break;
 			case UserType.HEALTH_OFFICIAL:
 				setColumns(healthOfficialColumns);
+				break;
+			case UserType.IMMIGRATION_OFFICER:
+				setColumns(immigrationOfficerColumns);
 				break;
 			case UserType.ADMIN:
 				setColumns(adminColumns);
@@ -105,6 +114,10 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 
 	function getRow(patient: Patient, index: number): JSX.Element | null {
 
+		if (!patient.flagged) {
+			return null;
+		}
+
 		return (
 			<Tr className="patients-table__table-entries"
 				key={index}
@@ -164,10 +177,14 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 					</IonButton>
 				</Td>
 				{
-					(currentProfile.getRole() === UserType.HEALTH_OFFICIAL || currentProfile.getRole() === UserType.DOCTOR) &&
+					(
+						currentProfile.getRole() === UserType.HEALTH_OFFICIAL ||
+						currentProfile.getRole() === UserType.DOCTOR ||
+						currentProfile.getRole() === UserType.IMMIGRATION_OFFICER
+					) &&
 					<Td key={index}>
 						<IonButton id={`patients-table__monitor-${patient.medicalId}`} shape="round" onClick={() => {
-							if (!patient.reviewed) {
+							if (currentProfile.getRole() === UserType.DOCTOR && !patient.reviewed) {
 								reviewPatient(patient);
 							}
 						}}>
