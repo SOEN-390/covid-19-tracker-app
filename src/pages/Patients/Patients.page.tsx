@@ -42,15 +42,15 @@ const PatientsPage: React.FC = () => {
 		setPatients([...patients]);
 	}
 
-	function getAssignedPatients(): void {
-		HttpService.get(`immigrations/${currentProfile.licenseId}/patients/flagged`).then((patients: Patient[]) => {
+	function getAllFlaggedPatients(): void {
+		HttpService.get(`immigrations/${currentProfile.id}/patients/flagged`).then((patients: Patient[]) => {
 			setPatients(patients);
 		}).catch((error) => {
 			console.log('ERROR: ', error);
 		});
 	}
 
-	function getAllFlaggedPatients(): void {
+	function getAssignedPatients(): void {
 		HttpService.get('patients/all').then((patients: Patient[]) => {
 			const patientsArranged: Patient[] = [];
 			for (const patient of patients) {
