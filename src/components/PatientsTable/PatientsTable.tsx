@@ -32,6 +32,7 @@ import HttpService from '../../providers/http.service';
 import SymptomsCardComponent from '../SymptomsCard/SymptomsCard.component';
 import { useHistory } from 'react-router-dom';
 import { AdminPages, DoctorPages, HealthOfficialPages } from '../../providers/pages.enum';
+import Moment from 'react-moment';
 
 const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient) => void }> = (props) => {
 
@@ -114,7 +115,7 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 
 	function getRow(patient: Patient, index: number): JSX.Element | null {
 
-		if (!patient.flagged) {
+		if (patient.flagged == undefined) {
 			return null;
 		}
 
@@ -210,6 +211,8 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 						className={patient.flagged ? 'patients-table__flag__high-priority' : 'patients-table__flag__no-priority'}
 						icon={flag} onClick={() => flagPatient(patient)}
 					/>
+				</Td>
+				<Td key={index} > <Moment format={'LLL'} date={patient.lastUpdated}/>
 				</Td>
 			</Tr>
 		);
