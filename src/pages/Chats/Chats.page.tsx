@@ -33,7 +33,6 @@ const ChatsPage: React.FC = () => {
 	const [flagClassName, setFlagClassName] = useState<string>('chats__flag__no-priority');
 
 	useEffect(() => {
-		console.log(currentProfile.flagged);
 		setFlagClassName(currentProfile.flagged ? 'chats__flag__high-priority' : 'chats__flag__no-priority');
 	}, [currentProfile]);
 

@@ -3,7 +3,14 @@ import { idToken } from './auth.provider';
 
 const HttpService = {
 
-	// async function (use .then)
+	/**
+	 * POST http request to the server
+	 * Throwable function
+	 * ALWAYS use try-catch or .then().catch()
+	 * @param path: string - the path of the request
+	 * @param body: any - body of the request
+	 * @return Promise<any>
+	 */
 	post: (path: string, body?: any) => {
 		const request = new Request(environment.apiUrl + environment.apiPrefix + '/' + path, {
 			method: 'POST',
