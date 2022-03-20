@@ -32,7 +32,7 @@ export enum HealthOfficialPages {
 
 export enum ImmigrationOfficerPages {
 	home = '/immigration-officer',
-	dashboard = '/immigration-officer/dashboard',
+	flaggedPatients = '/immigration-officer/flagged-patients',
 	patientProfile = '/immigration-officer/patient-profile',
 	settings = '/immigration-officer/settings'
 }

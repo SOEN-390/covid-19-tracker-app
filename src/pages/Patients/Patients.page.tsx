@@ -18,6 +18,8 @@ const PatientsPage: React.FC = () => {
 	useEffect(() => {
 		if (currentProfile.getRole() === UserType.DOCTOR) {
 			getAssignedPatients();
+		} else if (currentProfile.getRole() === UserType.IMMIGRATION_OFFICER) {
+			getAllFlaggedPatients();
 		} else if (currentProfile.getRole() === UserType.ADMIN || currentProfile.getRole() === UserType.HEALTH_OFFICIAL) {
 			getAllPatients();
 		}
@@ -40,8 +42,16 @@ const PatientsPage: React.FC = () => {
 		setPatients([...patients]);
 	}
 
-	function getAssignedPatients() {
-		HttpService.get(`doctors/${currentProfile.licenseId}/patients/assigned`).then((patients: Patient[]) => {
+	function getAllFlaggedPatients(): void {
+		HttpService.get(`immigrations/${currentProfile.id}/patients/flagged`).then((patients: Patient[]) => {
+			setPatients(patients);
+		}).catch((error) => {
+			console.log('ERROR: ', error);
+		});
+	}
+
+	function getAssignedPatients(): void {
+		HttpService.get('patients/all').then((patients: Patient[]) => {
 			const patientsArranged: Patient[] = [];
 			for (const patient of patients) {
 				if (patient.flagged) {
@@ -56,7 +66,7 @@ const PatientsPage: React.FC = () => {
 		});
 	}
 
-	function getAllPatients() {
+	function getAllPatients(): void {
 		HttpService.get('patients/all').then((patients: Patient[]) => {
 			const patientsArranged: Patient[] = [];
 			for (const patient of patients) {
@@ -100,7 +110,11 @@ const PatientsPage: React.FC = () => {
 				<NavBar/>
 			</IonToolbar>
 			<IonContent className={'patients-page__content'}>
-				<IonTitle>PATIENTS</IonTitle>
+				{
+					currentProfile.getRole() === UserType.IMMIGRATION_OFFICER ?
+						<IonTitle>FLAGGED PATIENTS</IonTitle>:
+						<IonTitle>PATIENTS</IonTitle>
+				}
 				<div>
 					<IonRow>
 						<IonCol/>
