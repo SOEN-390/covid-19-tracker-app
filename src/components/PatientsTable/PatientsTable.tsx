@@ -115,10 +115,6 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 
 	function getRow(patient: Patient, index: number): JSX.Element | null {
 
-		if (patient.flagged == undefined) {
-			return null;
-		}
-
 		return (
 			<Tr className="patients-table__table-entries"
 				key={index}

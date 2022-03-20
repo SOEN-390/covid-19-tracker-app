@@ -36,7 +36,11 @@ const PatientsPage: React.FC = () => {
 	function onPatientsChanged(changedPatient: Patient) {
 		for (const [index, patient] of patients.entries()) {
 			if (patient.medicalId === changedPatient.medicalId) {
-				patients[index] = changedPatient;
+				if (currentProfile.getRole() === UserType.IMMIGRATION_OFFICER) {
+					patients.splice(index, 1);
+				} else {
+					patients[index] = changedPatient;
+				}
 			}
 		}
 		setPatients([...patients]);
