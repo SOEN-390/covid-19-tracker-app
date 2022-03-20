@@ -71,7 +71,6 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 	}
 	function remindPatient(patient: Patient) {
 		patient.reminded = !patient.reminded;
-		resetButton(true);
 		setTime(currentHour);
 		console.log(timeReviewd);
 
@@ -80,7 +79,7 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 			{ role: currentProfile.getRole() }
 		).then(() => {
 			props.onChange(patient);
-			presentToast(`Successfully ${patient.flagged ? 'REMINDED' : 'UNREMINDED'} patient.`, 1000);
+			presentToast(`Successfully ${patient.reminded ? 'REMINDED' : 'UNREMINDED'} patient.`, 1000);
 		}).catch(() => {
 			presentToast('An error has occurred. Please try again.', 1000);
 		});
@@ -88,12 +87,6 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 
 	function resetButton(reminded: boolean) {
 
-		if (reminded == true) {
-			if (currentHour > timeReviewd) {
-				return reminded = false;
-			}
-
-		}
 		return reminded;
 
 
@@ -224,11 +217,14 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 						/>
 					</Td>
 				}
-				<Td key={index} className={'patients-table__reminder'}>
-					<IonButton disabled={resetButton(patient.reminded)} onClick={() => remindPatient(patient)} >
-						Remind patient</IonButton>
-				</Td>
+				{
+					(currentProfile.getRole() === UserType.HEALTH_OFFICIAL) &&
 
+					<Td key={index} className={'patients-table__reminder'}>
+						<IonButton disabled={resetButton(patient.reminded)} onClick={() => remindPatient(patient)} >
+							Remind patient</IonButton>
+					</Td>
+				}
 				<Td key={index} className={'patients-table__flag'}>
 					<IonIcon
 						className={patient.flagged ? 'patients-table__flag__high-priority' : 'patients-table__flag__no-priority'}
