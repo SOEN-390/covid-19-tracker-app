@@ -110,7 +110,11 @@ const PatientsPage: React.FC = () => {
 				<NavBar/>
 			</IonToolbar>
 			<IonContent className={'patients-page__content'}>
-				<IonTitle>PATIENTS</IonTitle>
+				{
+					currentProfile.getRole() === UserType.IMMIGRATION_OFFICER ?
+						<IonTitle>FLAGGED PATIENTS</IonTitle>:
+						<IonTitle>PATIENTS</IonTitle>
+				}
 				<div>
 					<IonRow>
 						<IonCol/>
