@@ -117,4 +117,35 @@ export const healthOfficialColumns: readonly PatientsTableColumn[] = [
 	}
 ];
 
-
+export const immigrationOfficerColumns: readonly PatientsTableColumn[] = [
+	{
+		id: 'patients',
+		label: 'Patient',
+		minWidth: 170,
+		align: 'center'
+	},
+	{
+		id: 'status',
+		label: 'Status',
+		minWidth: 170,
+		align: 'center'
+	},
+	{
+		id: 'action',
+		label: 'Action',
+		minWidth: 170,
+		align: 'center'
+	},
+	{
+		id: 'monitorSymptoms',
+		label: 'Monitor',
+		minWidth: 170,
+		align: 'center'
+	},
+	{
+		id: 'priority',
+		label: 'Priority',
+		minWidth: 170,
+		align: 'center'
+	}
+];
