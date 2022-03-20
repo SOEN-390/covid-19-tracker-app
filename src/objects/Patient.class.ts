@@ -21,13 +21,14 @@ export class Patient extends User {
 	// Constructor
 
 	public constructor(id: string, firstName: string, lastName: string, email: string, phoneNumber: string, address: string,
-		medicalId: string, testResult: TestResult, dob: string, gender: Gender) {
+		medicalId: string, testResult: TestResult, dob: string, gender: Gender, flagged?: boolean) {
 		super(id, firstName, lastName, phoneNumber, address);
 		this._medicalId = medicalId;
 		this._email = email;
 		this._testResult = testResult;
 		this._dob = dob;
 		this._gender = gender;
+		this._flagged = flagged;
 	}
 
 	// Getters & Setters

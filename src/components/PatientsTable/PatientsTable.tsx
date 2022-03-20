@@ -45,8 +45,8 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 	const [presentToast] = useIonToast();
 	const [presentActionSheet, dismissActionSheet] = useIonActionSheet();
 	const history = useHistory();
-	const currentHour = moment().format('HH:mm');
-	const [timeReviewd, setTime] = useState<string>('');
+	//const currentHour = moment().format('HH:mm');
+	//const [timeReviewd, setTime] = useState<string>('');
 
 
 	useEffect(() => {
@@ -80,9 +80,12 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 	}
 	function remindPatient(patient: Patient) {
 		patient.reminded = !patient.reminded;
-		setTime(currentHour);
-		console.log(timeReviewd);
+		//setTime(currentHour);
+		if (patient.reminded) {
+			presentToast('Patient already reminded', 1500);
 
+			return;
+		}
 		HttpService.post(
 			`patients/${patient.medicalId}/${patient.reminded ? 'remind' : 'unremind'}`,
 			{ role: currentProfile.getRole() }
@@ -95,10 +98,7 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 	}
 
 	function resetButton(reminded: boolean) {
-
 		return reminded;
-
-
 	}
 
 	function reviewPatient(patient: Patient) {
@@ -238,7 +238,7 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 					(currentProfile.getRole() === UserType.HEALTH_OFFICIAL) &&
 
 					<Td key={index} className={'patients-table__reminder'}>
-						<IonButton disabled={resetButton(patient.reminded)} onClick={() => remindPatient(patient)} >
+						<IonButton disabled={(patient.reminded)} onClick={() => remindPatient(patient)} >
 							Remind patient</IonButton>
 					</Td>
 				}
