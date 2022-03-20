@@ -84,7 +84,7 @@ export function AuthProvider({children}) {
 			case UserType.PATIENT:
 				return new Patient(auth.currentUser.uid, userData.firstName, userData.lastName, auth.currentUser.email,
 					userData.phoneNumber, userData.address, userData.medicalId, userData.testResult,
-					userData.dob, userData.gender, userData.flagged);
+					userData.dob, userData.gender, userData.flagged, userData.reminded, userData.lastUpdated);
 			case UserType.DOCTOR:
 				return new Doctor(auth.currentUser.uid, userData.firstName, userData.lastName, auth.currentUser.email,
 					userData.phoneNumber, userData.address, userData.licenseId);
