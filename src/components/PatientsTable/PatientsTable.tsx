@@ -241,7 +241,7 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 					(currentProfile.getRole() === UserType.HEALTH_OFFICIAL) &&
 
 					<Td key={index} className={'patients-table__reminder'}>
-						<IonButton disabled={(patient.reminded)} onClick={() => remindPatient(patient)} >
+						<IonButton disabled={resetButton(patient.reminded)} onClick={() => remindPatient(patient)} >
 							Remind patient</IonButton>
 					</Td>
 				}
