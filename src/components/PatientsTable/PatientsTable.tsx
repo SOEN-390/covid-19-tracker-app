@@ -74,6 +74,9 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 	}
 
 	function reviewPatient(patient: Patient) {
+		if (currentProfile.getRole() !== UserType.DOCTOR) {
+			return;
+		}
 		patient.reviewed = !patient.reviewed;
 		HttpService.patch(
 			`doctors/${patient.medicalId}/${patient.reviewed ? 'review' : 'unreview'}`,
@@ -181,7 +184,7 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 					) &&
 					<Td key={index}>
 						<IonButton id={`patients-table__monitor-${patient.medicalId}`} shape="round" onClick={() => {
-							if (currentProfile.getRole() === UserType.DOCTOR && !patient.reviewed) {
+							if (!patient.reviewed) {
 								reviewPatient(patient);
 							}
 						}}>
