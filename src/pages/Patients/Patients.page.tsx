@@ -36,7 +36,11 @@ const PatientsPage: React.FC = () => {
 	function onPatientsChanged(changedPatient: Patient) {
 		for (const [index, patient] of patients.entries()) {
 			if (patient.medicalId === changedPatient.medicalId) {
-				patients[index] = changedPatient;
+				if (currentProfile.getRole() === UserType.IMMIGRATION_OFFICER) {
+					patients.splice(index, 1);
+				} else {
+					patients[index] = changedPatient;
+				}
 			}
 		}
 		setPatients([...patients]);
@@ -51,7 +55,7 @@ const PatientsPage: React.FC = () => {
 	}
 
 	function getAssignedPatients(): void {
-		HttpService.get('patients/all').then((patients: Patient[]) => {
+		HttpService.get(`doctors/${currentProfile.licenseId}/patients/assigned`).then((patients: Patient[]) => {
 			const patientsArranged: Patient[] = [];
 			for (const patient of patients) {
 				if (patient.flagged) {

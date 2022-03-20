@@ -28,6 +28,7 @@ import { call, close, flag, mail } from 'ionicons/icons';
 import { ISymptom, ISymptomResponse } from '../../interfaces/ISymptom';
 import ContactTracingTableModal from '../ContactTracingTable/ContactTracingTable.modal';
 import PatientSymptomsTableModal from '../PatientSymptomsTable/PatientSymptomsTable.modal';
+import Moment from 'react-moment';
 
 const PatientInformation: React.FC<{
 	patient: IPatient, onChange: (patient: IPatient) => void,
@@ -55,6 +56,7 @@ const PatientInformation: React.FC<{
 			await HttpService.patch(`patients/${currentProfile.medicalId}/status`, {status: props.patient.testResult});
 			props.onChange(props.patient);
 			currentProfile.testResult = props.patient.testResult;
+			currentProfile.lastUpdated = new Date();
 			setShowStatusModal(false);
 			present('Successfully updated status', 1500);
 		} catch (e) {
@@ -237,6 +239,12 @@ const PatientInformation: React.FC<{
 								<div>
 									<IonText> <strong>Email</strong></IonText>
 									<p className="patient-information__detail">{props.patient.email}</p>
+								</div>
+							</IonRow>
+							<IonRow>
+								<div>
+									<IonText> <strong>Last Status Update</strong></IonText>
+									<p className="patient-information__detail"><Moment format={'LLL'} date={props.patient.lastUpdated}/></p>
 								</div>
 							</IonRow>
 						</IonCol>

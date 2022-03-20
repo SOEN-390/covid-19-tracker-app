@@ -84,7 +84,7 @@ const PatientSymptomsTableModal: React.FC<{
 							{
 								Array.from(symptomsTable).map((el, index1) =>
 									<Td className={'patient-symptoms-table__table-head__date'} key={index1}>
-										<Moment date={el[0]}/>
+										<Moment format={'LLL'} date={el[0]}/>
 									</Td>
 								)
 							}

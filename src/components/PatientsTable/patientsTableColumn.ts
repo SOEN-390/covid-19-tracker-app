@@ -1,5 +1,5 @@
 export interface PatientsTableColumn {
-	id: 'patients' | 'status' | 'lastUpdate' | 'doctor' | 'action' | 'priority' | 'monitorSymptoms' | 'reviewed';
+	id: 'patients' | 'status' | 'lastUpdated' | 'doctor' | 'action' | 'priority' | 'monitorSymptoms' | 'reviewed';
 	label: string;
 	minWidth?: number;
 	align?: 'center';
@@ -43,6 +43,12 @@ export const doctorColumns: readonly PatientsTableColumn[] = [
 		minWidth: 170,
 		align: 'center'
 	},
+	{
+		id: 'lastUpdated',
+		label: 'Last Updated',
+		minWidth: 170,
+		align: 'center'
+	}
 ];
 
 export const adminColumns: readonly PatientsTableColumn[] = [
@@ -76,6 +82,12 @@ export const adminColumns: readonly PatientsTableColumn[] = [
 		minWidth: 170,
 		align: 'center'
 	},
+	{
+		id: 'lastUpdated',
+		label: 'Last Updated',
+		minWidth: 170,
+		align: 'center'
+	}
 ];
 
 export const healthOfficialColumns: readonly PatientsTableColumn[] = [
@@ -114,6 +126,12 @@ export const healthOfficialColumns: readonly PatientsTableColumn[] = [
 		label: 'Priority',
 		minWidth: 170,
 		align: 'center'
+	},
+	{
+		id: 'lastUpdated',
+		label: 'Last Updated',
+		minWidth: 170,
+		align: 'center'
 	}
 ];
 
@@ -145,6 +163,12 @@ export const immigrationOfficerColumns: readonly PatientsTableColumn[] = [
 	{
 		id: 'priority',
 		label: 'Priority',
+		minWidth: 170,
+		align: 'center'
+	},
+	{
+		id: 'lastUpdated',
+		label: 'Last Updated',
 		minWidth: 170,
 		align: 'center'
 	}

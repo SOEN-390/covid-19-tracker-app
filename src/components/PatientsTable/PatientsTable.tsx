@@ -31,7 +31,8 @@ import { Patient } from '../../objects/Patient.class';
 import HttpService from '../../providers/http.service';
 import SymptomsCardComponent from '../SymptomsCard/SymptomsCard.component';
 import { useHistory } from 'react-router-dom';
-import { AdminPages, DoctorPages, HealthOfficialPages } from '../../providers/pages.enum';
+import { AdminPages, DoctorPages, HealthOfficialPages, ImmigrationOfficerPages } from '../../providers/pages.enum';
+import Moment from 'react-moment';
 
 const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient) => void }> = (props) => {
 
@@ -60,6 +61,7 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 	}, []);
 
 	function flagPatient(patient: Patient) {
+
 		patient.flagged = !patient.flagged;
 		HttpService.post(
 			`patients/${patient.medicalId}/${patient.flagged ? 'flag' : 'unflag'}`,
@@ -73,6 +75,9 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 	}
 
 	function reviewPatient(patient: Patient) {
+		if (currentProfile.getRole() !== UserType.DOCTOR) {
+			return;
+		}
 		patient.reviewed = !patient.reviewed;
 		HttpService.patch(
 			`doctors/${patient.medicalId}/${patient.reviewed ? 'review' : 'unreview'}`,
@@ -114,10 +119,6 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 
 	function getRow(patient: Patient, index: number): JSX.Element | null {
 
-		if (!patient.flagged) {
-			return null;
-		}
-
 		return (
 			<Tr className="patients-table__table-entries"
 				key={index}
@@ -132,6 +133,10 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 						if (currentProfile.getRole() === UserType.ADMIN) {
 							history.push({
 								pathname: AdminPages.patientProfile + '/' + patient.medicalId
+							});
+						} else if (currentProfile.getRole() === UserType.IMMIGRATION_OFFICER) {
+							history.push({
+								pathname: ImmigrationOfficerPages.patientProfile + '/' + patient.medicalId
 							});
 						} else if (currentProfile.getRole() === UserType.HEALTH_OFFICIAL) {
 							history.push({
@@ -184,7 +189,7 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 					) &&
 					<Td key={index}>
 						<IonButton id={`patients-table__monitor-${patient.medicalId}`} shape="round" onClick={() => {
-							if (currentProfile.getRole() === UserType.DOCTOR && !patient.reviewed) {
+							if (!patient.reviewed) {
 								reviewPatient(patient);
 							}
 						}}>
@@ -210,6 +215,8 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 						className={patient.flagged ? 'patients-table__flag__high-priority' : 'patients-table__flag__no-priority'}
 						icon={flag} onClick={() => flagPatient(patient)}
 					/>
+				</Td>
+				<Td key={index} > <Moment format={'LLL'} date={patient.lastUpdated}/>
 				</Td>
 			</Tr>
 		);
