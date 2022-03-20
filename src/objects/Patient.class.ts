@@ -103,15 +103,6 @@ export class Patient extends User {
 	set doctorName(value: string) {
 		this._doctorName = value;
 	}
-
-	get reminded(): boolean {
-		return this._reminded || false;
-	}
-
-	set reminded(value: boolean) {
-		this._reminded = value;
-	}
-
 	get lastUpdated(): Date {
 		return <Date>this._lastUpdated;
 	}

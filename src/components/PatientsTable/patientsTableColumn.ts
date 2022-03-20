@@ -44,7 +44,7 @@ export const doctorColumns: readonly PatientsTableColumn[] = [
 		align: 'center'
 	},
 	{
-		id: 'lastUpdated',
+		id: 'lastUpdate',
 		label: 'Last Updated',
 		minWidth: 170,
 		align: 'center'
@@ -83,7 +83,7 @@ export const adminColumns: readonly PatientsTableColumn[] = [
 		align: 'center'
 	},
 	{
-		id: 'lastUpdated',
+		id: 'lastUpdate',
 		label: 'Last Updated',
 		minWidth: 170,
 		align: 'center'
@@ -134,7 +134,7 @@ export const healthOfficialColumns: readonly PatientsTableColumn[] = [
 		align: 'center'
 	},
 	{
-		id: 'lastUpdated',
+		id: 'lastUpdate',
 		label: 'Last Updated',
 		minWidth: 170,
 		align: 'center'
@@ -173,7 +173,7 @@ export const immigrationOfficerColumns: readonly PatientsTableColumn[] = [
 		align: 'center'
 	},
 	{
-		id: 'lastUpdated',
+		id: 'lastUpdate',
 		label: 'Last Updated',
 		minWidth: 170,
 		align: 'center'
