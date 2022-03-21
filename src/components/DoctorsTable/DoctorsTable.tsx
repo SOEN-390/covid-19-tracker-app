@@ -95,7 +95,7 @@ const DoctorsTable: React.FC<{ doctorTableRows: IDoctorTableRow[] }> = (props) =
 										<IonIcon icon={alertCircleOutline}></IonIcon>
 									}
 								</Td>
-								<Td>{row.numberOfPatients}</Td>
+								<Td>{row.assignedPatientsCount}</Td>
 							</Tr>
 						);
 					})
