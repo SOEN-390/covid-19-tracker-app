@@ -79,27 +79,28 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 		});
 	}
 	function remindPatient(patient: Patient) {
-		patient.reminded = !patient.reminded;
-		//setTime(currentHour);
 		if (patient.reminded) {
 			presentToast('Patient already reminded', 1500);
 
 			return;
 		}
+		patient.reminded = true;
+		//setTime(currentHour);
+
+		console.log(patient.reminded);
 		HttpService.post(
-			`patients/${patient.medicalId}/${patient.reminded ? 'remind' : 'unremind'}`,
+			`patients/${patient.medicalId}/remind`,
 			{ role: currentProfile.getRole() }
 		).then(() => {
 			props.onChange(patient);
-			presentToast(`Successfully ${patient.reminded ? 'REMINDED' : 'UNREMINDED'} patient.`, 1000);
+			presentToast('Successfully REMINDED patient.', 1000);
 		}).catch(() => {
 			presentToast('An error has occurred. Please try again.', 1000);
 		});
+
 	}
 
-	function resetButton(reminded: boolean) {
-		return reminded;
-	}
+
 
 	function reviewPatient(patient: Patient) {
 		if (currentProfile.getRole() !== UserType.DOCTOR) {
@@ -241,7 +242,7 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 					(currentProfile.getRole() === UserType.HEALTH_OFFICIAL) &&
 
 					<Td key={index} className={'patients-table__reminder'}>
-						<IonButton disabled={resetButton(patient.reminded)} onClick={() => remindPatient(patient)} >
+						<IonButton onClick={() => remindPatient(patient)} >
 							Remind patient</IonButton>
 					</Td>
 				}
