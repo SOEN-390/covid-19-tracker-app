@@ -5,5 +5,5 @@ export interface IDoctorTableRow {
 	phoneNumber: string,
 	address: Date;
 	email: string;
-	numberOfPatients: string;
+	assignedPatientsCount: string;
 }
