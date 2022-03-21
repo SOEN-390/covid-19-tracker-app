@@ -7,13 +7,16 @@ export class Doctor extends User {
 
 	private _licenseId: string;
 	private _email: string;
+	private _emergencyLeave: boolean;
 
 	// Constructor
 
-	public constructor(id: string, firstName: string, lastName: string, email: string, phoneNumber: string, address: string, licenseId: string) {
+	public constructor(id: string, firstName: string, lastName: string, email: string, phoneNumber: string,
+					   address: string, licenseId: string, emergencyLeave: boolean) {
 		super(id, firstName, lastName, phoneNumber, address);
 		this._email = email;
 		this._licenseId = licenseId;
+		this._emergencyLeave = emergencyLeave;
 	}
 
 	// Getters and Setters
@@ -32,6 +35,14 @@ export class Doctor extends User {
 
 	set licenseId(value: string) {
 		this._licenseId = value;
+	}
+
+	get emergencyLeave(): boolean {
+		return this._emergencyLeave;
+	}
+
+	set emergencyLeave(value: boolean) {
+		this._emergencyLeave = value;
 	}
 
 	// Methods
