@@ -244,7 +244,7 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 					<Td key={index} className={'patients-table__reminder'}>
 						<IonButton color={patient.reminded ? 'success' : 'light'}
 							onClick={() => remindPatient(patient)} >
-							Remind patient</IonButton>
+							{patient.reminded ? 'patient reminded' : 'Remind patient'}</IonButton>
 					</Td>
 				}
 				<Td key={index} className={'patients-table__flag'}>
