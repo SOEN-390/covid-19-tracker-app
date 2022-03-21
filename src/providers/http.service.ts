@@ -34,10 +34,13 @@ const HttpService = {
 	patch: (path: string, body?: any) => {
 		const request = new Request(environment.apiUrl + environment.apiPrefix + '/' + path, {
 			method: 'PATCH',
-			body: new Blob([JSON.stringify(body, null, 2)], {type: 'application/json'}),
+			body: body ?
+				new Blob([JSON.stringify(body, null, 2)], {type: 'application/json'}) :
+				null,
 			headers: HttpService.getHeader()
 		});
 		return fetch(request).then(async (response) => {
+			console.log(response);
 			if (response.status === 500) {
 				throw new Error();
 			}
@@ -73,7 +76,9 @@ const HttpService = {
 	delete: (path: string, body?: any) => {
 		const request = new Request(environment.apiUrl + environment.apiPrefix + '/' + path, {
 			method: 'DELETE',
-			body: new Blob([JSON.stringify(body, null, 2)], {type: 'application/json'}),
+			body: body ?
+				new Blob([JSON.stringify(body, null, 2)], {type: 'application/json'}) :
+				null,
 			headers: HttpService.getHeader()
 		});
 		return fetch(request).then(async (response) => {
