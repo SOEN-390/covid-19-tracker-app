@@ -91,8 +91,9 @@ const DoctorsTable: React.FC<{ doctorTableRows: IDoctorTableRow[] }> = (props) =
 								<Td>{row.email}</Td>
 								<Td>
 									{
-										row.emergencyLeave &&
-										<IonIcon icon={alertCircleOutline}></IonIcon>
+										row.emergencyLeave ?
+											<IonIcon icon={alertCircleOutline} size={'large'} color={'danger'} /> :
+											<></>
 									}
 								</Td>
 								<Td>{row.assignedPatientsCount}</Td>
