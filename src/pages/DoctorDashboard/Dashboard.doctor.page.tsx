@@ -110,7 +110,7 @@ const DashboardDoctorPage: React.FC = () => {
 			presentToast('Emergency leave already declared.', 1500);
 			return;
 		}
-		HttpService.post(`doctors/${currentProfile.licenseId}/emergency-leave`).then(() => {
+		HttpService.patch(`doctors/${currentProfile.licenseId}/emergency-leave`).then(() => {
 			currentProfile.emergencyLeave = !currentProfile.emergencyLeave;
 			presentToast('Successfully declared an emergency leave.', 1500);
 		}).catch((error) => {
