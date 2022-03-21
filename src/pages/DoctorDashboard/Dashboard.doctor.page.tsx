@@ -9,7 +9,7 @@ import {
 	IonPage,
 	IonRow,
 	IonTitle,
-	IonToolbar
+	IonToolbar, useIonToast
 } from '@ionic/react';
 import NavBar from '../../components/NavBar/NavBar';
 import './Dashboard.doctor.page.scss';
@@ -25,6 +25,8 @@ const DashboardDoctorPage: React.FC = () => {
 	const {currentProfile} = useAuth();
 	const [diagnosticData, setDiagnosticData] = useState<{ testResult: string, val: number }[]>([]);
 	const [genderData, setGenderData] = useState<{ gender: string, val: number }[]>([]);
+
+	const [presentToast] = useIonToast();
 
 	useEffect(() => {
 		getAssignedPatients();
@@ -103,8 +105,17 @@ const DashboardDoctorPage: React.FC = () => {
 		};
 	}
 
-	function declareEmergency() {
-		console.log('EMERGENCY');
+	function declareEmergency(): void {
+		if (currentProfile.emergencyLeave) {
+			presentToast('Emergency leave already declared.', 1500);
+			return;
+		}
+		HttpService.post(`doctors/${currentProfile.licenseId}/emergency-leave`).then(() => {
+			currentProfile.emergencyLeave = !currentProfile.emergencyLeave;
+			presentToast('Successfully declared an emergency leave.', 1500);
+		}).catch((error) => {
+			console.log('ERROR: ', error);
+		});
 	}
 
 	return (
