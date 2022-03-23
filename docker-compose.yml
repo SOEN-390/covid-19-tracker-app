@@ -7,7 +7,7 @@ services:
       context: ./
       dockerfile: Dockerfile
     ports:
-      - "8100:8100"
+      - "8100:80"
     volumes:
       - ./src:/var/code/src
 
