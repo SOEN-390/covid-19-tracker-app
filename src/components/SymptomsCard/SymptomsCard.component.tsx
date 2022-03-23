@@ -1,55 +1,53 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Patient } from '../../objects/Patient.class';
 import {
 	IonButton,
 	IonCard,
 	IonCardContent,
 	IonCardHeader,
-	IonCardSubtitle,
+	IonCardSubtitle, IonItem, IonList,
 	IonModal, useIonToast
 } from '@ionic/react';
 import { ISymptomResponse } from '../../interfaces/ISymptom';
-import HttpService from '../../providers/http.service';
+import './SymptomsCard.component.scss';
+import Moment from 'react-moment';
 
-const SymptomsCardComponent: React.FC<{ patient: Patient, trigger: string}> = (props) => {
+const SymptomsCardComponent: React.FC<{ patient: Patient, trigger: string, symptoms: ISymptomResponse[]}> = (props) => {
 
 	const [modalOpen, setModalOpen] = useState<boolean>(false);
-	const [symptoms, setSymptoms] = useState<ISymptomResponse[]>([]);
 	const [present] = useIonToast();
 
-	async function getLatestSymptoms(): Promise<void> {
-		try {
-			const data = await HttpService.get(`patients/${props.patient.medicalId}/latest-symptoms`);
-			setSymptoms(data);
+	useEffect(() => {
+		if (modalOpen && (!props.symptoms || props.symptoms.length === 0)) {
+			setModalOpen(false);
+			present('The patient does not have any symptoms', 1500);
 		}
-		catch (e) {
-			present('Patient has not submitted any symptoms', 1500);
-		}
-	}
-
+	}, [modalOpen]);
 
 	return (
-		<IonModal className={'symptoms.card__modal'}
+		<IonModal className={'symptoms-card__modal'}
 				  isOpen={modalOpen} trigger={props.trigger}
-				  onWillPresent = {async () => {
-					  getLatestSymptoms();
-					  setModalOpen(true);
-				  }}>
+				  onIonModalDidPresent={() => {
+					 setModalOpen(true);
+			}}
+				  hidden={!props.symptoms || props.symptoms.length === 0}>
 			<IonCard>
+				<IonCardHeader className={'symptoms-card__header'} color={'secondary'}>Symptoms</IonCardHeader>
 				<IonCardContent>
-					{ symptoms && symptoms.length > 0 &&
-						symptoms.map((data, index) => {
+					{
+						props.symptoms && props.symptoms.length > 0 &&
+						<IonCardHeader>Submitted on
+							<IonCardSubtitle><Moment format={'LLL'}>{props.symptoms[0].onDate}</Moment></IonCardSubtitle>
+						</IonCardHeader>
+					}
+					{ props.symptoms && props.symptoms.length > 0 &&
+						props.symptoms.map((data, index) => {
 							return (
-								<IonCardHeader key={index}>{data.description}
-								</IonCardHeader>
+								<IonList key={index}>
+									<IonItem>{data.description}</IonItem>
+								</IonList>
 							);
 						})
-					}
-					{
-						symptoms && symptoms.length > 0 &&
-						<IonCardHeader>Submitted on
-							<IonCardSubtitle>{symptoms[0].onDate}</IonCardSubtitle>
-						</IonCardHeader>
 					}
 				</IonCardContent>
 			</IonCard>
