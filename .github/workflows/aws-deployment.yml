@@ -3,8 +3,9 @@ name: Docker Image CI
 on:
   push:
     branches: [ master ]
-  pull_request:
-    branches: [ master ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
 
 jobs:
 
@@ -14,16 +15,29 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+
+      - name: Build and Run the Docker Containers
+        run: docker-compose up --build -d
+
+      - name: Run ESLint
+        run: docker exec -e CI=true covid-19-tracker-app npm run style:eslint
+
+      - name: Run Tests with Coverage
+        run: docker exec -e CI=true covid-19-tracker-app npm run test -- --coverage
+
+  deploy:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
         with:
           lfs: 'true'
-      -
-        name: Build the Docker image
-        run: docker build -t ga63qes/flask-birds-classifier -f Dockerfile .
-      -
-        name: Generate Deployment Package
+      - name: Build the Docker image
+        run: docker build -t covid-19-tracker-app -f Dockerfile .
+      - name: Generate Deployment Package
         run: zip -r deploy.zip *
-      -
-        name: Get timestamp
+      - name: Get timestamp
         uses: gerred/actions/current-time@master
         id: current-time
 
