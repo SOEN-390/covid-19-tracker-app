@@ -6,36 +6,51 @@ import {
 	IonCardContent,
 	IonCardHeader,
 	IonCardSubtitle,
-	IonCardTitle,
-	IonModal
+	IonModal, useIonToast
 } from '@ionic/react';
+import { ISymptomResponse } from '../../interfaces/ISymptom';
+import HttpService from '../../providers/http.service';
 
 const SymptomsCardComponent: React.FC<{ patient: Patient, trigger: string}> = (props) => {
 
 	const [modalOpen, setModalOpen] = useState<boolean>(false);
+	const [symptoms, setSymptoms] = useState<ISymptomResponse[]>([]);
+	const [present] = useIonToast();
+
+	async function getLatestSymptoms(): Promise<void> {
+		try {
+			const data = await HttpService.get(`patients/${props.patient.medicalId}/latest-symptoms`);
+			setSymptoms(data);
+		}
+		catch (e) {
+			present('Patient has not submitted any symptoms', 1500);
+		}
+	}
+
 
 	return (
-		<IonModal isOpen={modalOpen} trigger={props.trigger}
-				  onIonModalDidPresent={() => setModalOpen(true)}>
+		<IonModal className={'symptoms.card__modal'}
+				  isOpen={modalOpen} trigger={props.trigger}
+				  onWillPresent = {async () => {
+					  getLatestSymptoms();
+					  setModalOpen(true);
+				  }}>
 			<IonCard>
-				<IonCardHeader>
-					<IonCardTitle>{props.patient.firstName + ' ' + props.patient.lastName}</IonCardTitle>
-					<IonCardSubtitle>Temperature</IonCardSubtitle>
-				</IonCardHeader>
 				<IonCardContent>
-					37.8 Celsius
-				</IonCardContent>
-				<IonCardHeader>
-					<IonCardSubtitle>Breathing</IonCardSubtitle>
-				</IonCardHeader>
-				<IonCardContent>
-					Severe difficulty breathing
-				</IonCardContent>
-				<IonCardHeader>
-					<IonCardSubtitle>Other Symptoms</IonCardSubtitle>
-				</IonCardHeader>
-				<IonCardContent>
-					Fever along with running nose
+					{ symptoms && symptoms.length > 0 &&
+						symptoms.map((data, index) => {
+							return (
+								<IonCardHeader key={index}>{data.description}
+								</IonCardHeader>
+							);
+						})
+					}
+					{
+						symptoms && symptoms.length > 0 &&
+						<IonCardHeader>Submitted on
+							<IonCardSubtitle>{symptoms[0].onDate}</IonCardSubtitle>
+						</IonCardHeader>
+					}
 				</IonCardContent>
 			</IonCard>
 			<IonButton onClick={() => setModalOpen(false)}>Close Symptoms Form</IonButton>
