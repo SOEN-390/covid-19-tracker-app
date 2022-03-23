@@ -32,7 +32,8 @@ const SymptomsCardComponent: React.FC<{ patient: Patient, trigger: string, sympt
 			}}
 				  hidden={!props.symptoms || props.symptoms.length === 0}>
 			<IonCard>
-				<IonCardHeader className={'symptoms-card__header'} color={'secondary'}>Symptoms</IonCardHeader>
+				<IonCardHeader className={'symptoms-card__header'} color={'secondary'}>
+					Symptoms of {props.patient.firstName} {props.patient.lastName}</IonCardHeader>
 				<IonCardContent>
 					{
 						props.symptoms && props.symptoms.length > 0 &&
