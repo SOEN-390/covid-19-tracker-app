@@ -1,4 +1,4 @@
-name: Docker Image CI
+name: Docker Build and AWS Deployment
 
 on:
   push:
@@ -106,6 +106,9 @@ jobs:
     name: Build and Push to ECR
     runs-on: ubuntu-latest
 
+    outputs:
+      image: ${{ steps.build-image.outputs.image }}
+
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -173,7 +176,7 @@ jobs:
         with:
           task-definition: ${{ secrets.AWS_ECS_TASK_DEFINITION }}
           container-name: covid-19-tracker-app
-          image: ${{ jobs.build-and-push.steps.build-image.outputs.image }}
+          image: ${{ needs.build-and-push.outputs.image }}
 
       - name: Deploy Amazon ECS task definition
         uses: aws-actions/amazon-ecs-deploy-task-definition@de0132cf8cdedb79975c6d42b77eb7ea193cf28e
