@@ -116,18 +116,21 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
 
-#      - name: Automatic Tagging of Releases
-#        id: increment-git-tag
-#        run: |
-#          bash ./build/git_update.sh -v major
+      - name: Get the version
+        id: get_version
+        run: echo ::set-output name=VERSION::$(cat package.json | jq --raw-output '.version')
+
+      - name: Automatic Tagging of Releases
+        id: increment-git-tag
+        run: |
+          bash ./build/git_update.sh -v ${{ steps.get_version.outputs.VERSION }}
 
       - name: Build, Tag, and Push the Image to Amazon ECR
         id: build-image
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: covid-19-tracker-app
-          IMAGE_TAG: initial
-#          ${{ steps.increment-git-tag.outputs.git-tag }}
+          IMAGE_TAG: ${{ steps.increment-git-tag.outputs.git-tag }}
         run: |
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
