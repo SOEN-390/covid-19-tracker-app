@@ -30,7 +30,8 @@ GVNUM1=${GITHUB_VERSION_PARTS[0]}
 GVNUM2=${GITHUB_VERSION_PARTS[1]}
 GVNUM3=${GITHUB_VERSION_PARTS[2]}
 
-if [[ $VNUM1 == $GVNUM1 && $VNUM2 == $GVNUM2 ]] then
+if [[ $VNUM1 == $GVNUM1 && $VNUM2 == $GVNUM2 ]]
+then
   # increase patch
   GVNUM3=$((VNUM3+1))
 else
@@ -41,7 +42,8 @@ fi
 NEW_TAG="$VNUM1.$VNUM2.$GVNUM3"
 echo "($VERSION) updating $CURRENT_VERSION to $NEW_TAG"
 
-if [[ $NEW_TAG < $GITHUB_VERSION ]] then
+if [[ $NEW_TAG < $GITHUB_VERSION ]]
+then
   echo "Package.json does not have the latest tag version"
   exit 1
 fi
@@ -51,7 +53,8 @@ GIT_COMMIT=`git rev-parse HEAD`
 NEEDS_TAG=`git describe --contains $GIT_COMMIT 2>/dev/null`
 
 # only tag if no tag already
-if [ -z "$NEEDS_TAG" ]; then
+if [ -z "$NEEDS_TAG" ]
+then
   echo "Tagged with $NEW_TAG"
   git tag $NEW_TAG
   git push --tags
