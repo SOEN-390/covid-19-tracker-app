@@ -81,7 +81,6 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 	function remindPatient(patient: Patient) {
 		if (patient.reminded) {
 			presentToast('Patient already reminded', 1500);
-
 			return;
 		}
 		patient.reminded = true;

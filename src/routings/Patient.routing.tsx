@@ -11,6 +11,7 @@ import { UserType } from '../enum/UserType.enum';
 import React from 'react';
 import ReportInContactPage from '../pages/ReportInContact/ReportInContact.page';
 import ChatsPage from '../pages/Chats/Chats.page';
+import DashboardPatientPage from '../pages/PatientDashboard/Dashboard.patient.page';
 
 setupIonicReact();
 
@@ -21,10 +22,10 @@ const PatientRouting: React.FC = () => {
 				<Menu ionMenuId={'home'} userType={UserType.PATIENT}/>
 				<IonRouterOutlet id="home">
 					<Route path={PatientPages.home} exact={true}>
-						<Redirect to={PatientPages.overview}/>
+						<Redirect to={PatientPages.dashboard}/>
 					</Route>
-					<Route path={PatientPages.overview}>
-						<Overview/>
+					<Route path={PatientPages.dashboard}>
+						<DashboardPatientPage/>
 					</Route>
 					<Route path={PatientPages.appointments}>
 						<AppointmentsPage/>

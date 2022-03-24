@@ -24,8 +24,8 @@ export interface AppPage {
 
 export const patientAppPages: readonly AppPage[] = [
 	{
-		title: 'Overview',
-		url: PatientPages.overview,
+		title: 'Dashboard',
+		url: PatientPages.dashboard,
 		icon: homeOutline
 	},
 	{

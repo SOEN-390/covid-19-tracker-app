@@ -5,7 +5,7 @@ export enum Pages {
 
 export enum PatientPages {
 	home = '/home',
-	overview = '/home/overview',
+	dashboard ='/home/dashboard',
 	appointments = '/home/appointments',
 	symptoms = '/home/symptoms',
 	patientProfile = '/home/patient-profile',
