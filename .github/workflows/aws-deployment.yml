@@ -172,7 +172,8 @@ jobs:
 
       - name: Print image
         run: |
-          echo ${{ needs.build-and-push.outputs }}
+          echo ${{ toJSON(needs.build-and-push.outputs) }}
+          echo ${{ toJSON(needs) }}
 
       - name: Fill in the new image ID in the Amazon ECS task definition
         id: task-def
