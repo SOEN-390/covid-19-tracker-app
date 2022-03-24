@@ -3,7 +3,7 @@ import {
 	IonButton,
 	IonIcon,
 	useIonActionSheet,
-	useIonToast,
+	useIonToast
 } from '@ionic/react';
 import './PatientsTable.scss';
 import * as React from 'react';
@@ -15,7 +15,7 @@ import {
 	doctorColumns,
 	healthOfficialColumns,
 	immigrationOfficerColumns,
-	PatientsTableColumn,
+	PatientsTableColumn
 } from './patientsTableColumn';
 import {
 	call,
@@ -42,20 +42,17 @@ import {
 import AssignedComponent from '../AssignedModal/Assigned.modal';
 import { IPatient } from '../../interfaces/IPatient';
 import Moment from 'react-moment';
+import { ISymptomResponse } from '../../interfaces/ISymptom';
 
-const PatientsTable: React.FC<{
-	patients: Patient[];
-	onChange: (patient: Patient) => void;
-	setPatients: (patient: Patient[]) => void;
-}> = (props) => {
-	const {currentProfile} = useAuth();
+const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient) => void }> = (props) => {
+
+	const { currentProfile } = useAuth();
 	const [columns, setColumns] = useState<readonly PatientsTableColumn[]>([]);
-
 	const [assignModal, setAssignModal] = useState<{ open: boolean, patient: Patient }>();
-
 	const [presentToast] = useIonToast();
 	const [presentActionSheet, dismissActionSheet] = useIonActionSheet();
 	const history = useHistory();
+	const [symptoms, setSymptoms] = useState<ISymptomResponse[]>([]);
 
 	const StringifyPatientList = JSON.stringify(props.patients);
 
@@ -104,16 +101,16 @@ const PatientsTable: React.FC<{
 		//setTime(currentHour);
 
 		console.log(patient.reminded);
-		HttpService.post(`patients/${patient.medicalId}/remind`, {
-			role: currentProfile.getRole(),
-		})
-			.then(() => {
-				props.onChange(patient);
-				presentToast('Successfully REMINDED patient.', 1000);
-			})
-			.catch(() => {
-				presentToast('An error has occurred. Please try again.', 1000);
-			});
+		HttpService.post(
+			`patients/${patient.medicalId}/remind`,
+			{ role: currentProfile.getRole() }
+		).then(() => {
+			props.onChange(patient);
+			presentToast('Successfully REMINDED patient.', 1000);
+		}).catch(() => {
+			presentToast('An error has occurred. Please try again.', 1000);
+		});
+
 	}
 
 	function reviewPatient(patient: Patient) {
@@ -122,17 +119,24 @@ const PatientsTable: React.FC<{
 		}
 		patient.reviewed = !patient.reviewed;
 		HttpService.patch(
-			`doctors/${patient.medicalId}/${
-				patient.reviewed ? 'review' : 'unreview'
-			}`,
-			{role: currentProfile.getRole()}
-		)
-			.then(() => {
-				props.onChange(patient);
-			})
-			.catch(() => {
-				presentToast('An error has occurred. Please try again.', 1500);
-			});
+			`doctors/${patient.medicalId}/${patient.reviewed ? 'review' : 'unreview'}`,
+			{ role: currentProfile.getRole() }
+		).then(() => {
+			props.onChange(patient);
+		}).catch(() => {
+			presentToast('An error has occurred. Please try again.', 1500);
+		});
+	}
+
+	async function getLatestSymptoms(patient: Patient): Promise<void> {
+		setSymptoms([]);
+		try {
+			const data = await HttpService.get(`patients/${patient.medicalId}/latest-symptoms`);
+			setSymptoms(data);
+		}
+		catch (e) {
+			console.log(e);
+		}
 	}
 
 	function generateContactList(patient: Patient): ActionSheetButton[] {
@@ -143,7 +147,7 @@ const PatientsTable: React.FC<{
 				icon: mail,
 				handler: () => {
 					window.location.href = `mailto:${patient.email}+?subject=COVID-Tracker&body=`;
-				},
+				}
 			});
 		}
 		if (patient.email) {
@@ -152,33 +156,24 @@ const PatientsTable: React.FC<{
 				icon: call,
 				handler: () => {
 					window.location.href = `tel:${patient.phoneNumber}`;
-				},
+				}
 			});
 		}
 		contactOption.push({
 			text: 'Cancel',
 			icon: close,
-			role: 'cancel',
+			role: 'cancel'
 		});
 		return contactOption;
 	}
 
 	function getRow(patient: Patient, index: number): JSX.Element | null {
 		return (
-			<Tr
-				className="patients-table__table-entries"
+			<Tr className="patients-table__table-entries"
 				key={index}
-				style={{
-					background:
-						currentProfile.getRole() === UserType.DOCTOR
-							? patient.reviewed
-								? ''
-								: '#F5F6F6'
-							: '',
-				}}
+				style={{ background: currentProfile.getRole() === UserType.DOCTOR ? (patient.reviewed ? '' : '#F5F6F6') : '' }}
 			>
-				<Td
-					key={index}
+				<Td key={index}
 					className="patients-table__table-entries__name"
 					onClick={() => {
 						if (!patient.reviewed) {
@@ -186,25 +181,19 @@ const PatientsTable: React.FC<{
 						}
 						if (currentProfile.getRole() === UserType.ADMIN) {
 							history.push({
-								pathname: AdminPages.patientProfile + '/' + patient.medicalId,
+								pathname: AdminPages.patientProfile + '/' + patient.medicalId
 							});
-						} else if (
-							currentProfile.getRole() === UserType.IMMIGRATION_OFFICER
-						) {
+						} else if (currentProfile.getRole() === UserType.IMMIGRATION_OFFICER) {
 							history.push({
-								pathname:
-									ImmigrationOfficerPages.patientProfile +
-									'/' +
-									patient.medicalId,
+								pathname: ImmigrationOfficerPages.patientProfile + '/' + patient.medicalId
 							});
 						} else if (currentProfile.getRole() === UserType.HEALTH_OFFICIAL) {
 							history.push({
-								pathname:
-									HealthOfficialPages.patientProfile + '/' + patient.medicalId,
+								pathname: HealthOfficialPages.patientProfile + '/' + patient.medicalId
 							});
 						} else if (currentProfile.getRole() === UserType.DOCTOR) {
 							history.push({
-								pathname: DoctorPages.patientProfile + '/' + patient.medicalId,
+								pathname: DoctorPages.patientProfile + '/' + patient.medicalId
 							});
 						}
 					}}
@@ -212,21 +201,11 @@ const PatientsTable: React.FC<{
 					{patient.firstName + ' ' + patient.lastName}
 				</Td>
 				<Td key={index}>
-					<div
-						key={index}
-						className={
-							'patients-table__status ' +
-							(patient.testResult === TestResult.POSITIVE
-								? 'patients-table__status__positive'
-								: '') +
-							(patient.testResult === TestResult.NEGATIVE
-								? 'patients-table__status__negative'
-								: '') +
-							(patient.testResult === TestResult.PENDING
-								? 'patients-table__status__pending'
-								: '')
-						}
-					>
+					<div key={index} className={'patients-table__status ' +
+						(patient.testResult === TestResult.POSITIVE ? 'patients-table__status__positive' : '') +
+						(patient.testResult === TestResult.NEGATIVE ? 'patients-table__status__negative' : '') +
+						(patient.testResult === TestResult.PENDING ? 'patients-table__status__pending' : '')
+					}>
 						{patient.testResult === TestResult.POSITIVE && 'POSITIVE'}
 						{patient.testResult === TestResult.NEGATIVE && 'NEGATIVE'}
 						{patient.testResult === TestResult.PENDING && 'PENDING'}
@@ -256,76 +235,67 @@ const PatientsTable: React.FC<{
 					</Td>
 				)}
 				<Td key={index}>
-					<IonButton
-						shape="round"
+					<IonButton shape="round"
 						expand="block"
 						onClick={() => {
-							presentActionSheet(generateContactList(patient), 'Contact by');
+							presentActionSheet(
+								generateContactList(patient),
+								'Contact by');
 							setTimeout(dismissActionSheet, 10000);
 						}}
 					>
 						Contact
 					</IonButton>
 				</Td>
-				{(currentProfile.getRole() === UserType.HEALTH_OFFICIAL ||
-					currentProfile.getRole() === UserType.DOCTOR ||
-					currentProfile.getRole() === UserType.IMMIGRATION_OFFICER) && (
+				{
+					(
+						currentProfile.getRole() === UserType.HEALTH_OFFICIAL ||
+						currentProfile.getRole() === UserType.DOCTOR ||
+						currentProfile.getRole() === UserType.IMMIGRATION_OFFICER
+					) &&
 					<Td key={index}>
-						<IonButton
-							shape="round"
-							onClick={() => {
-								if (!patient.reviewed) {
-									reviewPatient(patient);
-								}
-							}}
-						>
+						<IonButton id={`patients-table__monitor-${patient.medicalId}`} shape="round" onClick={async () => {
+							if (!patient.reviewed) {
+								reviewPatient(patient);
+							}
+							await getLatestSymptoms(patient);
+						}}>
 							Monitor Symptoms
 						</IonButton>
-						<SymptomsCardComponent
-							trigger={`patients-table__monitor-${patient.medicalId}`}
-							patient={patient}
-						/>
+
+						<SymptomsCardComponent trigger={`patients-table__monitor-${patient.medicalId}`}
+											   patient={patient} symptoms={symptoms}/>
+
+
 					</Td>
-				)}
-				{currentProfile.getRole() === UserType.DOCTOR && (
+				}
+				{
+					(currentProfile.getRole() === UserType.DOCTOR) &&
 					<Td key={index} className={'patients-table__flag'}>
-						<IonIcon
-							icon={
-								patient.reviewed
-									? checkmarkDoneCircleOutline
-									: checkmarkCircleOutline
-							}
+						<IonIcon icon={patient.reviewed ? checkmarkDoneCircleOutline : checkmarkCircleOutline}
 							color={patient.reviewed ? 'success' : ''}
 							onClick={() => {
 								reviewPatient(patient);
 							}}
 						/>
 					</Td>
-				)}
-				{currentProfile.getRole() === UserType.HEALTH_OFFICIAL && (
+				}
+				{
+					(currentProfile.getRole() === UserType.HEALTH_OFFICIAL) &&
+
 					<Td key={index} className={'patients-table__reminder'}>
-						<IonButton
-							color={patient.reminded ? 'success' : 'light'}
-							onClick={() => remindPatient(patient)}
-						>
-							{patient.reminded ? 'patient reminded' : 'Remind patient'}
-						</IonButton>
+						<IonButton color={patient.reminded ? 'success' : 'light'}
+							onClick={() => remindPatient(patient)} >
+							{patient.reminded ? 'patient reminded' : 'Remind patient'}</IonButton>
 					</Td>
-				)}
+				}
 				<Td key={index} className={'patients-table__flag'}>
 					<IonIcon
-						className={
-							patient.flagged
-								? 'patients-table__flag__high-priority'
-								: 'patients-table__flag__no-priority'
-						}
-						icon={flag}
-						onClick={() => flagPatient(patient)}
+						className={patient.flagged ? 'patients-table__flag__high-priority' : 'patients-table__flag__no-priority'}
+						icon={flag} onClick={() => flagPatient(patient)}
 					/>
 				</Td>
-				<Td key={index}>
-					{' '}
-					<Moment format={'LLL'} date={patient.lastUpdated}/>
+				<Td key={index} > <Moment format={'LLL'} date={patient.lastUpdated} />
 				</Td>
 			</Tr>
 		);
