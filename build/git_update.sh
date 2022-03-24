@@ -17,6 +17,7 @@ echo "Current Package.json Version: $CURRENT_VERSION"
 # get highest tag number in github
 git fetch --prune --unshallow 2>/dev/null
 GITHUB_VERSION=`git describe --abbrev=0 --tags 2>/dev/null`
+GITHUB_VERSION="${GITHUB_VERSION:1}"
 
 echo "Current GitHub Version: $GITHUB_VERSION"
 
