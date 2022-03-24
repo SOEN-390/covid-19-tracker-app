@@ -170,7 +170,6 @@ const PatientsPage: React.FC = () => {
 				{patients !== undefined ? (
 					<PatientsTable
 						patients={patientsTableRow}
-						setPatients={setPatients}
 						onChange={onPatientsChanged}
 					/>
 				) : null}
