@@ -28,6 +28,8 @@ const PatientsPage: React.FC = () => {
 	useEffect(() => {
 		if (currentProfile.getRole() === UserType.DOCTOR) {
 			getAssignedPatients();
+		} else if (currentProfile.getRole() === UserType.IMMIGRATION_OFFICER) {
+			getAllFlaggedPatients();
 		} else if (
 			currentProfile.getRole() === UserType.ADMIN ||
 			currentProfile.getRole() === UserType.HEALTH_OFFICIAL
@@ -47,31 +49,27 @@ const PatientsPage: React.FC = () => {
 	function onPatientsChanged(changedPatient: Patient) {
 		for (const [index, patient] of patients.entries()) {
 			if (patient.medicalId === changedPatient.medicalId) {
-				patients[index] = changedPatient;
+				if (currentProfile.getRole() === UserType.IMMIGRATION_OFFICER) {
+					patients.splice(index, 1);
+				} else {
+					patients[index] = changedPatient;
+				}
 			}
 		}
 		setPatients([...patients]);
 	}
 
-	function getAllPatients() {
-		HttpService.get('patients/all')
+	function getAllFlaggedPatients(): void {
+		HttpService.get(`immigrations/${currentProfile.id}/patients/flagged`)
 			.then((patients: Patient[]) => {
-				const patientsArranged: Patient[] = [];
-				for (const patient of patients) {
-					if (patient.flagged) {
-						patientsArranged.unshift(patient);
-					} else {
-						patientsArranged.push(patient);
-					}
-				}
-				setPatients?.(patientsArranged);
+				setPatients(patients);
 			})
 			.catch((error) => {
 				console.log('ERROR: ', error);
 			});
 	}
 
-	function getAssignedPatients() {
+	function getAssignedPatients(): void {
 		HttpService.get(`doctors/${currentProfile.licenseId}/patients/assigned`)
 			.then((patients: Patient[]) => {
 				const patientsArranged: Patient[] = [];
@@ -89,30 +87,40 @@ const PatientsPage: React.FC = () => {
 			});
 	}
 
+	function getAllPatients(): void {
+		HttpService.get('patients/all')
+			.then((patients: Patient[]) => {
+				const patientsArranged: Patient[] = [];
+				for (const patient of patients) {
+					if (patient.flagged) {
+						patientsArranged.unshift(patient);
+					} else {
+						patientsArranged.push(patient);
+					}
+				}
+				setPatients?.(patientsArranged);
+			})
+			.catch((error) => {
+				console.log('ERROR: ', error);
+			});
+	}
+
 	function getConfirmedPatients() {
-		const patientTableRow: Patient[] = [];
-		for (const patient of patients) {
-			if (
+		const patientTableRow = patients.filter(
+			(patient) =>
 				patient?.testResult === TestResult.POSITIVE ||
 				patient?.testResult === TestResult.NEGATIVE
-			) {
-				patientTableRow.push(patient);
-			}
-		}
+		);
 		setTableSelection('confirmed');
 		setPatientsTableRow(patientTableRow);
 	}
 
 	function getUnconfirmedPatients() {
-		const patientTableRow: Patient[] = [];
-		for (const patient of patients) {
-			if (
+		const patientTableRow = patients.filter(
+			(patient) =>
 				patient?.testResult === TestResult.PENDING ||
 				patient?.testResult === null
-			) {
-				patientTableRow.push(patient);
-			}
-		}
+		);
 		setTableSelection('unconfirmed');
 		setPatientsTableRow(patientTableRow);
 	}
@@ -120,10 +128,14 @@ const PatientsPage: React.FC = () => {
 	return (
 		<IonPage>
 			<IonToolbar>
-				<NavBar/>
+				<NavBar />
 			</IonToolbar>
 			<IonContent className={'patients-page__content'}>
-				<IonTitle>PATIENTS</IonTitle>
+				{currentProfile.getRole() === UserType.IMMIGRATION_OFFICER ? (
+					<IonTitle>FLAGGED PATIENTS</IonTitle>
+				) : (
+					<IonTitle>PATIENTS</IonTitle>
+				)}
 				<div>
 					<IonRow>
 						<IonCol />

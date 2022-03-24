@@ -19,14 +19,37 @@ const DoctorUnassignedModal: React.FC<{
 	doctor: IDoctorTableRow;
 	trigger?: string;
 	setDoctorsArray: (doctors: IDoctorTableRow[]) => void;
-}> = ({setDoctorsArray, doctor, trigger}) => {
+}> = ({ setDoctorsArray, doctor, trigger }) => {
 	const [patientsArray, setPatientsArray] = useState<IPatient[]>([]);
-	console.log('patientsArray: ', patientsArray);
 	const [modalOpen, setModalOpen] = useState<boolean>(false);
+	const [present] = useIonToast();
+	const unAssignPatient = async (
+		medicalId: string,
+		licenseId: string
+	): Promise<void> => {
+		try {
+			await HttpService.patch(
+				`admins/patient/${medicalId}
+				/doctor/${licenseId}/un-assign`,
+				{}
+			);
+			present('Successfully unAssigned Doctor', 1500);
+		} catch (e) {
+			present('Failed to unAssign Doctor', 1500);
+		}
+	};
+
+	const onClickHandler = async (medicalId: string) => {
+		await unAssignPatient(medicalId!, doctor.licenseId!);
+		doctorsRetrieval();
+		setModalOpen?.(false);
+		return;
+	};
 
 	useEffect(() => {
 		HttpService.get(`doctors/${doctor.licenseId}/patients/assigned`).then(
 			(numberOfPatientsResponse) => {
+				console.log('numberOfPatientsResponse: ', numberOfPatientsResponse);
 				setPatientsArray(numberOfPatientsResponse);
 			}
 		);
@@ -45,13 +68,13 @@ const DoctorUnassignedModal: React.FC<{
 				console.log(numberOfPatientsResponse);
 				doctorsResponse[index] = {
 					...doctor,
-					numberOfPatients: numberOfPatientsResponse.length,
+					assignedPatientsCount: numberOfPatientsResponse.length,
 				};
 				setPatientsArray(numberOfPatientsResponse);
 			} catch (error) {
 				doctorsResponse[index] = {
 					...doctor,
-					numberOfPatients: '0',
+					assignedPatientsCount: '0',
 				};
 			}
 		}
@@ -67,22 +90,24 @@ const DoctorUnassignedModal: React.FC<{
 			<IonCard>
 				<IonCardHeader>
 					<IonCardSubtitle>
-						{doctor.numberOfPatients > 0 ? 'Patients' : 'Patient'}
+						{doctor.assignedPatientsCount > 0 ? 'Patients' : 'Patient'}
 					</IonCardSubtitle>
 				</IonCardHeader>
 				<IonCardContent>
 					<Table className={'doctors-assigned__table'}>
 						{patientsArray.length > 0 &&
-							patientsArray.map((row, index) => {
+							patientsArray.map((row) => {
 								return (
-									<DoctorsRow
-										key={index}
-										name={row.firstName + ' ' + row.lastName}
-										setModalOpen={setModalOpen}
-										medicalId={row.medicalId}
-										licenseId={doctor.licenseId}
-										callPatientList={doctorsRetrieval}
-									/>
+									<Table key={row.id} className={'doctor-modal__Table'}>
+										<Tr className={'doctor-modal__table-row'}>
+											<Td
+												className={'doctor-table__doctor-name'}
+											>{`${row.firstName} ${row.lastName}`}</Td>
+											<IonButton onClick={() => onClickHandler(row.medicalId)}>
+												{'UnAssign'}
+											</IonButton>
+										</Tr>
+									</Table>
 								);
 							})}
 					</Table>
@@ -90,50 +115,6 @@ const DoctorUnassignedModal: React.FC<{
 			</IonCard>
 			<IonButton onClick={() => setModalOpen(false)}>Close</IonButton>
 		</IonModal>
-	);
-};
-
-const DoctorsRow: React.FC<{
-	name: string;
-	medicalId?: string;
-	licenseId?: string;
-	setModalOpen?: (open: boolean) => void;
-	callPatientList: () => void;
-}> = ({name, medicalId, licenseId, setModalOpen, callPatientList}) => {
-	const [present] = useIonToast();
-	const unAssignPatient = async (
-		medicalId: string,
-		licenseId: string
-	): Promise<void> => {
-		try {
-			await HttpService.patch(
-				`admins/patient/${medicalId}
-				/doctor/${licenseId}/un-assign`,
-				{}
-			);
-			present('Successfully unAssigned Doctor', 1500);
-		} catch (e) {
-			present('Failed to unAssign Doctor', 1500);
-		}
-	};
-
-	const onClickHandler = async () => {
-		await unAssignPatient(medicalId!, licenseId!);
-		callPatientList();
-		setModalOpen?.(false);
-		return;
-	};
-
-	return (
-		<Table className={'doctor-modal__Table'}>
-			<Tr
-				className={'doctor-modal__table-row'}
-			>
-				<Td className={'doctor-table__doctor-name'}>{name}</Td>
-				<IonButton onClick={onClickHandler}>{'UnAssign'}</IonButton>
-			</Tr>
-		</Table>
-
 	);
 };
 

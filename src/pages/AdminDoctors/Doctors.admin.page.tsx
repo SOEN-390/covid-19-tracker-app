@@ -8,6 +8,7 @@ import DoctorsTable from '../../components/DoctorsTable/DoctorsTable';
 import './Doctors.admin.page.scss';
 
 const DoctorsAdminPage: React.FC = () => {
+
 	const [doctorsArray, setDoctorsArray] = useState<IDoctorTableRow[]>([]);
 
 	useEffect(() => {
@@ -28,12 +29,12 @@ const DoctorsAdminPage: React.FC = () => {
 				console.log(numberOfPatientsResponse);
 				doctorsResponse[index] = {
 					...doctor,
-					numberOfPatients: numberOfPatientsResponse.length,
+					assignedPatientsCount: numberOfPatientsResponse.length,
 				};
 			} catch (error) {
 				doctorsResponse[index] = {
 					...doctor,
-					numberOfPatients: '0',
+					assignedPatientsCount: '0',
 				};
 			}
 		}
@@ -43,20 +44,20 @@ const DoctorsAdminPage: React.FC = () => {
 	return (
 		<IonPage>
 			<IonToolbar>
-				<NavBar />
+				<NavBar/>
 			</IonToolbar>
 			<IonContent className={'doctors-admin__content'}>
 				<IonTitle>Doctors</IonTitle>
-				<br />
-				{doctorsArray.length !== 0 ? (
-					<DoctorsTable
-						doctorTableRows={doctorsArray}
-						setDoctorsArray={setDoctorsArray}
-					/>
-				) : null}
+				<br/>
+				{
+					doctorsArray.length !== 0 ? <DoctorsTable doctorTableRows={doctorsArray}
+															  setDoctorsArray={setDoctorsArray}
+					/> : null
+				}
 			</IonContent>
 		</IonPage>
 	);
+
 };
 
 export default DoctorsAdminPage;

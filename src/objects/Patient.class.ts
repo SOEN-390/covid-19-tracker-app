@@ -12,8 +12,9 @@ export class Patient extends User {
 	private _testResult!: TestResult;
 	private _dob!: string;
 	private _gender!: Gender;
-	private _lastUpdatedAt?: string;
+	private _lastUpdated?: Date;
 	private _flagged?: boolean;
+	private _reminded?: boolean;
 	private _reviewed?: boolean;
 	private _doctorName?: string;
 	private _assigned?: boolean;
@@ -21,13 +22,17 @@ export class Patient extends User {
 	// Constructor
 
 	public constructor(id: string, firstName: string, lastName: string, email: string, phoneNumber: string, address: string,
-					   medicalId: string, testResult: TestResult, dob: string, gender: Gender) {
+		medicalId: string, testResult: TestResult, dob: string, gender: Gender, flagged?: boolean,
+		reminded?: boolean, lastUpdated?: Date) {
 		super(id, firstName, lastName, phoneNumber, address);
 		this._medicalId = medicalId;
 		this._email = email;
 		this._testResult = testResult;
 		this._dob = dob;
 		this._gender = gender;
+		this._flagged = flagged;
+		this._reminded = reminded;
+		this._lastUpdated = lastUpdated;
 	}
 
 	// Getters & Setters
@@ -67,13 +72,6 @@ export class Patient extends User {
 	set email(value: string) {
 		this._email = value;
 	}
-	get lastUpdatedAt(): string {
-		return this._lastUpdatedAt || '';
-	}
-
-	set lastUpdatedAt(value: string) {
-		this._lastUpdatedAt = value;
-	}
 
 	get flagged(): boolean {
 		return this._flagged || false;
@@ -81,6 +79,14 @@ export class Patient extends User {
 
 	set flagged(value: boolean) {
 		this._flagged = value;
+	}
+
+	get reminded(): boolean {
+		return this._reminded || false;
+	}
+
+	set reminded(value: boolean) {
+		this._reminded = value;
 	}
 
 	get reviewed(): boolean {
@@ -97,6 +103,13 @@ export class Patient extends User {
 
 	set doctorName(value: string) {
 		this._doctorName = value;
+	}
+	get lastUpdated(): Date {
+		return <Date>this._lastUpdated;
+	}
+
+	set lastUpdated(value: Date) {
+		this._lastUpdated = value;
 	}
 
 	get assigned(): boolean {

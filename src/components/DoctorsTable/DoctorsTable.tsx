@@ -2,6 +2,8 @@ import './DoctorTable.scss';
 import * as React from 'react';
 import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table';
 import { IDoctorTableRow } from '../../interfaces/IDoctorTableRow';
+import { IonIcon } from '@ionic/react';
+import { alertCircleOutline } from 'ionicons/icons';
 
 import DoctorUnassignedModal from '../AssignedModal/Doctor.unassigned.modal';
 
@@ -12,6 +14,7 @@ interface Column {
 		| 'phoneNumber'
 		| 'address'
 		| 'email'
+		| 'emergencyLeave'
 		| 'numberOfPatients';
 	label: string;
 	minWidth?: number;
@@ -51,6 +54,12 @@ const columns: readonly Column[] = [
 		align: 'center',
 	},
 	{
+		id: 'emergencyLeave',
+		label: 'Emergency Leave',
+		minWidth: 170,
+		align: 'center',
+	},
+	{
 		id: 'numberOfPatients',
 		label: 'Number of Patients',
 		minWidth: 170,
@@ -82,12 +91,23 @@ const DoctorsTable: React.FC<{
 							<Td>{row.phoneNumber}</Td>
 							<Td>{row.address}</Td>
 							<Td>{row.email}</Td>
+							<Td>
+								{row.emergencyLeave ? (
+									<IonIcon
+										icon={alertCircleOutline}
+										size={'large'}
+										color={'danger'}
+									/>
+								) : (
+									<></>
+								)}
+							</Td>
 							<Td id={`doctors-table__assigned-${row.licenseId}`}>
-								{row.numberOfPatients}
+								{row.assignedPatientsCount}
 							</Td>
 							<DoctorUnassignedModal
 								trigger={
-									row.numberOfPatients > 0
+									row.assignedPatientsCount > 0
 										? `doctors-table__assigned-${row.licenseId}`
 										: undefined
 								}

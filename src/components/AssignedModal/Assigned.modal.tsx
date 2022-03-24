@@ -15,9 +15,9 @@ import HttpService from '../../providers/http.service';
 import { IPatient } from '../../interfaces/IPatient';
 
 const AssignedComponent: React.FC<{
-	patient: IPatient; trigger: string; onChange: (patient: IPatient) => void;
+	onChange: (patient: IPatient) => void;
+	assignModal: {open: boolean, patient: IPatient}
 }> = (props) => {
-
 	const [modalOpen, setModalOpen] = useState<boolean>(false);
 	const [doctors, setDoctors] = useState<IDoctorTableRow[]>([]);
 
@@ -25,9 +25,12 @@ const AssignedComponent: React.FC<{
 
 	useEffect(() => {
 		HttpService.get('doctors/all').then((value: IDoctorTableRow[]) => {
-			if (props.patient.doctorName !== null) {
+			if (props.assignModal.patient.doctorName !== null) {
 				value.forEach((doctor) => {
-					if (doctor.firstName + ' ' + doctor.lastName === props.patient.doctorName) {
+					if (
+						doctor.firstName + ' ' + doctor.lastName ===
+						props.assignModal.patient.doctorName
+					) {
 						setDoctors([doctor]);
 						return;
 					}
@@ -36,11 +39,17 @@ const AssignedComponent: React.FC<{
 			}
 			setDoctors(value);
 		});
-	}, []);
+	}, [props.assignModal.patient.doctorName]);
+
+	useEffect(() => {
+		setModalOpen(props.assignModal.open);
+	}, [props.assignModal]);
+
+
 
 	async function unAssignPatient(licenseId: string): Promise<void> {
 		try {
-			const path = `admins/patient/${props.patient.medicalId}/doctor/${licenseId}/un-assign`;
+			const path = `admins/patient/${props.assignModal.patient.medicalId}/doctor/${licenseId}/un-assign`;
 			await HttpService.patch(path, {});
 			present('Successfully unAssigned Doctor', 1500);
 		} catch (e) {
@@ -51,48 +60,53 @@ const AssignedComponent: React.FC<{
 	async function assignPatient(licenseId: string): Promise<void> {
 		try {
 			await HttpService.patch(
-				`admins/patient/${props.patient.medicalId}/doctor/${licenseId}/assign`,
+				`admins/patient/${props.assignModal.patient.medicalId}/doctor/${licenseId}/assign`,
 				{}
 			);
 			present('Successfully Assigned Doctor', 1500);
 		} catch (e) {
-			present('Failed to unAssign Doctor', 1500);
+			present('Failed to Assign Doctor', 1500);
 		}
 	}
 
-	function getDoctorRow(doctorTableRow: IDoctorTableRow, isAssign: boolean): JSX.Element {
+	function getDoctorRow(
+		doctorTableRow: IDoctorTableRow,
+		Assigned: boolean
+	): JSX.Element {
 		return (
-			<Table className={'patients-modal__Table'}>
-				<Tr
-					className={'patients-modal__table-row'}
-					key={doctorTableRow.licenseId}
-				>
-					<Td className={'doctor-table__doctor-name'}>
-						{doctorTableRow.firstName + ' ' + doctorTableRow.lastName}
-					</Td>
-					<IonButton onClick={() => {
-						onClickHandler(doctorTableRow);
-					}}>
-						{isAssign ? 'UnAssign' : 'Add'}
+			<Tr
+				className={'patients-modal__table-row'}
+				key={doctorTableRow.licenseId}
+			>
+				<Td className={'doctor-table__doctor-name'}>
+					{doctorTableRow.firstName + ' ' + doctorTableRow.lastName}
+				</Td>
+				<Td>
+					<IonButton
+						onClick={() => {
+							onClickHandler(doctorTableRow);
+						}}
+					>
+						{Assigned ? 'UnAssign' : 'Add'}
 					</IonButton>
-				</Tr>
-			</Table>
-
+				</Td>
+			</Tr>
 		);
 	}
 
 	function onClickHandler(doctorTableRow: IDoctorTableRow) {
-		if (props.patient.doctorName) {
+		if (props.assignModal.patient.doctorName) {
 			unAssignPatient(doctorTableRow.licenseId!).then(() => {
-				props.patient.doctorName = null;
-				props.onChange(props.patient);
+				props.assignModal.patient.doctorName = null;
+				props.onChange(props.assignModal.patient);
 				setModalOpen?.(false);
 			});
 			return;
 		} else {
 			assignPatient(doctorTableRow.licenseId!).then(() => {
-				props.patient.doctorName = doctorTableRow.firstName + ' ' + doctorTableRow.lastName;
-				props.onChange(props.patient);
+				props.assignModal.patient.doctorName =
+					doctorTableRow.firstName + ' ' + doctorTableRow.lastName;
+				props.onChange(props.assignModal.patient);
 				setModalOpen?.(false);
 			});
 		}
@@ -101,24 +115,23 @@ const AssignedComponent: React.FC<{
 	return (
 		<IonModal
 			isOpen={modalOpen}
-			trigger={props.trigger}
-			onIonModalDidPresent={() => setModalOpen(true)}
+			onIonModalWillPresent={() => {
+				setModalOpen(true);
+			}}
 		>
 			<IonCard>
 				<IonCardHeader>
 					<IonCardSubtitle>
-						{!props.patient.doctorName ? 'Doctors' : 'Doctor'}
+						{!props.assignModal.patient.doctorName ? 'Doctors' : 'Doctor'}
 					</IonCardSubtitle>
 				</IonCardHeader>
 				<IonCardContent>
 					<Table className={'doctors-assigned__table'}>
-						{
-							doctors.map((row) => {
-								return (
-									getDoctorRow(row, !!props.patient.doctorName)
-								);
-							})
-						}
+						<tbody>
+							{doctors.map((row) => {
+								return getDoctorRow(row, !!props.assignModal.patient.doctorName);
+							})}
+						</tbody>
 					</Table>
 				</IonCardContent>
 			</IonCard>

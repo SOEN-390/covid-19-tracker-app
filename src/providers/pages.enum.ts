@@ -10,7 +10,8 @@ export enum PatientPages {
 	symptoms = '/home/symptoms',
 	patientProfile = '/home/patient-profile',
 	settings = '/home/settings',
-	reportInContact = '/home/report'
+	reportInContact = '/home/report',
+	chat = '/home/chat'
 }
 
 export enum DoctorPages {
@@ -18,7 +19,8 @@ export enum DoctorPages {
 	dashboard = '/doctor/dashboard',
 	patientProfile = '/doctor/patient-profile',
 	patients = '/doctor/patients',
-	settings = '/doctor/settings'
+	settings = '/doctor/settings',
+	chat = '/doctor/chat'
 }
 
 export enum HealthOfficialPages {
@@ -30,7 +32,7 @@ export enum HealthOfficialPages {
 
 export enum ImmigrationOfficerPages {
 	home = '/immigration-officer',
-	dashboard = '/immigration-officer/dashboard',
+	flaggedPatients = '/immigration-officer/flagged-patients',
 	patientProfile = '/immigration-officer/patient-profile',
 	settings = '/immigration-officer/settings'
 }

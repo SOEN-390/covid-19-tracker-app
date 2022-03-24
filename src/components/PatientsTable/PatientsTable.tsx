@@ -14,6 +14,7 @@ import {
 	adminColumns,
 	doctorColumns,
 	healthOfficialColumns,
+	immigrationOfficerColumns,
 	PatientsTableColumn,
 } from './patientsTableColumn';
 import {
@@ -22,7 +23,9 @@ import {
 	mail,
 	close,
 	checkmarkCircleOutline,
-	checkmarkDoneCircleOutline, personRemoveOutline, personAddOutline,
+	checkmarkDoneCircleOutline,
+	personRemoveOutline,
+	personAddOutline,
 } from 'ionicons/icons';
 import { useAuth } from '../../providers/auth.provider';
 import { TestResult } from '../../enum/TestResult.enum';
@@ -30,9 +33,15 @@ import { Patient } from '../../objects/Patient.class';
 import HttpService from '../../providers/http.service';
 import SymptomsCardComponent from '../SymptomsCard/SymptomsCard.component';
 import { useHistory } from 'react-router-dom';
-import { AdminPages, DoctorPages, HealthOfficialPages } from '../../providers/pages.enum';
+import {
+	AdminPages,
+	DoctorPages,
+	HealthOfficialPages,
+	ImmigrationOfficerPages,
+} from '../../providers/pages.enum';
 import AssignedComponent from '../AssignedModal/Assigned.modal';
 import { IPatient } from '../../interfaces/IPatient';
+import Moment from 'react-moment';
 
 const PatientsTable: React.FC<{
 	patients: Patient[];
@@ -42,9 +51,13 @@ const PatientsTable: React.FC<{
 	const {currentProfile} = useAuth();
 	const [columns, setColumns] = useState<readonly PatientsTableColumn[]>([]);
 
+	const [assignModal, setAssignModal] = useState<{ open: boolean, patient: Patient }>();
+
 	const [presentToast] = useIonToast();
 	const [presentActionSheet, dismissActionSheet] = useIonActionSheet();
 	const history = useHistory();
+
+	const StringifyPatientList = JSON.stringify(props.patients);
 
 	useEffect(() => {
 		switch (currentProfile.getRole()) {
@@ -54,11 +67,14 @@ const PatientsTable: React.FC<{
 			case UserType.HEALTH_OFFICIAL:
 				setColumns(healthOfficialColumns);
 				break;
+			case UserType.IMMIGRATION_OFFICER:
+				setColumns(immigrationOfficerColumns);
+				break;
 			case UserType.ADMIN:
 				setColumns(adminColumns);
 				break;
 		}
-	}, []);
+	}, [StringifyPatientList]);
 
 	function flagPatient(patient: Patient) {
 		patient.flagged = !patient.flagged;
@@ -78,7 +94,32 @@ const PatientsTable: React.FC<{
 			});
 	}
 
+	function remindPatient(patient: Patient) {
+		if (patient.reminded) {
+			presentToast('Patient already reminded', 1500);
+
+			return;
+		}
+		patient.reminded = true;
+		//setTime(currentHour);
+
+		console.log(patient.reminded);
+		HttpService.post(`patients/${patient.medicalId}/remind`, {
+			role: currentProfile.getRole(),
+		})
+			.then(() => {
+				props.onChange(patient);
+				presentToast('Successfully REMINDED patient.', 1000);
+			})
+			.catch(() => {
+				presentToast('An error has occurred. Please try again.', 1000);
+			});
+	}
+
 	function reviewPatient(patient: Patient) {
+		if (currentProfile.getRole() !== UserType.DOCTOR) {
+			return;
+		}
 		patient.reviewed = !patient.reviewed;
 		HttpService.patch(
 			`doctors/${patient.medicalId}/${
@@ -111,19 +152,18 @@ const PatientsTable: React.FC<{
 				icon: call,
 				handler: () => {
 					window.location.href = `tel:${patient.phoneNumber}`;
-				}
+				},
 			});
 		}
 		contactOption.push({
 			text: 'Cancel',
 			icon: close,
-			role: 'cancel'
+			role: 'cancel',
 		});
 		return contactOption;
 	}
 
 	function getRow(patient: Patient, index: number): JSX.Element | null {
-
 		return (
 			<Tr
 				className="patients-table__table-entries"
@@ -137,7 +177,8 @@ const PatientsTable: React.FC<{
 							: '',
 				}}
 			>
-				<Td key={index}
+				<Td
+					key={index}
 					className="patients-table__table-entries__name"
 					onClick={() => {
 						if (!patient.reviewed) {
@@ -145,15 +186,25 @@ const PatientsTable: React.FC<{
 						}
 						if (currentProfile.getRole() === UserType.ADMIN) {
 							history.push({
-								pathname: AdminPages.patientProfile + '/' + patient.medicalId
+								pathname: AdminPages.patientProfile + '/' + patient.medicalId,
+							});
+						} else if (
+							currentProfile.getRole() === UserType.IMMIGRATION_OFFICER
+						) {
+							history.push({
+								pathname:
+									ImmigrationOfficerPages.patientProfile +
+									'/' +
+									patient.medicalId,
 							});
 						} else if (currentProfile.getRole() === UserType.HEALTH_OFFICIAL) {
 							history.push({
-								pathname: HealthOfficialPages.patientProfile + '/' + patient.medicalId
+								pathname:
+									HealthOfficialPages.patientProfile + '/' + patient.medicalId,
 							});
 						} else if (currentProfile.getRole() === UserType.DOCTOR) {
 							history.push({
-								pathname: DoctorPages.patientProfile + '/' + patient.medicalId
+								pathname: DoctorPages.patientProfile + '/' + patient.medicalId,
 							});
 						}
 					}}
@@ -187,26 +238,21 @@ const PatientsTable: React.FC<{
 						key={index}
 						className="patients-table__table-entries__doctor-name"
 						id={`patients-table__assigned-${patient.medicalId}`}
+						onClick={() => {
+							setAssignModal({open: true, patient});
+						}}
 					>
-						{
-							patient.doctorName ?
-								<>
-									{'Dr.' + patient.doctorName + ' '}
-									<IonIcon icon={personRemoveOutline}/>
-								</> :
-								<>
-									{'Not Assigned'}
-									<IonIcon icon={personAddOutline}/>
-								</>
-						}
-
-						<AssignedComponent
-							trigger={`patients-table__assigned-${patient.medicalId}`}
-							patient={patient}
-							onChange={(patient: IPatient) => {
-								props.onChange(patient as Patient);
-							}}
-						/>
+						{patient.doctorName ? (
+							<>
+								{'Dr.' + patient.doctorName + ' '}
+								<IonIcon icon={personRemoveOutline}/>
+							</>
+						) : (
+							<>
+								{'Not Assigned'}
+								<IonIcon icon={personAddOutline}/>
+							</>
+						)}
 					</Td>
 				)}
 				<Td key={index}>
@@ -222,10 +268,10 @@ const PatientsTable: React.FC<{
 					</IonButton>
 				</Td>
 				{(currentProfile.getRole() === UserType.HEALTH_OFFICIAL ||
-					currentProfile.getRole() === UserType.DOCTOR) && (
+					currentProfile.getRole() === UserType.DOCTOR ||
+					currentProfile.getRole() === UserType.IMMIGRATION_OFFICER) && (
 					<Td key={index}>
 						<IonButton
-							id={`patients-table__monitor-${patient.medicalId}`}
 							shape="round"
 							onClick={() => {
 								if (!patient.reviewed) {
@@ -256,6 +302,16 @@ const PatientsTable: React.FC<{
 						/>
 					</Td>
 				)}
+				{currentProfile.getRole() === UserType.HEALTH_OFFICIAL && (
+					<Td key={index} className={'patients-table__reminder'}>
+						<IonButton
+							color={patient.reminded ? 'success' : 'light'}
+							onClick={() => remindPatient(patient)}
+						>
+							{patient.reminded ? 'patient reminded' : 'Remind patient'}
+						</IonButton>
+					</Td>
+				)}
 				<Td key={index} className={'patients-table__flag'}>
 					<IonIcon
 						className={
@@ -267,27 +323,43 @@ const PatientsTable: React.FC<{
 						onClick={() => flagPatient(patient)}
 					/>
 				</Td>
+				<Td key={index}>
+					{' '}
+					<Moment format={'LLL'} date={patient.lastUpdated}/>
+				</Td>
 			</Tr>
 		);
 	}
 
 	return (
-		<Table className={'patients-table__table'}>
-			<Thead>
-				<Tr className={'patients-table__table-head'}>
-					{columns.map((column, index) => (
-						<Th key={index} className={'patients-table__table-column-title'}>
-							{column.label}
-						</Th>
-					))}
-				</Tr>
-			</Thead>
-			<Tbody>
-				{props.patients.map((row, index) => {
-					return getRow(row, index);
-				})}
-			</Tbody>
-		</Table>
+		<>
+			{
+				assignModal && assignModal.patient &&
+				<AssignedComponent
+					assignModal={assignModal}
+					onChange={(patient: IPatient) => {
+						props.onChange(patient as Patient);
+						setAssignModal({open: false, patient: assignModal.patient});
+					}}
+				/>
+			}
+			<Table className={'patients-table__table'}>
+				<Thead>
+					<Tr className={'patients-table__table-head'}>
+						{columns.map((column, index) => (
+							<Th key={index} className={'patients-table__table-column-title'}>
+								{column.label}
+							</Th>
+						))}
+					</Tr>
+				</Thead>
+				<Tbody>
+					{props.patients.map((row, index) => {
+						return getRow(row, index);
+					})}
+				</Tbody>
+			</Table>
+		</>
 	);
 };
 

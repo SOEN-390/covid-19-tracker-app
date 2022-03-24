@@ -10,16 +10,19 @@ export interface IPatient {
 	doctorId?: string | null;
 	testResult: TestResult;
 	address: string;
-	email: string | null;
+	email: string | null | undefined;
 	phoneNumber: string;
 	dob: string;
 	gender: Gender;
 	flagged?: boolean;
+	reminded?: boolean;
+	lastUpdated?: Date;
 }
 
+
 export interface IContact {
-	medicalId: string;
-	firstName: string;
-	lastName: string;
-	testResult: TestResult;
+	medicalId: string,
+	firstName: string,
+	lastName: string,
+	testResult: TestResult
 }

@@ -1,5 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { IonCard, IonCol, IonContent, IonPage, IonRow, IonToolbar } from '@ionic/react';
+import {
+	IonButton,
+	IonCard,
+	IonCardContent, IonCardHeader,
+	IonCardTitle,
+	IonCol,
+	IonContent,
+	IonPage,
+	IonRow,
+	IonTitle,
+	IonToolbar, useIonToast
+} from '@ionic/react';
 import NavBar from '../../components/NavBar/NavBar';
 import './Dashboard.doctor.page.scss';
 import PieChart, { Connector, Export, Label, Legend, Series, Tooltip, } from 'devextreme-react/pie-chart';
@@ -15,11 +26,13 @@ const DashboardDoctorPage: React.FC = () => {
 	const [diagnosticData, setDiagnosticData] = useState<{ testResult: string, val: number }[]>([]);
 	const [genderData, setGenderData] = useState<{ gender: string, val: number }[]>([]);
 
+	const [presentToast] = useIonToast();
+
 	useEffect(() => {
 		getAssignedPatients();
 	}, []);
 
-	function getAssignedPatients() {
+	function getAssignedPatients(): void {
 		HttpService.get(`doctors/${currentProfile.licenseId}/patients/assigned`).then((patients: Patient[]) => {
 			generateDiagnosticGraph(patients);
 			generateGenderGraph(patients);
@@ -28,7 +41,7 @@ const DashboardDoctorPage: React.FC = () => {
 		});
 	}
 
-	function generateDiagnosticGraph(patients: Patient[]) {
+	function generateDiagnosticGraph(patients: Patient[]): void {
 		let negativeCount = 0;
 		let positiveCount = 0;
 		let pendingCount = 0;
@@ -57,7 +70,7 @@ const DashboardDoctorPage: React.FC = () => {
 		}]);
 	}
 
-	function generateGenderGraph(patients: Patient[]) {
+	function generateGenderGraph(patients: Patient[]): void {
 		let maleCount = 0;
 		let femaleCount = 0;
 		let otherCount = 0;
@@ -86,21 +99,34 @@ const DashboardDoctorPage: React.FC = () => {
 		}]);
 	}
 
-	function customizeTooltip(arg: any) {
+	function customizeTooltip(arg: any): { text: string } {
 		return {
-			text: `${arg.argumentText} - ${(arg.percent * 100).toFixed(2)}%`,
+			text: `${arg.argumentText} - ${(arg.percent * 100).toFixed(2)}%`
 		};
 	}
 
+	function declareEmergency(): void {
+		if (currentProfile.emergencyLeave) {
+			presentToast('Emergency leave already declared.', 1500);
+			return;
+		}
+		HttpService.patch(`doctors/${currentProfile.licenseId}/emergency-leave`).then(() => {
+			currentProfile.emergencyLeave = !currentProfile.emergencyLeave;
+			presentToast('Successfully declared an emergency leave.', 1500);
+		}).catch((error) => {
+			console.log('ERROR: ', error);
+		});
+	}
+
 	return (
-		<IonPage className={'dashboard-doctor__page'}>
+		<IonPage>
 			<IonToolbar>
 				<NavBar/>
 			</IonToolbar>
-			<IonContent>
+			<IonContent className={'dashboard-doctor__page'}>
 				<IonCol>
 					<IonRow>
-						<IonCard>
+						<IonCard className={'dashboard-doctor__pie-card'}>
 							<PieChart
 								id="pie"
 								type="doughnut"
@@ -125,7 +151,7 @@ const DashboardDoctorPage: React.FC = () => {
 							</PieChart>
 						</IonCard>
 
-						<IonCard>
+						<IonCard className={'dashboard-doctor__pie-card'}>
 							<PieChart
 								id="pie"
 								type="doughnut"
@@ -148,6 +174,22 @@ const DashboardDoctorPage: React.FC = () => {
 									{/*<Format type="percentage" />*/}
 								</Tooltip>
 							</PieChart>
+						</IonCard>
+						<IonCard className={'dashboard-doctor__emergency-card'}>
+							<IonCardHeader>
+								<IonCardTitle>Declare an Emergency Leave</IonCardTitle>
+							</IonCardHeader>
+							<IonCardContent>
+								As a doctor, you can declare an emergency leave to the admin.
+								The admin will re-assign your patients!
+							</IonCardContent>
+							<IonCardContent>
+								<IonButton color={'danger'} onClick={() => {
+									declareEmergency();
+								}}>
+									Declare
+								</IonButton>
+							</IonCardContent>
 						</IonCard>
 					</IonRow>
 				</IonCol>

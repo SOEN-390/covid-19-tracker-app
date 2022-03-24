@@ -3,10 +3,10 @@ import { Redirect, Route } from 'react-router-dom';
 import { IonReactRouter } from '@ionic/react-router';
 import Menu from '../components/Menu/Menu';
 import PatientProfile from '../pages/PatientProfile/PatientProfile.page';
-import ImmigrationDashboard from '../pages/ImmigrationOfficer/immigrationDashboard';
 import { ImmigrationOfficerPages } from '../providers/pages.enum';
 import { UserType } from '../enum/UserType.enum';
 import React from 'react';
+import PatientsPage from '../pages/Patients/Patients.page';
 
 setupIonicReact();
 
@@ -17,11 +17,10 @@ const ImmigrationOfficerRouting: React.FC = () => {
 				<Menu ionMenuId={'immigration-officer'} userType={UserType.IMMIGRATION_OFFICER}/>
 				<IonRouterOutlet id="immigration-officer">
 					<Route path={ImmigrationOfficerPages.home} exact={true}>
-						<Redirect to={ImmigrationOfficerPages.dashboard}/>
+						<Redirect to={ImmigrationOfficerPages.flaggedPatients}/>
 					</Route>
-
-					<Route path={ImmigrationOfficerPages.dashboard}>
-						<ImmigrationDashboard/>
+					<Route path={ImmigrationOfficerPages.flaggedPatients}>
+						<PatientsPage />
 					</Route>
 					<Route exact={true} path={ImmigrationOfficerPages.patientProfile}>
 						<PatientProfile/>
