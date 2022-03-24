@@ -169,8 +169,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-        steps:
-          - run: echo ${{ needs.build-and-push.outputs }}
+        run: |
+          echo ${{ needs.build-and-push.outputs }}
 
       - name: Fill in the new image ID in the Amazon ECS task definition
         id: task-def
