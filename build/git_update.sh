@@ -37,7 +37,7 @@ echo "Current GitHub Version1: $GVNUM1"
 if [[ $VNUM1 == $GVNUM1 && $VNUM2 == $GVNUM2 ]]
 then
   # increase patch
-  GVNUM3=$((VNUM3+1))
+  GVNUM3=$((GVNUM3+1))
 else
   GVNUM3=0
 fi
