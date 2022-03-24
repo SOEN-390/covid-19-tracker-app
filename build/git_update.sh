@@ -43,7 +43,7 @@ fi
 
 # create new tag
 NEW_TAG="v$VNUM1.$VNUM2.$GVNUM3"
-echo "($VERSION) updating $CURRENT_VERSION to $NEW_TAG"
+echo "($VERSION) updating $GITHUB_VERSION to $NEW_TAG"
 
 if [[ $NEW_TAG < $GITHUB_VERSION ]]
 then
