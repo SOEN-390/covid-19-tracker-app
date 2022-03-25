@@ -144,20 +144,6 @@ jobs:
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
 
-      - name: Deployment - Executing EC2 SSH Commands
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.AWS_EC2_HOST }}
-          username: ${{ secrets.AWS_EC2_USERNAME }}
-          key: ${{ secrets.EC2_SSH_KEY }}
-          script: |
-            sudo su
-            export AWS_ACCESS_KEY_ID=${{ secrets.AWS_EC2_ACCESS_KEY_ID }}
-            export AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_EC2_SECRET_ACCESS_KEY }}
-            docker login -u AWS -p $(aws ecr get-login-password --region ca-central-1) 713619954535.dkr.ecr.ca-central-1.amazonaws.com
-            docker pull 713619954535.dkr.ecr.ca-central-1.amazonaws.com/covid-19-tracker-app:${{ steps.increment-git-tag.outputs.git-tag }}
-            docker-compose up --build -d
-
 #      - name: Fill in the new image ID in the Amazon ECS task definition
 #        id: task-def
 #        uses: aws-actions/amazon-ecs-render-task-definition@97587c9d45a4930bf0e3da8dd2feb2a463cf4a3a
@@ -190,16 +176,35 @@ jobs:
 #          REMOTE_USER: ubuntu
 #          TARGET: ${{ secrets.TARGET_DIR }}
 
-#  deploy:
-#
-#    needs: [build-and-push]
-#    name: Deploy Image to EC2
-#    runs-on: ubuntu-latest
-#
-#    steps:
-#      - name: Checkout
-#        uses: actions/checkout@v2
-#
+  deploy:
+
+    needs: [build-and-push]
+    name: Deploy Image to EC2
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Git - Get Latest Tag
+        id: git-get-tag
+        run: |
+          bash ./build/git_get_tag.sh
+
+      - name: Deployment - Executing EC2 SSH Commands
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.AWS_EC2_HOST }}
+          username: ${{ secrets.AWS_EC2_USERNAME }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            sudo su
+            export AWS_ACCESS_KEY_ID=${{ secrets.AWS_EC2_ACCESS_KEY_ID }}
+            export AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_EC2_SECRET_ACCESS_KEY }}
+            docker login -u AWS -p $(aws ecr get-login-password --region ca-central-1) 713619954535.dkr.ecr.ca-central-1.amazonaws.com
+            docker pull 713619954535.dkr.ecr.ca-central-1.amazonaws.com/covid-19-tracker-app:${{ steps.git-get-tag.outputs.git-tag }}
+            docker-compose up --build -d
+
 #      - name: Print image
 #        run: |
 #          echo ${{ toJSON(needs.build-and-push.outputs) }}
