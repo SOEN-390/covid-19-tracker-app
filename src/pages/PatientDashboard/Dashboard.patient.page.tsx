@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import {
 	IonButton,
 	IonCard,
@@ -9,25 +9,25 @@ import {
 	IonPage,
 	IonRow,
 	IonTitle,
-	IonToolbar, useIonToast
+	IonToolbar
 } from '@ionic/react';
 import NavBar from '../../components/NavBar/NavBar';
 import './Dashboard.patient.page.scss';
 import { useHistory } from 'react-router-dom';
 import { Patient } from '../../objects/Patient.class';
 import { useAuth } from '../../providers/auth.provider';
-import { ISymptom, ISymptomResponse } from '../../interfaces/ISymptom';
 import HttpService from '../../providers/http.service';
-import moment from 'moment';
-
 
 
 const DashboardPatientPage: React.FC = () => {
-	const [presentToast] = useIonToast();
+
 	const { currentProfile } = useAuth();
 	const history = useHistory();
 
 	const routeChange = () => {
+		if (currentProfile.reminded == undefined) {
+			return;
+		}
 		unRemindPatient(currentProfile);
 		HttpService.post(
 			`patients/${currentProfile.medicalId}/${currentProfile.reminded}`,
@@ -48,7 +48,7 @@ const DashboardPatientPage: React.FC = () => {
 		);
 
 	}
-	
+
 
 	return (
 
