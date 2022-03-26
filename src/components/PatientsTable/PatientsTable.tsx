@@ -33,19 +33,17 @@ import SymptomsCardComponent from '../SymptomsCard/SymptomsCard.component';
 import { useHistory } from 'react-router-dom';
 import { AdminPages, DoctorPages, HealthOfficialPages, ImmigrationOfficerPages } from '../../providers/pages.enum';
 import Moment from 'react-moment';
+import { ISymptomResponse } from '../../interfaces/ISymptom';
+import { IPatient } from '../../interfaces/IPatient';
 
 const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient) => void }> = (props) => {
 
 	const { currentProfile } = useAuth();
 	const [columns, setColumns] = useState<readonly PatientsTableColumn[]>([]);
-
-
-
 	const [presentToast] = useIonToast();
 	const [presentActionSheet, dismissActionSheet] = useIonActionSheet();
 	const history = useHistory();
-	//const currentHour = moment().format('HH:mm');
-	//const [timeReviewd, setTime] = useState<string>('');
+	const [symptoms, setSymptoms] = useState<ISymptomResponse[]>([]);
 
 
 	useEffect(() => {
@@ -99,8 +97,6 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 
 	}
 
-
-
 	function reviewPatient(patient: Patient) {
 		if (currentProfile.getRole() !== UserType.DOCTOR) {
 			return;
@@ -114,6 +110,17 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 		}).catch(() => {
 			presentToast('An error has occurred. Please try again.', 1500);
 		});
+	}
+
+	async function getLatestSymptoms(patient: Patient): Promise<void> {
+		setSymptoms([]);
+		try {
+			const data = await HttpService.get(`patients/${patient.medicalId}/latest-symptoms`);
+			setSymptoms(data);
+		}
+		catch (e) {
+			console.log(e);
+		}
 	}
 
 	function generateContactList(patient: Patient): ActionSheetButton[] {
@@ -215,15 +222,19 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 						currentProfile.getRole() === UserType.IMMIGRATION_OFFICER
 					) &&
 					<Td key={index}>
-						<IonButton id={`patients-table__monitor-${patient.medicalId}`} shape="round" onClick={() => {
+						<IonButton id={`patients-table__monitor-${patient.medicalId}`} shape="round" onClick={async () => {
 							if (!patient.reviewed) {
 								reviewPatient(patient);
 							}
+							await getLatestSymptoms(patient);
 						}}>
 							Monitor Symptoms
 						</IonButton>
+
 						<SymptomsCardComponent trigger={`patients-table__monitor-${patient.medicalId}`}
-							patient={patient} />
+											   patient={patient} symptoms={symptoms}/>
+
+
 					</Td>
 				}
 				{
