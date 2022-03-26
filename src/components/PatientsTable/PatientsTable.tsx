@@ -1,5 +1,6 @@
 import {
 	ActionSheetButton,
+	IonAlert,
 	IonButton,
 	IonIcon,
 	useIonActionSheet,
@@ -32,9 +33,10 @@ import HttpService from '../../providers/http.service';
 import SymptomsCardComponent from '../SymptomsCard/SymptomsCard.component';
 import { useHistory } from 'react-router-dom';
 import { AdminPages, DoctorPages, HealthOfficialPages, ImmigrationOfficerPages } from '../../providers/pages.enum';
-import Moment from 'react-moment';
 import { ISymptomResponse } from '../../interfaces/ISymptom';
 import { IPatient } from '../../interfaces/IPatient';
+import moment from 'moment';
+import Moment from 'react-moment';
 
 const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient) => void }> = (props) => {
 
@@ -44,7 +46,7 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 	const [presentActionSheet, dismissActionSheet] = useIonActionSheet();
 	const history = useHistory();
 	const [symptoms, setSymptoms] = useState<ISymptomResponse[]>([]);
-
+	const currentDate = moment().format('YYYY-M-D');
 
 	useEffect(() => {
 		switch (currentProfile.getRole()) {
@@ -77,24 +79,42 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 		});
 	}
 	function remindPatient(patient: Patient) {
+
+		const lastUpdated = moment(patient.lastUpdated).format('YYYY-M-D');
 		if (patient.reminded) {
 			presentToast('Patient already reminded', 1500);
+
 			return;
 		}
-		patient.reminded = true;
-		//setTime(currentHour);
+		if (currentDate == lastUpdated) {
+			const confirmRemind = confirm('Patient status is already updated today, are you sure you want to continue?');
+			if (confirmRemind == true) {
+				patient.reminded = true;
+				HttpService.post(
+					`patients/${patient.medicalId}/remind`,
+					{ role: currentProfile.getRole() }
+				).then(() => {
+					props.onChange(patient);
+					presentToast('Successfully REMINDED patient.', 1000);
+				}).catch(() => {
+					presentToast('An error has occurred. Please try again.', 1000);
+				});
+			}
+		}
 
-		console.log(patient.reminded);
-		HttpService.post(
-			`patients/${patient.medicalId}/remind`,
-			{ role: currentProfile.getRole() }
-		).then(() => {
-			props.onChange(patient);
-			presentToast('Successfully REMINDED patient.', 1000);
-		}).catch(() => {
-			presentToast('An error has occurred. Please try again.', 1000);
-		});
+		else {
+			patient.reminded = true;
+			HttpService.post(
+				`patients/${patient.medicalId}/remind`,
+				{ role: currentProfile.getRole() }
+			).then(() => {
+				props.onChange(patient);
+				presentToast('Successfully REMINDED patient.', 1000);
+			}).catch(() => {
+				presentToast('An error has occurred. Please try again.', 1000);
+			});
 
+		}
 	}
 
 	function reviewPatient(patient: Patient) {
@@ -232,7 +252,7 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 						</IonButton>
 
 						<SymptomsCardComponent trigger={`patients-table__monitor-${patient.medicalId}`}
-											   patient={patient} symptoms={symptoms}/>
+							patient={patient} symptoms={symptoms} />
 
 
 					</Td>

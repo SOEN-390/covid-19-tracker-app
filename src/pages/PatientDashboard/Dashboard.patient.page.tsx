@@ -18,36 +18,45 @@ import { Patient } from '../../objects/Patient.class';
 import { useAuth } from '../../providers/auth.provider';
 import { ISymptom, ISymptomResponse } from '../../interfaces/ISymptom';
 import HttpService from '../../providers/http.service';
+import moment from 'moment';
 
 
 
 const DashboardPatientPage: React.FC = () => {
 	const [presentToast] = useIonToast();
-	const {currentProfile} = useAuth();
+	const { currentProfile } = useAuth();
 	const history = useHistory();
 
-	const routeChange = () =>{
-		currentProfile.reminded = !currentProfile.reminded;
+	const routeChange = () => {
+		unRemindPatient(currentProfile);
 		HttpService.post(
 			`patients/${currentProfile.medicalId}/${currentProfile.reminded}`,
 			{ role: currentProfile.getRole() }
-		).then(() => {
-			// props.onChange(currentProfile);
-			// presentToast(`Successfully ${patient.flagged ? 'FLAGGED' : 'UNFLAGGED'} patient.`, 1000);
-		}).catch(() => {
-			presentToast('An error has occurred. Please try again.', 1000);
-		});
-		console.log('on click '+ currentProfile.reminded);
+		);
+		console.log('on click ' + currentProfile.reminded);
 
-		const path='/home/patient-profile';
+		const path = '/home/patient-profile';
 		history.push(path);
 	};
+
+	function unRemindPatient(patient: Patient) {
+
+		patient.reminded = false;
+		//setTime(currentHour);
+		HttpService.post(
+			`patients/${patient.medicalId}/unremind`,
+			{ role: currentProfile.getRole() }
+		);
+
+	}
+	const m = moment(currentProfile.lastUpdated).format('YY-M-D');
+	console.log(m);
 
 	return (
 
 		<IonPage>
 			<IonToolbar>
-				<NavBar/>
+				<NavBar />
 			</IonToolbar>
 			<IonContent className={'dashboard-patient__page'}>
 				<IonCol>
@@ -55,9 +64,9 @@ const DashboardPatientPage: React.FC = () => {
 						<IonTitle>Notifications</IonTitle>
 					</IonRow>
 					{
-						 currentProfile.reminded == 0 ? null  :
+						currentProfile.reminded == 0 ? null :
 							<IonRow>
-								<IonCard className={'dashboard-patient__reminder-card'}>
+								<IonCard color={currentProfile.reminded ? 'danger' : 'light'} className={'dashboard-patient__reminder-card'}>
 									<IonCardHeader>
 										<IonCardTitle>Submit Symptoms Form Reminder</IonCardTitle>
 									</IonCardHeader>
@@ -72,6 +81,20 @@ const DashboardPatientPage: React.FC = () => {
 								</IonCard>
 							</IonRow>
 					}
+
+					{
+						currentProfile.reminded == 1 ? null :
+							<IonRow>
+								<IonCard color='light' className={'dashboard-patient__reminder-card'}>
+									<IonCardHeader>
+										<IonCardTitle>There is no Notification to show</IonCardTitle>
+									</IonCardHeader>
+
+								</IonCard>
+							</IonRow>
+
+					}
+
 				</IonCol>
 			</IonContent>
 		</IonPage>
