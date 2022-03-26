@@ -33,7 +33,6 @@ const DashboardPatientPage: React.FC = () => {
 			`patients/${currentProfile.medicalId}/${currentProfile.reminded}`,
 			{ role: currentProfile.getRole() }
 		);
-		console.log('on click ' + currentProfile.reminded);
 
 		const path = '/home/patient-profile';
 		history.push(path);
@@ -49,8 +48,7 @@ const DashboardPatientPage: React.FC = () => {
 		);
 
 	}
-	const m = moment(currentProfile.lastUpdated).format('YY-M-D');
-	console.log(m);
+	
 
 	return (
 
