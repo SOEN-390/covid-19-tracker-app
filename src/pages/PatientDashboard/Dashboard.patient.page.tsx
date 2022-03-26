@@ -25,7 +25,7 @@ const DashboardPatientPage: React.FC = () => {
 	const history = useHistory();
 
 	const routeChange = () => {
-		if (currentProfile.reminded == undefined) {
+		if (currentProfile.reminded === undefined) {
 			return;
 		}
 		unRemindPatient(currentProfile);
@@ -49,9 +49,7 @@ const DashboardPatientPage: React.FC = () => {
 
 	}
 
-
 	return (
-
 		<IonPage>
 			<IonToolbar>
 				<NavBar />
@@ -62,7 +60,7 @@ const DashboardPatientPage: React.FC = () => {
 						<IonTitle>Notifications</IonTitle>
 					</IonRow>
 					{
-						currentProfile.reminded == 0 ? null :
+						currentProfile.reminded !== undefined && currentProfile.reminded == 0 ? null :
 							<IonRow>
 								<IonCard color={currentProfile.reminded ? 'danger' : 'light'} className={'dashboard-patient__reminder-card'}>
 									<IonCardHeader>
@@ -81,7 +79,7 @@ const DashboardPatientPage: React.FC = () => {
 					}
 
 					{
-						currentProfile.reminded == 1 ? null :
+						currentProfile.reminded !== undefined && currentProfile.reminded == 1 ? null :
 							<IonRow>
 								<IonCard color='light' className={'dashboard-patient__reminder-card'}>
 									<IonCardHeader>
