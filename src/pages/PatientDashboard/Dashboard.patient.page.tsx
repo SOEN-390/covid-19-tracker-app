@@ -22,23 +22,29 @@ import HttpService from '../../providers/http.service';
 
 
 const DashboardPatientPage: React.FC = () => {
-
+	const [presentToast] = useIonToast();
 	const {currentProfile} = useAuth();
 	const history = useHistory();
+
 	const routeChange = () =>{
+		currentProfile.reminded = !currentProfile.reminded;
+		HttpService.post(
+			`patients/${currentProfile.medicalId}/${currentProfile.reminded}`,
+			{ role: currentProfile.getRole() }
+		).then(() => {
+			// props.onChange(currentProfile);
+			// presentToast(`Successfully ${patient.flagged ? 'FLAGGED' : 'UNFLAGGED'} patient.`, 1000);
+		}).catch(() => {
+			presentToast('An error has occurred. Please try again.', 1000);
+		});
+		console.log('on click '+ currentProfile.reminded);
+
 		const path='/home/patient-profile';
 		history.push(path);
 	};
 
-	function isReminded(): string {
-		if (!currentProfile) {
-			return '';
-		}
-		console.log(`${currentProfile.reminded}`);
-		return `${currentProfile.reminded}`;
-	}
-
 	return (
+
 		<IonPage>
 			<IonToolbar>
 				<NavBar/>
@@ -49,7 +55,7 @@ const DashboardPatientPage: React.FC = () => {
 						<IonTitle>Notifications</IonTitle>
 					</IonRow>
 					{
-						isReminded() == 'false' ? null :
+						 currentProfile.reminded == 0 ? null  :
 							<IonRow>
 								<IonCard className={'dashboard-patient__reminder-card'}>
 									<IonCardHeader>
