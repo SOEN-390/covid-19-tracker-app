@@ -23,15 +23,13 @@ import HttpService from '../../providers/http.service';
 
 const DashboardPatientPage: React.FC = () => {
 
-
-	const [reminded] = useState<any>(true);
-
 	const {currentProfile} = useAuth();
 	const history = useHistory();
 	const routeChange = () =>{
-		const path='/home/symptoms';
+		const path='/home/patient-profile';
 		history.push(path);
 	};
+
 	function isReminded(): string {
 		if (!currentProfile) {
 			return '';
@@ -48,22 +46,27 @@ const DashboardPatientPage: React.FC = () => {
 			<IonContent className={'dashboard-patient__page'}>
 				<IonCol>
 					<IonRow>
-						<IonCard color={isReminded()==='true'?'danger':'light'} className={'dashboard-patient__reminder-card'}>
-							<IonCardHeader>
-								<IonCardTitle>Submit Symptoms Form Reminder</IonCardTitle>
-							</IonCardHeader>
-							<IonCardContent>
-								You need to submit your symptoms form ... Please submit now
-							</IonCardContent>
-							<IonCardContent>
-								<IonButton className={'symptoms-patient__symptoms-form'} onClick={routeChange}>
-									Submit Symptoms form
-								</IonButton>
-							</IonCardContent>
-						</IonCard>
+						<IonTitle>Notifications</IonTitle>
 					</IonRow>
+					{
+						isReminded() == 'false' ? null :
+							<IonRow>
+								<IonCard className={'dashboard-patient__reminder-card'}>
+									<IonCardHeader>
+										<IonCardTitle>Submit Symptoms Form Reminder</IonCardTitle>
+									</IonCardHeader>
+									<IonCardContent>
+										You need to update your status... Please update it now
+									</IonCardContent>
+									<IonCardContent>
+										<IonButton className={'symptoms-patient__symptoms-form'} onClick={routeChange}>
+											update your status
+										</IonButton>
+									</IonCardContent>
+								</IonCard>
+							</IonRow>
+					}
 				</IonCol>
-
 			</IonContent>
 		</IonPage>
 	);
