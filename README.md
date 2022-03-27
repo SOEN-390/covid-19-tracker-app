@@ -72,5 +72,6 @@ Note: Build/compile time is much longer when running this project on docker comp
 Deployment of the app is made on Vercel
 - All changes to master, updates the Vercel deployed app
 - For each PR, a deployment is made in order to test the website
+- Vercel waits for all GitHub Workflows to finish and succeeds, in order to deploy
 - The Vercel website is connected to the deployed AWS server
 
