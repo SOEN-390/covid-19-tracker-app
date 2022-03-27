@@ -53,11 +53,16 @@
     "workbox-streams": "^6.5.1"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --transformIgnorePatterns 'node_modules/(?!(@ionic/react|@ionic/react-router|@ionic/core|@stencil/core|ionicons|stream-chat-react/dist/css)/)'",
+    "start": "ENV=DEV react-scripts start",
+    "build": "ENV=DEV react-scripts build",
+    "test": "ENV=DEV react-scripts test --transformIgnorePatterns 'node_modules/(?!(@ionic/react|@ionic/react-router|@ionic/core|@stencil/core|ionicons|stream-chat-react/dist/css)/)'",
     "eject": "react-scripts eject",
-    "style:eslint": "eslint '**/*.{js,jsx,ts,tsx}'"
+    "style:eslint": "eslint '**/*.{js,jsx,ts,tsx}'",
+
+
+    "start:prod": "CI= ENV=PROD react-scripts start",
+    "build:prod": "CI= ENV=PROD react-scripts build",
+    "test:prod": "CI= ENV=PROD react-scripts test --transformIgnorePatterns 'node_modules/(?!(@ionic/react|@ionic/react-router|@ionic/core|@stencil/core|ionicons|stream-chat-react/dist/css)/)'"
   },
   "eslintConfig": {
     "extends": [
