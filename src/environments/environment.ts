@@ -16,7 +16,7 @@ const dev_environment = {
 	}
 };
 
-const environment = process.env.ENV === 'PROD' ?
+const environment = process.env.REACT_APP_ENV === 'prod' ?
 	prod_environment :
 	dev_environment;
 
