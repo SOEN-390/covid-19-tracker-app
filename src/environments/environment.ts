@@ -1,4 +1,6 @@
-export const environment = {
+import { prod_environment } from './environment.prod';
+
+const dev_environment = {
 	production: false,
 	environment: 'local',
 	apiUrl: 'http://127.0.0.1:8080',
@@ -13,3 +15,9 @@ export const environment = {
 		measurementId: 'G-SR3XXFC56M'
 	}
 };
+
+const environment = process.env.ENV === 'PROD' ?
+	prod_environment :
+	dev_environment;
+
+export default environment;

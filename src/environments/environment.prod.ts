@@ -1,7 +1,7 @@
-export const environment = {
+export const prod_environment = {
 	production: true,
 	environment: 'production',
-	apiUrl: 'http://3.96.166.222:8080',
+	apiUrl: 'http://3.96.220.46:8080',
 	apiPrefix: '/api/v1',
 	firebaseConfig: {
 		apiKey: 'AIzaSyCc5OVW6IMigjStRF4UImwwYwgadQ9Up_o',
