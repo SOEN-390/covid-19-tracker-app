@@ -66,4 +66,11 @@ Note: Build/compile time is much longer when running this project on docker comp
 - `cd` to the project's root folder
 - Build: `docker-compose build`
 - Run: `docker-compose up`
-- Open: `http://localhost:8100`
+- Open: `http://127.0.0.1:8100`
+
+# App Deployment
+Deployment of the app is made on Vercel
+- All changes to master, updates the Vercel deployed app
+- For each PR, a deployment is made in order to test the website
+- The Vercel website is connected to the deployed AWS server
+
