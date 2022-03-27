@@ -1,7 +1,7 @@
 export const prod_environment = {
 	production: true,
 	environment: 'production',
-	apiUrl: 'http://3.96.220.46:8080',
+	apiUrl: 'https://ec2-3-96-220-46.ca-central-1.compute.amazonaws.com:8443',
 	apiPrefix: '/api/v1',
 	firebaseConfig: {
 		apiKey: 'AIzaSyCc5OVW6IMigjStRF4UImwwYwgadQ9Up_o',
