@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
 	IonButton,
 	IonCard,
@@ -23,8 +23,9 @@ const DashboardPatientPage: React.FC = () => {
 
 	const { currentProfile } = useAuth();
 	const history = useHistory();
-
+	const [reminderNotification, setreminderNotification] = useState(currentProfile.reminded);
 	const routeChange = () => {
+		setreminderNotification(false);
 		unRemindPatient(currentProfile);
 		HttpService.post(
 			`patients/${currentProfile.medicalId}/${currentProfile.reminded}`,
@@ -57,9 +58,9 @@ const DashboardPatientPage: React.FC = () => {
 						<IonTitle>Notifications</IonTitle>
 					</IonRow>
 					{
-						currentProfile.reminded == 0 ? null :
+						reminderNotification == 0 ? null :
 							<IonRow>
-								<IonCard color={currentProfile.reminded ? 'danger' : 'light'} className={'dashboard-patient__reminder-card'}>
+								<IonCard color={reminderNotification ? 'danger' : 'light'} className={'dashboard-patient__reminder-card'}>
 									<IonCardHeader>
 										<IonCardTitle>Submit Symptoms Form Reminder</IonCardTitle>
 									</IonCardHeader>
@@ -76,7 +77,7 @@ const DashboardPatientPage: React.FC = () => {
 					}
 
 					{
-						currentProfile.reminded == 1 ? null :
+						reminderNotification == 1 ? null :
 							<IonRow>
 								<IonCard color='light' className={'dashboard-patient__reminder-card'}>
 									<IonCardHeader>
