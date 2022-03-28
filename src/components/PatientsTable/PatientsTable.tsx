@@ -33,6 +33,7 @@ import { Patient } from '../../objects/Patient.class';
 import HttpService from '../../providers/http.service';
 import SymptomsCardComponent from '../SymptomsCard/SymptomsCard.component';
 import { useHistory } from 'react-router-dom';
+import moment from 'moment';
 import {
 	AdminPages,
 	DoctorPages,
@@ -53,6 +54,7 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 	const [presentActionSheet, dismissActionSheet] = useIonActionSheet();
 	const history = useHistory();
 	const [symptoms, setSymptoms] = useState<ISymptomResponse[]>([]);
+	const currentDate = moment().format('YYYY-M-D');
 
 	const StringifyPatientList = JSON.stringify(props.patients);
 
@@ -77,7 +79,7 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 		patient.flagged = !patient.flagged;
 		HttpService.post(
 			`patients/${patient.medicalId}/${patient.flagged ? 'flag' : 'unflag'}`,
-			{role: currentProfile.getRole()}
+			{ role: currentProfile.getRole() }
 		)
 			.then(() => {
 				props.onChange(patient);
@@ -92,15 +94,20 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 	}
 
 	function remindPatient(patient: Patient) {
+
+		const lastUpdated = moment(patient.lastUpdated).format('YYYY-M-D');
 		if (patient.reminded) {
 			presentToast('Patient already reminded', 1500);
 
 			return;
 		}
+		if (currentDate == lastUpdated) {
+			const confirmRemind = confirm('Patient status is already updated today, are you sure you want to continue?');
+			if (!confirmRemind) {
+				return;
+			}
+		}
 		patient.reminded = true;
-		//setTime(currentHour);
-
-		console.log(patient.reminded);
 		HttpService.post(
 			`patients/${patient.medicalId}/remind`,
 			{ role: currentProfile.getRole() }
@@ -110,6 +117,7 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 		}).catch(() => {
 			presentToast('An error has occurred. Please try again.', 1000);
 		});
+
 
 	}
 
@@ -217,34 +225,31 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 						key={index}
 						className="patients-table__table-entries__doctor-name"
 						onClick={() => {
-							setAssignModal({open: true, patient});
-						}}
-					>
+							setAssignModal({ open: true, patient });
+						}}						>
 						{patient.doctorName ? (
 							<>
 								{'Dr.' + patient.doctorName + ' '}
-								<IonIcon icon={personRemoveOutline}/>
+								<IonIcon icon={personRemoveOutline} />
 							</>
-						) : (
-							<>
-								{'Not Assigned'}
-								<IonIcon icon={personAddOutline}/>
-							</>
+						) : (<>
+							{'Not Assigned'}
+							<IonIcon icon={personAddOutline} />
+						</>
 						)}
 					</Td>
 				)}
-				<Td key={index}>
-					<IonButton shape="round"
-						expand="block"
-						onClick={() => {
-							presentActionSheet(
-								generateContactList(patient),
-								'Contact by');
-							setTimeout(dismissActionSheet, 10000);
-						}}
-					>
-						Contact
-					</IonButton>
+				<Td key={index}>					<IonButton shape="round"
+					expand="block"
+					onClick={() => {
+						presentActionSheet(
+							generateContactList(patient),
+							'Contact by');
+						setTimeout(dismissActionSheet, 10000);
+					}}
+				>
+					Contact
+				</IonButton>
 				</Td>
 				{
 					(
@@ -263,7 +268,7 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 						</IonButton>
 
 						<SymptomsCardComponent trigger={`patients-table__monitor-${patient.medicalId}`}
-											   patient={patient} symptoms={symptoms}/>
+							patient={patient} symptoms={symptoms} />
 
 
 					</Td>
@@ -308,7 +313,7 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 					assignModal={assignModal}
 					onChange={(patient: IPatient) => {
 						props.onChange(patient as Patient);
-						setAssignModal({open: false, patient: assignModal.patient});
+						setAssignModal({ open: false, patient: assignModal.patient });
 					}}
 				/>
 			}

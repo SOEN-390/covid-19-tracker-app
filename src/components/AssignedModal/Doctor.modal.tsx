@@ -40,7 +40,7 @@ const DoctorModal: React.FC<{
 	};
 
 	const onClickHandler = async (medicalId: string) => {
-		await unAssignPatient(medicalId!, doctor.licenseId!);
+		await unAssignPatient(medicalId, doctor.licenseId);
 		doctorsRetrieval();
 		setModalOpen?.(false);
 		return;

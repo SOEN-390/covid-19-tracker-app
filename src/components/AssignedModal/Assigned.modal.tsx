@@ -95,14 +95,14 @@ const AssignedComponent: React.FC<{
 
 	function onClickHandler(doctorTableRow: IDoctorTableRow) {
 		if (props.assignModal.patient.doctorName) {
-			unAssignPatient(doctorTableRow.licenseId!).then(() => {
+			unAssignPatient(doctorTableRow.licenseId).then(() => {
 				delete props.assignModal.patient.doctorName;
 				props.onChange(props.assignModal.patient);
 				setModalOpen?.(false);
 			});
 			return;
 		} else {
-			assignPatient(doctorTableRow.licenseId!).then(() => {
+			assignPatient(doctorTableRow.licenseId).then(() => {
 				props.assignModal.patient.doctorName =
 					doctorTableRow.firstName + ' ' + doctorTableRow.lastName;
 				props.onChange(props.assignModal.patient);
