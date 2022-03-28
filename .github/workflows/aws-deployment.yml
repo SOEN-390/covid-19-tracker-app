@@ -1,227 +1,229 @@
-name: Docker + AWS CI
-
-on:
-  push:
-    branches: [ master ]
-
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
-jobs:
-
-  build:
-
-    runs-on: ubuntu-latest
-    name: Build and Test
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Build and Run the Docker Containers
-        run: docker-compose up --build -d
-
-      - name: Run ESLint
-        run: docker exec -e CI=true covid-19-tracker-app npm run style:eslint
-
-      - name: Run Tests with Coverage
-        run: docker exec -e CI=true covid-19-tracker-app npm run test -- --coverage
-
-#  deploy:
+#name: Docker + AWS CI
 #
-##    needs: [build]
+#on:
+#  push:
+#    branches: [ master ]
+#
+#  # Allows you to run this workflow manually from the Actions tab
+#  workflow_dispatch:
+#
+#jobs:
+#
+#  build:
 #
 #    runs-on: ubuntu-latest
+#    name: Build and Test
 #
 #    steps:
-#      - uses: actions/checkout@v2
+#      - name: Checkout
+#        uses: actions/checkout@v2
 #
-#      - name: Get Timestamp
-#        uses: gerred/actions/current-time@master
-#        id: current-time
+#      - name: Build and Run the Docker Containers
+#        run: docker-compose up --build -d
 #
-#      - name: Run String Replace
-#        uses: frabert/replace-string-action@master
-#        id: format-time
-#        with:
-#          pattern: '[:\.]+'
-#          string: "${{ steps.current-time.outputs.time }}"
-#          replace-with: '-'
-#          flags: 'g'
+#      - name: Run ESLint
+#        run: docker exec -e CI=true covid-19-tracker-app npm run style:eslint
 #
-#      - name: Generate Deployment Package
-#        run: zip -r deploy.zip * -x "**node_modules**"
+#      - name: Run Tests with Coverage
+#        run: docker exec -e CI=true covid-19-tracker-app npm run test -- --coverage
 #
-#      - name: Deploy to EB
-#        uses: einaregilsson/beanstalk-deploy@v16
-#        with:
-#          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
-#          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-#          application_name: COVID-tracker
-#          environment_name: Covidtracker-env
-#          version_label: "covid-tracker-${{ steps.format-time.outputs.replaced }}"
-#          region: ca-central-1
-#          deployment_package: deploy.zip
-
-#  continuous-integration:
+##  deploy:
+##
+###    needs: [build]
+##
+##    runs-on: ubuntu-latest
+##
+##    steps:
+##      - uses: actions/checkout@v2
+##
+##      - name: Get Timestamp
+##        uses: gerred/actions/current-time@master
+##        id: current-time
+##
+##      - name: Run String Replace
+##        uses: frabert/replace-string-action@master
+##        id: format-time
+##        with:
+##          pattern: '[:\.]+'
+##          string: "${{ steps.current-time.outputs.time }}"
+##          replace-with: '-'
+##          flags: 'g'
+##
+##      - name: Generate Deployment Package
+##        run: zip -r deploy.zip * -x "**node_modules**"
+##
+##      - name: Deploy to EB
+##        uses: einaregilsson/beanstalk-deploy@v16
+##        with:
+##          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+##          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+##          application_name: COVID-tracker
+##          environment_name: Covidtracker-env
+##          version_label: "covid-tracker-${{ steps.format-time.outputs.replaced }}"
+##          region: ca-central-1
+##          deployment_package: deploy.zip
+#
+##  continuous-integration:
+##    runs-on: ubuntu-latest
+##    steps:
+##      # Step 1
+##      - uses: actions/checkout@v2
+##      # Step 2
+##      - name: Set up JDK 11
+##        uses: actions/setup-java@v2
+##        with:
+##          java-version: '11'
+##          distribution: 'adopt'
+##      # Step 3
+##      - name: Build Application and Run unit Test
+##        run: mvn -B test --file student-service/pom.xml
+##
+##  continuous-deployment:
+##    runs-on: ubuntu-latest
+##    needs: [ continuous-integration ]
+##    if: github.ref == 'refs/heads/main'
+##    steps:
+##      # Step 1
+##      - name: Configure AWS credentials
+##        uses: aws-actions/configure-aws-credentials@v1
+##        with:
+##          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+##          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+##          aws-region: ${{ secrets.AWS_REGION }}
+##      # Step 2
+##      - name: Create CodeDeploy Deployment
+##        id: deploy
+##        run: |
+##          aws deploy create-deployment \
+##            --application-name Git_Application \
+##            --deployment-group-name development_gropup \
+##            --deployment-config-name CodeDeployDefault.OneAtATime \
+##            --github-location repository=${{ github.repository }},commitId=${{ github.sha }}
+#
+#  build-and-push:
+#
+#    needs: [build]
+#    name: Build and Push to ECR
 #    runs-on: ubuntu-latest
-#    steps:
-#      # Step 1
-#      - uses: actions/checkout@v2
-#      # Step 2
-#      - name: Set up JDK 11
-#        uses: actions/setup-java@v2
-#        with:
-#          java-version: '11'
-#          distribution: 'adopt'
-#      # Step 3
-#      - name: Build Application and Run unit Test
-#        run: mvn -B test --file student-service/pom.xml
 #
-#  continuous-deployment:
-#    runs-on: ubuntu-latest
-#    needs: [ continuous-integration ]
-#    if: github.ref == 'refs/heads/main'
+#    outputs:
+#      image: ${{ steps.build-image.outputs.image }}
+#
 #    steps:
-#      # Step 1
+#      - name: Checkout
+#        uses: actions/checkout@v2
+#
 #      - name: Configure AWS credentials
 #        uses: aws-actions/configure-aws-credentials@v1
 #        with:
-#          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-#          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#          aws-access-key-id: ${{ secrets.AWS_ECR_ACCESS_KEY_ID }}
+#          aws-secret-access-key: ${{ secrets.AWS_ECR_SECRET_ACCESS_KEY }}
 #          aws-region: ${{ secrets.AWS_REGION }}
-#      # Step 2
-#      - name: Create CodeDeploy Deployment
-#        id: deploy
-#        run: |
-#          aws deploy create-deployment \
-#            --application-name Git_Application \
-#            --deployment-group-name development_gropup \
-#            --deployment-config-name CodeDeployDefault.OneAtATime \
-#            --github-location repository=${{ github.repository }},commitId=${{ github.sha }}
-
-  build-and-push:
-
-    needs: [build]
-    name: Build and Push to ECR
-    runs-on: ubuntu-latest
-
-    outputs:
-      image: ${{ steps.build-image.outputs.image }}
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ECR_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_ECR_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_REGION }}
-
-      - name: Login to Amazon ECR
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v1
-
-      - name: Get the version
-        id: get_version
-        run: echo ::set-output name=VERSION::$(cat package.json | jq --raw-output '.version')
-
-      - name: Automatic Tagging of Releases
-        id: increment-git-tag
-        run: |
-          bash ./build/git_update.sh -v ${{ steps.get_version.outputs.VERSION }}
-
-      - name: Build, Tag, and Push the Image to Amazon ECR
-        id: build-image
-        env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: covid-19-tracker-app
-          IMAGE_TAG: ${{ steps.increment-git-tag.outputs.git-tag }}
-        run: |
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-          echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
-
-#      - name: Fill in the new image ID in the Amazon ECS task definition
-#        id: task-def
-#        uses: aws-actions/amazon-ecs-render-task-definition@97587c9d45a4930bf0e3da8dd2feb2a463cf4a3a
-#        with:
-#          task-definition: ./aws-ecs-task-definition.json
-#          container-name: covid-19-tracker-app-container
-#          image: ${{ steps.build-image.outputs.image }}
 #
-#      - name: Deploy Amazon ECS task definition
-#        uses: aws-actions/amazon-ecs-deploy-task-definition@de0132cf8cdedb79975c6d42b77eb7ea193cf28e
-#        with:
-#          task-definition: ${{ steps.task-def.outputs.task-definition }}
-#          service: ${{ secrets.AWS_ECS_SERVICE }}
-#          cluster: ${{ secrets.AWS_ECS_CLUSTER }}
-#          wait-for-service-stability: true
-
+#      - name: Login to Amazon ECR
+#        id: login-ecr
+#        uses: aws-actions/amazon-ecr-login@v1
+#
+#      - name: Get the version
+#        id: get_version
+#        run: echo ::set-output name=VERSION::$(cat package.json | jq --raw-output '.version')
+#
+#      - name: Automatic Tagging of Releases
+#        id: increment-git-tag
+#        run: |
+#          bash ./build/git_update.sh -v ${{ steps.get_version.outputs.VERSION }}
+#
+#      - name: Build, Tag, and Push the Image to Amazon ECR
+#        id: build-image
+#        env:
+#          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+#          ECR_REPOSITORY: covid-19-tracker-app
+#          IMAGE_TAG: ${{ steps.increment-git-tag.outputs.git-tag }}
+#        run: |
+#          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+#          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+#          echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+#
+##      - name: Fill in the new image ID in the Amazon ECS task definition
+##        id: task-def
+##        uses: aws-actions/amazon-ecs-render-task-definition@97587c9d45a4930bf0e3da8dd2feb2a463cf4a3a
+##        with:
+##          task-definition: ./aws-ecs-task-definition.json
+##          container-name: covid-19-tracker-app-container
+##          image: ${{ steps.build-image.outputs.image }}
+##
+##      - name: Deploy Amazon ECS task definition
+##        uses: aws-actions/amazon-ecs-deploy-task-definition@de0132cf8cdedb79975c6d42b77eb7ea193cf28e
+##        with:
+##          task-definition: ${{ steps.task-def.outputs.task-definition }}
+##          service: ${{ secrets.AWS_ECS_SERVICE }}
+##          cluster: ${{ secrets.AWS_ECS_CLUSTER }}
+##          wait-for-service-stability: true
+#
+##  deploy:
+##    name: Deploy to EC2 on master branch push
+##    runs-on: ubuntu-latest
+##
+##    steps:
+##      - name: Checkout the files
+##        uses: actions/checkout@v2
+##
+##      - name: Deploy to Server 1
+##        uses: easingthemes/ssh-deploy@main
+##        env:
+##          SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
+##          REMOTE_HOST: ${{ secrets.HOST_DNS }}
+##          REMOTE_USER: ubuntu
+##          TARGET: ${{ secrets.TARGET_DIR }}
+#
 #  deploy:
-#    name: Deploy to EC2 on master branch push
+#
+#    needs: [build-and-push]
+#    name: Deploy Image to EC2
 #    runs-on: ubuntu-latest
 #
 #    steps:
-#      - name: Checkout the files
+#      - name: Checkout
 #        uses: actions/checkout@v2
 #
-#      - name: Deploy to Server 1
-#        uses: easingthemes/ssh-deploy@main
-#        env:
-#          SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
-#          REMOTE_HOST: ${{ secrets.HOST_DNS }}
-#          REMOTE_USER: ubuntu
-#          TARGET: ${{ secrets.TARGET_DIR }}
-
-  deploy:
-
-    needs: [build-and-push]
-    name: Deploy Image to EC2
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Git - Get Latest Tag
-        id: git-get-tag
-        run: |
-          bash ./build/git_get_tag.sh
-
-      - name: Deployment - Executing EC2 SSH Commands
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.AWS_EC2_HOST }}
-          username: ${{ secrets.AWS_EC2_USERNAME }}
-          key: ${{ secrets.EC2_SSH_KEY }}
-          script: |
-            sudo su
-            export AWS_ACCESS_KEY_ID=${{ secrets.AWS_EC2_ACCESS_KEY_ID }}
-            export AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_EC2_SECRET_ACCESS_KEY }}
-            sudo docker login -u AWS -p $(aws ecr get-login-password --region ca-central-1) 713619954535.dkr.ecr.ca-central-1.amazonaws.com
-            sudo docker pull 713619954535.dkr.ecr.ca-central-1.amazonaws.com/covid-19-tracker-app:${{ steps.git-get-tag.outputs.git-tag }}
-            sudo docker-compose up -d
-
-#      - name: Print image
+#      - name: Git - Get Latest Tag
+#        id: git-get-tag
 #        run: |
-#          echo ${{ toJSON(needs.build-and-push.outputs) }}
-#          echo ${{ toJSON(needs) }}
+#          bash ./build/git_get_tag.sh
 #
-#      - name: Fill in the new image ID in the Amazon ECS task definition
-#        id: task-def
-#        uses: aws-actions/amazon-ecs-render-task-definition@97587c9d45a4930bf0e3da8dd2feb2a463cf4a3a
+#      - name: Deployment - Executing EC2 SSH Commands
+#        uses: appleboy/ssh-action@master
 #        with:
-#          task-definition: ${{ secrets.AWS_ECS_TASK_DEFINITION }}
-#          container-name: covid-19-tracker-app
-#          image: ${{ needs.build-and-push.outputs.image }}
+#          host: ${{ secrets.AWS_EC2_HOST }}
+#          username: ${{ secrets.AWS_EC2_USERNAME }}
+#          key: ${{ secrets.EC2_SSH_KEY }}
+#          script: |
+#            sudo su
+#            sudo docker system prune -a
+#            export AWS_ACCESS_KEY_ID=${{ secrets.AWS_EC2_ACCESS_KEY_ID }}
+#            export AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_EC2_SECRET_ACCESS_KEY }}
+#            export SERVER_ECR_VERSION=${{ steps.git-get-tag.outputs.git-tag }}
+#            sudo docker login -u AWS -p $(aws ecr get-login-password --region ca-central-1) 713619954535.dkr.ecr.ca-central-1.amazonaws.com
+#            sudo docker pull 713619954535.dkr.ecr.ca-central-1.amazonaws.com/covid-19-tracker-app:${{ steps.git-get-tag.outputs.git-tag }}
+#            sudo docker-compose up -d
 #
-#      - name: Deploy Amazon ECS task definition
-#        uses: aws-actions/amazon-ecs-deploy-task-definition@de0132cf8cdedb79975c6d42b77eb7ea193cf28e
-#        with:
-#          task-definition: ${{ steps.task-def.outputs.task-definition }}
-#          service: ${{ secrets.AWS_ECS_SERVICE }}
-#          cluster: ${{ secrets.AWS_ECS_CLUSTER }}
-#          wait-for-service-stability: true
+##      - name: Print image
+##        run: |
+##          echo ${{ toJSON(needs.build-and-push.outputs) }}
+##          echo ${{ toJSON(needs) }}
+##
+##      - name: Fill in the new image ID in the Amazon ECS task definition
+##        id: task-def
+##        uses: aws-actions/amazon-ecs-render-task-definition@97587c9d45a4930bf0e3da8dd2feb2a463cf4a3a
+##        with:
+##          task-definition: ${{ secrets.AWS_ECS_TASK_DEFINITION }}
+##          container-name: covid-19-tracker-app
+##          image: ${{ needs.build-and-push.outputs.image }}
+##
+##      - name: Deploy Amazon ECS task definition
+##        uses: aws-actions/amazon-ecs-deploy-task-definition@de0132cf8cdedb79975c6d42b77eb7ea193cf28e
+##        with:
+##          task-definition: ${{ steps.task-def.outputs.task-definition }}
+##          service: ${{ secrets.AWS_ECS_SERVICE }}
+##          cluster: ${{ secrets.AWS_ECS_CLUSTER }}
+##          wait-for-service-stability: true

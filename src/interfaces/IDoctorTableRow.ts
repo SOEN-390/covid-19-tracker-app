@@ -6,5 +6,5 @@ export interface IDoctorTableRow {
 	address: Date;
 	email: string;
 	emergencyLeave: boolean;
-	assignedPatientsCount: string;
+	assignedPatientsCount: number;
 }

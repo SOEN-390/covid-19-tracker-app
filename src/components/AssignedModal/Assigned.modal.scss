@@ -1,0 +1,11 @@
+Table.patients-modal__Table{
+  Tr.patients-modal__table-row{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+ion-button{
+  --background: var(--ion-color-dark-blue);
+}
