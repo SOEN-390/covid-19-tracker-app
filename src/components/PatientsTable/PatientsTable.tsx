@@ -226,33 +226,30 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 							className="patients-table__table-entries__doctor-name"
 							onClick={() => {
 								setAssignModal({ open: true, patient });
-							}}
-						>
+							}}						>
 							{patient.doctorName ? (
 								<>
 									{'Dr.' + patient.doctorName + ' '}
 									<IonIcon icon={personRemoveOutline} />
 								</>
-							) : (
-								<>
-									{'Not Assigned'}
-									<IonIcon icon={personAddOutline} />
-								</>
+							) : (<>
+								{'Not Assigned'}
+								<IonIcon icon={personAddOutline} />
+							</>
 							)}
 						</Td>
 					)}
-				<Td key={index}>
-					<IonButton shape="round"
-						expand="block"
-						onClick={() => {
-							presentActionSheet(
-								generateContactList(patient),
-								'Contact by');
-							setTimeout(dismissActionSheet, 10000);
-						}}
-					>
-						Contact
-					</IonButton>
+				<Td key={index}>					<IonButton shape="round"
+					expand="block"
+					onClick={() => {
+						presentActionSheet(
+							generateContactList(patient),
+							'Contact by');
+						setTimeout(dismissActionSheet, 10000);
+					}}
+				>
+					Contact
+				</IonButton>
 				</Td>
 				{
 					(
