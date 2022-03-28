@@ -1,6 +1,5 @@
 import {
 	ActionSheetButton,
-	IonAlert,
 	IonButton,
 	IonIcon,
 	useIonActionSheet,
@@ -34,7 +33,6 @@ import SymptomsCardComponent from '../SymptomsCard/SymptomsCard.component';
 import { useHistory } from 'react-router-dom';
 import { AdminPages, DoctorPages, HealthOfficialPages, ImmigrationOfficerPages } from '../../providers/pages.enum';
 import { ISymptomResponse } from '../../interfaces/ISymptom';
-import { IPatient } from '../../interfaces/IPatient';
 import moment from 'moment';
 import Moment from 'react-moment';
 
@@ -88,33 +86,22 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 		}
 		if (currentDate == lastUpdated) {
 			const confirmRemind = confirm('Patient status is already updated today, are you sure you want to continue?');
-			if (confirmRemind == true) {
-				patient.reminded = true;
-				HttpService.post(
-					`patients/${patient.medicalId}/remind`,
-					{ role: currentProfile.getRole() }
-				).then(() => {
-					props.onChange(patient);
-					presentToast('Successfully REMINDED patient.', 1000);
-				}).catch(() => {
-					presentToast('An error has occurred. Please try again.', 1000);
-				});
+			if (!confirmRemind) {
+				return;
 			}
 		}
+		patient.reminded = true;
+		HttpService.post(
+			`patients/${patient.medicalId}/remind`,
+			{ role: currentProfile.getRole() }
+		).then(() => {
+			props.onChange(patient);
+			presentToast('Successfully REMINDED patient.', 1000);
+		}).catch(() => {
+			presentToast('An error has occurred. Please try again.', 1000);
+		});
 
-		else {
-			patient.reminded = true;
-			HttpService.post(
-				`patients/${patient.medicalId}/remind`,
-				{ role: currentProfile.getRole() }
-			).then(() => {
-				props.onChange(patient);
-				presentToast('Successfully REMINDED patient.', 1000);
-			}).catch(() => {
-				presentToast('An error has occurred. Please try again.', 1000);
-			});
 
-		}
 	}
 
 	function reviewPatient(patient: Patient) {
