@@ -43,5 +43,7 @@ export enum AdminPages {
 	patientProfile = '/admin/patient-profile',
 	patients = '/admin/patients',
 	doctors = '/admin/doctors',
-	settings = '/admin/settings'
+	addSymptoms = '/admin/add-symptoms',
+	settings = '/admin/settings',
+
 }
