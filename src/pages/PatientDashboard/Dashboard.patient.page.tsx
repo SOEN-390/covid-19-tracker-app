@@ -8,7 +8,6 @@ import {
 	IonContent,
 	IonPage,
 	IonRow,
-	IonText,
 	IonTitle,
 	IonToolbar
 } from '@ionic/react';

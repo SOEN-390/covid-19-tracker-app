@@ -221,24 +221,24 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 				</Td>
 				{(currentProfile.getRole() === UserType.HEALTH_OFFICIAL ||
 					currentProfile.getRole() === UserType.ADMIN) && (
-						<Td
-							key={index}
-							className="patients-table__table-entries__doctor-name"
-							onClick={() => {
-								setAssignModal({ open: true, patient });
-							}}						>
-							{patient.doctorName ? (
-								<>
-									{'Dr.' + patient.doctorName + ' '}
-									<IonIcon icon={personRemoveOutline} />
-								</>
-							) : (<>
-								{'Not Assigned'}
-								<IonIcon icon={personAddOutline} />
+					<Td
+						key={index}
+						className="patients-table__table-entries__doctor-name"
+						onClick={() => {
+							setAssignModal({ open: true, patient });
+						}}						>
+						{patient.doctorName ? (
+							<>
+								{'Dr.' + patient.doctorName + ' '}
+								<IonIcon icon={personRemoveOutline} />
 							</>
-							)}
-						</Td>
-					)}
+						) : (<>
+							{'Not Assigned'}
+							<IonIcon icon={personAddOutline} />
+						</>
+						)}
+					</Td>
+				)}
 				<Td key={index}>					<IonButton shape="round"
 					expand="block"
 					onClick={() => {

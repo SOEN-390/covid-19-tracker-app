@@ -3,7 +3,6 @@ import NavBar from '../../components/NavBar/NavBar';
 import React, { useState, useEffect } from 'react';
 import HttpService from '../../providers/http.service';
 import { IDoctorTableRow } from '../../interfaces/IDoctorTableRow';
-import { IPatient } from '../../interfaces/IPatient';
 import DoctorsTable from '../../components/DoctorsTable/DoctorsTable';
 import './Doctors.admin.page.scss';
 
