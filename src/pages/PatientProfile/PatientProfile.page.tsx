@@ -1,4 +1,4 @@
-import { IonLabel, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import { IonContent, IonLabel, IonModal, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import PatientInformation from '../../components/PatientInformation/PatientInformation';
 import NavBar from '../../components/NavBar/NavBar';
 import React, { useEffect, useState } from 'react';
@@ -62,6 +62,13 @@ const PatientProfilePage: React.FC = () => {
 		);
 		setSymptomsList([]);
 		setSymptomsResponse([]);
+	}
+	function presentAppointmentModal(){
+		<IonModal isOpen={true}>
+			<IonContent>
+				<p> yooooo  </p>
+			</IonContent>
+		</IonModal>;
 	}
 
 	// Throwable function. Always try-catch

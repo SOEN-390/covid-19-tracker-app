@@ -4,6 +4,7 @@ import {
 	IonCheckbox,
 	IonCol,
 	IonContent,
+	IonDatetime,
 	IonIcon,
 	IonInput,
 	IonItem,
@@ -39,6 +40,9 @@ const PatientInformation: React.FC<{
 
 	const [showStatusModal, setShowStatusModal] = useState<boolean>(false);
 	const [showSymptomsModal, setShowSymptomsModal] = useState<boolean>(false);
+	const [showAppointmentModal, setShowAppointmentModal ] = useState<boolean>(false);
+
+
 
 	const [contacts, setContacts] = useState<IContact[]>([]);
 
@@ -150,6 +154,10 @@ const PatientInformation: React.FC<{
 		});
 		return contactOption;
 	}
+	function setAppointment(){
+		console.log('yo');
+	
+	}
 
 	function setupModals() {
 		return (
@@ -205,6 +213,16 @@ const PatientInformation: React.FC<{
 					<IonButton color="success" onClick={() => submitSymptoms()}>Request</IonButton>
 					<IonButton color="danger" onClick={() => setShowSymptomsModal(false)}>Cancel</IonButton>
 				</IonModal>
+
+				<IonModal isOpen={showAppointmentModal}>
+					<IonContent>
+						<IonDatetime></IonDatetime>
+					</IonContent>
+					<IonLabel></IonLabel>
+					<IonButton color="success" onClick={() => (setAppointment())}>Set appointment</IonButton>
+					<IonButton color="danger" onClick={() => setShowAppointmentModal(false)}>Cancel</IonButton>
+				</IonModal>
+
 
 				<ContactTracingTableModal trigger={'patient-information__contact-tracing-trigger'}
 										  contacts={contacts}/>
@@ -333,7 +351,7 @@ const PatientInformation: React.FC<{
 										</IonButton>
 									</IonCol>
 									<IonCol>
-										<IonButton>Set an Appointment</IonButton>
+										<IonButton onClick={() => setShowAppointmentModal(true) }>Set an Appointment</IonButton>
 									</IonCol>
 									<IonCol>
 										<IonButton onClick={() => {

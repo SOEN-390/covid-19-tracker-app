@@ -1,7 +1,11 @@
 import {
 	ActionSheetButton,
 	IonButton,
+	IonContent,
 	IonIcon,
+	IonLabel,
+	IonListHeader,
+	IonModal,
 	useIonActionSheet,
 	useIonToast
 } from '@ionic/react';
@@ -23,7 +27,8 @@ import {
 	mail,
 	close,
 	checkmarkCircleOutline,
-	checkmarkDoneCircleOutline
+	checkmarkDoneCircleOutline,
+	calendar
 } from 'ionicons/icons';
 import { useAuth } from '../../providers/auth.provider';
 import { TestResult } from '../../enum/TestResult.enum';
@@ -112,6 +117,8 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 			presentToast('An error has occurred. Please try again.', 1500);
 		});
 	}
+	
+
 
 	async function getLatestSymptoms(patient: Patient): Promise<void> {
 		setSymptoms([]);
@@ -135,7 +142,7 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 				}
 			});
 		}
-		if (patient.email) {
+		if (patient.phoneNumber) {
 			contactOption.push({
 				text: 'Phone',
 				icon: call,
@@ -143,7 +150,7 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 					window.location.href = `tel:${patient.phoneNumber}`;
 				}
 			});
-		}
+		}	
 		contactOption.push({
 			text: 'Cancel',
 			icon: close,
