@@ -16,7 +16,7 @@ import { IPatient } from '../../interfaces/IPatient';
 
 const AssignedComponent: React.FC<{
 	onChange: (patient: IPatient) => void;
-	assignModal: {open: boolean, patient: IPatient}
+	assignModal: { open: boolean, patient: IPatient }
 }> = (props) => {
 	const [modalOpen, setModalOpen] = useState<boolean>(false);
 	const [doctors, setDoctors] = useState<IDoctorTableRow[]>([]);
@@ -44,7 +44,6 @@ const AssignedComponent: React.FC<{
 	useEffect(() => {
 		setModalOpen(props.assignModal.open);
 	}, [props.assignModal]);
-
 
 
 	async function unAssignPatient(licenseId: string): Promise<void> {
@@ -97,7 +96,7 @@ const AssignedComponent: React.FC<{
 	function onClickHandler(doctorTableRow: IDoctorTableRow) {
 		if (props.assignModal.patient.doctorName) {
 			unAssignPatient(doctorTableRow.licenseId!).then(() => {
-				props.assignModal.patient.doctorName = null;
+				delete props.assignModal.patient.doctorName;
 				props.onChange(props.assignModal.patient);
 				setModalOpen?.(false);
 			});

@@ -98,7 +98,7 @@ const PatientsPage: React.FC = () => {
 						patientsArranged.push(patient);
 					}
 				}
-				setPatients?.(patientsArranged);
+				setPatients(patientsArranged);
 			})
 			.catch((error) => {
 				console.log('ERROR: ', error);

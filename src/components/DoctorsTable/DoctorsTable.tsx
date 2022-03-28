@@ -5,7 +5,7 @@ import { IDoctorTableRow } from '../../interfaces/IDoctorTableRow';
 import { IonIcon } from '@ionic/react';
 import { alertCircleOutline } from 'ionicons/icons';
 
-import DoctorUnassignedModal from '../AssignedModal/Doctor.unassigned.modal';
+import DoctorModal from '../AssignedModal/Doctor.modal';
 
 interface Column {
 	id:
@@ -105,7 +105,7 @@ const DoctorsTable: React.FC<{
 							<Td id={`doctors-table__assigned-${row.licenseId}`}>
 								{row.assignedPatientsCount}
 							</Td>
-							<DoctorUnassignedModal
+							<DoctorModal
 								trigger={
 									row.assignedPatientsCount > 0
 										? `doctors-table__assigned-${row.licenseId}`

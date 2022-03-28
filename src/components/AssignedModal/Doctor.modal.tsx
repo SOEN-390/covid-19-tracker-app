@@ -9,13 +9,13 @@ import {
 	IonModal,
 	useIonToast,
 } from '@ionic/react';
-import './Doctor.unassigned.modal.scss';
+import './Doctor.modal.scss';
 import { IDoctorTableRow } from '../../interfaces/IDoctorTableRow';
 import { Table, Td, Tr } from 'react-super-responsive-table';
 import HttpService from '../../providers/http.service';
 import { IPatient } from '../../interfaces/IPatient';
 
-const DoctorUnassignedModal: React.FC<{
+const DoctorModal: React.FC<{
 	doctor: IDoctorTableRow;
 	trigger?: string;
 	setDoctorsArray: (doctors: IDoctorTableRow[]) => void;
@@ -59,25 +59,6 @@ const DoctorUnassignedModal: React.FC<{
 		const doctorsResponse: IDoctorTableRow[] = await HttpService.get(
 			'doctors/all'
 		);
-		for (const [index, doctor] of doctorsResponse.entries()) {
-			try {
-				const numberOfPatientsResponse: IPatient[] = await HttpService.get(
-					`doctors/${doctor.licenseId}/patients/assigned`
-				);
-
-				console.log(numberOfPatientsResponse);
-				doctorsResponse[index] = {
-					...doctor,
-					assignedPatientsCount: numberOfPatientsResponse.length,
-				};
-				setPatientsArray(numberOfPatientsResponse);
-			} catch (error) {
-				doctorsResponse[index] = {
-					...doctor,
-					assignedPatientsCount: '0',
-				};
-			}
-		}
 		setDoctorsArray?.(doctorsResponse);
 	}
 
@@ -98,7 +79,7 @@ const DoctorUnassignedModal: React.FC<{
 						{patientsArray.length > 0 &&
 							patientsArray.map((row) => {
 								return (
-									<Table key={row.id} className={'doctor-modal__Table'}>
+									<Table key={row.id} className={'doctor-modal__table'}>
 										<Tr className={'doctor-modal__table-row'}>
 											<Td
 												className={'doctor-table__doctor-name'}
@@ -118,4 +99,4 @@ const DoctorUnassignedModal: React.FC<{
 	);
 };
 
-export default DoctorUnassignedModal;
+export default DoctorModal;

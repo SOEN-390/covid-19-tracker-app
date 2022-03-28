@@ -216,7 +216,6 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 					<Td
 						key={index}
 						className="patients-table__table-entries__doctor-name"
-						id={`patients-table__assigned-${patient.medicalId}`}
 						onClick={() => {
 							setAssignModal({open: true, patient});
 						}}

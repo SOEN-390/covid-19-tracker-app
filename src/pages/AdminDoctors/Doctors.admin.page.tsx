@@ -20,24 +20,6 @@ const DoctorsAdminPage: React.FC = () => {
 		const doctorsResponse: IDoctorTableRow[] = await HttpService.get(
 			'doctors/all'
 		);
-		for (const [index, doctor] of doctorsResponse.entries()) {
-			try {
-				const numberOfPatientsResponse: IPatient[] = await HttpService.get(
-					`doctors/${doctor.licenseId}/patients/assigned`
-				);
-
-				console.log(numberOfPatientsResponse);
-				doctorsResponse[index] = {
-					...doctor,
-					assignedPatientsCount: numberOfPatientsResponse.length,
-				};
-			} catch (error) {
-				doctorsResponse[index] = {
-					...doctor,
-					assignedPatientsCount: '0',
-				};
-			}
-		}
 		setDoctorsArray(doctorsResponse);
 	}
 
