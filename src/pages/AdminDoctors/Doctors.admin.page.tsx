@@ -3,6 +3,7 @@ import NavBar from '../../components/NavBar/NavBar';
 import React, { useState, useEffect } from 'react';
 import HttpService from '../../providers/http.service';
 import { IDoctorTableRow } from '../../interfaces/IDoctorTableRow';
+import { IPatient } from '../../interfaces/IPatient';
 import DoctorsTable from '../../components/DoctorsTable/DoctorsTable';
 import './Doctors.admin.page.scss';
 
@@ -27,11 +28,13 @@ const DoctorsAdminPage: React.FC = () => {
 			<IonToolbar>
 				<NavBar/>
 			</IonToolbar>
-			<IonContent className={'doctors-admin__content'} >
+			<IonContent className={'doctors-admin__content'}>
 				<IonTitle>Doctors</IonTitle>
 				<br/>
 				{
-					doctorsArray.length !== 0 ? <DoctorsTable doctorTableRows={doctorsArray}/> : null
+					doctorsArray.length !== 0 ? <DoctorsTable doctorTableRows={doctorsArray}
+															  setDoctorsArray={setDoctorsArray}
+					/> : null
 				}
 			</IonContent>
 		</IonPage>
