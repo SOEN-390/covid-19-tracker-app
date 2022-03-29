@@ -20,7 +20,7 @@ const AdminAddSymptomsPage: React.FC = () => {
 	const [present] = useIonToast();
 
 	async function addSymptom(): Promise<void> {
-		if (name === '' || description === '') {
+		if (name.trim() === '' || description.trim() === '') {
 			present('Please complete the required fields', 1500);
 			return;
 		}
