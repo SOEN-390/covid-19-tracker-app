@@ -63,13 +63,6 @@ const PatientProfilePage: React.FC = () => {
 		setSymptomsList([]);
 		setSymptomsResponse([]);
 	}
-	function presentAppointmentModal(){
-		<IonModal isOpen={true}>
-			<IonContent>
-				<p> yooooo  </p>
-			</IonContent>
-		</IonModal>;
-	}
 
 	// Throwable function. Always try-catch
 	async function getPatientWithId() {
