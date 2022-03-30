@@ -1,0 +1,22 @@
+ion-content.dashboard-patient__page {
+
+
+  ion-card.dashboard-patient__reminder-card {
+    max-height: 400px;
+    max-width: 500px;
+    min-height: 100px;
+    min-width: 110px;
+    width: 100%;
+    height: 100%;
+    position: relative;
+
+    ion-card-content {
+      //width: 100%;
+
+      ion-button.symptoms-patient__symptoms-form {
+        --background: var(--ion-color-dark-blue);
+      }
+    }
+  }
+
+}

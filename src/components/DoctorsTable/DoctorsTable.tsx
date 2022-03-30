@@ -5,6 +5,8 @@ import { IDoctorTableRow } from '../../interfaces/IDoctorTableRow';
 import { IonIcon } from '@ionic/react';
 import { alertCircleOutline } from 'ionicons/icons';
 
+import DoctorModal from '../AssignedModal/Doctor.modal';
+
 interface Column {
 	id:
 		| 'name'
@@ -25,82 +27,96 @@ const columns: readonly Column[] = [
 		id: 'name',
 		label: 'Name',
 		minWidth: 170,
-		align: 'center'
+		align: 'center',
 	},
 	{
 		id: 'licenseId',
 		label: 'LicenseId',
 		minWidth: 170,
-		align: 'center'
+		align: 'center',
 	},
 	{
 		id: 'phoneNumber',
 		label: 'Phone Number',
 		minWidth: 170,
-		align: 'center'
+		align: 'center',
 	},
 	{
 		id: 'address',
 		label: 'Address',
 		minWidth: 170,
-		align: 'center'
+		align: 'center',
 	},
 	{
 		id: 'email',
 		label: 'Email',
 		minWidth: 170,
-		align: 'center'
+		align: 'center',
 	},
 	{
 		id: 'emergencyLeave',
 		label: 'Emergency Leave',
 		minWidth: 170,
-		align: 'center'
+		align: 'center',
 	},
 	{
 		id: 'numberOfPatients',
 		label: 'Number of Patients',
 		minWidth: 170,
-		align: 'center'
-	}
+		align: 'center',
+	},
 ];
 
-
-const DoctorsTable: React.FC<{ doctorTableRows: IDoctorTableRow[] }> = (props) => {
-
+const DoctorsTable: React.FC<{
+	doctorTableRows: IDoctorTableRow[];
+	setDoctorsArray: (doctors: IDoctorTableRow[]) => void;
+}> = (props) => {
 	return (
 		<Table className={'doctor-table__table'}>
 			<Thead>
 				<Tr className={'doctor-table__table-head'}>
-					{
-						columns.map((column, index) => (
-							<Th key={index}>{column.label}</Th>
-						))
-					}
+					{columns.map((column, index) => (
+						<Th key={index}>{column.label}</Th>
+					))}
 				</Tr>
 			</Thead>
 			<Tbody>
-				{
-					props.doctorTableRows.map((row, index) => {
-						return (
-							<Tr key={index} className={'doctor-table__table-row'}>
-								<Td className={'doctor-table__doctor-name'}>{row.firstName + ' ' + row.lastName}</Td>
-								<Td>{row.licenseId}</Td>
-								<Td>{row.phoneNumber}</Td>
-								<Td>{row.address}</Td>
-								<Td>{row.email}</Td>
-								<Td>
-									{
-										row.emergencyLeave ?
-											<IonIcon icon={alertCircleOutline} size={'large'} color={'danger'} /> :
-											<></>
-									}
-								</Td>
-								<Td>{row.assignedPatientsCount}</Td>
-							</Tr>
-						);
-					})
-				}
+				{props.doctorTableRows.map((row, index) => {
+					return (
+						<Tr key={index} className={'doctor-table__table-row'}>
+							<Td className={'doctor-table__doctor-name'}>
+								{row.firstName + ' ' + row.lastName}
+							</Td>
+							<Td>{row.licenseId}</Td>
+							<Td>{row.phoneNumber}</Td>
+							<Td>{row.address}</Td>
+							<Td>{row.email}</Td>
+							<Td>
+								{row.emergencyLeave ? (
+									<IonIcon
+										icon={alertCircleOutline}
+										size={'large'}
+										color={'danger'}
+									/>
+								) : (
+									<></>
+								)}
+							</Td>
+							<Td id={`doctors-table__assigned-${row.licenseId}`}>
+								{row.assignedPatientsCount}
+							</Td>
+							<DoctorModal
+								trigger={
+									row.assignedPatientsCount > 0
+										? `doctors-table__assigned-${row.licenseId}`
+										: undefined
+								}
+								doctor={row}
+								setDoctorsArray={props.setDoctorsArray}
+							/>
+						</Tr>
+					);
+				})}
 			</Tbody>
 		</Table>
 	);

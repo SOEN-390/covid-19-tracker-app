@@ -11,7 +11,7 @@ import {
 	homeOutline,
 	medkitOutline,
 	peopleOutline,
-	personOutline,
+	personOutline, readerOutline,
 	settingsOutline,
 	warningOutline
 } from 'ionicons/icons';
@@ -24,8 +24,8 @@ export interface AppPage {
 
 export const patientAppPages: readonly AppPage[] = [
 	{
-		title: 'Overview',
-		url: PatientPages.overview,
+		title: 'Dashboard',
+		url: PatientPages.dashboard,
 		icon: homeOutline
 	},
 	{
@@ -149,6 +149,11 @@ export const adminAppPages: readonly AppPage[] = [
 		title: 'Patient Profile',
 		url: AdminPages.patientProfile,
 		icon: personOutline
+	},
+	{
+		title: 'Add Symptoms',
+		url: AdminPages.addSymptoms,
+		icon: readerOutline
 	},
 	{
 		title: 'Settings',

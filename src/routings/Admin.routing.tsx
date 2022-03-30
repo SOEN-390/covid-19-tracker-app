@@ -10,6 +10,7 @@ import SettingsPage from '../pages/Settings/Settings.page';
 import { UserType } from '../enum/UserType.enum';
 import React from 'react';
 import PatientsPage from '../pages/Patients/Patients.page';
+import AdminAddSymptomsPage from '../pages/AdminAddSymptoms/Admin.add.symptoms.page';
 
 setupIonicReact();
 
@@ -36,6 +37,9 @@ const AdminRouting: React.FC = () => {
 					</Route>
 					<Route path={AdminPages.doctors}>
 						<DoctorsAdminPage/>
+					</Route>
+					<Route path={AdminPages.addSymptoms}>
+						<AdminAddSymptomsPage/>
 					</Route>
 					<Route path={AdminPages.settings}>
 						<SettingsPage/>

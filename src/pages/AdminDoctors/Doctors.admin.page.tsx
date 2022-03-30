@@ -27,11 +27,13 @@ const DoctorsAdminPage: React.FC = () => {
 			<IonToolbar>
 				<NavBar/>
 			</IonToolbar>
-			<IonContent className={'doctors-admin__content'} >
+			<IonContent className={'doctors-admin__content'}>
 				<IonTitle>Doctors</IonTitle>
 				<br/>
 				{
-					doctorsArray.length !== 0 ? <DoctorsTable doctorTableRows={doctorsArray}/> : null
+					doctorsArray.length !== 0 ? <DoctorsTable doctorTableRows={doctorsArray}
+															  setDoctorsArray={setDoctorsArray}
+					/> : null
 				}
 			</IonContent>
 		</IonPage>
