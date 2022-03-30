@@ -1,4 +1,4 @@
-export interface IAppointement {
-    Date : string,
-    Subject: string;
+export interface IAppointment {
+    date : Date,
+    subject: string;
 }
