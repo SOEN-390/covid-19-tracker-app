@@ -1,11 +1,7 @@
 import {
 	ActionSheetButton,
 	IonButton,
-	IonContent,
 	IonIcon,
-	IonLabel,
-	IonListHeader,
-	IonModal,
 	useIonActionSheet,
 	useIonToast
 } from '@ionic/react';
@@ -30,7 +26,6 @@ import {
 	checkmarkDoneCircleOutline,
 	personRemoveOutline,
 	personAddOutline,
-	calendar
 } from 'ionicons/icons';
 import { useAuth } from '../../providers/auth.provider';
 import { TestResult } from '../../enum/TestResult.enum';
@@ -41,6 +36,9 @@ import { useHistory } from 'react-router-dom';
 import { AdminPages, DoctorPages, HealthOfficialPages, ImmigrationOfficerPages } from '../../providers/pages.enum';
 import Moment from 'react-moment';
 import { ISymptomResponse } from '../../interfaces/ISymptom';
+import moment from 'moment-timezone';
+import { IPatient } from '../../interfaces/IPatient';
+import AssignedComponent from '../AssignedModal/Assigned.modal';
 
 const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient) => void }> = (props) => {
 
