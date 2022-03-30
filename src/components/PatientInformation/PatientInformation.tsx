@@ -137,7 +137,7 @@ const PatientInformation: React.FC<{
 				}
 			});
 		}
-		if (patient.email) {
+		if (patient.phoneNumber) {
 			contactOption.push({
 				text: 'Phone',
 				icon: call,
