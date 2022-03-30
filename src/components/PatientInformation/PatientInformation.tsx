@@ -25,11 +25,12 @@ import { UserType } from '../../enum/UserType.enum';
 import React, { useEffect, useState } from 'react';
 import { TestResult } from '../../enum/TestResult.enum';
 import HttpService from '../../providers/http.service';
-import { call, close, flag, mail } from 'ionicons/icons';
+import { call, close, flag, mail, text } from 'ionicons/icons';
 import { ISymptom, ISymptomResponse } from '../../interfaces/ISymptom';
 import ContactTracingTableModal from '../ContactTracingTable/ContactTracingTable.modal';
 import PatientSymptomsTableModal from '../PatientSymptomsTable/PatientSymptomsTable.modal';
 import Moment from 'react-moment';
+import { IAppointement } from '../../interfaces/IAppointment';
 
 const PatientInformation: React.FC<{
 	patient: IPatient, onChange: (patient: IPatient) => void,
@@ -41,7 +42,13 @@ const PatientInformation: React.FC<{
 	const [showStatusModal, setShowStatusModal] = useState<boolean>(false);
 	const [showSymptomsModal, setShowSymptomsModal] = useState<boolean>(false);
 	const [showAppointmentModal, setShowAppointmentModal ] = useState<boolean>(false);
-
+	const [appointmentSubject, setAppointmentSubject ] =useState<string>('');
+	const [appointmentDate, setAppointmentDate ] =useState<string>('');
+	
+	const appointment: IAppointement = {
+		Date : appointmentDate,
+		Subject: appointmentSubject
+	};
 
 
 	const [contacts, setContacts] = useState<IContact[]>([]);
@@ -155,7 +162,9 @@ const PatientInformation: React.FC<{
 		return contactOption;
 	}
 	function setAppointment(){
-		console.log('yo');
+		console.log(appointment.Date);
+		console.log(appointment.Subject);
+	
 	
 	}
 
@@ -216,9 +225,12 @@ const PatientInformation: React.FC<{
 
 				<IonModal isOpen={showAppointmentModal}>
 					<IonContent>
-						<IonDatetime></IonDatetime>
+						<IonDatetime onIonChange={e => setAppointmentDate(e.detail.value!)}></IonDatetime>
+						<br/>
+						<br/>
+						<IonLabel>Subject</IonLabel>
+						<IonInput type='text' onIonChange={e => setAppointmentSubject(e.detail.value!)}  placeholder="Enter the subject"></IonInput>
 					</IonContent>
-					<IonLabel></IonLabel>
 					<IonButton color="success" onClick={() => (setAppointment())}>Set appointment</IonButton>
 					<IonButton color="danger" onClick={() => setShowAppointmentModal(false)}>Cancel</IonButton>
 				</IonModal>
