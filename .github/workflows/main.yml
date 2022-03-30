@@ -49,7 +49,7 @@ jobs:
       - name: Automatic Tagging of Releases
         id: increment-git-tag
         run: |
-          bash ./build/git_update.sh -v ${{ steps.get_version.outputs.VERSION }}
+          bash ./.github/build/git_update.sh -v ${{ steps.get_version.outputs.VERSION }}
 
   deploy:
 
