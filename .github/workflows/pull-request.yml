@@ -38,7 +38,7 @@ jobs:
         uses: actions/setup-node@v1
 
       - name: Setup the Code
-        run: npm install
+        run: npm ci
 
       - name: Build Prod build
         run: npm run build:prod
