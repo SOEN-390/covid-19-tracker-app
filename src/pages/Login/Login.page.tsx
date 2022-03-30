@@ -31,24 +31,25 @@ const LoginPage: React.FC = () => {
 			await login(email, password);
 			present('Successfully logged in.', 1500);
 		} catch {
-			present('Something went wrong. Please try again.', 1500);
+			present('Something went wrong. Please try again.', 5000);
 		}
 	}
 
 	return (
 		<IonApp>
 			<IonContent>
-				<IonImg className="login__logo" src={'/assets/logo/covid-tracker-transparent.png'} alt={'logo'} />
+				<IonImg className="login__logo" src={'/assets/logo/covid-tracker-transparent.png'} alt={'logo'}/>
 				<h2 className="login__text">Sign In</h2>
 				<div className="ion-align-items-center; login__form">
 					<IonLabel className="login__text">Email</IonLabel>
-					<IonInput data-testid={'login__email-field'} className="login__text-field"
+					<IonInput data-cy="email"
+							  data-testid={'login__email-field'} className="login__text-field"
 							  placeholder="Enter your Email" type="email" value={email}
 							  onIonChange={(e: CustomEvent<InputChangeEventDetail>) => setEmail(e.detail.value || '')}/>
 
 					<br/><br/>
 					<IonLabel className="login__text">Password</IonLabel>
-					<IonInput data-testid={'login__password-field'} className="login__text-field"
+					<IonInput data-cy="password" data-testid={'login__password-field'} className="login__text-field"
 							  placeholder="Enter your password" type="password" value={password}
 							  onIonChange={(e: CustomEvent<InputChangeEventDetail>) => setPassword(e.detail.value || '')}/>
 

@@ -6,8 +6,9 @@ export interface IPatient {
 	medicalId: string;
 	firstName: string;
 	lastName: string;
-	testResult: TestResult;
 	doctorName?: string;
+	doctorId?: string;
+	testResult: TestResult;
 	address: string;
 	email: string | null | undefined;
 	phoneNumber: string;

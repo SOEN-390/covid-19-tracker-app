@@ -28,6 +28,8 @@ import {
 	close,
 	checkmarkCircleOutline,
 	checkmarkDoneCircleOutline,
+	personRemoveOutline,
+	personAddOutline,
 	calendar
 } from 'ionicons/icons';
 import { useAuth } from '../../providers/auth.provider';
@@ -39,17 +41,19 @@ import { useHistory } from 'react-router-dom';
 import { AdminPages, DoctorPages, HealthOfficialPages, ImmigrationOfficerPages } from '../../providers/pages.enum';
 import Moment from 'react-moment';
 import { ISymptomResponse } from '../../interfaces/ISymptom';
-import { IPatient } from '../../interfaces/IPatient';
 
 const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient) => void }> = (props) => {
 
 	const { currentProfile } = useAuth();
 	const [columns, setColumns] = useState<readonly PatientsTableColumn[]>([]);
+	const [assignModal, setAssignModal] = useState<{ open: boolean, patient: Patient }>();
 	const [presentToast] = useIonToast();
 	const [presentActionSheet, dismissActionSheet] = useIonActionSheet();
 	const history = useHistory();
 	const [symptoms, setSymptoms] = useState<ISymptomResponse[]>([]);
+	const currentDate = moment().format('YYYY-M-D');
 
+	const StringifyPatientList = JSON.stringify(props.patients);
 
 	useEffect(() => {
 		switch (currentProfile.getRole()) {
@@ -66,10 +70,9 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 				setColumns(adminColumns);
 				break;
 		}
-	}, []);
+	}, [StringifyPatientList]);
 
 	function flagPatient(patient: Patient) {
-
 		patient.flagged = !patient.flagged;
 		HttpService.post(
 			`patients/${patient.medicalId}/${patient.flagged ? 'flag' : 'unflag'}`,
@@ -81,16 +84,21 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 			presentToast('An error has occurred. Please try again.', 1000);
 		});
 	}
+
 	function remindPatient(patient: Patient) {
+		const lastUpdated = moment(patient.lastUpdated).format('YYYY-M-D');
 		if (patient.reminded) {
 			presentToast('Patient already reminded', 1500);
 
 			return;
 		}
+		if (currentDate == lastUpdated) {
+			const confirmRemind = confirm('Patient status is already updated today, are you sure you want to continue?');
+			if (!confirmRemind) {
+				return;
+			}
+		}
 		patient.reminded = true;
-		//setTime(currentHour);
-
-		console.log(patient.reminded);
 		HttpService.post(
 			`patients/${patient.medicalId}/remind`,
 			{ role: currentProfile.getRole() }
@@ -117,8 +125,6 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 			presentToast('An error has occurred. Please try again.', 1500);
 		});
 	}
-	
-
 
 	async function getLatestSymptoms(patient: Patient): Promise<void> {
 		setSymptoms([]);
@@ -150,7 +156,7 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 					window.location.href = `tel:${patient.phoneNumber}`;
 				}
 			});
-		}	
+		}
 		contactOption.push({
 			text: 'Cancel',
 			icon: close,
@@ -204,24 +210,37 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 						{patient.testResult === TestResult.PENDING && 'PENDING'}
 					</div>
 				</Td>
-				{
-					(currentProfile.getRole() === UserType.HEALTH_OFFICIAL || currentProfile.getRole() === UserType.ADMIN) &&
-					<Td key={index} className="patients-table__table-entries__doctor-name">
-						{patient.doctorName ? 'Dr. ' + patient.doctorName : 'Not Assigned'}
-					</Td>
-				}
-				<Td key={index}>
-					<IonButton shape="round"
-						expand="block"
+				{(currentProfile.getRole() === UserType.HEALTH_OFFICIAL ||
+					currentProfile.getRole() === UserType.ADMIN) && (
+					<Td
+						key={index}
+						className="patients-table__table-entries__doctor-name"
 						onClick={() => {
-							presentActionSheet(
-								generateContactList(patient),
-								'Contact by');
-							setTimeout(dismissActionSheet, 10000);
-						}}
-					>
-						Contact
-					</IonButton>
+							setAssignModal({ open: true, patient });
+						}}						>
+						{patient.doctorName ? (
+							<>
+								{'Dr.' + patient.doctorName + ' '}
+								<IonIcon icon={personRemoveOutline} />
+							</>
+						) : (<>
+							{'Not Assigned'}
+							<IonIcon icon={personAddOutline} />
+						</>
+						)}
+					</Td>
+				)}
+				<Td key={index}>					<IonButton shape="round"
+					expand="block"
+					onClick={() => {
+						presentActionSheet(
+							generateContactList(patient),
+							'Contact by');
+						setTimeout(dismissActionSheet, 10000);
+					}}
+				>
+					Contact
+				</IonButton>
 				</Td>
 				{
 					(
@@ -240,7 +259,7 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 						</IonButton>
 
 						<SymptomsCardComponent trigger={`patients-table__monitor-${patient.medicalId}`}
-											   patient={patient} symptoms={symptoms}/>
+							patient={patient} symptoms={symptoms} />
 
 
 					</Td>
@@ -278,26 +297,34 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 	}
 
 	return (
-		<Table className={'patients-table__table'}>
-			<Thead>
-				<Tr className={'patients-table__table-head'}>
-					{
-						columns.map((column, index) => (
+		<>
+			{
+				assignModal && assignModal.patient &&
+				<AssignedComponent
+					assignModal={assignModal}
+					onChange={(patient: IPatient) => {
+						props.onChange(patient as Patient);
+						setAssignModal({ open: false, patient: assignModal.patient });
+					}}
+				/>
+			}
+			<Table className={'patients-table__table'}>
+				<Thead>
+					<Tr className={'patients-table__table-head'}>
+						{columns.map((column, index) => (
 							<Th key={index} className={'patients-table__table-column-title'}>
 								{column.label}
 							</Th>
-						))
-					}
-				</Tr>
-			</Thead>
-			<Tbody>
-				{
-					props.patients.map((row, index) => {
+						))}
+					</Tr>
+				</Thead>
+				<Tbody>
+					{props.patients.map((row, index) => {
 						return getRow(row, index);
-					})
-				}
-			</Tbody>
-		</Table>
+					})}
+				</Tbody>
+			</Table>
+		</>
 	);
 };
 

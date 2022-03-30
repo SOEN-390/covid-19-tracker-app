@@ -17,6 +17,7 @@ export class Patient extends User {
 	private _reminded?: boolean;
 	private _reviewed?: boolean;
 	private _doctorName?: string;
+	private _assigned?: boolean;
 
 	// Constructor
 
@@ -111,6 +112,13 @@ export class Patient extends User {
 		this._lastUpdated = value;
 	}
 
+	get assigned(): boolean {
+		return this._assigned || false;
+	}
+
+	set assigned(value: boolean) {
+		this._assigned = value;
+	}
 	// Methods
 
 	public getRole(): UserType {
