@@ -71,10 +71,7 @@ const NavBar: React.FC = () => {
 								<IonSearchbar value={searchText} placeholder={'Enter the Medical ID of a patient'}
 											  onIonChange={e => setSearchText(e.detail.value || '')}
 											  showCancelButton="never"
-											  onKeyPress={(e) => e.key === 'Enter' && search(e.key)}
-
-
-								/>
+											  onKeyPress={(e) => e.key === 'Enter' && search(e.key)}/>
 								<IonButton onClick={search}> Search </IonButton>
 							</IonItem>
 						</div>) : null

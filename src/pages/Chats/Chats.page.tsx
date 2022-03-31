@@ -226,7 +226,6 @@ const ChatsPage: React.FC = () => {
 									<>
 										<Channel channel={patientChannel}>
 											<Window>
-
 												<ChannelHeader />
 												<MessageList/>
 												<MessageInput/>
@@ -237,7 +236,7 @@ const ChatsPage: React.FC = () => {
 									<>
 										<br />
 										<br />
-										<IonTitle className={'chats__title'}>You do not have a good doctor</IonTitle>
+										<IonTitle className={'chats__title'}>You do not have a doctor</IonTitle>
 									</>
 							}
 						</Chat>
