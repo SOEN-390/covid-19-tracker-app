@@ -1,0 +1,79 @@
+name: Main Master Workflow
+
+on:
+  push:
+    branches:
+      - master
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+
+
+  build:
+
+    runs-on: ubuntu-latest
+    name: Build and Test
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Build and Run the Docker Containers
+        run: docker-compose up --build -d
+
+      - name: Run ESLint
+        run: docker exec -e CI=true covid-19-tracker-app npm run style:eslint
+
+      - name: Run Tests with Coverage
+        run: docker exec -e CI=true covid-19-tracker-app npm run test -- --coverage
+
+  release-tag:
+
+    needs: [build]
+    name: Release GitHub Tag
+    runs-on: ubuntu-latest
+
+    outputs:
+      image: ${{ steps.build-image.outputs.image }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Get the version
+        id: get_version
+        run: echo ::set-output name=VERSION::$(cat package.json | jq --raw-output '.version')
+
+      - name: Automatic Tagging of Releases
+        id: increment-git-tag
+        run: |
+          bash ./.github/build/git_update.sh -v ${{ steps.get_version.outputs.VERSION }}
+
+  deploy:
+
+    needs: [release-tag]
+    name: Deploy to Firebase
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: '16'
+
+      - name: Setup the Code
+        run: npm ci
+
+      - name: Build Prod build
+        run: npm run build:prod
+
+      - uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_CVOID_19_APP }}'
+          channelId: live
+          projectId: cvoid-19-app

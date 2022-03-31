@@ -4,6 +4,7 @@ import {
 	IonCheckbox,
 	IonCol,
 	IonContent,
+	IonDatetime,
 	IonIcon,
 	IonInput,
 	IonItem,
@@ -24,11 +25,12 @@ import { UserType } from '../../enum/UserType.enum';
 import React, { useEffect, useState } from 'react';
 import { TestResult } from '../../enum/TestResult.enum';
 import HttpService from '../../providers/http.service';
-import { call, close, flag, mail } from 'ionicons/icons';
+import { call, close, flag, mail, text } from 'ionicons/icons';
 import { ISymptom, ISymptomResponse } from '../../interfaces/ISymptom';
 import ContactTracingTableModal from '../ContactTracingTable/ContactTracingTable.modal';
 import PatientSymptomsTableModal from '../PatientSymptomsTable/PatientSymptomsTable.modal';
 import Moment from 'react-moment';
+import moment from 'moment-timezone';
 
 const PatientInformation: React.FC<{
 	patient: IPatient, onChange: (patient: IPatient) => void,
@@ -39,9 +41,10 @@ const PatientInformation: React.FC<{
 
 	const [showStatusModal, setShowStatusModal] = useState<boolean>(false);
 	const [showSymptomsModal, setShowSymptomsModal] = useState<boolean>(false);
-
+	const [showAppointmentModal, setShowAppointmentModal ] = useState<boolean>(false);
+	const [appointmentSubject, setAppointmentSubject ] =useState<string>('');
+	const [appointmentDate, setAppointmentDate ] =useState<string>();
 	const [contacts, setContacts] = useState<IContact[]>([]);
-
 	const [presentActionSheet, dismissActionSheet] = useIonActionSheet();
 	const [present] = useIonToast();
 
@@ -134,7 +137,7 @@ const PatientInformation: React.FC<{
 				}
 			});
 		}
-		if (patient.email) {
+		if (patient.phoneNumber) {
 			contactOption.push({
 				text: 'Phone',
 				icon: call,
@@ -150,6 +153,31 @@ const PatientInformation: React.FC<{
 		});
 		return contactOption;
 	}
+	async function setAppointment() {
+		const pickedDate = moment(appointmentDate).toDate();
+		if (moment().toDate() > pickedDate) {
+			present('Please select a valid date', 1500);
+			return;
+		}
+		if (appointmentSubject.trim() === '') {
+			present('Please enter a subject', 1500);
+			return;
+		}
+		try {
+			await HttpService.post(`doctors/${currentProfile.licenseId}/patients/${props.patient.medicalId}/appointment`, {
+				appointment: {
+					date: appointmentDate,
+					subject: appointmentSubject
+				}
+			});
+			present('Successfully booked appointment', 1500);
+			setShowAppointmentModal(false);
+		} catch (e) {
+			present('You already have a booked appointment with the patient', 1500);
+			setShowAppointmentModal(false);
+		}
+	}
+
 
 	function setupModals() {
 		return (
@@ -205,6 +233,19 @@ const PatientInformation: React.FC<{
 					<IonButton color="success" onClick={() => submitSymptoms()}>Request</IonButton>
 					<IonButton color="danger" onClick={() => setShowSymptomsModal(false)}>Cancel</IonButton>
 				</IonModal>
+
+				<IonModal isOpen={showAppointmentModal}>
+					<IonContent>
+						<IonDatetime onIonChange={e => setAppointmentDate(e.detail.value!)}/>
+						<br/>
+						<br/>
+						<IonLabel>Subject</IonLabel>
+						<IonInput type='text' onIonChange={e => setAppointmentSubject(e.detail.value!)}  placeholder="Enter the subject"/>
+					</IonContent>
+					<IonButton color="success" onClick={() => (setAppointment())}>Set appointment</IonButton>
+					<IonButton color="danger" onClick={() => setShowAppointmentModal(false)}>Cancel</IonButton>
+				</IonModal>
+
 
 				<ContactTracingTableModal trigger={'patient-information__contact-tracing-trigger'}
 										  contacts={contacts}/>
@@ -333,7 +374,7 @@ const PatientInformation: React.FC<{
 										</IonButton>
 									</IonCol>
 									<IonCol>
-										<IonButton>Set an Appointment</IonButton>
+										<IonButton onClick={() => setShowAppointmentModal(true) }>Set an Appointment</IonButton>
 									</IonCol>
 									<IonCol>
 										<IonButton onClick={() => {

@@ -33,17 +33,12 @@ import { Patient } from '../../objects/Patient.class';
 import HttpService from '../../providers/http.service';
 import SymptomsCardComponent from '../SymptomsCard/SymptomsCard.component';
 import { useHistory } from 'react-router-dom';
-import moment from 'moment';
-import {
-	AdminPages,
-	DoctorPages,
-	HealthOfficialPages,
-	ImmigrationOfficerPages,
-} from '../../providers/pages.enum';
-import AssignedComponent from '../AssignedModal/Assigned.modal';
-import { IPatient } from '../../interfaces/IPatient';
+import { AdminPages, DoctorPages, HealthOfficialPages, ImmigrationOfficerPages } from '../../providers/pages.enum';
 import Moment from 'react-moment';
 import { ISymptomResponse } from '../../interfaces/ISymptom';
+import moment from 'moment-timezone';
+import { IPatient } from '../../interfaces/IPatient';
+import AssignedComponent from '../AssignedModal/Assigned.modal';
 
 const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient) => void }> = (props) => {
 
@@ -80,21 +75,15 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 		HttpService.post(
 			`patients/${patient.medicalId}/${patient.flagged ? 'flag' : 'unflag'}`,
 			{ role: currentProfile.getRole() }
-		)
-			.then(() => {
-				props.onChange(patient);
-				presentToast(
-					`Successfully ${patient.flagged ? 'FLAGGED' : 'UNFLAGGED'} patient.`,
-					1000
-				);
-			})
-			.catch(() => {
-				presentToast('An error has occurred. Please try again.', 1000);
-			});
+		).then(() => {
+			props.onChange(patient);
+			presentToast(`Successfully ${patient.flagged ? 'FLAGGED' : 'UNFLAGGED'} patient.`, 1000);
+		}).catch(() => {
+			presentToast('An error has occurred. Please try again.', 1000);
+		});
 	}
 
 	function remindPatient(patient: Patient) {
-
 		const lastUpdated = moment(patient.lastUpdated).format('YYYY-M-D');
 		if (patient.reminded) {
 			presentToast('Patient already reminded', 1500);
@@ -117,7 +106,6 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 		}).catch(() => {
 			presentToast('An error has occurred. Please try again.', 1000);
 		});
-
 
 	}
 
@@ -158,7 +146,7 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 				}
 			});
 		}
-		if (patient.email) {
+		if (patient.phoneNumber) {
 			contactOption.push({
 				text: 'Phone',
 				icon: call,
@@ -176,6 +164,7 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 	}
 
 	function getRow(patient: Patient, index: number): JSX.Element | null {
+
 		return (
 			<Tr className="patients-table__table-entries"
 				key={index}
