@@ -17,7 +17,6 @@ COPY ionic.config.json ./
 COPY capacitor.config.ts ./
 COPY capacitor.config.json ./
 COPY tsconfig.json ./
-COPY aws-ecs-task-definition.json ./
 
 EXPOSE $PORT
 
