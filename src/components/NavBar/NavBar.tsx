@@ -14,15 +14,18 @@ import { UserType } from '../../enum/UserType.enum';
 import { AdminPages, DoctorPages, HealthOfficialPages, ImmigrationOfficerPages } from '../../providers/pages.enum';
 import { useHistory } from 'react-router-dom';
 
+
 const NavBar: React.FC = () => {
 	const [searchText, setSearchText] = useState('');
 	const {currentProfile} = useAuth();
 	const history = useHistory();
 
-	async function search() {
+	async function search(value:any) {
+
 		if (searchText.trim() === '') {
 			return;
 		}
+
 		let pathname: string;
 		if (currentProfile.getRole() === UserType.ADMIN) {
 			pathname = AdminPages.patientProfile + '/' + searchText;
@@ -63,11 +66,14 @@ const NavBar: React.FC = () => {
 
 				{
 					currentProfile ? (currentProfile.getRole() === UserType.PATIENT ? null :
-						<div className={'search-bar'}>
-							<IonItem lines={'none'}>
+						<div className={'search-bar'} >
+							<IonItem lines={'none'} >
 								<IonSearchbar value={searchText} placeholder={'Enter the Medical ID of a patient'}
 											  onIonChange={e => setSearchText(e.detail.value || '')}
 											  showCancelButton="never"
+											  onKeyPress={(e) => e.key === 'Enter' && search(e.key)}
+
+
 								/>
 								<IonButton onClick={search}> Search </IonButton>
 							</IonItem>

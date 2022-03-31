@@ -230,11 +230,6 @@ const ChatsPage: React.FC = () => {
 												<ChannelHeader />
 												<MessageList/>
 												<MessageInput/>
-												<IonIcon
-													size={'large'}
-													className={flagClassName}
-													icon={flag} onClick={() => flagChat()}
-												/>
 											</Window>
 											<Thread/>
 										</Channel>
@@ -242,7 +237,7 @@ const ChatsPage: React.FC = () => {
 									<>
 										<br />
 										<br />
-										<IonTitle className={'chats__title'}>You do not have a doctor</IonTitle>
+										<IonTitle className={'chats__title'}>You do not have a good doctor</IonTitle>
 									</>
 							}
 						</Chat>
@@ -254,3 +249,4 @@ const ChatsPage: React.FC = () => {
 };
 
 export default ChatsPage;
+
