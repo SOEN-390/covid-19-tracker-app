@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import AppointmentsTable from '../../components/AppointmentsTable/AppointmentsTable';
-import { IonContent, IonPage, IonToolbar } from '@ionic/react';
+import { IonContent, IonLabel, IonPage, IonTitle, IonToolbar, useIonToast } from '@ionic/react';
 import NavBar from '../../components/NavBar/NavBar';
 import { useAuth } from '../../providers/auth.provider';
 import HttpService from '../../providers/http.service';
+import { IAppointmentTableData } from '../../interfaces/IAppointment';
 
 
 
 const DoctorUpcomingAppointmentsPage: React.FC = () => {
 
 	const { currentProfile } = useAuth();
+	const [present] = useIonToast();
+	const [appointments, setAppointments] = useState<IAppointmentTableData[]>([]);
 
 	useEffect(() => {
 		getUpcomingAppointments();
@@ -18,13 +21,11 @@ const DoctorUpcomingAppointmentsPage: React.FC = () => {
 	async function getUpcomingAppointments() {
 		try {
 			const data = await HttpService.get(`doctors/${currentProfile.licenseId}/upcoming-appointments`);
-			console.log(data);
-
+			setAppointments(data);
 		}
 		catch (e) {
-
+			present('No upcoming appointments', 1500);
 		}
-
 	}
 
 	return (
@@ -33,7 +34,16 @@ const DoctorUpcomingAppointmentsPage: React.FC = () => {
 				<NavBar/>
 			</IonToolbar>
 			<IonContent>
-				<AppointmentsTable/>
+				{ appointments.length === 0 &&
+				<IonTitle>
+					<IonLabel>You do not have any upcoming appointments</IonLabel>
+				</IonTitle>
+				}
+				{
+					appointments.length > 0 &&
+					<AppointmentsTable appointments={appointments}/>
+				}
+
 			</IonContent>
 
 		</IonPage>
