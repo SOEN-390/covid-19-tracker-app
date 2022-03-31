@@ -66,4 +66,12 @@ Note: Build/compile time is much longer when running this project on docker comp
 - `cd` to the project's root folder
 - Build: `docker-compose build`
 - Run: `docker-compose up`
-- Open: `http://localhost:8100`
+- Open: `http://127.0.0.1:8100`
+
+# App Deployment
+Deployment of the app is made on Firebase
+- All changes to master, updates the live Firebase deployed app
+- For each PR, a preview deployment is made in order to test the website
+- Firebase waits for all GitHub Workflows to finish and succeeds, in order to deploy
+- The Firebase website is connected to the deployed AWS server
+

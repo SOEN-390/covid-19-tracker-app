@@ -1,0 +1,53 @@
+name: PR Workflow
+
+on:
+  pull_request
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+    name: Build and Test
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Build and Run the Docker Containers
+        run: docker-compose up --build -d
+
+      - name: Run ESLint
+        run: docker exec -e CI=true covid-19-tracker-app npm run style:eslint
+
+      - name: Run Tests with Coverage
+        run: docker exec -e CI=true covid-19-tracker-app npm run test -- --coverage
+
+  preview:
+
+    if: '${{ github.event.pull_request.head.repo.full_name == github.repository }}'
+    name: Preview PR to Firebase
+    needs: [build]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: '16'
+
+      - name: Setup the Code
+        run: npm ci
+
+      - name: Build Prod build
+        run: npm run build:prod
+
+      - name: Deploy to Firebase
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_CVOID_19_APP }}'
+          projectId: cvoid-19-app

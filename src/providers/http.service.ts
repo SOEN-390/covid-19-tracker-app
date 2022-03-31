@@ -1,4 +1,4 @@
-import { environment } from '../environments/environment';
+import environment from '../environments/environment';
 import { idToken } from './auth.provider';
 
 const HttpService = {
