@@ -8,7 +8,7 @@ import {
 	IonInput,
 	IonItem,
 	IonLabel,
-	IonRouterLink,
+	IonRouterLink, IonSearchbar,
 	setupIonicReact,
 	useIonToast
 } from '@ionic/react';
@@ -26,7 +26,7 @@ const LoginPage: React.FC = () => {
 	const [password, setPassword] = useState('');
 	const [present] = useIonToast();
 
-	async function loginUser() {
+	async function loginUser(value:any) {
 		try {
 			await login(email, password);
 			present('Successfully logged in.', 1500);
@@ -51,7 +51,9 @@ const LoginPage: React.FC = () => {
 					<IonLabel className="login__text">Password</IonLabel>
 					<IonInput data-cy="password" data-testid={'login__password-field'} className="login__text-field"
 							  placeholder="Enter your password" type="password" value={password}
-							  onIonChange={(e: CustomEvent<InputChangeEventDetail>) => setPassword(e.detail.value || '')}/>
+							  onIonChange={(e: CustomEvent<InputChangeEventDetail>) => setPassword(e.detail.value || '')}
+							  onKeyPress={(e) => e.key === 'Enter' && loginUser(e.key)}
+					/>
 
 					<IonItem className="login__ion-item" lines="none">
 						<div slot="start">
