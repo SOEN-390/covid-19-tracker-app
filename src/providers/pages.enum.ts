@@ -20,7 +20,8 @@ export enum DoctorPages {
 	patientProfile = '/doctor/patient-profile',
 	patients = '/doctor/patients',
 	settings = '/doctor/settings',
-	chat = '/doctor/chat'
+	chat = '/doctor/chat',
+	upcomingAppointments='/doctor/upcoming-appointments'
 }
 
 export enum HealthOfficialPages {
