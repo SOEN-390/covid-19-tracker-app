@@ -19,7 +19,7 @@ jest.mock('../../components/Symptom/Symptom', () => (props: {symptomsList: ISymp
 	return mockChildComponent(props);
 });
 
-const mockGetRoleFn = jest.fn();
+const mockGetRoleFn = () => UserType.PATIENT;
 jest.mock('../../providers/auth.provider', () => ({
 	useAuth: () => ({
 		currentProfile: {
@@ -38,7 +38,6 @@ describe('SymptomsFormPage: Test symptoms form', () => {
 	let renderedPage: RenderResult;
 
 	beforeEach(() => {
-		mockGetRoleFn.mockReturnValue(UserType.PATIENT);
 		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 		// @ts-ignore
 		mockHttpGetFn.mockImplementation(async (path: string): ISymptom[] => {
