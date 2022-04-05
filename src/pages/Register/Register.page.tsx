@@ -25,7 +25,7 @@ const RegisterPage: React.FC = () => {
 	const [present] = useIonToast();
 	const history = useHistory();
 
-	async function register() {
+	async function register(value:any) {
 		//validation
 		if (email.trim() === '' || password.trim() === '') {
 			present('Email and Password are required', 1500);
@@ -76,7 +76,9 @@ const RegisterPage: React.FC = () => {
 					<IonLabel className="register__login-text">Confirm your password</IonLabel>
 					<IonInput className="register__text-field" placeholder="Enter the same password" type="password" required={true}
 						data-testid={'register__password-confirm-field'} value={confirmPassword}
-						onIonChange={(e: CustomEvent<InputChangeEventDetail>) => setConfirmPassword(e.detail.value || '')} />
+						onIonChange={(e: CustomEvent<InputChangeEventDetail>) => setConfirmPassword(e.detail.value || '')}
+							  onKeyPress={(e) => e.key === 'Enter' && register(e.key)}
+					/>
 
 					<br /><br />
 
