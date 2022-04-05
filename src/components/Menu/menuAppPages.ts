@@ -82,6 +82,11 @@ export const doctorAppPages: readonly AppPage[] = [
 		icon: chatbubblesOutline
 	},
 	{
+		title: 'Upcoming Appointments',
+		url: DoctorPages.upcomingAppointments,
+		icon: calendarOutline
+	},
+	{
 		title: 'Settings',
 		url: DoctorPages.settings,
 		icon: settingsOutline

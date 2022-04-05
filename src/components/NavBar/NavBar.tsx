@@ -84,12 +84,6 @@ const NavBar: React.FC = () => {
 							<img src={'/assets/avatar/user-avatar.png'} alt="user-avatar"/>
 					}
 				</IonAvatar>
-				{/*<IonCol size="2">*/}
-
-				{/*    <h5>Beshoy Soliman</h5>*/}
-				{/*    <p>PatientProfilePage</p>*/}
-
-				{/*</IonCol>*/}
 
 			</IonRow>
 			<br />

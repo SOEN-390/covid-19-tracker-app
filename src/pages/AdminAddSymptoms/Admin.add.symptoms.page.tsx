@@ -48,23 +48,23 @@ const AdminAddSymptomsPage: React.FC = () => {
 		<IonPage>
 			<IonToolbar>
 				<NavBar/>
-				<IonCard>
-					<IonCardHeader>Add Symptom Form</IonCardHeader>
-					<IonCardContent>
-						<IonItem>
-							<IonLabel position="floating">Name</IonLabel>
-							<IonInput  value={name}
-									   onIonChange={e => setName(e.detail.value!)}/>
-						</IonItem>
-						<IonItem>
-							<IonLabel position="floating">Description</IonLabel>
-							<IonInput  value={description}
-									   onIonChange={e => setDescription(e.detail.value!)}/>
-						</IonItem>
-						<IonButton color='success' onClick={()=> addSymptom()}>Submit</IonButton>
-					</IonCardContent>
-				</IonCard>
 			</IonToolbar>
+			<IonCard>
+				<IonCardHeader>Add Symptom Form</IonCardHeader>
+				<IonCardContent>
+					<IonItem>
+						<IonLabel position="floating">Name</IonLabel>
+						<IonInput  value={name}
+								   onIonChange={e => setName(e.detail.value!)}/>
+					</IonItem>
+					<IonItem>
+						<IonLabel position="floating">Description</IonLabel>
+						<IonInput  value={description}
+								   onIonChange={e => setDescription(e.detail.value!)}/>
+					</IonItem>
+					<IonButton color='success' onClick={()=> addSymptom()}>Submit</IonButton>
+				</IonCardContent>
+			</IonCard>
 		</IonPage>
 
 	);
