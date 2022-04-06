@@ -51,25 +51,23 @@ const AdminAddSymptomsPage: React.FC = () => {
 				<NavBar/>
 				<IonTitle>Add Symptoms Form</IonTitle>
 			</IonToolbar>
-			<div className={'symptom-form__card'}>
-				<IonCard className={'symptom-form__card'}>
-					<IonCardHeader>Add Symptom Form</IonCardHeader>
-					<IonCardContent>
-						<IonItem>
-							<IonLabel position="floating">Name</IonLabel>
-							<IonInput value={name}
-									  onIonChange={e => setName(e.detail.value!)}/>
-						</IonItem>
-						<IonItem>
-							<IonLabel position="floating">Description</IonLabel>
-							<IonInput value={description}
-									  onIonChange={e => setDescription(e.detail.value!)}/>
-						</IonItem>
-						<br/>
-						<IonButton onClick={() => addSymptom()}>Submit</IonButton>
-					</IonCardContent>
-				</IonCard>
-			</div>
+			<IonCard className={'symptom-form__card'}>
+				<IonCardHeader>Add Symptom Form</IonCardHeader>
+				<IonCardContent>
+					<IonItem>
+						<IonLabel position="floating">Name</IonLabel>
+						<IonInput value={name}
+								  onIonChange={e => setName(e.detail.value!)}/>
+					</IonItem>
+					<IonItem>
+						<IonLabel position="floating">Description</IonLabel>
+						<IonInput value={description}
+								  onIonChange={e => setDescription(e.detail.value!)}/>
+					</IonItem>
+					<br/>
+					<IonButton onClick={() => addSymptom()}>Submit</IonButton>
+				</IonCardContent>
+			</IonCard>
 
 		</IonPage>
 

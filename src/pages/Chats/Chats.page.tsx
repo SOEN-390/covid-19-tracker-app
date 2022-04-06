@@ -228,7 +228,7 @@ const ChatsPage: React.FC = () => {
 										<Channel channel={patientChannel}>
 											<Window>
 												<ChannelHeader/>
-												<div className={'patient__flag'}>
+												<div className={'patient-chat__flag'}>
 													<IonIcon
 														size={'large'}
 														className={flagClassName}

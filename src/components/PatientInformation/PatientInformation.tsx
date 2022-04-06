@@ -236,7 +236,7 @@ const PatientInformation: React.FC<{
 
 				<IonModal isOpen={showAppointmentModal}>
 					<IonContent>
-						<div className={'calendar__content'}>
+						<div className={'patient-information__calendar-content'}>
 							<IonDatetime onIonChange={e => setAppointmentDate(e.detail.value!)}/>
 							<br/>
 							<br/>
