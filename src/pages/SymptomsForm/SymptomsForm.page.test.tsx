@@ -7,11 +7,6 @@ import { ISymptom } from '../../interfaces/ISymptom';
 
 const mockHttpGetFn = jest.spyOn(HttpService, 'get');
 
-jest.mock('../../providers/auth.provider', () => ({
-	useAuth: () => ({
-	})
-}));
-
 const mockChildComponent = jest.fn();
 let symptomsProps: {symptomsList: ISymptom[], handleSubmit: () => void};
 jest.mock('../../components/Symptom/Symptom', () => (props: {symptomsList: ISymptom[], handleSubmit: () => void}) => {

@@ -30,7 +30,7 @@ test('DashboardDoctorPage: Renders without crashing', () => {
 	expect(baseElement).toBeDefined();
 });
 
-describe('DashboardDoctorPage: Patient Reminded', () => {
+describe('DashboardDoctorPage: Test page', () => {
 	let renderedPage: RenderResult;
 
 	beforeEach(() => {
