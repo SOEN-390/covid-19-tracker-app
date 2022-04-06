@@ -17,7 +17,7 @@ import { Patient } from '../../objects/Patient.class';
 import './Chats.page.scss';
 import ChatService, { chatClient } from '../../providers/chat.service';
 import { Doctor } from '../../objects/Doctor.class';
-import { IonAvatar, IonCol, IonContent, IonIcon, IonItem, IonPage, IonRow, IonTitle, useIonToast } from '@ionic/react';
+import { IonAvatar, IonCol, IonContent, IonIcon, IonItem, IonPage, IonTitle, useIonToast } from '@ionic/react';
 import { flag } from 'ionicons/icons';
 
 const ChatsPage: React.FC = () => {
@@ -227,13 +227,14 @@ const ChatsPage: React.FC = () => {
 									<>
 										<Channel channel={patientChannel}>
 											<Window>
-
-												<IonIcon
-													size={'large'}
-													className={flagClassName}
-													icon={flag} onClick={() => flagChat()}
-												/>
-												<ChannelHeader />
+												<ChannelHeader/>
+												<div className={'patient__flag'}>
+													<IonIcon
+														size={'large'}
+														className={flagClassName}
+														icon={flag} onClick={() => flagChat()}
+													/>
+												</div>
 												<MessageList/>
 												<MessageInput/>
 											</Window>

@@ -1,4 +1,4 @@
-import { IonContent, IonLabel, IonModal, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import { IonLabel, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import PatientInformation from '../../components/PatientInformation/PatientInformation';
 import NavBar from '../../components/NavBar/NavBar';
 import React, { useEffect, useState } from 'react';
