@@ -26,7 +26,7 @@ const LoginPage: React.FC = () => {
 	const [password, setPassword] = useState('');
 	const [present] = useIonToast();
 
-	async function loginUser(value:string) {
+	async function loginUser() {
 		try {
 			await login(email, password);
 			present('Successfully logged in.', 1500);
@@ -52,7 +52,11 @@ const LoginPage: React.FC = () => {
 					<IonInput data-cy="password" data-testid={'login__password-field'} className="login__text-field"
 							  placeholder="Enter your password" type="password" value={password}
 							  onIonChange={(e: CustomEvent<InputChangeEventDetail>) => setPassword(e.detail.value || '')}
-							  onKeyPress={(e) => e.key === 'Enter' && loginUser(e.key)}
+							  onKeyPress={(e) => {
+								  if (e.key === 'Enter') {
+									  loginUser();
+								  }
+							  }}
 					/>
 
 					<IonItem className="login__ion-item" lines="none">
@@ -63,7 +67,7 @@ const LoginPage: React.FC = () => {
 						<IonRouterLink href="#" color="#4D4D4D" className="underline">Forgot Password?</IonRouterLink>
 					</IonItem>
 					<br/>
-					<IonButton onClick={()=> loginUser('')} className={'login__btn'} size="large" expand="block" fill="solid"
+					<IonButton onClick={()=> loginUser()} className={'login__btn'} size="large" expand="block" fill="solid"
 							   data-testid={'login__button'} color={'dark-blue'}>LOGIN</IonButton>
 					<br/>
 					<p className={'login__register-text'}> Do not have an account? <br/>

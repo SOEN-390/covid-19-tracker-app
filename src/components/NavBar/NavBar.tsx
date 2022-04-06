@@ -14,13 +14,12 @@ import { UserType } from '../../enum/UserType.enum';
 import { AdminPages, DoctorPages, HealthOfficialPages, ImmigrationOfficerPages } from '../../providers/pages.enum';
 import { useHistory } from 'react-router-dom';
 
-
 const NavBar: React.FC = () => {
 	const [searchText, setSearchText] = useState('');
 	const {currentProfile} = useAuth();
 	const history = useHistory();
 
-	async function search(value:string) {
+	async function search() {
 
 		if (searchText.trim() === '') {
 			return;
@@ -65,16 +64,27 @@ const NavBar: React.FC = () => {
 			<IonRow className={'ion-align-items-end navbar__row'}>
 
 				{
-					currentProfile ? (currentProfile.getRole() === UserType.PATIENT ? null :
-						<div className={'search-bar'} >
-							<IonItem lines={'none'} >
-								<IonSearchbar value={searchText} placeholder={'Enter the Medical ID of a patient'}
-											  onIonChange={e => setSearchText(e.detail.value || '')}
-											  showCancelButton="never"
-											  onKeyPress={(e) => e.key === 'Enter' && search(e.key)}/>
-								<IonButton onClick={()=> search('')}> Search </IonButton>
-							</IonItem>
-						</div>) : null
+					currentProfile ?
+						(
+							currentProfile.getRole() === UserType.PATIENT ?
+								<></> :
+								<div className={'search-bar'} >
+									<IonItem lines={'none'} >
+										<IonSearchbar value={searchText} placeholder={'Enter the Medical ID of a patient'}
+													  onIonChange={e => setSearchText(e.detail.value || '')}
+													  showCancelButton="never"
+													  onKeyPress={(e) => {
+														  if (e.key === 'Enter') {
+															  search();
+														  }
+													  }}/>
+										<IonButton onClick={()=> {
+											search();
+										}}> Search </IonButton>
+									</IonItem>
+								</div>
+						) :
+						<></>
 				}
 
 				<IonAvatar>
