@@ -6,9 +6,7 @@ import { useAuth } from '../../providers/auth.provider';
 import HttpService from '../../providers/http.service';
 import { IAppointmentTableData } from '../../interfaces/IAppointment';
 
-
-
-const DoctorUpcomingAppointmentsPage: React.FC = () => {
+const UpcomingAppointmentsDoctorPage: React.FC = () => {
 
 	const { currentProfile } = useAuth();
 	const [present] = useIonToast();
@@ -34,21 +32,17 @@ const DoctorUpcomingAppointmentsPage: React.FC = () => {
 				<NavBar/>
 			</IonToolbar>
 			<IonContent>
-				{ appointments.length === 0 &&
-				<IonTitle>
-					<IonLabel>You do not have any upcoming appointments</IonLabel>
-				</IonTitle>
-				}
 				{
-					appointments.length > 0 &&
-					<AppointmentsTable appointments={appointments}/>
+					appointments.length === 0 ?
+						<IonTitle>
+							<IonLabel>You do not have any upcoming appointments</IonLabel>
+						</IonTitle> :
+						<AppointmentsTable appointments={appointments}/>
 				}
-
 			</IonContent>
 
 		</IonPage>
-
 	);
 };
 
-export default DoctorUpcomingAppointmentsPage;
+export default UpcomingAppointmentsDoctorPage;
