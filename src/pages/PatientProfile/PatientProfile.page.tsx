@@ -1,4 +1,4 @@
-import { IonContent, IonLabel, IonModal, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import { IonLabel, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import PatientInformation from '../../components/PatientInformation/PatientInformation';
 import NavBar from '../../components/NavBar/NavBar';
 import React, { useEffect, useState } from 'react';
@@ -45,15 +45,7 @@ const PatientProfilePage: React.FC = () => {
 			return;
 		}
 		reset();
-		getPatientWithId().then(() => {
-			if (currentProfile.getRole() === UserType.DOCTOR) {
-				getSymptoms();
-				getPatientSymptomHistory();
-			}
-		}).catch((error) => {
-			console.log(error);
-			reset();
-		});
+		getPatientInfo();
 	}, [medicalNumber]);
 
 	function reset() {
@@ -64,15 +56,26 @@ const PatientProfilePage: React.FC = () => {
 		setSymptomsResponse([]);
 	}
 
+	async function getPatientInfo() {
+		try {
+			await getPatientWithId();
+			if (currentProfile.getRole() === UserType.DOCTOR) {
+				getSymptoms();
+				getPatientSymptomHistory();
+			}
+		} catch(error)  {
+			console.log(error);
+			reset();
+		}
+	}
+
 	// Throwable function. Always try-catch
 	async function getPatientWithId() {
-		let path: string;
+		let path = '';
 		if (currentProfile.getRole() === UserType.DOCTOR) {
 			path = `doctors/patient/${medicalNumber}`;
 		} else if (currentProfile.getRole() !== UserType.PATIENT) {
 			path = `patients/${medicalNumber}`;
-		} else {
-			return;
 		}
 		const data = await HttpService.get(path) as IPatient;
 		if (!data.medicalId) {
@@ -122,11 +125,9 @@ const PatientProfilePage: React.FC = () => {
 					<PatientInformation patient={patientProfile} onChange={handleChange}
 						symptomsList={symptomsList} symptomsResponse={symptomsResponse}
 					/> :
-					<>
-						<IonTitle className={'patient-profile'}>
-							<IonLabel>Enter the Medical ID of a patient above then press Search</IonLabel>
-						</IonTitle>
-					</>
+					<IonTitle className={'patient-profile'}>
+						<IonLabel>Enter the Medical ID of a patient above then press Search</IonLabel>
+					</IonTitle>
 			}
 		</IonPage>
 	);
