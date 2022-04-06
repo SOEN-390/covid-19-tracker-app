@@ -17,7 +17,7 @@ import { Patient } from '../../objects/Patient.class';
 import './Chats.page.scss';
 import ChatService, { chatClient } from '../../providers/chat.service';
 import { Doctor } from '../../objects/Doctor.class';
-import { IonAvatar, IonCol, IonContent, IonIcon, IonPage, IonRow, IonTitle, useIonToast } from '@ionic/react';
+import { IonAvatar, IonCol, IonContent, IonIcon, IonItem, IonPage, IonRow, IonTitle, useIonToast } from '@ionic/react';
 import { flag } from 'ionicons/icons';
 
 const ChatsPage: React.FC = () => {
@@ -81,7 +81,7 @@ const ChatsPage: React.FC = () => {
 						id: patient.id,
 						name: patient.firstName + ' ' + patient.lastName,
 						role: 'user',
-						image: '/assets/avatar/user-avatar.png',
+						image: '/assets/avatar/user-icon.png',
 					});
 					const channel = chatClient.channel('messaging', {
 						name: patient.firstName + ' ' + patient.lastName,
@@ -90,7 +90,7 @@ const ChatsPage: React.FC = () => {
 					await channel.create();
 					await channel.update({
 						name: patient.firstName + ' ' + patient.lastName,
-						image: '/assets/avatar/user-avatar.png'
+						image: '/assets/avatar/user-icon.png'
 					});
 					if (channel.id) {
 						channelsIds.push(channel.id);
@@ -171,15 +171,15 @@ const ChatsPage: React.FC = () => {
 
 		return (
 			<div onClick={() => setActiveChannel(channel)} style={{margin: '12px'}}>
-				<IonRow>
+				<IonItem className={'patients__chats'}>
 					<IonCol>
-						<IonAvatar>
+						<IonAvatar className={'patients__avatar'}>
 							<img src={channel.data.image}/>
 						</IonAvatar>
 					</IonCol>
 					<IonCol>
 						<div>{channel.data.name || 'Unnamed Channel'}</div>
-						<div style={{fontSize: '14px'}}>{messagePreview}</div>
+						<div style={{fontSize: '11px'}}>{messagePreview}</div>
 					</IonCol>
 					<IonCol>
 						<IonIcon
@@ -188,7 +188,7 @@ const ChatsPage: React.FC = () => {
 							icon={flag} onClick={() => flagPatient(channel)}
 						/>
 					</IonCol>
-				</IonRow>
+				</IonItem>
 			</div>
 		);
 	};
@@ -209,6 +209,7 @@ const ChatsPage: React.FC = () => {
 								<>
 									<div className="messaging__sidebar" id="mobile-channel-list">
 										<ChannelList filters={filters} Preview={CustomChannelPreview}/>
+
 									</div>
 									<Channel>
 										<Window>
@@ -227,21 +228,20 @@ const ChatsPage: React.FC = () => {
 										<Channel channel={patientChannel}>
 											<Window>
 
-												<ChannelHeader />
-												<MessageList/>
-												<MessageInput/>
 												<IonIcon
 													size={'large'}
 													className={flagClassName}
 													icon={flag} onClick={() => flagChat()}
 												/>
+												<ChannelHeader />
+												<MessageList/>
+												<MessageInput/>
 											</Window>
 											<Thread/>
 										</Channel>
 									</> :
 									<>
-										<br />
-										<br />
+
 										<IonTitle className={'chats__title'}>You do not have a doctor</IonTitle>
 									</>
 							}

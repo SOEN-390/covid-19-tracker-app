@@ -11,16 +11,34 @@ ion-title.chats__title {
   color: red;
 }
 
+ion-avatar.patients__avatar {
+  height: 55px;
+  width: 50px;
+}
+
+ion-item.patients__chats {
+  border-radius: 12px;
+
+}
+
+.str-chat__channel-list-messenger__main {
+  background-color: #F7F7F7;
+}
+
+.str-chat__main-panel{
+  padding: 0 !important;
+  background-color: white;
+}
 //Bad CSS tbh, better without it
 //#root {
 //  height: 100%;
 //}
-//
+
 //.str-chat-channel-list {
 //  overflow: auto;
 //  height: 100%;
 //}
-//
+
 //.dark.messaging__channel-list {
 //  background: #212326;
 //}
@@ -28,32 +46,32 @@ ion-title.chats__title {
 //.light.messaging__channel-list {
 //  background: #fafafa;
 //}
-//
+
 //.str-chat.str-chat-channel.messaging {
 //  background: #fafafa;
 //  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.06), 0px 2px 30px rgba(0, 0, 0, 0.1);
 //}
-//
+
 //.dark.str-chat.str-chat-channel.messaging {
 //  background: #212326;
 //  box-shadow: 0px 2px 30px rgba(0, 0, 0, 0.1);
 //}
 //
-//.str-chat.str-chat-channel-list.messaging {
-//  background: #fafafa;
-//}
-//
+.str-chat.str-chat-channel-list.messaging {
+  background: #fafafa;
+}
+
 //.dark.str-chat.str-chat-channel-list.messaging {
 //  background: #212326 !important;
 //}
 //
-//.str-chat-channel .str-chat__container {
-//  padding: 20px 0px;
-//}
-//
-//.str-chat-channel.messaging .str-chat__main-panel {
-//  padding: 0 !important;
-//}
+.str-chat-channel .str-chat__container {
+  padding: 0;
+}
+
+.str-chat-channel.messaging .str-chat__main-panel {
+  padding: 0 !important;
+}
 //
 //.messaging.str-chat .str-chat__list .str-chat__reverse-infinite-scroll {
 //  padding-top: 0;
@@ -67,19 +85,19 @@ ion-title.chats__title {
 //.str-chat-channel.messaging .str-chat__main-panel {
 //  padding: 30px 30px 0 0px;
 //}
-//
+
 //.str-chat-channel.messaging .str-chat__main-panel:not(:last-child) {
 //  padding: 20px 0 0 0px;
 //}
-//
+
 //.str-chat-channel.messaging .str-chat__main-panel:not(:last-child) .messaging__channel-header {
 //  border-radius: 10px 0px 0px 0px;
 //}
-//
+
 //.str-chat__message-simple-status {
 //  display: none;
 //}
-//
+
 //.messaging.str-chat.dark .str-chat__message--system__date {
 //  color: rgba(255, 255, 255, 0.7);
 //}
@@ -95,7 +113,7 @@ ion-title.chats__title {
 //.str-chat__message--system {
 //  padding: 20px;
 //}
-//
+
 ///* Mobile View */
 //@media screen and (max-width: 640px) {
 //  /*
@@ -126,7 +144,7 @@ ion-title.chats__title {
 //    z-index: 1000;
 //  }
 //}
-//
+
 ///* To fix inherited styles (as per Team and Customer Support apps */
 //@media screen and (max-width: 960px) {
 //  .str-chat-channel-list.messaging {
