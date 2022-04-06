@@ -7,10 +7,9 @@ import HttpService from '../../providers/http.service';
 import { IAppointmentTableData } from '../../interfaces/IAppointment';
 
 
-
 const DoctorUpcomingAppointmentsPage: React.FC = () => {
 
-	const { currentProfile } = useAuth();
+	const {currentProfile} = useAuth();
 	const [present] = useIonToast();
 	const [appointments, setAppointments] = useState<IAppointmentTableData[]>([]);
 
@@ -22,8 +21,7 @@ const DoctorUpcomingAppointmentsPage: React.FC = () => {
 		try {
 			const data = await HttpService.get(`doctors/${currentProfile.licenseId}/upcoming-appointments`);
 			setAppointments(data);
-		}
-		catch (e) {
+		} catch (e) {
 			present('No upcoming appointments', 1500);
 		}
 	}
@@ -32,12 +30,13 @@ const DoctorUpcomingAppointmentsPage: React.FC = () => {
 		<IonPage>
 			<IonToolbar>
 				<NavBar/>
+				<IonTitle>Appointments</IonTitle>
+				<br/>
 			</IonToolbar>
 			<IonContent>
-				{ appointments.length === 0 &&
-				<IonTitle>
+				{appointments.length === 0 &&
+
 					<IonLabel>You do not have any upcoming appointments</IonLabel>
-				</IonTitle>
 				}
 				{
 					appointments.length > 0 &&
