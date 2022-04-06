@@ -20,7 +20,7 @@ const NavBar: React.FC = () => {
 	const {currentProfile} = useAuth();
 	const history = useHistory();
 
-	async function search(value:any) {
+	async function search(value:string) {
 
 		if (searchText.trim() === '') {
 			return;
@@ -72,7 +72,7 @@ const NavBar: React.FC = () => {
 											  onIonChange={e => setSearchText(e.detail.value || '')}
 											  showCancelButton="never"
 											  onKeyPress={(e) => e.key === 'Enter' && search(e.key)}/>
-								<IonButton onClick={search}> Search </IonButton>
+								<IonButton onClick={()=> search('')}> Search </IonButton>
 							</IonItem>
 						</div>) : null
 				}

@@ -26,7 +26,7 @@ const LoginPage: React.FC = () => {
 	const [password, setPassword] = useState('');
 	const [present] = useIonToast();
 
-	async function loginUser(value:any) {
+	async function loginUser(value:string) {
 		try {
 			await login(email, password);
 			present('Successfully logged in.', 1500);
@@ -63,7 +63,7 @@ const LoginPage: React.FC = () => {
 						<IonRouterLink href="#" color="#4D4D4D" className="underline">Forgot Password?</IonRouterLink>
 					</IonItem>
 					<br/>
-					<IonButton onClick={loginUser} className={'login__btn'} size="large" expand="block" fill="solid"
+					<IonButton onClick={()=> loginUser('')} className={'login__btn'} size="large" expand="block" fill="solid"
 							   data-testid={'login__button'} color={'dark-blue'}>LOGIN</IonButton>
 					<br/>
 					<p className={'login__register-text'}> Do not have an account? <br/>
