@@ -6,6 +6,10 @@ import App from './App';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
 
+console.log((new Date()).getTimezoneOffset());
+console.log(new Date());
+console.log(new Date().getDate());
+
 ReactDOM.render(
 	<React.StrictMode>
 		<App/>
