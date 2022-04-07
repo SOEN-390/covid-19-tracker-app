@@ -10,7 +10,7 @@ const AppointmentsPage: React.FC = () => {
 			<IonToolbar>
 				<NavBar/>
 			</IonToolbar>
-			<IonTitle>Appointments</IonTitle>
+			<IonTitle className={'appointments__title'}>Appointments</IonTitle>
 
 		</IonPage>
 	);

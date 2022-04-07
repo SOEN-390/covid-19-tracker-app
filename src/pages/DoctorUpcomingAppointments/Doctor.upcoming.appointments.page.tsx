@@ -32,7 +32,7 @@ const DoctorUpcomingAppointmentsPage: React.FC = () => {
 			<IonToolbar>
 				<NavBar/>
 			</IonToolbar>
-			<IonTitle>APPOINTMENTS</IonTitle>
+			<IonTitle className={'doctor-upcoming-appointments__title'}>APPOINTMENTS</IonTitle>
 			<IonContent>
 				{appointments.length === 0 &&
 
