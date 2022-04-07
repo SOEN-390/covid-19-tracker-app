@@ -164,6 +164,9 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 
 	function getRow(patient: Patient, index: number): JSX.Element | null {
 
+		console.log(new Date(patient.lastUpdated).getTimezoneOffset());
+		console.log(new Date(patient.lastUpdated).getUTCDate());
+
 		return (
 			<Tr className="patients-table__table-entries"
 				key={index}
@@ -288,7 +291,7 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 					/>
 				</Td>
 				<Td key={index} >
-					{moment(patient.lastUpdated).utcOffset(-((new Date()).getTimezoneOffset())).format('LLL')}
+					{moment(new Date(patient.lastUpdated)).format('LLL')}
 				</Td>
 			</Tr>
 		);
