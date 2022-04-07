@@ -11,6 +11,10 @@ console.log((new Date()).getTimezoneOffset());
 console.log(new Date());
 console.log(new Date().getDate());
 console.log(moment().utcOffset());
+console.log(moment().utcOffset(-moment().utcOffset()));
+console.log(moment(new Date()).format('LLL'));
+console.log(moment(new Date()).utcOffset(-moment().utcOffset()).format('LLL'));
+console.log(new Date().toUTCString());
 
 ReactDOM.render(
 	<React.StrictMode>
