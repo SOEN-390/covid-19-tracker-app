@@ -288,7 +288,7 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 					/>
 				</Td>
 				<Td key={index} >
-					{moment(patient.lastUpdated).utcOffset((new Date()).getTimezoneOffset()).format('LLL')}
+					{moment(patient.lastUpdated).utcOffset(-((new Date()).getTimezoneOffset())).format('LLL')}
 				</Td>
 			</Tr>
 		);
