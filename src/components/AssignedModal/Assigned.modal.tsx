@@ -117,6 +117,7 @@ const AssignedComponent: React.FC<{
 			onIonModalWillPresent={() => {
 				setModalOpen(true);
 			}}
+			onDidDismiss={()=>setModalOpen(false)}
 		>
 			<IonCard>
 				<IonCardHeader>

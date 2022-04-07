@@ -205,46 +205,52 @@ const ChatsPage: React.FC = () => {
 					<>
 						<Chat client={chatClient} theme="messaging light">
 							{
-								currentProfile.getRole() === UserType.DOCTOR &&
-								<>
-									<div className="messaging__sidebar" id="mobile-channel-list">
-										<ChannelList filters={filters} Preview={CustomChannelPreview}/>
-
-									</div>
-									<Channel>
-										<Window>
-											<ChannelHeader/>
-											<MessageList/>
-											<MessageInput/>
-										</Window>
-										<Thread/>
-									</Channel>
-								</>
+								(
+									currentProfile.getRole() === UserType.DOCTOR ?
+										<>
+											<div className="messaging__sidebar" id="mobile-channel-list">
+												<ChannelList filters={filters} Preview={CustomChannelPreview}/>
+											</div>
+											<Channel>
+												<Window>
+													<ChannelHeader/>
+													<MessageList/>
+													<MessageInput/>
+												</Window>
+												<Thread/>
+											</Channel>
+										</> :
+										<></>
+								)
 							}
 							{
-								currentProfile.getRole() === UserType.PATIENT &&
-								patientChannel ?
-									<>
-										<Channel channel={patientChannel}>
-											<Window>
-												<ChannelHeader/>
-												<div className={'chats__patients-flag'}>
-													<IonIcon
-														size={'large'}
-														className={flagClassName}
-														icon={flag} onClick={() => flagChat()}
-													/>
-												</div>
-												<MessageList/>
-												<MessageInput/>
-											</Window>
-											<Thread/>
-										</Channel>
-									</> :
-									<>
-
-										<IonTitle className={'chats__title'}>You do not have a doctor</IonTitle>
-									</>
+								(
+									currentProfile.getRole() === UserType.PATIENT ?
+										(
+											patientChannel ?
+												<>
+													<Channel channel={patientChannel}>
+														<Window>
+															<ChannelHeader />
+															<div className={'chats__patients-flag'}>
+																<IonIcon
+																	size={'large'}
+																	className={flagClassName}
+																	icon={flag} onClick={() => flagChat()}
+																  />
+															</div>
+															<MessageList/>
+															<MessageInput/>
+														</Window>
+														<Thread/>
+													</Channel>
+												</> :
+												<>
+													<IonTitle className={'chats__title'}>You do not have a doctor</IonTitle>
+												</>
+										) :
+										<></>
+								)
 							}
 						</Chat>
 					</>

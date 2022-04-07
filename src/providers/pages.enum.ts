@@ -26,6 +26,7 @@ export enum DoctorPages {
 
 export enum HealthOfficialPages {
 	home = '/health-official',
+	dashboard = '/health-official/dashboard',
 	patients = '/health-official/patients',
 	patientProfile = '/health-official/patient-profile',
 	settings = '/health-official/settings'

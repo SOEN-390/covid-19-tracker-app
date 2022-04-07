@@ -216,7 +216,7 @@ const PatientInformation: React.FC<{
 					<IonButton color="danger" onClick={() => setShowStatusModal(false)}>Cancel</IonButton>
 				</IonModal>
 
-				<IonModal isOpen={showSymptomsModal}>
+				<IonModal isOpen={showSymptomsModal} onDidDismiss={()=>setShowSymptomsModal(false)}>
 					<IonContent>
 						{
 							props.symptomsList &&
@@ -234,7 +234,7 @@ const PatientInformation: React.FC<{
 					<IonButton color="danger" onClick={() => setShowSymptomsModal(false)}>Cancel</IonButton>
 				</IonModal>
 
-				<IonModal isOpen={showAppointmentModal}>
+				<IonModal isOpen={showAppointmentModal} onDidDismiss={()=>setShowAppointmentModal(false)}>
 					<IonContent>
 						<div className={'patient-information__calendar-content'}>
 							<IonDatetime onIonChange={e => setAppointmentDate(e.detail.value!)}/>

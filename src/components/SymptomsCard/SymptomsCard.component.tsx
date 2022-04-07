@@ -31,7 +31,7 @@ const SymptomsCardComponent: React.FC<{ patient: Patient, trigger: string, sympt
 					 setModalOpen(true);
 			}}
 				  hidden={!props.symptoms || props.symptoms.length === 0}>
-			<IonCard>
+			<IonCard >
 				<IonCardHeader className={'symptoms-card__header'} color={'secondary'}>
 					Symptoms of {props.patient.firstName} {props.patient.lastName}</IonCardHeader>
 				<IonCardContent>

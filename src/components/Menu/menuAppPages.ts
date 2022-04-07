@@ -96,7 +96,7 @@ export const doctorAppPages: readonly AppPage[] = [
 export const healthOfficialAppPages: readonly AppPage[] = [
 	{
 		title: 'Overview',
-		url: '',
+		url: HealthOfficialPages.dashboard,
 		icon: homeOutline
 	},
 	{

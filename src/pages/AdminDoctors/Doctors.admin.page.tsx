@@ -31,9 +31,11 @@ const DoctorsAdminPage: React.FC = () => {
 				<IonTitle>DOCTORS</IonTitle>
 				<br/>
 				{
-					doctorsArray.length !== 0 ? <DoctorsTable doctorTableRows={doctorsArray}
-															  setDoctorsArray={setDoctorsArray}
-					/> : null
+					doctorsArray.length !== 0 ?
+						<DoctorsTable doctorTableRows={doctorsArray}
+									  setDoctorsArray={setDoctorsArray}
+						/> :
+						<></>
 				}
 			</IonContent>
 		</IonPage>
