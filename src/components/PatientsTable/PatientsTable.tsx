@@ -291,7 +291,7 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 					/>
 				</Td>
 				<Td key={index} >
-					{moment(new Date(patient.lastUpdated)).format('LLL')}
+					{moment(new Date(patient.lastUpdated).toUTCString()).format('LLL')}
 				</Td>
 			</Tr>
 		);
