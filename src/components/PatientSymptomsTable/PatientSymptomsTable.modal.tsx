@@ -3,8 +3,8 @@ import { Table, Tbody, Td, Th, Thead, Tr } from 'react-super-responsive-table';
 import { IonButton, IonContent, IonModal, useIonToast } from '@ionic/react';
 import './PatientSymptomsTable.modal.scss';
 import { useEffect, useState } from 'react';
-import Moment from 'react-moment';
 import { ISymptom, ISymptomResponse, ISymptomTable } from '../../interfaces/ISymptom';
+import moment from 'moment-timezone';
 
 const PatientSymptomsTableModal: React.FC<{
 	symptomsList: ISymptom[], symptomsResponse: ISymptomResponse[], trigger: string
@@ -84,7 +84,7 @@ const PatientSymptomsTableModal: React.FC<{
 							{
 								Array.from(symptomsTable).map((el, index1) =>
 									<Td className={'patient-symptoms-table__table-head__date'} key={index1}>
-										<Moment format={'LLL'} date={el[0]}/>
+										{moment(el[0]).format('LLL')}
 									</Td>
 								)
 							}

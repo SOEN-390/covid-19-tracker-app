@@ -29,7 +29,6 @@ import { call, close, flag, mail } from 'ionicons/icons';
 import { ISymptom, ISymptomResponse } from '../../interfaces/ISymptom';
 import ContactTracingTableModal from '../ContactTracingTable/ContactTracingTable.modal';
 import PatientSymptomsTableModal from '../PatientSymptomsTable/PatientSymptomsTable.modal';
-import Moment from 'react-moment';
 import moment from 'moment-timezone';
 
 const PatientInformation: React.FC<{
@@ -287,7 +286,9 @@ const PatientInformation: React.FC<{
 							<IonRow>
 								<div>
 									<IonText> <strong>Last Status Update</strong></IonText>
-									<p className="patient-information__detail"><Moment format={'LLL'} date={props.patient.lastUpdated}/></p>
+									<p className="patient-information__detail">
+										{moment(props.patient.lastUpdated).format('LLL')}
+									</p>
 								</div>
 							</IonRow>
 						</IonCol>

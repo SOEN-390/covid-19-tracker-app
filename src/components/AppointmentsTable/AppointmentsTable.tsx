@@ -2,11 +2,9 @@ import { Table, Tbody, Td, Thead, Tr, Th } from 'react-super-responsive-table';
 import React from 'react';
 import { IAppointmentTableData } from '../../interfaces/IAppointment';
 import './AppointmentsTable.scss';
-import Moment from 'react-moment';
+import moment from 'moment-timezone';
 
 const AppointmentsTable: React.FC<{appointments: IAppointmentTableData[]}> = (props) => {
-
-
 
 	return (
 
@@ -25,7 +23,7 @@ const AppointmentsTable: React.FC<{appointments: IAppointmentTableData[]}> = (pr
 							<Tr key={key} className={'appointments-table__table-row'}>
 								<Td>{value.patientName}</Td>
 								<Td>{value.appointmentSubject}</Td>
-								<Td><Moment format={'LLL'} date={value.appointmentDate}/></Td>
+								<Td>{moment(value.appointmentDate).format('LLL')}</Td>
 							</Tr>
 						);
 					})

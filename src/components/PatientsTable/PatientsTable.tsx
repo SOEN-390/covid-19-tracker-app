@@ -34,7 +34,6 @@ import HttpService from '../../providers/http.service';
 import SymptomsCardComponent from '../SymptomsCard/SymptomsCard.component';
 import { useHistory } from 'react-router-dom';
 import { AdminPages, DoctorPages, HealthOfficialPages, ImmigrationOfficerPages } from '../../providers/pages.enum';
-import Moment from 'react-moment';
 import { ISymptomResponse } from '../../interfaces/ISymptom';
 import moment from 'moment-timezone';
 import { IPatient } from '../../interfaces/IPatient';
@@ -288,7 +287,8 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 						icon={flag} onClick={() => flagPatient(patient)}
 					/>
 				</Td>
-				<Td key={index} > <Moment format={'LLL'} date={patient.lastUpdated} local={true} />
+				<Td key={index} >
+					{moment(patient.lastUpdated).format('LLL')}
 				</Td>
 			</Tr>
 		);
