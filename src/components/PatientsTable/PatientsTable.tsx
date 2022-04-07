@@ -288,7 +288,7 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 						icon={flag} onClick={() => flagPatient(patient)}
 					/>
 				</Td>
-				<Td key={index} > <Moment format={'LLL'} date={patient.lastUpdated} />
+				<Td key={index} > <Moment format={'LLL'} date={patient.lastUpdated} local={true} />
 				</Td>
 			</Tr>
 		);
