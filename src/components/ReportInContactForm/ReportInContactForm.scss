@@ -2,13 +2,6 @@ ion-content.report-form__content {
 
   --padding-end: 30px;
 
-  ion-title.report-form__title {
-    color: #2C4D62;
-    font-weight: bold;
-    font-size: 50px;
-    padding: 20px;
-  }
-
   form {
     border-radius: 20px;
     border: 2px solid #C5C5C5;
@@ -20,7 +13,7 @@ ion-content.report-form__content {
 
       div.report-form__input-div {
         padding-left: 30px;
-        padding-right: 20px;
+        padding-right: 30px;
 
         ion-col.report-form__input-div__column {
 
@@ -28,7 +21,7 @@ ion-content.report-form__content {
             color: #2C4D62;
             font-weight: bold;
             font-size: 20px;
-            padding: 20px;
+            padding: 8px;
           }
 
           ion-input {
@@ -47,7 +40,7 @@ ion-content.report-form__content {
       ion-button {
         font-weight: bold;
         font-size: 13px;
-        padding-left: 20px;
+        padding-left: 40px;
       }
 
       ion-button.report-form__buttons-div__add {

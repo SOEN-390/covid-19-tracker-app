@@ -28,7 +28,7 @@ const DoctorsAdminPage: React.FC = () => {
 				<NavBar/>
 			</IonToolbar>
 			<IonContent className={'doctors-admin__content'}>
-				<IonTitle>Doctors</IonTitle>
+				<IonTitle>DOCTORS</IonTitle>
 				<br/>
 				{
 					doctorsArray.length !== 0 ?

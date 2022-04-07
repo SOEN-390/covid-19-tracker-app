@@ -5,12 +5,12 @@ import NavBar from '../../components/NavBar/NavBar';
 import { useAuth } from '../../providers/auth.provider';
 import HttpService from '../../providers/http.service';
 import { IAppointmentTableData } from '../../interfaces/IAppointment';
-
+import './Doctor.upcoming.appointments.page.scss';
 
 
 const DoctorUpcomingAppointmentsPage: React.FC = () => {
 
-	const { currentProfile } = useAuth();
+	const {currentProfile} = useAuth();
 	const [present] = useIonToast();
 	const [appointments, setAppointments] = useState<IAppointmentTableData[]>([]);
 
@@ -22,8 +22,7 @@ const DoctorUpcomingAppointmentsPage: React.FC = () => {
 		try {
 			const data = await HttpService.get(`doctors/${currentProfile.licenseId}/upcoming-appointments`);
 			setAppointments(data);
-		}
-		catch (e) {
+		} catch (e) {
 			present('No upcoming appointments', 1500);
 		}
 	}
@@ -33,11 +32,11 @@ const DoctorUpcomingAppointmentsPage: React.FC = () => {
 			<IonToolbar>
 				<NavBar/>
 			</IonToolbar>
+			<IonTitle className={'doctor-upcoming-appointments__title'}>APPOINTMENTS</IonTitle>
 			<IonContent>
-				{ appointments.length === 0 &&
-				<IonTitle>
+				{appointments.length === 0 &&
+
 					<IonLabel>You do not have any upcoming appointments</IonLabel>
-				</IonTitle>
 				}
 				{
 					appointments.length > 0 &&
