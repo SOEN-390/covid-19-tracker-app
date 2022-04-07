@@ -232,13 +232,13 @@ const ChatsPage: React.FC = () => {
 													<Channel channel={patientChannel}>
 														<Window>
 															<ChannelHeader />
-                              <div className={'chats__patients-flag'}>
-                                <IonIcon
-                                  size={'large'}
-                                  className={flagClassName}
-                                  icon={flag} onClick={() => flagChat()}
-                                />
-                              </div>
+															<div className={'chats__patients-flag'}>
+																<IonIcon
+																	size={'large'}
+																	className={flagClassName}
+																	icon={flag} onClick={() => flagChat()}
+																  />
+															</div>
 															<MessageList/>
 															<MessageInput/>
 														</Window>
@@ -261,4 +261,3 @@ const ChatsPage: React.FC = () => {
 };
 
 export default ChatsPage;
-
