@@ -124,7 +124,7 @@ const RegisterNextPage: React.FC = () => {
 
 				<div className="ion-align-items-center; register-next__form">
 					<IonLabel className="register-next__login-text">First Name</IonLabel>
-					<IonInput className="register-next__text-field" placeholder="Enter your First Name" type="text" required={true}
+					<IonInput data-cy="first_name" className="register-next__text-field" placeholder="Enter your First Name" type="text" required={true}
 						value={firstName} data-testid={'register-next__first_name-field'}
 						onIonChange={(e: CustomEvent<InputChangeEventDetail>) =>
 							setFirstName(e.detail.value || '')} />
@@ -132,41 +132,41 @@ const RegisterNextPage: React.FC = () => {
 					<br />
 
 					<IonLabel className="register-next__login-text">Last Name</IonLabel>
-					<IonInput className="register-next__text-field" placeholder="Enter your Last Name" type="text" required={true}
+					<IonInput data-cy="last_name" className="register-next__text-field" placeholder="Enter your Last Name" type="text" required={true}
 						value={lastName} data-testid={'register-next__last_name-field'}
 						onIonChange={(e: CustomEvent<InputChangeEventDetail>) =>
 							setLastName(e.detail.value || '')} />
 					<br />
 
 					<IonLabel className="register-next__login-text">Medical Card Number</IonLabel>
-					<IonInput className="register-next__text-field" placeholder="Enter your medical card number" type="text" required={true}
+					<IonInput data-cy="medical_number" className="register-next__text-field" placeholder="Enter your medical card number" type="text" required={true}
 						value={medicalNumber} data-testid={'register-next__medicalCard-field'}
 						onIonChange={(e: CustomEvent<InputChangeEventDetail>) =>
 							setMedicalNumber(e.detail.value || '')} />
 					<br />
 
 					<IonLabel className="register-next__login-text">Your Date of Birth</IonLabel>
-					<IonInput className="register-next__text-field" placeholder="MM/DD/YYYY" type="date" required={true}
+					<IonInput data-cy="date_of_birth" className="register-next__text-field" placeholder="MM/DD/YYYY" type="date" required={true}
 						value={dob} data-testid={'register-next__dob-field'}
 						onIonChange={(e: CustomEvent<InputChangeEventDetail>) =>
 							setDOB(e.detail.value || '')} />
 					<br />
 
 					<IonLabel className="register-next__login-text">Your Address</IonLabel>
-					<IonInput className="register-next__text-field" placeholder="Enter your Address" type="text" required={true}
+					<IonInput data-cy="address" className="register-next__text-field" placeholder="Enter your Address" type="text" required={true}
 						value={address} data-testid={'register-next__address-field'}
 						onIonChange={(e: CustomEvent<InputChangeEventDetail>) =>
 							setAddress(e.detail.value || '')} />
 					<br />
 
 					<IonLabel className="register-next__login-text">Phone number</IonLabel>
-					<IonInput className="register-next__text-field" placeholder="Enter your phone number" type={'tel'} required={true}
+					<IonInput data-cy="phone_number" className="register-next__text-field" placeholder="Enter your phone number" type={'tel'} required={true}
 						value={phoneNumber} data-testid={'register-next__phone-field'}
 						onIonChange={(e: CustomEvent<InputChangeEventDetail>) =>
 							setPhoneNumber(e.detail.value || '')} />
 					<br />
 					<IonLabel className="register-next__login-text"> Gender </IonLabel>
-					<IonSelect interface="popover" placeholder="Select"
+					<IonSelect data-cy="gender" interface="popover" placeholder="Select"
 						value={gender} data-testid={'register-next__gender-field'}
 						onIonChange={(e: CustomEvent<InputChangeEventDetail>) =>
 							setGender(e.detail.value as Gender || Gender.NONE)}>
@@ -176,7 +176,7 @@ const RegisterNextPage: React.FC = () => {
 					</IonSelect>
 					<br />
 					<IonLabel className="register-next__login-text"> Test Results </IonLabel>
-					<IonSelect interface="popover" placeholder="Select"
+					<IonSelect data-cy="testResult" interface="popover" placeholder="Select"
 						value={testResult} data-testid={'register-next__result-field'}
 						onIonChange={(e: CustomEvent<InputChangeEventDetail>) =>
 							setTestResult(e.detail.value as TestResult || TestResult.PENDING)}>
