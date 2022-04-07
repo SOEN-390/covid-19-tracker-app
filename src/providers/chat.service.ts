@@ -16,7 +16,7 @@ const ChatService = {
 				id: currentProfile.id,
 				name: currentProfile.getFullName(),
 				image: currentProfile.getRole() === UserType.PATIENT ?
-					'/assets/avatar/user-avatar.png' : '/assets/avatar/doctor-avatar.png',
+					'/assets/avatar/user-icon.png' : '/assets/avatar/doctor-avatar.png',
 			},
 			chatClient.devToken(currentProfile.id)
 		);
