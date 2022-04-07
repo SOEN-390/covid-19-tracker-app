@@ -10,7 +10,7 @@ import {
 } from '@ionic/react';
 import { ISymptomResponse } from '../../interfaces/ISymptom';
 import './SymptomsCard.component.scss';
-import Moment from 'react-moment';
+import moment from 'moment-timezone';
 
 const SymptomsCardComponent: React.FC<{ patient: Patient, trigger: string, symptoms: ISymptomResponse[]}> = (props) => {
 
@@ -38,7 +38,9 @@ const SymptomsCardComponent: React.FC<{ patient: Patient, trigger: string, sympt
 					{
 						props.symptoms && props.symptoms.length > 0 &&
 						<IonCardHeader>Submitted on
-							<IonCardSubtitle><Moment format={'LLL'}>{props.symptoms[0].onDate}</Moment></IonCardSubtitle>
+							<IonCardSubtitle>
+								{moment(props.symptoms[0].onDate).format('LLL')}
+							</IonCardSubtitle>
 						</IonCardHeader>
 					}
 					{ props.symptoms && props.symptoms.length > 0 &&

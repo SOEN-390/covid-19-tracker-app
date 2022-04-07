@@ -34,7 +34,6 @@ import HttpService from '../../providers/http.service';
 import SymptomsCardComponent from '../SymptomsCard/SymptomsCard.component';
 import { useHistory } from 'react-router-dom';
 import { AdminPages, DoctorPages, HealthOfficialPages, ImmigrationOfficerPages } from '../../providers/pages.enum';
-import Moment from 'react-moment';
 import { ISymptomResponse } from '../../interfaces/ISymptom';
 import moment from 'moment-timezone';
 import { IPatient } from '../../interfaces/IPatient';
@@ -165,6 +164,9 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 
 	function getRow(patient: Patient, index: number): JSX.Element | null {
 
+		console.log(new Date(patient.lastUpdated).getTimezoneOffset());
+		console.log(new Date(patient.lastUpdated).getUTCDate());
+
 		return (
 			<Tr className="patients-table__table-entries"
 				key={index}
@@ -288,7 +290,8 @@ const PatientsTable: React.FC<{ patients: Patient[], onChange: (patient: Patient
 						icon={flag} onClick={() => flagPatient(patient)}
 					/>
 				</Td>
-				<Td key={index} > <Moment format={'LLL'} date={patient.lastUpdated} local={true} />
+				<Td key={index} >
+					{moment(new Date(patient.lastUpdated).toUTCString()).format('LLL')}
 				</Td>
 			</Tr>
 		);
