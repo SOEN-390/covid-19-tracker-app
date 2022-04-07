@@ -171,9 +171,9 @@ const ChatsPage: React.FC = () => {
 
 		return (
 			<div onClick={() => setActiveChannel(channel)} style={{margin: '12px'}}>
-				<IonItem className={'patients__chats'}>
+				<IonItem className={'chats__patients'}>
 					<IonCol>
-						<IonAvatar className={'patients__avatar'}>
+						<IonAvatar className={'chats__patient-avatar'}>
 							<img src={channel.data.image}/>
 						</IonAvatar>
 					</IonCol>
@@ -228,7 +228,7 @@ const ChatsPage: React.FC = () => {
 										<Channel channel={patientChannel}>
 											<Window>
 												<ChannelHeader/>
-												<div className={'patient-chat__flag'}>
+												<div className={'chats__patients-flag'}>
 													<IonIcon
 														size={'large'}
 														className={flagClassName}

@@ -11,17 +11,17 @@ ion-title.chats__title {
   color: red;
 }
 
-ion-avatar.patients__avatar {
+ion-avatar.chats__patient-avatar {
   height: 55px;
   width: 50px;
 }
 
-ion-item.patients__chats {
+ion-item.chats__patients {
   border-radius: 12px;
 
 }
 
-.patient-chat__flag {
+.chats__patients-flag {
   position: absolute;
   right: 50px;
   top: 20px;

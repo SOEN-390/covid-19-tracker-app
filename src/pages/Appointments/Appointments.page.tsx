@@ -1,5 +1,6 @@
 import { IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import NavBar from '../../components/NavBar/NavBar';
+import './Appointments.page.scss';
 import React from 'react';
 
 const AppointmentsPage: React.FC = () => {
@@ -8,8 +9,8 @@ const AppointmentsPage: React.FC = () => {
 		<IonPage>
 			<IonToolbar>
 				<NavBar/>
-				<IonTitle>Appointments</IonTitle>
 			</IonToolbar>
+			<IonTitle>Appointments</IonTitle>
 
 		</IonPage>
 	);

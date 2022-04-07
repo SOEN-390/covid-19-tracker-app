@@ -49,8 +49,8 @@ const AdminAddSymptomsPage: React.FC = () => {
 		<IonPage>
 			<IonToolbar>
 				<NavBar/>
-				<IonTitle>Add Symptoms Form</IonTitle>
 			</IonToolbar>
+			<IonTitle>Add Symptoms Form</IonTitle>
 			<IonCard className={'symptom-form__card'}>
 				<IonCardHeader>Add Symptom Form</IonCardHeader>
 				<IonCardContent>

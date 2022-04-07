@@ -1,4 +1,4 @@
-import { IonLabel, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import { IonContent, IonLabel, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import PatientInformation from '../../components/PatientInformation/PatientInformation';
 import NavBar from '../../components/NavBar/NavBar';
 import React, { useEffect, useState } from 'react';
@@ -123,9 +123,12 @@ const PatientProfilePage: React.FC = () => {
 						symptomsList={symptomsList} symptomsResponse={symptomsResponse}
 					/> :
 					<>
-						<IonTitle className={'patient-profile'}>
-							<IonLabel>Enter the Medical ID of a patient above then press Search</IonLabel>
-						</IonTitle>
+						<IonContent>
+							<IonTitle className={'patient-profile'}>
+								<IonLabel>Enter the Medical ID of a patient above then press Search</IonLabel>
+							</IonTitle>
+						</IonContent>
+
 					</>
 			}
 		</IonPage>

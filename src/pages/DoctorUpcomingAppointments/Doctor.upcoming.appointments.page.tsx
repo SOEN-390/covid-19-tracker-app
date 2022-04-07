@@ -5,6 +5,7 @@ import NavBar from '../../components/NavBar/NavBar';
 import { useAuth } from '../../providers/auth.provider';
 import HttpService from '../../providers/http.service';
 import { IAppointmentTableData } from '../../interfaces/IAppointment';
+import './Doctor.upcoming.appointments.page.scss';
 
 
 const DoctorUpcomingAppointmentsPage: React.FC = () => {
@@ -30,9 +31,8 @@ const DoctorUpcomingAppointmentsPage: React.FC = () => {
 		<IonPage>
 			<IonToolbar>
 				<NavBar/>
-				<IonTitle>Appointments</IonTitle>
-				<br/>
 			</IonToolbar>
+			<IonTitle>APPOINTMENTS</IonTitle>
 			<IonContent>
 				{appointments.length === 0 &&
 
