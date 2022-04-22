@@ -25,7 +25,7 @@ import { UserType } from '../../enum/UserType.enum';
 import React, { useEffect, useState } from 'react';
 import { TestResult } from '../../enum/TestResult.enum';
 import HttpService from '../../providers/http.service';
-import { call, close, flag, mail, text } from 'ionicons/icons';
+import { call, close, flag, mail } from 'ionicons/icons';
 import { ISymptom, ISymptomResponse } from '../../interfaces/ISymptom';
 import ContactTracingTableModal from '../ContactTracingTable/ContactTracingTable.modal';
 import PatientSymptomsTableModal from '../PatientSymptomsTable/PatientSymptomsTable.modal';
@@ -212,11 +212,11 @@ const PatientInformation: React.FC<{
 						</IonRadioGroup>
 
 					</IonContent>
-					<IonButton color="success" onClick={() => updateStatus()}>Save</IonButton>
+					<IonButton background-color='var(--ion-color-dark-blue)' onClick={() => updateStatus()}>Save</IonButton>
 					<IonButton color="danger" onClick={() => setShowStatusModal(false)}>Cancel</IonButton>
 				</IonModal>
 
-				<IonModal isOpen={showSymptomsModal}>
+				<IonModal isOpen={showSymptomsModal} onDidDismiss={()=>setShowSymptomsModal(false)}>
 					<IonContent>
 						{
 							props.symptomsList &&
@@ -230,19 +230,21 @@ const PatientInformation: React.FC<{
 							)
 						}
 					</IonContent>
-					<IonButton color="success" onClick={() => submitSymptoms()}>Request</IonButton>
+					<IonButton background-color={'var(--ion-color-dark-blue'} onClick={() => submitSymptoms()}>Request</IonButton>
 					<IonButton color="danger" onClick={() => setShowSymptomsModal(false)}>Cancel</IonButton>
 				</IonModal>
 
-				<IonModal isOpen={showAppointmentModal}>
+				<IonModal isOpen={showAppointmentModal} onDidDismiss={()=>setShowAppointmentModal(false)}>
 					<IonContent>
-						<IonDatetime onIonChange={e => setAppointmentDate(e.detail.value!)}/>
-						<br/>
-						<br/>
-						<IonLabel>Subject</IonLabel>
-						<IonInput type='text' onIonChange={e => setAppointmentSubject(e.detail.value!)}  placeholder="Enter the subject"/>
+						<div className={'patient-information__calendar-content'}>
+							<IonDatetime onIonChange={e => setAppointmentDate(e.detail.value!)}/>
+							<br/>
+							<br/>
+							<IonLabel>Subject</IonLabel>
+							<IonInput type='text' onIonChange={e => setAppointmentSubject(e.detail.value!)}  placeholder="Enter the subject"/>
+						</div>
 					</IonContent>
-					<IonButton color="success" onClick={() => (setAppointment())}>Set appointment</IonButton>
+					<IonButton background-color={'var(--ion-color-dark-blue'} onClick={() => (setAppointment())}>Set appointment</IonButton>
 					<IonButton color="danger" onClick={() => setShowAppointmentModal(false)}>Cancel</IonButton>
 				</IonModal>
 

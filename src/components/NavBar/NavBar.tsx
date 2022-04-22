@@ -20,9 +20,11 @@ const NavBar: React.FC = () => {
 	const history = useHistory();
 
 	async function search() {
+
 		if (searchText.trim() === '') {
 			return;
 		}
+
 		let pathname: string;
 		if (currentProfile.getRole() === UserType.ADMIN) {
 			pathname = AdminPages.patientProfile + '/' + searchText;
@@ -62,16 +64,27 @@ const NavBar: React.FC = () => {
 			<IonRow className={'ion-align-items-end navbar__row'}>
 
 				{
-					currentProfile ? (currentProfile.getRole() === UserType.PATIENT ? null :
-						<div className={'search-bar'}>
-							<IonItem lines={'none'}>
-								<IonSearchbar value={searchText} placeholder={'Enter the Medical ID of a patient'}
-											  onIonChange={e => setSearchText(e.detail.value || '')}
-											  showCancelButton="never"
-								/>
-								<IonButton onClick={search}> Search </IonButton>
-							</IonItem>
-						</div>) : null
+					currentProfile ?
+						(
+							currentProfile.getRole() === UserType.PATIENT ?
+								<></> :
+								<div className={'search-bar'} >
+									<IonItem lines={'none'} >
+										<IonSearchbar value={searchText} placeholder={'Enter the Medical ID of a patient'}
+													  onIonChange={e => setSearchText(e.detail.value || '')}
+													  showCancelButton="never"
+													  onKeyPress={(e) => {
+														  if (e.key === 'Enter') {
+															  search();
+														  }
+													  }}/>
+										<IonButton onClick={()=> {
+											search();
+										}}> Search </IonButton>
+									</IonItem>
+								</div>
+						) :
+						<></>
 				}
 
 				<IonAvatar>

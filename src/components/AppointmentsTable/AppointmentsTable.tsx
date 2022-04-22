@@ -1,4 +1,4 @@
-import { Table, Tbody, Td, Thead, Tr } from 'react-super-responsive-table';
+import { Table, Tbody, Td, Thead, Tr, Th } from 'react-super-responsive-table';
 import React from 'react';
 import { IAppointmentTableData } from '../../interfaces/IAppointment';
 import './AppointmentsTable.scss';
@@ -13,9 +13,9 @@ const AppointmentsTable: React.FC<{appointments: IAppointmentTableData[]}> = (pr
 		<Table className={'appointments-table__table'}>
 			<Thead>
 				<Tr className={'appointments-table__table-head'}>
-					<Td>Patient Name</Td>
-					<Td>Appointment Subject</Td>
-					<Td>Appointment Date</Td>
+					<Th>Patient Name</Th>
+					<Th>Appointment Subject</Th>
+					<Th>Appointment Date</Th>
 				</Tr>
 			</Thead>
 			<Tbody>

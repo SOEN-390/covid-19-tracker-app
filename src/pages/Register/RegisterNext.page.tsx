@@ -160,10 +160,11 @@ const RegisterNextPage: React.FC = () => {
 					<br />
 
 					<IonLabel className="register-next__login-text">Phone number</IonLabel>
-					<IonInput className="register-next__text-field" placeholder="Enter your phone number" type={'tel'} required={true}
+					<IonInput className="register-next__text-field" placeholder="Enter your phone number" type={'number'} required={true}
 						value={phoneNumber} data-testid={'register-next__phone-field'}
 						onIonChange={(e: CustomEvent<InputChangeEventDetail>) =>
-							setPhoneNumber(e.detail.value || '')} />
+							setPhoneNumber(e.detail.value || '')}/>
+
 					<br />
 					<IonLabel className="register-next__login-text"> Gender </IonLabel>
 					<IonSelect interface="popover" placeholder="Select"

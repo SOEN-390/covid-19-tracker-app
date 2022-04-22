@@ -117,6 +117,7 @@ const AssignedComponent: React.FC<{
 			onIonModalWillPresent={() => {
 				setModalOpen(true);
 			}}
+			onDidDismiss={()=>setModalOpen(false)}
 		>
 			<IonCard>
 				<IonCardHeader>
@@ -125,7 +126,7 @@ const AssignedComponent: React.FC<{
 					</IonCardSubtitle>
 				</IonCardHeader>
 				<IonCardContent>
-					<Table className={'doctors-assigned__table'}>
+					<Table className={'patients-modal__table'}>
 						<tbody>
 							{doctors.map((row) => {
 								return getDoctorRow(row, !!props.assignModal.patient.doctorName);

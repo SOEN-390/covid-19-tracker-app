@@ -5,13 +5,14 @@ import {
 	IonInput,
 	IonItem,
 	IonLabel,
-	IonPage,
+	IonPage, IonTitle,
 	IonToolbar, useIonToast
 } from '@ionic/react';
 import React, { useState } from 'react';
 import NavBar from '../../components/NavBar/NavBar';
 import { ISymptom } from '../../interfaces/ISymptom';
 import HttpService from '../../providers/http.service';
+import './Admin.add.symptoms.page.scss';
 
 const AdminAddSymptomsPage: React.FC = () => {
 
@@ -24,7 +25,8 @@ const AdminAddSymptomsPage: React.FC = () => {
 			present('Please complete the required fields', 1500);
 			return;
 		}
-		const symptom: ISymptom = {	name: name,
+		const symptom: ISymptom = {
+			name: name,
 			description: description
 		};
 		try {
@@ -33,8 +35,7 @@ const AdminAddSymptomsPage: React.FC = () => {
 			});
 			resetFields();
 			present('Successfully added symptom', 1500);
-		}
-		catch (e) {
+		} catch (e) {
 			present('Failed to add symptom', 1500);
 		}
 	}
@@ -49,22 +50,25 @@ const AdminAddSymptomsPage: React.FC = () => {
 			<IonToolbar>
 				<NavBar/>
 			</IonToolbar>
-			<IonCard>
+			<IonTitle className={'admin-add-symptoms__title'}>Add Symptoms Form</IonTitle>
+			<IonCard className={'symptom-form__card'}>
 				<IonCardHeader>Add Symptom Form</IonCardHeader>
 				<IonCardContent>
 					<IonItem>
 						<IonLabel position="floating">Name</IonLabel>
-						<IonInput  value={name}
-								   onIonChange={e => setName(e.detail.value!)}/>
+						<IonInput value={name}
+								  onIonChange={e => setName(e.detail.value!)}/>
 					</IonItem>
 					<IonItem>
 						<IonLabel position="floating">Description</IonLabel>
-						<IonInput  value={description}
-								   onIonChange={e => setDescription(e.detail.value!)}/>
+						<IonInput value={description}
+								  onIonChange={e => setDescription(e.detail.value!)}/>
 					</IonItem>
-					<IonButton color='success' onClick={()=> addSymptom()}>Submit</IonButton>
+					<br/>
+					<IonButton onClick={() => addSymptom()}>Submit</IonButton>
 				</IonCardContent>
 			</IonCard>
+
 		</IonPage>
 
 	);

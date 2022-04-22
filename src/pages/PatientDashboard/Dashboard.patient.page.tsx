@@ -61,7 +61,9 @@ const DashboardPatientPage: React.FC = () => {
 							{
 								reminderNotification &&
 								<IonCardContent>
-									You need to update your status... Please update it now
+									You need to update your status ... Please update it now!
+									<br/>
+									<br/>
 									<IonButton className={'symptoms-patient__symptoms-form'}
 											   data-testid={'symptoms-patient__symptoms-form'}
 											   onClick={routeChange}
