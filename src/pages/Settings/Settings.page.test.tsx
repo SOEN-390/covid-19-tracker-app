@@ -7,7 +7,7 @@ jest.mock('../../providers/auth.provider', () => ({
 	})
 }));
 
-test('RegisterPage: Renders without crashing', () => {
+test('SettingsPage: Renders without crashing', () => {
 	const {baseElement} = render(<SettingsPage />);
 	expect(baseElement).toBeDefined();
 });

@@ -8,12 +8,12 @@ import {
 	IonContent,
 	IonPage,
 	IonRow,
-	IonTitle,
-	IonToolbar, useIonToast
+	IonToolbar,
+	useIonToast
 } from '@ionic/react';
 import NavBar from '../../components/NavBar/NavBar';
 import './Dashboard.doctor.page.scss';
-import PieChart, { Connector, Export, Label, Legend, Series, Tooltip, } from 'devextreme-react/pie-chart';
+import PieChart, { Connector, Export, Label, Legend, Series, Tooltip } from 'devextreme-react/pie-chart';
 import HttpService from '../../providers/http.service';
 import { useAuth } from '../../providers/auth.provider';
 import { Patient } from '../../objects/Patient.class';
@@ -32,13 +32,17 @@ const DashboardDoctorPage: React.FC = () => {
 		getAssignedPatients();
 	}, []);
 
-	function getAssignedPatients(): void {
-		HttpService.get(`doctors/${currentProfile.licenseId}/patients/assigned`).then((patients: Patient[]) => {
+	async function getAssignedPatients(): Promise<void> {
+		try {
+			const patients: Patient[] = await HttpService.get(`doctors/${currentProfile.licenseId}/patients/assigned`);
+			if (!patients || patients.length === 0) {
+				throw Error('Empty patients list');
+			}
 			generateDiagnosticGraph(patients);
 			generateGenderGraph(patients);
-		}).catch((error) => {
-			console.log('ERROR: ', error);
-		});
+		} catch (e) {
+			console.log('ERROR: ', e);
+		}
 	}
 
 	function generateDiagnosticGraph(patients: Patient[]): void {
@@ -126,55 +130,62 @@ const DashboardDoctorPage: React.FC = () => {
 			<IonContent className={'dashboard-doctor__page'}>
 				<IonCol>
 					<IonRow>
-						<IonCard className={'dashboard-doctor__pie-card'}>
-							<PieChart
-								id="pie"
-								type="doughnut"
-								title="Diagnostics"
-								palette="Soft Pastel"
-								dataSource={diagnosticData}
-							>
-								<Series argumentField="testResult">
-									<Label visible={true}>
-										<Connector visible={true}/>
-									</Label>
-								</Series>
-								<Export enabled={true}/>
-								<Legend
-									margin={20}
-									horizontalAlignment="center"
-									verticalAlignment="bottom"
-								/>
-								<Tooltip enabled={true} customizeTooltip={customizeTooltip}>
-									{/*<Format type="percentage" />*/}
-								</Tooltip>
-							</PieChart>
-						</IonCard>
+						{
+							diagnosticData && diagnosticData.length !== 0 &&
+							<IonCard className={'dashboard-doctor__pie-card'}>
+								<PieChart
+									id="pie"
+									type="doughnut"
+									title="Diagnostics"
+									palette="Soft Pastel"
+									dataSource={diagnosticData}
+								>
+									<Series argumentField="testResult">
+										<Label visible={true}>
+											<Connector visible={true}/>
+										</Label>
+									</Series>
+									<Export enabled={true}/>
+									<Legend
+										margin={20}
+										horizontalAlignment="center"
+										verticalAlignment="bottom"
+									/>
+									<Tooltip enabled={true} customizeTooltip={customizeTooltip}>
+										{/*<Format type="percentage" />*/}
+									</Tooltip>
+								</PieChart>
+							</IonCard>
+						}
 
-						<IonCard className={'dashboard-doctor__pie-card'}>
-							<PieChart
-								id="pie"
-								type="doughnut"
-								title="Patients"
-								palette="Soft Pastel"
-								dataSource={genderData}
-							>
-								<Series argumentField="gender">
-									<Label visible={true}>
-										<Connector visible={true}/>
-									</Label>
-								</Series>
-								<Export enabled={true}/>
-								<Legend
-									margin={20}
-									horizontalAlignment="center"
-									verticalAlignment="bottom"
-								/>
-								<Tooltip enabled={true} customizeTooltip={customizeTooltip}>
-									{/*<Format type="percentage" />*/}
-								</Tooltip>
-							</PieChart>
-						</IonCard>
+						{
+							genderData && genderData.length !== 0 &&
+							<IonCard className={'dashboard-doctor__pie-card'}>
+								<PieChart
+									id="pie"
+									type="doughnut"
+									title="Patients"
+									palette="Soft Pastel"
+									dataSource={genderData}
+								>
+									<Series argumentField="gender">
+										<Label visible={true}>
+											<Connector visible={true}/>
+										</Label>
+									</Series>
+									<Export enabled={true}/>
+									<Legend
+										margin={20}
+										horizontalAlignment="center"
+										verticalAlignment="bottom"
+									/>
+									<Tooltip enabled={true} customizeTooltip={customizeTooltip}>
+										{/*<Format type="percentage" />*/}
+									</Tooltip>
+								</PieChart>
+							</IonCard>
+						}
+
 						<IonCard className={'dashboard-doctor__emergency-card'}>
 							<IonCardHeader>
 								<IonCardTitle>Declare an Emergency Leave</IonCardTitle>

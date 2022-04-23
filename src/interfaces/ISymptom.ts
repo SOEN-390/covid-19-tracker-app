@@ -4,7 +4,6 @@ export interface ISymptom {
 	isChecked?: boolean
 }
 
-
 export interface ISymptomResponse {
 	name: string,
 	description: string,

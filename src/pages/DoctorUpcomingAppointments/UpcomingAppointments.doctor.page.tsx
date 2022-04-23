@@ -5,10 +5,9 @@ import NavBar from '../../components/NavBar/NavBar';
 import { useAuth } from '../../providers/auth.provider';
 import HttpService from '../../providers/http.service';
 import { IAppointmentTableData } from '../../interfaces/IAppointment';
-import './Doctor.upcoming.appointments.page.scss';
+import './UpcomingAppointments.doctor.page.scss';
 
-
-const DoctorUpcomingAppointmentsPage: React.FC = () => {
+const UpcomingAppointmentsDoctorPage: React.FC = () => {
 
 	const {currentProfile} = useAuth();
 	const [present] = useIonToast();
@@ -34,20 +33,17 @@ const DoctorUpcomingAppointmentsPage: React.FC = () => {
 			</IonToolbar>
 			<IonTitle className={'doctor-upcoming-appointments__title'}>APPOINTMENTS</IonTitle>
 			<IonContent>
-				{appointments.length === 0 &&
-
-					<IonLabel>You do not have any upcoming appointments</IonLabel>
-				}
 				{
-					appointments.length > 0 &&
-					<AppointmentsTable appointments={appointments}/>
+					appointments.length === 0 ?
+						<IonTitle>
+							<IonLabel>You do not have any upcoming appointments</IonLabel>
+						</IonTitle> :
+						<AppointmentsTable appointments={appointments}/>
 				}
-
 			</IonContent>
 
 		</IonPage>
-
 	);
 };
 
-export default DoctorUpcomingAppointmentsPage;
+export default UpcomingAppointmentsDoctorPage;

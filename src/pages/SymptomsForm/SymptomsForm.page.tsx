@@ -5,12 +5,13 @@ import React, { useEffect, useState } from 'react';
 import { ISymptom } from '../../interfaces/ISymptom';
 import HttpService from '../../providers/http.service';
 import { useAuth } from '../../providers/auth.provider';
+import { useStateIfMounted } from 'use-state-if-mounted';
 
 const SymptomsFormPage: React.FC = () => {
 
 	const {currentProfile} = useAuth();
-	const [symptomsList, setSymptomsList] = useState<ISymptom[]>([]);
-	const [requestExist, setRequestExist] = useState<boolean>(false);
+	const [symptomsList, setSymptomsList] = useStateIfMounted<ISymptom[]>([]);
+	const [requestExist, setRequestExist] = useStateIfMounted<boolean>(false);
 
 	useEffect(() => {
 		getMyRequestedSymptoms();
@@ -20,13 +21,12 @@ const SymptomsFormPage: React.FC = () => {
 		try {
 			const symptoms: ISymptom[] = [];
 			const data: ISymptom[] = await HttpService.get(`patients/${currentProfile.medicalId}/symptoms`);
-			for (const symp of data) {
-				symptoms.push({name: symp.name, description: symp.description, isChecked: false});
+			for (const symptom of data) {
+				symptoms.push({name: symptom.name, description: symptom.description, isChecked: false});
 			}
 			setSymptomsList(symptoms);
 			setRequestExist(true);
-		}
-		catch (e) {
+		} catch (e) {
 			setRequestExist(false);
 		}
 	}
@@ -42,13 +42,15 @@ const SymptomsFormPage: React.FC = () => {
 				<NavBar/>
 			</IonToolbar>
 
-			{!requestExist && <IonTitle>
-				<IonLabel>You do not have any pending symptoms form requested by your Doctor</IonLabel>
-			</IonTitle> }
 			{
-				requestExist && <Symptom symptomsList = {symptomsList} handleSubmit = {handleSubmit}/>
+				requestExist ?
+					<Symptom symptomsList={symptomsList} handleSubmit={handleSubmit}
+							 data-testid={'symptoms-form__symptoms'}
+					/> :
+					<IonTitle>
+						<IonLabel>You do not have any pending symptoms form requested by your Doctor</IonLabel>
+					</IonTitle>
 			}
-
 
 		</IonPage>
 	);
